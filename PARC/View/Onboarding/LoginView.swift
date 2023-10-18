@@ -12,10 +12,11 @@ struct LoginView: View {
     @State var password = ""
     @State var isEmailValid: Bool = true
     @Binding var login_shown: Bool
+    @Binding var user_home_shown: Bool
+    @Binding var admin_home_shown: Bool
     
     var body: some View {
         GeometryReader { geometry in
-            NavigationStack {
                 ZStack {
                     Color("Primary").ignoresSafeArea()
                     VStack(alignment: .leading) {
@@ -31,15 +32,23 @@ struct LoginView: View {
                         }
                         .foregroundColor(Color("Secondary"))
                         
-                        TextField("", text: $email, prompt: Text("Email").foregroundColor(.gray).font(Font.custom("Nunito-Medium", size: 16)))
-                            .padding()
-                            .frame(width: max(0, geometry.size.width-40), height: 70)
-                            .background(.white)
-//                            .border(.black, width: 1)
+                        TextField("", text: $email, prompt: Text("Email").foregroundColor(.gray).font(Font.custom("Nunito-Medium", size: 16))).padding().frame(width: max(0, geometry.size.width-40), height: 70).background(.white)
                             .cornerRadius(5)
-                            .font(Font.custom("Nunito-Bold", size: 16))
                             .autocorrectionDisabled(true)
                             .autocapitalization(.none)
+                            .font(Font.custom("Nunito-Bold", size: 16))
+                            .onChange(of: email) { newValue in
+                                withAnimation(.easeOut(duration: 0.2)) {
+                                    validateEmail()
+                                }
+                            }
+                        
+                        if !isEmailValid {
+                            HStack {
+                                Spacer()
+                                Text("Invalid Email").foregroundColor(.red).font(Font.custom("Nunito-Medium", size: min(geometry.size.width, geometry.size.height) * 0.035)).fontWeight(.bold)
+                            }
+                        }
                         
                         SecureField("", text: $password, prompt: Text("Password").foregroundColor(.gray).font(Font.custom("Nunito-Medium", size: 16)))
                             .padding()
@@ -60,7 +69,11 @@ struct LoginView: View {
                         
                         Spacer()
                         
-                        Button(action: {print("Logged in")}) {
+                        Button(action: {
+                            print("Logged in")
+                            login_shown.toggle()
+                            user_home_shown.toggle()
+                        }) {
                             HStack {
                                 Text("Log in")
                                     .font(Font.custom("Nunito", size: min(geometry.size.width, geometry.size.height) * 0.07))
@@ -77,7 +90,6 @@ struct LoginView: View {
                     }
                     .frame(width: max(0, geometry.size.width-40), height: max(0, geometry.size.height - 20))
                 }
-            }
         }
     }
     

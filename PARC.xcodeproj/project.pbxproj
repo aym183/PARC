@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		619F4C0F2AE00F7100D7A861 /* UserHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619F4C0E2AE00F7100D7A861 /* UserHome.swift */; };
 		61DBDFC42ADEF83F00AE41FA /* PARCApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DBDFC32ADEF83F00AE41FA /* PARCApp.swift */; };
 		61DBDFC62ADEF83F00AE41FA /* LandingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DBDFC52ADEF83F00AE41FA /* LandingPage.swift */; };
 		61DBDFC82ADEF84000AE41FA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 61DBDFC72ADEF84000AE41FA /* Assets.xcassets */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		619F4C0E2AE00F7100D7A861 /* UserHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserHome.swift; sourceTree = "<group>"; };
 		61DBDFC02ADEF83F00AE41FA /* PARC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PARC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61DBDFC32ADEF83F00AE41FA /* PARCApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PARCApp.swift; sourceTree = "<group>"; };
 		61DBDFC52ADEF83F00AE41FA /* LandingPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingPage.swift; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 		61DBDFEE2ADFF6B400AE41FA /* User */ = {
 			isa = PBXGroup;
 			children = (
+				619F4C0E2AE00F7100D7A861 /* UserHome.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -237,6 +240,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				619F4C0F2AE00F7100D7A861 /* UserHome.swift in Sources */,
 				61DBDFC62ADEF83F00AE41FA /* LandingPage.swift in Sources */,
 				61DBDFC42ADEF83F00AE41FA /* PARCApp.swift in Sources */,
 				61DBDFF02ADFF78700AE41FA /* LoginView.swift in Sources */,
