@@ -16,6 +16,7 @@
 		61DBDFE52ADFDC8D00AE41FA /* shop.json in Resources */ = {isa = PBXBuildFile; fileRef = 61DBDFE42ADFDC8D00AE41FA /* shop.json */; };
 		61DBDFE82ADFDE5800AE41FA /* Nunito-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 61DBDFE72ADFDE5800AE41FA /* Nunito-VariableFont_wght.ttf */; };
 		61DBDFEB2ADFE29C00AE41FA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 61DBDFEA2ADFE29C00AE41FA /* LaunchScreen.storyboard */; };
+		61DBDFF02ADFF78700AE41FA /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DBDFEF2ADFF78700AE41FA /* LoginView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 		61DBDFE42ADFDC8D00AE41FA /* shop.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = shop.json; sourceTree = "<group>"; };
 		61DBDFE72ADFDE5800AE41FA /* Nunito-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-VariableFont_wght.ttf"; sourceTree = "<group>"; };
 		61DBDFEA2ADFE29C00AE41FA /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		61DBDFEF2ADFF78700AE41FA /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +45,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		619F4C0D2AE0062D00D7A861 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				61DBDFEF2ADFF78700AE41FA /* LoginView.swift */,
+				61DBDFC52ADEF83F00AE41FA /* LandingPage.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
 		61DBDFB72ADEF83E00AE41FA = {
 			isa = PBXGroup;
 			children = (
@@ -84,10 +95,12 @@
 		61DBDFD92ADF097E00AE41FA /* View */ = {
 			isa = PBXGroup;
 			children = (
+				619F4C0D2AE0062D00D7A861 /* Onboarding */,
+				61DBDFEE2ADFF6B400AE41FA /* User */,
+				61DBDFED2ADFF6AE00AE41FA /* Admin */,
 				61DBDFE92ADFE28A00AE41FA /* Launch Screen */,
 				61DBDFE62ADFDE4A00AE41FA /* Fonts */,
 				61DBDFDC2ADF09A400AE41FA /* Lottie Files */,
-				61DBDFC52ADEF83F00AE41FA /* LandingPage.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -129,6 +142,20 @@
 				61DBDFEA2ADFE29C00AE41FA /* LaunchScreen.storyboard */,
 			);
 			path = "Launch Screen";
+			sourceTree = "<group>";
+		};
+		61DBDFED2ADFF6AE00AE41FA /* Admin */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Admin;
+			sourceTree = "<group>";
+		};
+		61DBDFEE2ADFF6B400AE41FA /* User */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = User;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -212,6 +239,7 @@
 			files = (
 				61DBDFC62ADEF83F00AE41FA /* LandingPage.swift in Sources */,
 				61DBDFC42ADEF83F00AE41FA /* PARCApp.swift in Sources */,
+				61DBDFF02ADFF78700AE41FA /* LoginView.swift in Sources */,
 				61DBDFE02ADF0A0D00AE41FA /* LottieView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -345,12 +373,15 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PARC/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = PARC;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDarkContent;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -376,12 +407,15 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PARC/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = PARC;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDarkContent;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

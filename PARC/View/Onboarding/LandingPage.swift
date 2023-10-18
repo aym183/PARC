@@ -7,14 +7,16 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct LandingPage: View {
     @State private var index = 0
-    var numbers = ["shop", "Onboarding_2", "Onboarding_3"]
+    @State var login_shown = false
+    @State var signup_shown = false
+    var onboarding_assets = ["shop", "Onboarding_2", "Onboarding_3"]
     var body: some View {
         
         GeometryReader { geometry in
-            Color("Primary").ignoresSafeArea()
             ZStack {
+                Color("Primary").ignoresSafeArea()
                 VStack {
                     Image("Logo").frame(width: max(0, geometry.size.width), height: 100).padding(.top,40)
                     
@@ -22,7 +24,7 @@ struct ContentView: View {
                         ForEach((0..<3), id: \.self) { index in
                             if index == 0{
                                 VStack {
-                                    LottieView(name: numbers[index], speed: 1.5)
+                                    LottieView(name: onboarding_assets[index], speed: 1.5)
                                     Text("Start investing in franchises with only $100!").font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.058))
                                         .fontWeight(.bold)
                                 }
@@ -31,7 +33,7 @@ struct ContentView: View {
                                 .multilineTextAlignment(.center)
                                 
                             } else {
-                                Image(numbers[index])
+                                Image(onboarding_assets[index])
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: max(0, geometry.size.width-70), height: max(0, geometry.size.height-80))
@@ -57,7 +59,7 @@ struct ContentView: View {
                     }
                     .padding(.bottom, 10)
                     
-                    Button(action: {print("Hello world to log in")}) {
+                    Button(action: { login_shown.toggle() }) {
                         HStack {
                             Text("Log in")
                                 .font(Font.custom("Nunito", size: min(geometry.size.width, geometry.size.height) * 0.055))
@@ -70,6 +72,9 @@ struct ContentView: View {
                         .cornerRadius(5)
                     }
                     .padding(.bottom)
+                    .sheet(isPresented: $login_shown) {
+                        LoginView(login_shown: $login_shown).presentationDetents([.height(500)])
+                    }
                 }
                 .foregroundColor(.black)
                 .padding(.bottom)
@@ -77,17 +82,17 @@ struct ContentView: View {
         }
     }
     
-    init() {
-        for familyName in UIFont.familyNames {
-            for fontname in UIFont.fontNames(forFamilyName: familyName) {
-                print("\(familyName) \(fontname)")
-            }
-        }
-    }
+//    init() {
+//        for familyName in UIFont.familyNames {
+//            for fontname in UIFont.fontNames(forFamilyName: familyName) {
+//                print("\(familyName) \(fontname)")
+//            }
+//        }
+//    }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        LandingPage()
     }
 }
