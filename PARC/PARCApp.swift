@@ -11,7 +11,7 @@ import SwiftUI
 struct PARCApp: App {
     var body: some Scene {
         WindowGroup {
-            LandingPage().preferredColorScheme(.dark)
+            LandingPage().preferredColorScheme(.light)
         }
     }
 }

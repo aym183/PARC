@@ -34,6 +34,7 @@ struct LoginView: View {
                         
                         TextField("", text: $email, prompt: Text("Email").foregroundColor(.gray).font(Font.custom("Nunito-Medium", size: 16))).padding().frame(width: max(0, geometry.size.width-40), height: 70).background(.white)
                             .cornerRadius(5)
+                            .foregroundColor(.black)
                             .autocorrectionDisabled(true)
                             .autocapitalization(.none)
                             .font(Font.custom("Nunito-Bold", size: 16))
@@ -55,6 +56,7 @@ struct LoginView: View {
                             .frame(width: max(0, geometry.size.width-40), height: 70)
                             .background(.white)
 //                            .border(.black, width: 1)
+                            .foregroundColor(.black)
                             .cornerRadius(5)
                             .font(Font.custom("Nunito-Bold", size: 16))
                             .autocorrectionDisabled(true)

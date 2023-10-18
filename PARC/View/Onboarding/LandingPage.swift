@@ -28,7 +28,7 @@ struct LandingPage: View {
                                 if index == 0{
                                     VStack {
                                         LottieView(name: onboarding_assets[index], speed: 1.5)
-                                        Text("Start investing in franchises with only $100!").font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.058))
+                                        Text("Start investing in franchises with only $100!").font(Font.custom("Nunito-Black", size: min(geometry.size.width, geometry.size.height) * 0.058))
                                             .fontWeight(.bold)
                                     }
                                     .frame(width: 320, height: 300)
