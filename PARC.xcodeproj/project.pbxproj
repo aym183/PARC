@@ -8,17 +8,27 @@
 
 /* Begin PBXBuildFile section */
 		61DBDFC42ADEF83F00AE41FA /* PARCApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DBDFC32ADEF83F00AE41FA /* PARCApp.swift */; };
-		61DBDFC62ADEF83F00AE41FA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DBDFC52ADEF83F00AE41FA /* ContentView.swift */; };
+		61DBDFC62ADEF83F00AE41FA /* LandingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DBDFC52ADEF83F00AE41FA /* LandingPage.swift */; };
 		61DBDFC82ADEF84000AE41FA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 61DBDFC72ADEF84000AE41FA /* Assets.xcassets */; };
 		61DBDFCB2ADEF84000AE41FA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 61DBDFCA2ADEF84000AE41FA /* Preview Assets.xcassets */; };
+		61DBDFE02ADF0A0D00AE41FA /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DBDFDF2ADF0A0D00AE41FA /* LottieView.swift */; };
+		61DBDFE32ADF0A3E00AE41FA /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 61DBDFE22ADF0A3E00AE41FA /* Lottie */; };
+		61DBDFE52ADFDC8D00AE41FA /* shop.json in Resources */ = {isa = PBXBuildFile; fileRef = 61DBDFE42ADFDC8D00AE41FA /* shop.json */; };
+		61DBDFE82ADFDE5800AE41FA /* Nunito-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 61DBDFE72ADFDE5800AE41FA /* Nunito-VariableFont_wght.ttf */; };
+		61DBDFEB2ADFE29C00AE41FA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 61DBDFEA2ADFE29C00AE41FA /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		61DBDFC02ADEF83F00AE41FA /* PARC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PARC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61DBDFC32ADEF83F00AE41FA /* PARCApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PARCApp.swift; sourceTree = "<group>"; };
-		61DBDFC52ADEF83F00AE41FA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		61DBDFC52ADEF83F00AE41FA /* LandingPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingPage.swift; sourceTree = "<group>"; };
 		61DBDFC72ADEF84000AE41FA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		61DBDFCA2ADEF84000AE41FA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		61DBDFD82ADEFED400AE41FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		61DBDFDF2ADF0A0D00AE41FA /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
+		61DBDFE42ADFDC8D00AE41FA /* shop.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = shop.json; sourceTree = "<group>"; };
+		61DBDFE72ADFDE5800AE41FA /* Nunito-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-VariableFont_wght.ttf"; sourceTree = "<group>"; };
+		61DBDFEA2ADFE29C00AE41FA /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -26,6 +36,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61DBDFE32ADF0A3E00AE41FA /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,8 +62,11 @@
 		61DBDFC22ADEF83F00AE41FA /* PARC */ = {
 			isa = PBXGroup;
 			children = (
+				61DBDFDB2ADF098900AE41FA /* ViewModel */,
+				61DBDFDA2ADF098400AE41FA /* Model */,
+				61DBDFD92ADF097E00AE41FA /* View */,
+				61DBDFD82ADEFED400AE41FA /* Info.plist */,
 				61DBDFC32ADEF83F00AE41FA /* PARCApp.swift */,
-				61DBDFC52ADEF83F00AE41FA /* ContentView.swift */,
 				61DBDFC72ADEF84000AE41FA /* Assets.xcassets */,
 				61DBDFC92ADEF84000AE41FA /* Preview Content */,
 			);
@@ -65,6 +79,56 @@
 				61DBDFCA2ADEF84000AE41FA /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		61DBDFD92ADF097E00AE41FA /* View */ = {
+			isa = PBXGroup;
+			children = (
+				61DBDFE92ADFE28A00AE41FA /* Launch Screen */,
+				61DBDFE62ADFDE4A00AE41FA /* Fonts */,
+				61DBDFDC2ADF09A400AE41FA /* Lottie Files */,
+				61DBDFC52ADEF83F00AE41FA /* LandingPage.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		61DBDFDA2ADF098400AE41FA /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		61DBDFDB2ADF098900AE41FA /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		61DBDFDC2ADF09A400AE41FA /* Lottie Files */ = {
+			isa = PBXGroup;
+			children = (
+				61DBDFE42ADFDC8D00AE41FA /* shop.json */,
+				61DBDFDF2ADF0A0D00AE41FA /* LottieView.swift */,
+			);
+			path = "Lottie Files";
+			sourceTree = "<group>";
+		};
+		61DBDFE62ADFDE4A00AE41FA /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				61DBDFE72ADFDE5800AE41FA /* Nunito-VariableFont_wght.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		61DBDFE92ADFE28A00AE41FA /* Launch Screen */ = {
+			isa = PBXGroup;
+			children = (
+				61DBDFEA2ADFE29C00AE41FA /* LaunchScreen.storyboard */,
+			);
+			path = "Launch Screen";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +147,9 @@
 			dependencies = (
 			);
 			name = PARC;
+			packageProductDependencies = (
+				61DBDFE22ADF0A3E00AE41FA /* Lottie */,
+			);
 			productName = PARC;
 			productReference = 61DBDFC02ADEF83F00AE41FA /* PARC.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +178,9 @@
 				Base,
 			);
 			mainGroup = 61DBDFB72ADEF83E00AE41FA;
+			packageReferences = (
+				61DBDFE12ADF0A3E00AE41FA /* XCRemoteSwiftPackageReference "lottie-ios" */,
+			);
 			productRefGroup = 61DBDFC12ADEF83F00AE41FA /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -125,7 +195,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61DBDFE82ADFDE5800AE41FA /* Nunito-VariableFont_wght.ttf in Resources */,
 				61DBDFCB2ADEF84000AE41FA /* Preview Assets.xcassets in Resources */,
+				61DBDFE52ADFDC8D00AE41FA /* shop.json in Resources */,
+				61DBDFEB2ADFE29C00AE41FA /* LaunchScreen.storyboard in Resources */,
 				61DBDFC82ADEF84000AE41FA /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -137,8 +210,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				61DBDFC62ADEF83F00AE41FA /* ContentView.swift in Sources */,
+				61DBDFC62ADEF83F00AE41FA /* LandingPage.swift in Sources */,
 				61DBDFC42ADEF83F00AE41FA /* PARCApp.swift in Sources */,
+				61DBDFE02ADF0A0D00AE41FA /* LottieView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,9 +344,11 @@
 				DEVELOPMENT_TEAM = 29VBPZUJ23;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PARC/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -299,9 +375,11 @@
 				DEVELOPMENT_TEAM = 29VBPZUJ23;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PARC/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -339,6 +417,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		61DBDFE12ADF0A3E00AE41FA /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		61DBDFE22ADF0A3E00AE41FA /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 61DBDFE12ADF0A3E00AE41FA /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 61DBDFB82ADEF83E00AE41FA /* Project object */;
 }
