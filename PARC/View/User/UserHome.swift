@@ -9,6 +9,7 @@ import SwiftUI
 
 struct UserHome: View {
     @State private var selectedTab: Tab = .house
+    @State var account_shown = false
     
     var body: some View {
         GeometryReader { geometry in
@@ -18,7 +19,7 @@ struct UserHome: View {
                     HStack {
                         Text("PARC").font(Font.custom("Nunito-Black", size: 60)).foregroundColor(Color("Secondary"))
                         Spacer()
-                        Button(action: {}) {
+                        Button(action: { account_shown.toggle() }) {
                             Image(systemName: "person.crop.circle")
                                 .resizable()
                                 .frame(width: 50, height: 50)
@@ -29,6 +30,7 @@ struct UserHome: View {
                         Text("New Opportunities")
                             .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.065))
                             .padding(.bottom, -5)
+                        
                         Divider()
                             .frame(height: 1)
                             .overlay(.black)
@@ -63,6 +65,9 @@ struct UserHome: View {
                 .foregroundColor(.black)
                 
             }
+            .navigationDestination(isPresented: $account_shown) {
+                UserAccount(account_shown: $account_shown)
+            }
             
         }
     }
@@ -75,8 +80,6 @@ struct UserHomeContent: View {
     
     var body: some View {
         GeometryReader { geometry in
-                
-                
                 ScrollView(.vertical, showsIndicators: false){
                     ForEach(0..<2, id: \.self) {index in
                         
