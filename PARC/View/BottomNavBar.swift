@@ -33,6 +33,7 @@ struct BottomNavBar: View {
                                 selectedTab = tab
                             }
                         }
+                    
                     Spacer()
                 }
             }
