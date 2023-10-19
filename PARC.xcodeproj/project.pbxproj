@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		615243CE2AE06E4900A18880 /* BottomNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615243CD2AE06E4900A18880 /* BottomNavBar.swift */; };
+		615243D02AE128F500A18880 /* UserPortfolio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615243CF2AE128F500A18880 /* UserPortfolio.swift */; };
+		615243D22AE1290400A18880 /* UserMarketplace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615243D12AE1290400A18880 /* UserMarketplace.swift */; };
+		615243D42AE1290B00A18880 /* UserAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615243D32AE1290B00A18880 /* UserAccount.swift */; };
 		619F4C0F2AE00F7100D7A861 /* UserHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619F4C0E2AE00F7100D7A861 /* UserHome.swift */; };
 		61DBDFC42ADEF83F00AE41FA /* PARCApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DBDFC32ADEF83F00AE41FA /* PARCApp.swift */; };
 		61DBDFC62ADEF83F00AE41FA /* LandingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DBDFC52ADEF83F00AE41FA /* LandingPage.swift */; };
@@ -21,6 +25,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		615243CD2AE06E4900A18880 /* BottomNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomNavBar.swift; sourceTree = "<group>"; };
+		615243CF2AE128F500A18880 /* UserPortfolio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPortfolio.swift; sourceTree = "<group>"; };
+		615243D12AE1290400A18880 /* UserMarketplace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMarketplace.swift; sourceTree = "<group>"; };
+		615243D32AE1290B00A18880 /* UserAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccount.swift; sourceTree = "<group>"; };
 		619F4C0E2AE00F7100D7A861 /* UserHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserHome.swift; sourceTree = "<group>"; };
 		61DBDFC02ADEF83F00AE41FA /* PARC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PARC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61DBDFC32ADEF83F00AE41FA /* PARCApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PARCApp.swift; sourceTree = "<group>"; };
@@ -103,6 +111,7 @@
 				61DBDFE92ADFE28A00AE41FA /* Launch Screen */,
 				61DBDFE62ADFDE4A00AE41FA /* Fonts */,
 				61DBDFDC2ADF09A400AE41FA /* Lottie Files */,
+				615243CD2AE06E4900A18880 /* BottomNavBar.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -157,6 +166,9 @@
 			isa = PBXGroup;
 			children = (
 				619F4C0E2AE00F7100D7A861 /* UserHome.swift */,
+				615243CF2AE128F500A18880 /* UserPortfolio.swift */,
+				615243D12AE1290400A18880 /* UserMarketplace.swift */,
+				615243D32AE1290B00A18880 /* UserAccount.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -240,8 +252,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				615243D22AE1290400A18880 /* UserMarketplace.swift in Sources */,
 				619F4C0F2AE00F7100D7A861 /* UserHome.swift in Sources */,
+				615243D42AE1290B00A18880 /* UserAccount.swift in Sources */,
 				61DBDFC62ADEF83F00AE41FA /* LandingPage.swift in Sources */,
+				615243CE2AE06E4900A18880 /* BottomNavBar.swift in Sources */,
+				615243D02AE128F500A18880 /* UserPortfolio.swift in Sources */,
 				61DBDFC42ADEF83F00AE41FA /* PARCApp.swift in Sources */,
 				61DBDFF02ADFF78700AE41FA /* LoginView.swift in Sources */,
 				61DBDFE02ADF0A0D00AE41FA /* LottieView.swift in Sources */,

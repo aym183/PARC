@@ -11,6 +11,7 @@ struct UserHome: View {
     var bg_images = ["store_live", "store_live_2"]
     var logo_images = ["McDonalds", "Starbucks"]
     var titles = ["McDonald's", "Starbucks"]
+    @State private var selectedTab: Tab = .house
     
     var body: some View {
         GeometryReader { geometry in
@@ -36,7 +37,7 @@ struct UserHome: View {
                         .overlay(.black)
                     
                     
-                    ScrollView(.vertical){
+                    ScrollView(.vertical, showsIndicators: false){
                         ForEach(0..<2, id: \.self) {index in
                             
                             Button(action: {}) {
@@ -161,10 +162,13 @@ struct UserHome: View {
                         }
                     }
                     
+                    Spacer()
+                    BottomNavBar(selectedTab: $selectedTab)
                     
                 }
                 .frame(width: max(0, geometry.size.width-40), height: max(0, geometry.size.height - 20))
                 .foregroundColor(.black)
+                
             }
             
         }
