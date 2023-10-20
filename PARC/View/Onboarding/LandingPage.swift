@@ -8,6 +8,28 @@
 import SwiftUI
 
 struct LandingPage: View {
+    @State var loggedInUser = true
+    
+    var body: some View {
+        NavigationStack {
+            if loggedInUser {
+                UserHome()
+            } else {
+                LandingContent()
+            }
+        }
+    }
+    
+//    init() {
+//        for familyName in UIFont.familyNames {
+//            for fontname in UIFont.fontNames(forFamilyName: familyName) {
+//                print("\(familyName) \(fontname)")
+//            }
+//        }
+//    }
+}
+
+struct LandingContent: View {
     @State private var index = 0
     @State var login_shown = false
     @State var user_home_shown = false
@@ -17,7 +39,6 @@ struct LandingPage: View {
     var body: some View {
         
         GeometryReader { geometry in
-            NavigationStack{
                 ZStack {
                     Color("Primary").ignoresSafeArea()
                     VStack {
@@ -85,16 +106,7 @@ struct LandingPage: View {
                     }
                 }
             }
-        }
     }
-    
-//    init() {
-//        for familyName in UIFont.familyNames {
-//            for fontname in UIFont.fontNames(forFamilyName: familyName) {
-//                print("\(familyName) \(fontname)")
-//            }
-//        }
-//    }
 }
 
 struct ContentView_Previews: PreviewProvider {

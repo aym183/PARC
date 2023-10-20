@@ -13,63 +13,62 @@ struct UserHome: View {
     
     var body: some View {
         GeometryReader { geometry in
-            ZStack {
-                Color(.white).ignoresSafeArea()
-                VStack(alignment: .leading) {
-                    HStack {
-                        Text("PARC").font(Font.custom("Nunito-Black", size: 60)).foregroundColor(Color("Secondary"))
-                        Spacer()
-                        Button(action: { account_shown.toggle() }) {
-                            Image(systemName: "person.crop.circle")
-                                .resizable()
-                                .frame(width: 50, height: 50)
+                ZStack {
+                    Color(.white).ignoresSafeArea()
+                    VStack(alignment: .leading) {
+                        HStack {
+                            Text("PARC").font(Font.custom("Nunito-Black", size: 60)).foregroundColor(Color("Secondary"))
+                            Spacer()
+                            Button(action: { account_shown.toggle() }) {
+                                Image(systemName: "person.crop.circle")
+                                    .resizable()
+                                    .frame(width: 50, height: 50)
+                            }
                         }
+                        
+                        if selectedTab == .house {
+                            Text("New Opportunities")
+                                .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.065))
+                                .padding(.bottom, -5)
+                            
+                            Divider()
+                                .frame(height: 1)
+                                .overlay(.black)
+                            
+                            UserHomeContent()
+                        } else if selectedTab == .chartPie {
+                            Text("Portfolio")
+                                .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.065))
+                                .padding(.bottom, -5)
+                            Divider()
+                                .frame(height: 1)
+                                .overlay(.black)
+                            
+                            UserPortfolio()
+                        } else {
+                            Text("Secondary Market")
+                                .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.065))
+                                .padding(.bottom, -5)
+                            Divider()
+                                .frame(height: 1)
+                                .overlay(.black)
+                            
+                            UserMarketplace()
+                        }
+                        
+                        
+                        Spacer()
+                        BottomNavBar(selectedTab: $selectedTab)
+                        
                     }
-                    
-                    if selectedTab == .house {
-                        Text("New Opportunities")
-                            .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.065))
-                            .padding(.bottom, -5)
-                        
-                        Divider()
-                            .frame(height: 1)
-                            .overlay(.black)
-                        
-                        UserHomeContent()
-                    } else if selectedTab == .chartPie {
-                        Text("Portfolio")
-                            .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.065))
-                            .padding(.bottom, -5)
-                        Divider()
-                            .frame(height: 1)
-                            .overlay(.black)
-                        
-                        UserPortfolio()
-                    } else {
-                        Text("Secondary Market")
-                            .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.065))
-                            .padding(.bottom, -5)
-                        Divider()
-                            .frame(height: 1)
-                            .overlay(.black)
-                        
-                        UserMarketplace()
-                    }
-                
-                    
-                    Spacer()
-                    BottomNavBar(selectedTab: $selectedTab)
+                    .frame(width: max(0, geometry.size.width-40), height: max(0, geometry.size.height - 20))
+                    .foregroundColor(.black)
                     
                 }
-                .frame(width: max(0, geometry.size.width-40), height: max(0, geometry.size.height - 20))
-                .foregroundColor(.black)
-                
+                .navigationDestination(isPresented: $account_shown) {
+                    UserAccount(account_shown: $account_shown)
+                }
             }
-            .navigationDestination(isPresented: $account_shown) {
-                UserAccount(account_shown: $account_shown)
-            }
-            
-        }
     }
 }
 
@@ -77,13 +76,14 @@ struct UserHomeContent: View {
     var bg_images = ["store_live", "store_live_2"]
     var logo_images = ["McDonalds", "Starbucks"]
     var titles = ["McDonald's", "Starbucks"]
+    @State var opportunity_shown = false
     
     var body: some View {
         GeometryReader { geometry in
                 ScrollView(.vertical, showsIndicators: false){
                     ForEach(0..<2, id: \.self) {index in
                         
-                        Button(action: {}) {
+                        Button(action: { opportunity_shown.toggle() }) {
                             ZStack{
                                 Image(bg_images[index])
                                     .resizable()

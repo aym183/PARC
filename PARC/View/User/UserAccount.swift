@@ -24,10 +24,10 @@ struct UserAccount: View {
                         
                         VStack(alignment: .leading) {
                             Text("Ayman Ali")
-                                .font(Font.custom("Nunito-ExtraBold", size: 30))
+                                .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.08))
 
                             Text("Member since November 2023")
-                                .font(Font.custom("Nunito-SemiBold", size: 12))
+                                .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.03))
                                 .foregroundColor(Color("Custom_Gray"))
                         }
                         .padding(.leading, 10)
@@ -38,10 +38,10 @@ struct UserAccount: View {
                         
                         HStack {
                             Text("Verification Status")
-                                .font(Font.custom("Nunito-SemiBold", size: 20))
+                                .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.052))
                             Spacer()
                             Text("Completed")
-                                .font(Font.custom("Nunito-Bold", size: 20))
+                                .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.052))
                                 .foregroundColor(Color("Profit"))
                         }
                         .padding(.horizontal).padding(.top, 10)
@@ -53,7 +53,7 @@ struct UserAccount: View {
                         
                         HStack {
                             Text("Transaction History")
-                                .font(Font.custom("Nunito-SemiBold", size: 20))
+                                .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.052))
                             Spacer()
                             Button(action: {}) {
                                 HStack {
@@ -77,7 +77,7 @@ struct UserAccount: View {
                         
                         HStack {
                             Text("Set Pin")
-                                .font(Font.custom("Nunito-SemiBold", size: 20))
+                                .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.052))
                             Spacer()
                             Button(action: {}) {
                                 HStack {
@@ -101,10 +101,10 @@ struct UserAccount: View {
                         
                         HStack {
                             Text("Balance")
-                                .font(Font.custom("Nunito-SemiBold", size: 20))
+                                .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.052))
                             Spacer()
                             Text("£10,000")
-                                .font(Font.custom("Nunito-Bold", size: 20))
+                                .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.052))
                                 .foregroundColor(.black)
                                 .padding(.trailing, 13)
                         }
@@ -119,7 +119,7 @@ struct UserAccount: View {
                                 .font(Font.custom("Nunito", size: min(geometry.size.width, geometry.size.height) * 0.055))
                                 .fontWeight(.bold)
                         }
-                        .frame(width: 335, height: 45)
+                        .frame(width: max(0, geometry.size.width-60), height: 45)
                         .background(Color("Secondary"))
                         .foregroundColor(Color.white)
                         .border(Color.black, width: 1)
@@ -135,7 +135,7 @@ struct UserAccount: View {
                                     .font(Font.custom("Nunito", size: min(geometry.size.width, geometry.size.height) * 0.055))
                                     .fontWeight(.bold)
                             }
-                            .frame(width: 160, height: 45)
+                            .frame(width: max(0, geometry.size.width-233), height: 45)
                             .background(Color("Secondary"))
                             .foregroundColor(Color.white)
                             .border(Color.black, width: 1)
@@ -148,13 +148,13 @@ struct UserAccount: View {
                                     .font(Font.custom("Nunito", size: min(geometry.size.width, geometry.size.height) * 0.055))
                                     .fontWeight(.bold)
                             }
-                            .frame(width: 160, height: 45)
+                            .frame(width: max(0, geometry.size.width-233), height: 45)
                             .background(Color("Loss"))
                             .foregroundColor(Color.white)
                             .border(Color.black, width: 1)
                             .cornerRadius(5)
                         }
-                        .padding(.leading, 5)
+                        .padding(.leading, 22.5)
                         
                     }
                     .padding(.top, 10)
