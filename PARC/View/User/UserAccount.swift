@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct UserAccount: View {
-    @Binding var account_shown: Bool
     
     var body: some View {
         GeometryReader { geometry in
@@ -47,9 +46,9 @@ struct UserAccount: View {
                         .padding(.horizontal).padding(.top, 10)
                         
                         Divider()
-                            .frame(height: 1)
                             .overlay(Color("Custom_Gray"))
                             .opacity(0.75)
+                            .frame(height: 1)
                         
                         HStack {
                             Text("Transaction History")
@@ -58,8 +57,7 @@ struct UserAccount: View {
                             Button(action: {}) {
                                 HStack {
                                     Text("Check")
-                                        .font(Font.custom("Nunito", size: min(geometry.size.width, geometry.size.height) * 0.04))
-                                        .fontWeight(.bold)
+                                        .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.04))
                                 }
                                 .frame(width: 100, height: 35)
                                 .background(Color("Secondary"))
@@ -71,9 +69,10 @@ struct UserAccount: View {
                         .padding(.horizontal).padding(.top, 10)
                         
                         Divider()
-                            .frame(height: 1)
                             .overlay(Color("Custom_Gray"))
                             .opacity(0.75)
+                            .frame(height: 1)
+                            
                         
                         HStack {
                             Text("Set Pin")
@@ -82,8 +81,7 @@ struct UserAccount: View {
                             Button(action: {}) {
                                 HStack {
                                     Text("Set")
-                                        .font(Font.custom("Nunito", size: min(geometry.size.width, geometry.size.height) * 0.04))
-                                        .fontWeight(.bold)
+                                        .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.04))
                                 }
                                 .frame(width: 100, height: 35)
                                 .background(Color("Secondary"))
@@ -95,9 +93,9 @@ struct UserAccount: View {
                         .padding(.horizontal).padding(.top, 10)
                         
                         Divider()
-                            .frame(height: 1)
                             .overlay(Color("Custom_Gray"))
                             .opacity(0.75)
+                            .frame(height: 1)
                         
                         HStack {
                             Text("Balance")
@@ -119,7 +117,7 @@ struct UserAccount: View {
                                 .font(Font.custom("Nunito", size: min(geometry.size.width, geometry.size.height) * 0.055))
                                 .fontWeight(.bold)
                         }
-                        .frame(width: max(0, geometry.size.width-60), height: 45)
+                        .frame(width: max(0, geometry.size.width-50), height: 45)
                         .background(Color("Secondary"))
                         .foregroundColor(Color.white)
                         .border(Color.black, width: 1)
@@ -154,7 +152,7 @@ struct UserAccount: View {
                             .border(Color.black, width: 1)
                             .cornerRadius(5)
                         }
-                        .padding(.leading, 22.5)
+                        .padding(.leading, 15)
                         
                     }
                     .padding(.top, 10)
@@ -170,8 +168,8 @@ struct UserAccount: View {
     }
 }
 
-//struct UserAccount_Previews: PreviewProvider {
-//    static var previews: some View {
-//        UserAccount()
-//    }
-//}
+struct UserAccount_Previews: PreviewProvider {
+    static var previews: some View {
+        UserAccount()
+    }
+}

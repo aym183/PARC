@@ -71,9 +71,10 @@ struct UserPortfolio: View {
                     .frame(height: geometry.size.height - 200)
                     
                     Divider()
-                        .frame(height: 1)
                         .overlay(.black)
                         .padding(.top)
+                        .frame(height: 1)
+                        .padding(.bottom, 10)
                     
                     ForEach((0..<3), id: \.self) { index in
                         Button(action: {}) {
@@ -113,13 +114,14 @@ struct UserPortfolio: View {
                             
                         }
                         Divider()
-                            .frame(height: 0.5)
                             .overlay(Color("Custom_Gray"))
+                            .frame(height: 0.5)
                         
                     }
                 }
                 
             }
+            .foregroundColor(.black)
             .frame(width: max(0, geometry.size.width))
         }
     }

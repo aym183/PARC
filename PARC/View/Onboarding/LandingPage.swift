@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LandingPage: View {
-    @State var loggedInUser = true
+    @State var loggedInUser = false
     
     var body: some View {
         NavigationStack {

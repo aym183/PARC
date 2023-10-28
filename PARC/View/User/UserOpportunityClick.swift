@@ -30,12 +30,12 @@ struct UserOpportunity: View {
     @Binding var min_investment_amount: String
     @Binding var target_raise: String
     
-    @State var investment_titles = ["Location", "Type", "Equity Offered", "Share Price"]
-    @State var investment_values = ["Stratford, London", "Equity", "12.54%", "£38.42"]
+    @State var investment_titles = ["Location", "Type", "Equity Offered", "Share Price", "", ""]
+    @State var investment_values = ["Stratford, London", "Equity", "12.54%", "£38.42", "", ""]
     
     var body: some View {
         GeometryReader { geometry in
-            ZStack {
+            ZStack(alignment: .bottom) {
                 Color(.white).ignoresSafeArea()
                 
                 ScrollView(.vertical, showsIndicators: false) {
@@ -254,7 +254,7 @@ struct UserOpportunity: View {
                                 Text(investment_values[index])
                                 }
                                 .font(Font.custom("Nunito-SemiBold", size: 14))
-                            if index != investment_titles.count-1 {
+                            if index < 4 {
                                 Divider()
                                     .overlay(.gray)
                                     .frame(height: 1)
@@ -263,24 +263,22 @@ struct UserOpportunity: View {
                         }
                         .padding(.vertical, 5)
                         
-                        HStack {
-                            Text("Invest")
-                                .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.06))
-                        }
-                        .frame(width: max(0, geometry.size.width-40), height: 55)
-                        .background(Color("Secondary"))
-                        .foregroundColor(Color.white)
-                        .border(Color.black, width: 1)
-                        .cornerRadius(5)
-                        .padding(.top, 10)
-                        
-//                        Spacer()
-                        
                     }
                     .frame(width: max(0, geometry.size.width - 40))
-                    .padding(.top,10)
                 }
                 
+                Button(action: {}) {
+                    HStack {
+                        Text("Invest")
+                            .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.06))
+                    }
+                    .frame(width: max(0, geometry.size.width-40), height: 55)
+                    .background(Color("Secondary"))
+                    .foregroundColor(Color.white)
+                    .border(Color.black, width: 1)
+                    .cornerRadius(5)
+                    .padding(.bottom)
+                }
                 
             }
 //            .frame(width: max(0, geometry.size.width), height: max(0, geometry.size.height - 20))

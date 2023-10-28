@@ -7,11 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		613877A62AE26B77000C959A /* UserOpportunity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613877A52AE26B77000C959A /* UserOpportunity.swift */; };
+		61346E1D2AE51CE900E1941B /* UserMarketplaceClick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61346E1C2AE51CE900E1941B /* UserMarketplaceClick.swift */; };
+		61346E1F2AE66E0F00E1941B /* UserMarketplaceBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61346E1E2AE66E0F00E1941B /* UserMarketplaceBottomSheet.swift */; };
+		613877A62AE26B77000C959A /* UserOpportunityClick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613877A52AE26B77000C959A /* UserOpportunityClick.swift */; };
 		615243CE2AE06E4900A18880 /* BottomNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615243CD2AE06E4900A18880 /* BottomNavBar.swift */; };
 		615243D02AE128F500A18880 /* UserPortfolio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615243CF2AE128F500A18880 /* UserPortfolio.swift */; };
 		615243D22AE1290400A18880 /* UserMarketplace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615243D12AE1290400A18880 /* UserMarketplace.swift */; };
 		615243D42AE1290B00A18880 /* UserAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615243D32AE1290B00A18880 /* UserAccount.swift */; };
+		617E98822AECD4980085C4EE /* UserListShares.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617E98812AECD4980085C4EE /* UserListShares.swift */; };
 		619F4C0F2AE00F7100D7A861 /* UserHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619F4C0E2AE00F7100D7A861 /* UserHome.swift */; };
 		61DBDFC42ADEF83F00AE41FA /* PARCApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DBDFC32ADEF83F00AE41FA /* PARCApp.swift */; };
 		61DBDFC62ADEF83F00AE41FA /* LandingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DBDFC52ADEF83F00AE41FA /* LandingPage.swift */; };
@@ -26,11 +29,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		613877A52AE26B77000C959A /* UserOpportunity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOpportunity.swift; sourceTree = "<group>"; };
+		61346E1C2AE51CE900E1941B /* UserMarketplaceClick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMarketplaceClick.swift; sourceTree = "<group>"; };
+		61346E1E2AE66E0F00E1941B /* UserMarketplaceBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMarketplaceBottomSheet.swift; sourceTree = "<group>"; };
+		613877A52AE26B77000C959A /* UserOpportunityClick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOpportunityClick.swift; sourceTree = "<group>"; };
 		615243CD2AE06E4900A18880 /* BottomNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomNavBar.swift; sourceTree = "<group>"; };
 		615243CF2AE128F500A18880 /* UserPortfolio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPortfolio.swift; sourceTree = "<group>"; };
 		615243D12AE1290400A18880 /* UserMarketplace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMarketplace.swift; sourceTree = "<group>"; };
 		615243D32AE1290B00A18880 /* UserAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccount.swift; sourceTree = "<group>"; };
+		617E98812AECD4980085C4EE /* UserListShares.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListShares.swift; sourceTree = "<group>"; };
 		619F4C0E2AE00F7100D7A861 /* UserHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserHome.swift; sourceTree = "<group>"; };
 		61DBDFC02ADEF83F00AE41FA /* PARC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PARC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61DBDFC32ADEF83F00AE41FA /* PARCApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PARCApp.swift; sourceTree = "<group>"; };
@@ -171,7 +177,10 @@
 				615243CF2AE128F500A18880 /* UserPortfolio.swift */,
 				615243D12AE1290400A18880 /* UserMarketplace.swift */,
 				615243D32AE1290B00A18880 /* UserAccount.swift */,
-				613877A52AE26B77000C959A /* UserOpportunity.swift */,
+				613877A52AE26B77000C959A /* UserOpportunityClick.swift */,
+				61346E1C2AE51CE900E1941B /* UserMarketplaceClick.swift */,
+				61346E1E2AE66E0F00E1941B /* UserMarketplaceBottomSheet.swift */,
+				617E98812AECD4980085C4EE /* UserListShares.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -260,10 +269,13 @@
 				615243D42AE1290B00A18880 /* UserAccount.swift in Sources */,
 				61DBDFC62ADEF83F00AE41FA /* LandingPage.swift in Sources */,
 				615243CE2AE06E4900A18880 /* BottomNavBar.swift in Sources */,
+				61346E1D2AE51CE900E1941B /* UserMarketplaceClick.swift in Sources */,
 				615243D02AE128F500A18880 /* UserPortfolio.swift in Sources */,
 				61DBDFC42ADEF83F00AE41FA /* PARCApp.swift in Sources */,
 				61DBDFF02ADFF78700AE41FA /* LoginView.swift in Sources */,
-				613877A62AE26B77000C959A /* UserOpportunity.swift in Sources */,
+				613877A62AE26B77000C959A /* UserOpportunityClick.swift in Sources */,
+				61346E1F2AE66E0F00E1941B /* UserMarketplaceBottomSheet.swift in Sources */,
+				617E98822AECD4980085C4EE /* UserListShares.swift in Sources */,
 				61DBDFE02ADF0A0D00AE41FA /* LottieView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
