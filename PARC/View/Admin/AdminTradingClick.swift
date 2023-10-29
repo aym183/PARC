@@ -8,8 +8,104 @@
 import SwiftUI
 
 struct AdminTradingClick: View {
+    var data_titles = ["Trading Volume", "Trades", "Start Date", "End Date", "Most Traded Opportunity", "Biggest Trade"]
+    var data_values = ["£178,000,000", "Check", "21/03/2023", "15/04/2023", "McDonald's, 25", "McDonald's - £1.5M"]
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        GeometryReader { geometry in
+            ZStack {
+                Color(.white).ignoresSafeArea()
+                ScrollView(.vertical, showsIndicators: false) {
+                    VStack {
+                        Text("500 Trades")
+                            .font(Font.custom("Nunito-ExtraBold", size: 50))
+                            .foregroundColor(Color("Profit"))
+                        
+                        HStack(spacing: 20) {
+                            Button(action: {}) {
+                                HStack {
+                                    Text("Edit Opportunity")
+                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.038))
+                                }
+                                .frame(width: max(0, geometry.size.width-240), height: 45)
+                                .background(Color("Secondary"))
+                                .foregroundColor(Color.white)
+                                .cornerRadius(5)
+                                .padding(.bottom)
+                            }
+                            .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 4)
+                            
+                            Button(action: {}) {
+                                HStack {
+                                    Text("Close Opportunity")
+                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.038))
+                                }
+                                .frame(width: max(0, geometry.size.width-240), height: 45)
+                                .background(Color("Loss"))
+                                .foregroundColor(Color.white)
+                                .cornerRadius(5)
+                                .padding(.bottom)
+                            }
+                            .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 4)
+                        }
+                        //                    .padding(.top)
+                        
+                        
+                        HStack {
+                            Text("Trading Window Details")
+                                .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.06))
+                                .padding(.bottom, -5)
+                            
+                            Spacer()
+                        }
+                        .padding(.top)
+                        
+                        Divider()
+                            .frame(height: 1)
+                            .overlay(.black)
+                            .padding(.bottom, 5)
+                        
+                        ForEach(0..<data_titles.count, id: \.self) {index in
+                            HStack {
+                                Text(data_titles[index])
+                                    .foregroundColor(.gray)
+                                Spacer()
+                                
+                                if data_values[index] == "Check" {
+                                    Button(action: {}) {
+                                        HStack {
+                                            Text("Check")
+                                                .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.038))
+                                        }
+                                        .frame(width: max(0, geometry.size.width-300), height: 35)
+                                        .background(Color("Secondary"))
+                                        .foregroundColor(Color.white)
+                                        .cornerRadius(5)
+                                    }
+                                } else {
+                                    Text(data_values[index])
+                                }
+                            }
+                            .font(Font.custom("Nunito-Medium", size: 14))
+                            .padding(.vertical, 6)
+                            
+                            if index < data_titles.count - 1 {
+                                Divider()
+                                    .overlay(.gray)
+                                    .frame(height: 1)
+                                    .opacity(0.5)
+                            }
+                        }
+                        
+                        Spacer()
+                        
+                    }
+                    .frame(width: max(0, geometry.size.width-40), height: max(0, geometry.size.height - 20))
+                    .foregroundColor(.black)
+                    .padding(.top)
+                }
+            }
+        }
     }
 }
 

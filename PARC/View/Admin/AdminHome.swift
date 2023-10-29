@@ -15,6 +15,8 @@ struct AdminHome: View {
     @State var admin_payout_form_shown = false
     @State var admin_trading_form_shown = false
     @State var admin_opportunity_click_shown = false
+    @State var admin_payout_click_shown = false
+    @State var admin_trading_click_shown = false
     var logo_images = ["McDonalds", "Starbucks", "Dominos", "Chipotle", "Subway"]
     var titles = ["McDonald's", "Starbucks", "Dominos", "Chipotle", "Subway"]
     @State var opportunity_title = ""
@@ -206,7 +208,7 @@ struct AdminHome: View {
                                             .frame(width: 135, height: 140)
                                         }
                                     } else {
-                                        Button(action: {}) {
+                                        Button(action: { admin_payout_click_shown.toggle() }) {
                                             ZStack {
                                                 RoundedRectangle(cornerRadius: 5)
                                                     .fill(Color.white)
@@ -286,7 +288,7 @@ struct AdminHome: View {
                                             .frame(width: 135, height: 140)
                                         }
                                     } else {
-                                        Button(action: {}) {
+                                        Button(action: { admin_trading_click_shown.toggle() }) {
                                             ZStack {
                                                 RoundedRectangle(cornerRadius: 5)
                                                     .fill(Color.white)
@@ -347,6 +349,12 @@ struct AdminHome: View {
             }
             .navigationDestination(isPresented: $admin_opportunity_click_shown){
                 AdminOpportunityClick(opportunity_logo: $opportunity_logo, opportunity_title: $opportunity_title)
+            }
+            .navigationDestination(isPresented: $admin_trading_click_shown){
+                AdminTradingClick()
+            }
+            .navigationDestination(isPresented: $admin_payout_click_shown){
+                AdminPayoutClick()
             }
         }
     }
