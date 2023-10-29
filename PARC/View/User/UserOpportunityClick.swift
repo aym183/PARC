@@ -29,7 +29,7 @@ struct UserOpportunity: View {
     @Binding var progress: String
     @Binding var min_investment_amount: String
     @Binding var target_raise: String
-    
+    @State var user_invest_shown = false
     @State var investment_titles = ["Location", "Type", "Equity Offered", "Share Price", "", ""]
     @State var investment_values = ["Stratford, London", "Equity", "12.54%", "£38.42", "", ""]
     
@@ -54,7 +54,7 @@ struct UserOpportunity: View {
                                 .frame(width: 50, height: 50)
                             
                             Text(title)
-                                .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.055))
+                                .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.055))
                             
                             Spacer()
                         }
@@ -266,8 +266,9 @@ struct UserOpportunity: View {
                     }
                     .frame(width: max(0, geometry.size.width - 40))
                 }
+                .foregroundColor(.black)
                 
-                Button(action: {}) {
+                Button(action: { user_invest_shown.toggle() }) {
                     HStack {
                         Text("Invest")
                             .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.06))
@@ -281,13 +282,15 @@ struct UserOpportunity: View {
                 }
                 
             }
+            .navigationDestination(isPresented: $user_invest_shown) {
+                UserInvestPage(user_invest_shown: $user_invest_shown)
+            }
 //            .frame(width: max(0, geometry.size.width), height: max(0, geometry.size.height - 20))
-            .foregroundColor(.black)
             
         }
     }
 }
-//
+
 //#Preview {
 //    UserOpportunity()
 //}

@@ -12,6 +12,8 @@ struct UserListShares: View {
     @State var no_of_shares = ""
     @State var asking_price = ""
     @State var is_on = false
+    @Binding var marketplace_shown: Bool
+    @State var isInvestmentConfirmed = false
     
     //Refactor this view to show for loop components as compared to replicating
     var body: some View {
@@ -21,7 +23,7 @@ struct UserListShares: View {
                 VStack(alignment: .leading) {
                     
                     Text("List Shares")
-                        .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.065))
+                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.065))
                         .padding(.bottom, -5)
                     
                     Divider()
@@ -50,6 +52,7 @@ struct UserListShares: View {
 //                            .border(Color.black, width: 1)
                             .cornerRadius(5)
                             .font(Font.custom("Nunito-Bold", size: 16))
+
                         
                     }
                     
@@ -70,6 +73,7 @@ struct UserListShares: View {
                             .autocorrectionDisabled(true)
                             .autocapitalization(.none)
                             .font(Font.custom("Nunito-Bold", size: 16))
+                            .keyboardType(.numberPad)
                     }
                     
                     Text("Asking Price (£)").font(Font.custom("Nunito-Bold", size: 18))
@@ -90,6 +94,7 @@ struct UserListShares: View {
                             .autocorrectionDisabled(true)
                             .autocapitalization(.none)
                             .font(Font.custom("Nunito-Bold", size: 16))
+                            .keyboardType(.numberPad)
                     }
                     
                     HStack {
@@ -107,7 +112,9 @@ struct UserListShares: View {
                   
                     Spacer()
                     
-                    Button(action: {}) {
+                    Button(action: { 
+                        marketplace_shown.toggle()
+                    }) {
                         HStack {
                             Text("Submit Listing")
                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.06))
@@ -115,18 +122,22 @@ struct UserListShares: View {
                         .frame(width: max(0, geometry.size.width-40), height: 55)
                         .background(Color("Secondary"))
                         .foregroundColor(Color.white)
-                        .border(Color.black, width: 1)
+//                        .border(Color.black, width: 1)
                         .cornerRadius(5)
                         .padding(.bottom)
                     }
                 }
                 .frame(width: max(0, geometry.size.width - 40))
+                .padding(10)
             }
             .foregroundColor(.black)
+            .navigationDestination(isPresented: $marketplace_shown) {
+                UserHome(isInvestmentConfirmed: $isInvestmentConfirmed).navigationBarBackButtonHidden(true)
+            }
         }
     }
 }
-
-#Preview {
-    UserListShares()
-}
+//
+//#Preview {
+//    UserListShares()
+//}

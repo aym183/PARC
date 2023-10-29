@@ -8,13 +8,36 @@
 import SwiftUI
 
 struct UserHome: View {
-    @State private var selectedTab: Tab = .house
+    @State var selectedTab: Tab = .house
     @State var account_shown = false
+    @Binding var isInvestmentConfirmed: Bool
     
     var body: some View {
         GeometryReader { geometry in
                 ZStack {
                     Color(.white).ignoresSafeArea()
+                    
+                    if isInvestmentConfirmed {
+                            
+                            VStack(alignment: .center) {
+                                Spacer()
+                                
+                                Text("Congratulations!").font(Font.custom("Nunito-Bold", size: 40))
+                                
+                                Text("Your investment has been received. Thank you for trusting PARC!").font(Font.custom("Nunito-Bold", size: 16))
+                                    .multilineTextAlignment(.center)
+                                    .padding(.top, -25)
+                                    .frame(width: 270)
+                                
+                                Spacer()
+                            }
+                            .foregroundColor(.black)
+                            .frame(width: max(0, geometry.size.width))
+                            
+                        LottieView(name: "confetti", speed: 0.5, loop: false).frame(width: max(0, geometry.size.width))
+                    }
+                    
+                    
                     VStack(alignment: .leading) {
                         HStack {
                             Text("PARC").font(Font.custom("Nunito-Black", size: 60)).foregroundColor(Color("Secondary"))
@@ -28,7 +51,7 @@ struct UserHome: View {
                         
                         if selectedTab == .house {
                             Text("New Opportunities")
-                                .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.065))
+                                .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.065))
                                 .padding(.bottom, -5)
                             
                             Divider()
@@ -38,7 +61,7 @@ struct UserHome: View {
                             UserHomeContent()
                         } else if selectedTab == .chartPie {
                             Text("Portfolio")
-                                .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.065))
+                                .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.065))
                                 .padding(.bottom, -5)
                             Divider()
                                 .frame(height: 1)
@@ -47,7 +70,7 @@ struct UserHome: View {
                             UserPortfolio()
                         } else {
                             Text("Secondary Market")
-                                .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.065))
+                                .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.065))
                                 .padding(.bottom, -5)
                             Divider()
                                 .frame(height: 1)
@@ -63,6 +86,14 @@ struct UserHome: View {
                     }
                     .frame(width: max(0, geometry.size.width-40), height: max(0, geometry.size.height - 20))
                     .foregroundColor(.black)
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                            withAnimation(.easeOut(duration: 0.5)) {
+                                isInvestmentConfirmed = false
+                            }
+                        }
+                    }
+                    .opacity(isInvestmentConfirmed ? 0 : 1)
                     
                 }
                 .navigationDestination(isPresented: $account_shown) {
@@ -224,9 +255,9 @@ struct UserHomeContent: View {
             }
     }
 }
-
-struct UserHomeView_Previews: PreviewProvider {
-    static var previews: some View {
-        UserHome()
-    }
-}
+//
+//struct UserHomeView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        UserHome()
+//    }
+//}

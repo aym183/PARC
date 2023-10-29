@@ -11,12 +11,15 @@ import Lottie
 struct LottieView: UIViewRepresentable {
     var name: String
     var speed: CGFloat
+    var loop: Bool
     
     func makeUIView(context: Context) -> Lottie.LottieAnimationView {
         let animationView = LottieAnimationView(name: name)
         animationView.contentMode = .scaleAspectFill
         animationView.animationSpeed = speed
-        animationView.loopMode = .loop
+        if loop == true {
+            animationView.loopMode = .loop
+        }
         animationView.play()
         
         return animationView

@@ -16,6 +16,7 @@ struct UserMarketplace: View {
     @State var marketplace_click_shown = false
     @State var marketplace_bottom_sheet_shown = false
     @State var marketplace_list_shares_shown = false
+    @State var marketplace_shown = false
     @State var title = ""
     @State var logo = ""
     
@@ -138,7 +139,7 @@ struct UserMarketplace: View {
                 UserMarketplaceClick(title: $title, logo: $title)
             }
             .navigationDestination(isPresented: $marketplace_list_shares_shown) {
-                UserListShares()
+                UserListShares(marketplace_shown: $marketplace_shown)
             }
             .sheet(isPresented: $marketplace_bottom_sheet_shown) {
                 UserMarketplaceBottomSheet(marketplace_bottom_sheet_shown: $marketplace_bottom_sheet_shown, marketplace_list_shares_shown: $marketplace_list_shares_shown).presentationDetents([.height(200)])

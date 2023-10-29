@@ -8,12 +8,19 @@
 import SwiftUI
 
 struct LandingPage: View {
-    @State var loggedInUser = false
+    @State var loggedInUser = true
+    @State var loggedInAdmin = true
+    @State var isInvestmentConfirmed = false
     
     var body: some View {
         NavigationStack {
-            if loggedInUser {
-                UserHome()
+//            if loggedInUser {
+//                UserHome(isInvestmentConfirmed: $isInvestmentConfirmed)
+//            } else {
+//                LandingContent()
+//            }
+            if loggedInAdmin {
+                AdminHome()
             } else {
                 LandingContent()
             }
@@ -35,6 +42,7 @@ struct LandingContent: View {
     @State var user_home_shown = false
     @State var admin_home_shown = false
     @State var signup_shown = false
+    @State var isInvestmentConfirmed = false
     var onboarding_assets = ["shop", "Onboarding_2", "Onboarding_3"]
     var body: some View {
         
@@ -48,7 +56,7 @@ struct LandingContent: View {
                             ForEach((0..<3), id: \.self) { index in
                                 if index == 0{
                                     VStack {
-                                        LottieView(name: onboarding_assets[index], speed: 1.5)
+                                        LottieView(name: onboarding_assets[index], speed: 1.5, loop: true)
                                         Text("Start investing in franchises with only $100!").font(Font.custom("Nunito-Black", size: min(geometry.size.width, geometry.size.height) * 0.058))
                                             .fontWeight(.bold)
                                     }
@@ -102,7 +110,7 @@ struct LandingContent: View {
                     }
                     .padding(.bottom)
                     .navigationDestination(isPresented: $user_home_shown) {
-                        UserHome().navigationBarHidden(true)
+                        UserHome(isInvestmentConfirmed: $isInvestmentConfirmed).navigationBarHidden(true)
                     }
                 }
             }

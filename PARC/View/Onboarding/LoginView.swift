@@ -21,7 +21,7 @@ struct LoginView: View {
                     Color("Primary").ignoresSafeArea()
                     VStack(alignment: .leading) {
                         HStack {
-                            Text("Login").font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.1))
+                            Text("Login").font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.1))
 
                             Spacer()
                             Button(action: { login_shown.toggle() }) {

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AdminOpportunityTradingForm: View {
+struct AdminTradingForm: View {
     @State var start_date = ""
     @State var end_date = ""
     
@@ -19,7 +19,7 @@ struct AdminOpportunityTradingForm: View {
                     VStack(alignment: .leading) {
                         Text("Create Trading Window")
                             .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.065))
-                            .padding(.bottom, -5)
+                            .padding(.bottom, -5).padding(.top, 10)
                         
                         Divider()
                             .frame(height: 1)
@@ -28,7 +28,7 @@ struct AdminOpportunityTradingForm: View {
                         
                         // Change to dropdown
                         Text("Start Date").font(Font.custom("Nunito-Bold", size: 18))
-                            .padding(.top, 10).padding(.bottom, -5).padding(.leading,2.5)
+                             .padding(.bottom, -5).padding(.leading,2.5)
                         
                         ZStack {
                             RoundedRectangle(cornerRadius: 5)
@@ -39,7 +39,7 @@ struct AdminOpportunityTradingForm: View {
                                 )
                                 .frame(width: max(0, geometry.size.width - 45), height: 50)
                             
-                            TextField("", text: $start_date).padding().frame(width: max(0, geometry.size.width-40), height: 50)
+                            TextField("", text: $start_date, prompt: Text("13/10/2023").foregroundColor(.gray).font(Font.custom("Nunito-Medium", size: 16))).padding().frame(width: max(0, geometry.size.width-40), height: 50)
                                 .foregroundColor(.black)
                                 .autocorrectionDisabled(true)
                                 .autocapitalization(.none)
@@ -62,7 +62,7 @@ struct AdminOpportunityTradingForm: View {
                                 )
                                 .frame(width: max(0, geometry.size.width - 45), height: 50)
                             
-                            TextField("", text: $end_date, prompt: Text("50000").foregroundColor(.gray).font(Font.custom("Nunito-Medium", size: 16))).padding().frame(width: max(0, geometry.size.width-40), height: 50)
+                            TextField("", text: $end_date, prompt: Text("20/10/2023").foregroundColor(.gray).font(Font.custom("Nunito-Medium", size: 16))).padding().frame(width: max(0, geometry.size.width-40), height: 50)
                                 .foregroundColor(.black)
                                 .autocorrectionDisabled(true)
                                 .autocapitalization(.none)
@@ -94,5 +94,5 @@ struct AdminOpportunityTradingForm: View {
 }
 
 #Preview {
-    AdminOpportunityTradingForm()
+    AdminTradingForm()
 }
