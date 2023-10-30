@@ -55,7 +55,6 @@ struct LoginView: View {
                             .padding()
                             .frame(width: max(0, geometry.size.width-40), height: 70)
                             .background(.white)
-//                            .border(.black, width: 1)
                             .foregroundColor(.black)
                             .cornerRadius(5)
                             .font(Font.custom("Nunito-Bold", size: 16))
@@ -74,7 +73,13 @@ struct LoginView: View {
                         Button(action: {
                             print("Logged in")
                             login_shown.toggle()
-                            user_home_shown.toggle()
+                            if email == "ayman.ali1302@gmail.com" {
+                                user_home_shown.toggle()
+                            } else if email == "aali@databar.ai" {
+                                admin_home_shown.toggle()
+                            } else {
+                                print("Invalid Email")
+                            }
                         }) {
                             HStack {
                                 Text("Log in")

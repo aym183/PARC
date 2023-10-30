@@ -38,11 +38,20 @@ struct AdminAccount: View {
                             Text("Set Pin")
                                 .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.052))
                             Spacer()
-                            Text("Completed")
-                                .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.052))
-                                .foregroundColor(Color("Profit"))
+                            
+                            Button(action: {}) {
+                                HStack {
+                                    Text("Set")
+                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.038))
+                                }
+                                .frame(width: max(0, geometry.size.width-300), height: 35)
+                                .background(Color("Secondary"))
+                                .foregroundColor(Color.white)
+                                .cornerRadius(5)
+                            }
+                            
                         }
-                        .padding(.horizontal).padding(.top, 10)
+                        .padding(.horizontal).padding(.top)
                         
                         Divider()
                             .overlay(Color("Custom_Gray"))
@@ -79,7 +88,7 @@ struct AdminAccount: View {
                             .padding(.leading, 15)
                             
                         }
-                        .padding(.top, 10)
+                        .padding(.top, 40)
                         
                         Spacer()
                     }

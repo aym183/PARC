@@ -17,6 +17,7 @@ struct AdminHome: View {
     @State var admin_opportunity_click_shown = false
     @State var admin_payout_click_shown = false
     @State var admin_trading_click_shown = false
+    @State var admin_account_click_shown = false
     var logo_images = ["McDonalds", "Starbucks", "Dominos", "Chipotle", "Subway"]
     var titles = ["McDonald's", "Starbucks", "Dominos", "Chipotle", "Subway"]
     @State var opportunity_title = ""
@@ -31,7 +32,7 @@ struct AdminHome: View {
                         HStack {
                             Text("PARC").font(Font.custom("Nunito-Black", size: 60)).foregroundColor(Color("Secondary"))
                             Spacer()
-                            Button(action: {}) {
+                            Button(action: { admin_account_click_shown.toggle() }) {
                                 Image(systemName: "person.crop.circle")
                                     .resizable()
                                     .frame(width: 50, height: 50)
@@ -140,7 +141,7 @@ struct AdminHome: View {
                                                         .frame(width: 135, height: 8)
                                                         .background(Color(red: 0.85, green: 0.85, blue: 0.85).opacity(0.6))
                                                         .cornerRadius(100)
-                                                        
+                                                    
                                                     
                                                     HStack {
                                                         Rectangle()
@@ -216,7 +217,7 @@ struct AdminHome: View {
                                                         RoundedRectangle(cornerRadius: 5)
                                                             .stroke(Color.black, lineWidth: 1.25)
                                                     )
-                                            
+                                                
                                                 VStack {
                                                     Text("15/06/2023")
                                                         .font(Font.custom("Nunito-Bold", size: 16))
@@ -337,6 +338,7 @@ struct AdminHome: View {
                     .frame(width: max(0, geometry.size.width-40), height: max(0, geometry.size.height - 20))
                     .foregroundColor(.black)
                 }
+                }
             }
             .navigationDestination(isPresented: $admin_payout_form_shown){
                 AdminPayoutForm()
@@ -356,8 +358,10 @@ struct AdminHome: View {
             .navigationDestination(isPresented: $admin_payout_click_shown){
                 AdminPayoutClick()
             }
+            .navigationDestination(isPresented: $admin_account_click_shown){
+                AdminAccount()
+            }
         }
-    }
 }
 
 #Preview {

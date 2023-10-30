@@ -17,6 +17,7 @@
 		6179DC322AEE31B100A83F9A /* AdminOpportunityClick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6179DC312AEE31B100A83F9A /* AdminOpportunityClick.swift */; };
 		6179DC342AEE31ED00A83F9A /* AdminPayoutClick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6179DC332AEE31ED00A83F9A /* AdminPayoutClick.swift */; };
 		6179DC362AEE31FB00A83F9A /* AdminTradingClick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6179DC352AEE31FB00A83F9A /* AdminTradingClick.swift */; };
+		6179DC382AEE412300A83F9A /* AdminAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6179DC372AEE412300A83F9A /* AdminAccount.swift */; };
 		617E98822AECD4980085C4EE /* UserListShares.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617E98812AECD4980085C4EE /* UserListShares.swift */; };
 		617E98842AECE53B0085C4EE /* UserInvestPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617E98832AECE53B0085C4EE /* UserInvestPage.swift */; };
 		6180FADB2AED1D9400A99D6D /* confetti.json in Resources */ = {isa = PBXBuildFile; fileRef = 6180FADA2AED1D9400A99D6D /* confetti.json */; };
@@ -49,6 +50,7 @@
 		6179DC312AEE31B100A83F9A /* AdminOpportunityClick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminOpportunityClick.swift; sourceTree = "<group>"; };
 		6179DC332AEE31ED00A83F9A /* AdminPayoutClick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminPayoutClick.swift; sourceTree = "<group>"; };
 		6179DC352AEE31FB00A83F9A /* AdminTradingClick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminTradingClick.swift; sourceTree = "<group>"; };
+		6179DC372AEE412300A83F9A /* AdminAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminAccount.swift; sourceTree = "<group>"; };
 		617E98812AECD4980085C4EE /* UserListShares.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListShares.swift; sourceTree = "<group>"; };
 		617E98832AECE53B0085C4EE /* UserInvestPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInvestPage.swift; sourceTree = "<group>"; };
 		6180FADA2AED1D9400A99D6D /* confetti.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = confetti.json; path = "../../../../../IOS Dev/Mishki/Kitt/View/Lottie Files/confetti.json"; sourceTree = "<group>"; };
@@ -195,6 +197,7 @@
 				6179DC312AEE31B100A83F9A /* AdminOpportunityClick.swift */,
 				6179DC332AEE31ED00A83F9A /* AdminPayoutClick.swift */,
 				6179DC352AEE31FB00A83F9A /* AdminTradingClick.swift */,
+				6179DC372AEE412300A83F9A /* AdminAccount.swift */,
 			);
 			path = Admin;
 			sourceTree = "<group>";
@@ -317,6 +320,7 @@
 				6180FAE72AED550900A99D6D /* AdminTradingForm.swift in Sources */,
 				61DBDFE02ADF0A0D00AE41FA /* LottieView.swift in Sources */,
 				6180FAE32AED4BA400A99D6D /* AdminOpportunityForm.swift in Sources */,
+				6179DC382AEE412300A83F9A /* AdminAccount.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

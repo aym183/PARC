@@ -9,21 +9,22 @@ import SwiftUI
 
 struct LandingPage: View {
     @State var loggedInUser = true
-    @State var loggedInAdmin = true
+    @State var loggedInAdmin = false
     @State var isInvestmentConfirmed = false
     
     var body: some View {
         NavigationStack {
+//            if email
 //            if loggedInUser {
 //                UserHome(isInvestmentConfirmed: $isInvestmentConfirmed)
 //            } else {
 //                LandingContent()
 //            }
-            if loggedInAdmin {
-                AdminHome()
-            } else {
+//            if loggedInAdmin {
+//                AdminHome()
+//            } else {
                 LandingContent()
-            }
+//            }
         }
     }
     
@@ -111,6 +112,9 @@ struct LandingContent: View {
                     .padding(.bottom)
                     .navigationDestination(isPresented: $user_home_shown) {
                         UserHome(isInvestmentConfirmed: $isInvestmentConfirmed).navigationBarHidden(true)
+                    }
+                    .navigationDestination(isPresented: $admin_home_shown) {
+                        AdminHome().navigationBarHidden(true)
                     }
                 }
             }
