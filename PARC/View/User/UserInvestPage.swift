@@ -23,6 +23,7 @@ struct UserInvestPage: View {
     @State var home_page_shown = false
     @State var isInvestmentConfirmed = true
     @State var user_ready_to_invest = false
+    @State var isShownHomePage = false
     @Binding var user_invest_shown: Bool
     
     var body: some View {
@@ -181,7 +182,7 @@ struct UserInvestPage: View {
                 .frame(width: max(0, geometry.size.width - 40))
             }
             .navigationDestination(isPresented: $home_page_shown) {
-                UserHome(isInvestmentConfirmed: $isInvestmentConfirmed).navigationBarBackButtonHidden(true)
+                UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isShownHomePage: $isShownHomePage).navigationBarBackButtonHidden(true)
             }
         }
     }

@@ -14,6 +14,7 @@ struct UserListShares: View {
     @State var is_on = false
     @Binding var marketplace_shown: Bool
     @State var isInvestmentConfirmed = false
+    @State var isShownHomePage = false
     
     //Refactor this view to show for loop components as compared to replicating
     var body: some View {
@@ -132,7 +133,7 @@ struct UserListShares: View {
             }
             .foregroundColor(.black)
             .navigationDestination(isPresented: $marketplace_shown) {
-                UserHome(isInvestmentConfirmed: $isInvestmentConfirmed).navigationBarBackButtonHidden(true)
+                UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isShownHomePage: $isShownHomePage).navigationBarBackButtonHidden(true)
             }
         }
     }

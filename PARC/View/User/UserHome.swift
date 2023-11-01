@@ -6,16 +6,37 @@
 //
 
 import SwiftUI
+import URLImage
 
 struct UserHome: View {
     @State var selectedTab: Tab = .house
     @State var account_shown = false
     @Binding var isInvestmentConfirmed: Bool
+    @Binding var isShownHomePage: Bool
+    @AppStorage("first_name") var firstName: String = ""
+    @AppStorage("picture") var picture: String = ""
+    @State var imageURL = URL(string: "")
+
     
     var body: some View {
         GeometryReader { geometry in
                 ZStack {
                     Color(.white).ignoresSafeArea()
+                    
+                    if isShownHomePage {
+                        VStack(alignment: .center) {
+                            Spacer()
+                            
+                            LottieView(name: "loading_3.0", speed: 1, loop: false).frame(width: 100, height: 100)
+                            
+                            Text("Welcome \(firstName)").font(Font.custom("Avenir-ExtraBold", size: 30)).multilineTextAlignment(.center).padding(.horizontal).foregroundColor(.black).padding(.top, -5)
+                            Text("Your PARC journey awaits 🥳").font(Font.custom("Avenir-Medium", size: 20)).multilineTextAlignment(.center).padding(.horizontal).foregroundColor(.black)
+                            
+                            Spacer()
+                        }
+                        .foregroundColor(.black).frame(width: max(0, geometry.size.width))
+                        
+                    }
                     
                     if isInvestmentConfirmed {
                             
@@ -42,11 +63,30 @@ struct UserHome: View {
                         HStack {
                             Text("PARC").font(Font.custom("Nunito-Black", size: 60)).foregroundColor(Color("Secondary"))
                             Spacer()
+                            
                             Button(action: { account_shown.toggle() }) {
-                                Image(systemName: "person.crop.circle")
-                                    .resizable()
-                                    .frame(width: 50, height: 50)
+                                if imageURL != nil {
+                                    URLImage(imageURL!) { image in
+                                        image
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 50, height: 50)
+                                            .clipShape(RoundedRectangle(cornerRadius: 50))
+                                    }
+                                } else {
+                                    Image(systemName: "person.crop.circle")
+                                            .resizable()
+                                            .frame(width: 50, height: 50)
+                                }
                             }
+//                            }
+//                        else {
+//                                Button(action: { account_shown.toggle() }) {
+//                                    Image(systemName: "person.crop.circle")
+//                                        .resizable()
+//                                        .frame(width: 50, height: 50)
+//                                }
+//                            }
                         }
                         
                         if selectedTab == .house {
@@ -89,15 +129,25 @@ struct UserHome: View {
                     .onAppear {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                             withAnimation(.easeOut(duration: 0.5)) {
+                                imageURL = URL(string: picture)!
                                 isInvestmentConfirmed = false
                             }
                         }
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                            withAnimation(.easeOut(duration: 0.5)) {
+                                imageURL = URL(string: picture)!
+                                isShownHomePage = false
+                            }
+                        }
+                        
                     }
                     .opacity(isInvestmentConfirmed ? 0 : 1)
+                    .opacity(isShownHomePage ? 0 : 1)
                     
                 }
                 .navigationDestination(isPresented: $account_shown) {
-                    UserAccount()
+                    UserAccount(imageURL: $imageURL)
                 }
             }
     }

@@ -6,8 +6,10 @@
 //
 
 import SwiftUI
+import URLImage
 
 struct UserAccount: View {
+    @Binding var imageURL: URL?
     
     var body: some View {
         GeometryReader { geometry in
@@ -16,9 +18,19 @@ struct UserAccount: View {
                 VStack(alignment: .center) {
                     HStack {
                         Button(action: {}) {
-                            Image(systemName: "person.crop.circle")
-                                .resizable()
-                                .frame(width: 120, height: 120)
+                            if imageURL != nil {
+                                URLImage(imageURL!) { image in
+                                    image
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 120, height: 120)
+                                        .clipShape(RoundedRectangle(cornerRadius: 100))
+                                }
+                            } else {
+                                Image(systemName: "person.crop.circle")
+                                        .resizable()
+                                        .frame(width: 120, height: 120)
+                            }
                         }
                         
                         VStack(alignment: .leading) {
@@ -168,8 +180,8 @@ struct UserAccount: View {
     }
 }
 
-struct UserAccount_Previews: PreviewProvider {
-    static var previews: some View {
-        UserAccount()
-    }
-}
+//struct UserAccount_Previews: PreviewProvider {
+//    static var previews: some View {
+//        UserAccount()
+//    }
+//}
