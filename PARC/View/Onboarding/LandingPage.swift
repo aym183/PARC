@@ -88,9 +88,7 @@ struct LandingContent: View {
                         
                         Spacer()
                         
-                        Button(action: {
-                            login()
-                        }) {
+                        Button(action: { login() }) {
                             HStack {
                                 Text("Get Started")
                                     .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.075))
