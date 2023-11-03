@@ -27,10 +27,12 @@ struct LandingPage: View {
 //            if loggedInAdmin {
 //                AdminHome()
 //            } else {
-            if logged_in {
+            if isShownHomePage && logged_in {
+                UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isShownHomePage: $isShownHomePage)
+            } else if logged_in && !isShownHomePage {
                 UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isShownHomePage: $isShownHomePage)
             } else {
-                LandingContent()
+                LandingContent(isShownHomePage: $isShownHomePage)
             }
 //            }
         }
@@ -50,7 +52,7 @@ struct LandingContent: View {
     @State var isInvestmentConfirmed = false
     @State var isAuthenticated = false
     @State var userProfile = Profile.empty
-    @State var isShownHomePage = false
+    @Binding var isShownHomePage: Bool
     var onboarding_assets = ["shop", "Onboarding_2", "Onboarding_3"]
     @AppStorage("logged_in") var logged_in: Bool = false
     var body: some View {
@@ -124,6 +126,9 @@ struct LandingContent: View {
 //                    }
                 }
                 .navigationDestination(isPresented: $logged_in) {
+//                    if isShownHomePage {
+//                        
+//                    }
                     UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isShownHomePage: $isShownHomePage).navigationBarHidden(true)
                 }
             }
@@ -150,7 +155,14 @@ extension LandingContent {
                     UserDefaults.standard.set(self.userProfile.email, forKey: "email")
                     UserDefaults.standard.set(self.userProfile.picture, forKey: "picture")
                     UserDefaults.standard.set(true, forKey: "logged_in")
-                    lambda_func(name: self.userProfile.given_name, email: self.userProfile.email)
+                    DispatchQueue.global(qos: .userInteractive).async {
+                        CreateDB().createUser(email: self.userProfile.email, first_name: self.userProfile.given_name, last_name: self.userProfile.family_name, full_name: self.userProfile.name, picture: self.userProfile.picture) { response in
+                            
+                            if response == "User Created" {
+                                CreateDB().create_onboarding_email(name: self.userProfile.given_name, email: self.userProfile.email)
+                            }
+                        }
+                    }
                 }
                 
             }
@@ -169,29 +181,6 @@ extension LandingContent {
 //                        self.isAuthenticated = false
                 }
             }
-    }
-    
-    func lambda_func(name: String, email: String) {
-                // Replace with your API Gateway URL
-                let apiUrl = URL(string: "https://brdh472ip2.execute-api.us-east-1.amazonaws.com/beta/emails/send-intro-email?email=\(email)&name=\(name)")!
-
-                var request = URLRequest(url: apiUrl)
-                request.httpMethod = "POST" // Use the appropriate HTTP method
-
-                // If you need to send data in the request body (e.g., JSON data), you can set it here
-                // request.httpBody = try? JSONSerialization.data(withJSONObject: yourData)
-
-                URLSession.shared.dataTask(with: request) { data, response, error in
-                    if let data = data, let responseText = String(data: data, encoding: .utf8) {
-                        DispatchQueue.main.async {
-                            print(responseText)
-                        }
-                    } else if let error = error {
-                        DispatchQueue.main.async {
-                            print("Error: \(error.localizedDescription)")
-                        }
-                    }
-                }.resume()
     }
 }
 
