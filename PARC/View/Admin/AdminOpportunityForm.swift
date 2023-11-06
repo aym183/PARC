@@ -14,7 +14,16 @@ struct AdminOpportunityForm: View {
     @State var equity_offered = ""
     @State var min_investment_amount = ""
     @State var opportunity_close_date = ""
-    
+    @State private var date = Date()
+//    @State private var selectedDate = Date()
+    let dateRange: ClosedRange<Date> = {
+        let calendar = Calendar.current
+        let startComponents = DateComponents(year: 2023, month: 11, day: 1)
+        let endComponents = DateComponents(year: 2050, month: 12, day: 31)
+        return calendar.date(from:startComponents)!
+            ...
+            calendar.date(from:endComponents)!
+    }()
     
     var body: some View {
         GeometryReader { geometry in
@@ -46,9 +55,6 @@ struct AdminOpportunityForm: View {
                                 
                                 TextField("", text: $franchise).padding().frame(width: max(0, geometry.size.width-120), height: 50)
                                     .foregroundColor(.black)
-                                    .autocorrectionDisabled(true)
-                                    .autocapitalization(.none)
-                                //                            .border(Color.black, width: 1)
                                     .cornerRadius(5)
                                     .font(Font.custom("Nunito-Bold", size: 16))
                             }
@@ -81,10 +87,7 @@ struct AdminOpportunityForm: View {
                             
                             TextField("", text: $location, prompt: Text("Stratford, London").foregroundColor(.gray).font(Font.custom("Nunito-Medium", size: 16))).padding().frame(width: max(0, geometry.size.width-40), height: 50)
                                 .foregroundColor(.black)
-                                .autocorrectionDisabled(true)
-                                .autocapitalization(.none)
                                 .font(Font.custom("Nunito-Bold", size: 16))
-                                .keyboardType(.numberPad)
                         }
                         
                         Text("Asking Price (£)").font(Font.custom("Nunito-Bold", size: 18))
@@ -101,10 +104,7 @@ struct AdminOpportunityForm: View {
                             
                             TextField("", text: $asking_price, prompt: Text("1500000").foregroundColor(.gray).font(Font.custom("Nunito-Medium", size: 16))).padding().frame(width: max(0, geometry.size.width-40), height: 50)
                                 .foregroundColor(.black)
-                                .autocorrectionDisabled(true)
-                                .autocapitalization(.none)
                                 .font(Font.custom("Nunito-Bold", size: 16))
-                                .keyboardType(.numberPad)
                         }
                         
                         Text("Equity Offered (%)").font(Font.custom("Nunito-Bold", size: 18))
@@ -124,7 +124,6 @@ struct AdminOpportunityForm: View {
                                 .autocorrectionDisabled(true)
                                 .autocapitalization(.none)
                                 .font(Font.custom("Nunito-Bold", size: 16))
-                                .keyboardType(.numberPad)
                         }
                         
                         Text("Minimum Investment Amount (£)").font(Font.custom("Nunito-Bold", size: 18))
@@ -144,33 +143,43 @@ struct AdminOpportunityForm: View {
                                 .autocorrectionDisabled(true)
                                 .autocapitalization(.none)
                                 .font(Font.custom("Nunito-Bold", size: 16))
-                                .keyboardType(.numberPad)
                         }
                         
                         Text("Opportunity Close Date").font(Font.custom("Nunito-Bold", size: 18))
                             .padding(.top, 10).padding(.bottom, -5).padding(.leading,2.5)
                         
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 5)
-                                .fill(Color.white)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 5)
-                                        .stroke(Color.black, lineWidth: 1.25)
-                                )
-                                .frame(width: max(0, geometry.size.width - 45), height: 50)
+//                        ZStack {
+//                            RoundedRectangle(cornerRadius: 5)
+//                                .fill(Color.white)
+//                                .overlay(
+//                                    RoundedRectangle(cornerRadius: 5)
+//                                        .stroke(Color.black, lineWidth: 1.25)
+//                                )
+//                                .frame(width: max(0, geometry.size.width - 45), height: 50)
                             
-                            TextField("", text: $opportunity_close_date, prompt: Text("25/11/2023").foregroundColor(.gray).font(Font.custom("Nunito-Medium", size: 16))).padding().frame(width: max(0, geometry.size.width-40), height: 50)
-                                .foregroundColor(.black)
-                                .autocorrectionDisabled(true)
-                                .autocapitalization(.none)
-                                .font(Font.custom("Nunito-Bold", size: 16))
-                                .keyboardType(.numberPad)
+//                            TextField("", text: $opportunity_close_date, prompt: Text("25/11/2023").foregroundColor(.gray).font(Font.custom("Nunito-Medium", size: 16))).padding().frame(width: max(0, geometry.size.width-40), height: 50)
+//                                .foregroundColor(.black)
+//                                .autocorrectionDisabled(true)
+//                                .autocapitalization(.none)
+//                                .font(Font.custom("Nunito-Bold", size: 16))
                             
-                        }
+                            DatePicker("Select a Date", selection: $date, in: dateRange, displayedComponents: [.date])
+                            .padding([.horizontal, .top], 2)
+//                                            .datePickerStyle(GraphicalDatePickerStyle())
+//                                            .labelsHidden()
+                            
+//                        }
                         
                         Spacer()
                         
-                        Button(action: {}) {
+                        Button(action: {
+                            print(franchise)
+                            print(location)
+                            print(asking_price)
+                            print(equity_offered)
+                            print(min_investment_amount)
+                            print(date)
+                        }) {
                             HStack {
                                 Text("Submit")
                                     .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.06))
