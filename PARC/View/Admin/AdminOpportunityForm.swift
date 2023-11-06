@@ -34,25 +34,38 @@ struct AdminOpportunityForm: View {
                         Text("Franchise").font(Font.custom("Nunito-Bold", size: 18))
                             .padding(.bottom, -5).padding(.leading,2.5)
                         
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 5)
-                                .fill(Color.white)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 5)
-                                        .stroke(Color.black, lineWidth: 1.25)
-                                )
-                                .frame(width: max(0, geometry.size.width - 45), height: 50)
+                        HStack {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 5)
+                                    .fill(Color.white)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 5)
+                                            .stroke(Color.black, lineWidth: 1.25)
+                                    )
+                                    .frame(width: max(0, geometry.size.width - 125), height: 50)
+                                
+                                TextField("", text: $franchise).padding().frame(width: max(0, geometry.size.width-120), height: 50)
+                                    .foregroundColor(.black)
+                                    .autocorrectionDisabled(true)
+                                    .autocapitalization(.none)
+                                //                            .border(Color.black, width: 1)
+                                    .cornerRadius(5)
+                                    .font(Font.custom("Nunito-Bold", size: 16))
+                            }
                             
-                            TextField("", text: $franchise).padding().frame(width: max(0, geometry.size.width-40), height: 50)
-                                .foregroundColor(.black)
-                                .autocorrectionDisabled(true)
-                                .autocapitalization(.none)
-                            //                            .border(Color.black, width: 1)
-                                .cornerRadius(5)
-                                .font(Font.custom("Nunito-Bold", size: 16))
-                            
-                            
+                            Button(action: {}) {
+                                ZStack {
+                                    Circle()
+                                        .fill(Color("Secondary"))
+                                        .frame(width: 30, height: 30)
+                                    
+                                    Image(systemName: "plus")
+                                        .font(Font.custom("Nunito-Black", size: min(geometry.size.width, geometry.size.height) * 0.045))
+                                        .foregroundColor(.white)
+                                }
+                            }
                         }
+                        .padding(.top, 0.5)
                         
                         Text("Location").font(Font.custom("Nunito-Bold", size: 18))
                             .padding(.top, 10).padding(.bottom, -5).padding(.leading,2.5)

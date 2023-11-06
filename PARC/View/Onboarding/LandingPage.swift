@@ -25,13 +25,13 @@ struct LandingPage: View {
 //                LandingContent()
 //            }
 //            if loggedInAdmin {
-//                AdminHome()
 //            } else {
             
             if isShownHomePage && logged_in {
                 UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isShownHomePage: $isShownHomePage)
             } else if logged_in && !isShownHomePage {
-                UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isShownHomePage: $isShownHomePage)
+//                UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isShownHomePage: $isShownHomePage)
+                AdminHome()
             } else {
                 LandingContent(isShownHomePage: $isShownHomePage)
             }
