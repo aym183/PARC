@@ -5,14 +5,25 @@
 //  Created by Ayman Ali on 03/11/2023.
 //
 
-import SwiftUI
+import Foundation
 
-struct DropdownMenuOption: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
+struct DropdownMenuOption: Identifiable, Hashable {
+    let id = UUID().uuidString
+    let option: String
 }
 
-#Preview {
-    DropdownMenuOption()
+extension DropdownMenuOption {
+    static let testSingleValue: DropdownMenuOption = DropdownMenuOption(option: "Asset Management")
+    static let testAllValues: [DropdownMenuOption] = [
+        DropdownMenuOption(option: "Asset Management"),
+        DropdownMenuOption(option: "Investment banking"),
+        DropdownMenuOption(option: "Engineer"),
+        DropdownMenuOption(option: "Sales"),
+        DropdownMenuOption(option: "Product Management"),
+        DropdownMenuOption(option: "Business Owner")
+    ]
+    static let boolValues: [DropdownMenuOption] = [
+        DropdownMenuOption(option: "Yes"),
+        DropdownMenuOption(option: "No")
+    ]
 }

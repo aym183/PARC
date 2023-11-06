@@ -60,8 +60,11 @@ struct UserOpportunity: View {
                         }
                         
                         Text("A golden opportunity for those seeking a turnkey, globally renowned business in the fast-food industry, backed by a proven system of success and ongoing support.")
+                            .frame(width: max(0, geometry.size.width - 40))
                             .foregroundColor(Color("Custom_Gray"))
                             .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.030))
+
+
                         
                         HStack {
                             Text(progress)
@@ -87,28 +90,33 @@ struct UserOpportunity: View {
                         }
                         .padding(.top, -3)
                         
-                        ZStack {
-                            Rectangle()
-                                .foregroundColor(.clear)
-                                .frame(width: max(0, geometry.size.width - 40), height: 8)
-                                .background(Color(red: 0.85, green: 0.85, blue: 0.85).opacity(0.6))
-                                .cornerRadius(100)
-                            
-                            HStack {
-                                Rectangle()
-                                    .foregroundColor(.clear)
-                                    .frame(width: max(0, geometry.size.width - 200), height: 8)
-                                    .background(Color("Secondary"))
-                                    .cornerRadius(100)
-                                
-                                Spacer()
-                            }
-                            .frame(width: max(0, geometry.size.width - 105))
-                            .padding(.leading, -65)
-                            
-                            
-                        }
-                        .padding(.top, -5)
+                        ProgressView(value: /*@START_MENU_TOKEN@*/0.5/*@END_MENU_TOKEN@*/)
+                            .tint(Color("Secondary"))
+                            .scaleEffect(x: 1, y: 2, anchor: .center)
+                            .padding(.top, -1)
+                        
+//                        ZStack {
+//                            Rectangle()
+//                                .foregroundColor(.clear)
+//                                .frame(width: max(0, geometry.size.width - 40), height: 8)
+//                                .background(Color(red: 0.85, green: 0.85, blue: 0.85).opacity(0.6))
+//                                .cornerRadius(100)
+//                            
+//                            HStack {
+//                                Rectangle()
+//                                    .foregroundColor(.clear)
+//                                    .frame(width: max(0, geometry.size.width - 200), height: 8)
+//                                    .background(Color("Secondary"))
+//                                    .cornerRadius(100)
+//                                
+//                                Spacer()
+//                            }
+//                            .frame(width: max(0, geometry.size.width - 105))
+//                            .padding(.leading, -65)
+//                            
+//                            
+//                        }
+//                        .padding(.top, -5)
                         
                         HStack {
                             Text("Minimum Investment Amount - £\(min_investment_amount)")
@@ -254,7 +262,7 @@ struct UserOpportunity: View {
                                 Text(investment_values[index])
                                 }
                                 .font(Font.custom("Nunito-SemiBold", size: 14))
-                            if index < 4 {
+                            if index < 3 {
                                 Divider()
                                     .overlay(.gray)
                                     .frame(height: 1)
@@ -291,6 +299,6 @@ struct UserOpportunity: View {
     }
 }
 
-//#Preview {
-//    UserOpportunity()
-//}
+#Preview {
+    UserOpportunity(bg_image: .constant("store_live"), logo: .constant("McDonalds"), title: .constant("McDonald's"), progress: .constant("250,000"), min_investment_amount: .constant("100"), target_raise: .constant("250,000,000"))
+}

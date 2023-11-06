@@ -117,7 +117,7 @@ struct UserInvestPage: View {
                         .overlay(Color("Custom_Gray"))
                         .opacity(0.5)
                         .frame(height: 1)
-                        .padding(.top, 5)
+                        .padding(.top, 7.5)
                         .padding(.bottom, -7.5)
                     
                     if investment_limit > 0 {

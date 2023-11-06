@@ -94,7 +94,7 @@ struct AdminHome: View {
                                                     .frame(width: 160, height: 140)
                                             }
                                             
-                                            VStack(alignment: .leading) {
+                                            VStack {
                                                 HStack {
                                                     Image(logo_images[index-1])
                                                         .resizable()
@@ -133,33 +133,22 @@ struct AdminHome: View {
                                                         .font(Font.custom("Nunito-Bold", size: 6.5))
                                                         .foregroundColor(Color("Custom_Gray"))
                                                 }
-                                                .padding(.horizontal, 12.5)
+                                                .padding(.horizontal, 10)
                                                 
-                                                ZStack {
-                                                    Rectangle()
-                                                        .foregroundColor(.clear)
-                                                        .frame(width: 135, height: 8)
-                                                        .background(Color(red: 0.85, green: 0.85, blue: 0.85).opacity(0.6))
-                                                        .cornerRadius(100)
+                                                ProgressView(value: 0.8)
+                                                    .tint(Color("Secondary"))
+                                                    .scaleEffect(x: 1, y: 2, anchor: .center)
+                                                    .padding(.top,3)
+                                                    .frame(width: 140)
+                                                
+                                                HStack {
+                                                    Text("15 days left")
+                                                        .font(Font.custom("Nunito-ExtraBold", size: 15))
+                                                        .foregroundColor(Color("Loss"))
+                                                        .padding(.leading, 10)
                                                     
-                                                    
-                                                    HStack {
-                                                        Rectangle()
-                                                            .foregroundColor(.clear)
-                                                            .frame(width: 30, height: 8)
-                                                            .background(Color("Secondary"))
-                                                            .cornerRadius(100)
-                                                        
-                                                            .padding(.leading, 12.5)
-                                                        
-                                                        Spacer()
-                                                    }
+                                                    Spacer()
                                                 }
-                                                
-                                                Text("15 days left")
-                                                    .font(Font.custom("Nunito-ExtraBold", size: 15))
-                                                    .foregroundColor(Color("Loss"))
-                                                    .padding(.leading, 10)
                                             }
                                             .padding(.bottom, 10)
                                         }

@@ -8,11 +8,23 @@
 import SwiftUI
 
 struct DropdownMenuListRow: View {
+    let option: DropdownMenuOption
+    let onSelectedAction: (_ option: DropdownMenuOption) -> Void
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Button(action: {
+            self.onSelectedAction(option)
+        }) {
+            Text(option.option)
+                .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .font(Font.custom("Nunito-Medium", size: 15))
+        .foregroundColor(.black)
+        .padding(.vertical, 5)
+        .padding(.horizontal)
     }
 }
 
 #Preview {
-    DropdownMenuListRow()
+    DropdownMenuListRow(option: DropdownMenuOption.testSingleValue, onSelectedAction: {_ in})
 }

@@ -27,6 +27,7 @@ struct LandingPage: View {
 //            if loggedInAdmin {
 //                AdminHome()
 //            } else {
+            
             if isShownHomePage && logged_in {
                 UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isShownHomePage: $isShownHomePage)
             } else if logged_in && !isShownHomePage {
@@ -34,6 +35,7 @@ struct LandingPage: View {
             } else {
                 LandingContent(isShownHomePage: $isShownHomePage)
             }
+            
 //            }
         }
     }
@@ -153,6 +155,7 @@ extension LandingContent {
                     UserDefaults.standard.set(self.userProfile.email, forKey: "email")
                     UserDefaults.standard.set(self.userProfile.picture, forKey: "picture")
                     UserDefaults.standard.set(true, forKey: "logged_in")
+                    UserDefaults.standard.set(false, forKey: "onboarding_completed")
                     DispatchQueue.global(qos: .userInteractive).async {
                         CreateDB().createUser(email: self.userProfile.email, first_name: self.userProfile.given_name, last_name: self.userProfile.family_name, full_name: self.userProfile.name, picture: self.userProfile.picture) { response in
                             

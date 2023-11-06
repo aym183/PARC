@@ -101,6 +101,6 @@ struct AdminOpportunityClick: View {
     }
 }
 
-//#Preview {
-//    AdminOpportunityClick()
-//}
+#Preview {
+    AdminOpportunityClick(opportunity_logo: .constant("McDonalds"), opportunity_title: .constant("McDonalds"))
+}

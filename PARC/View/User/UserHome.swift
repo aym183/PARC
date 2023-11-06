@@ -13,13 +13,18 @@ struct UserHome: View {
     @State var account_shown = false
     @Binding var isInvestmentConfirmed: Bool
     @Binding var isShownHomePage: Bool
+    @State var isShownOnboarding = false
     @AppStorage("first_name") var firstName: String = ""
     @AppStorage("picture") var picture: String = ""
+    @AppStorage("onboarding_completed") var onboarding_completed: Bool = false
     @State var imageURL = URL(string: "")
 
     
     var body: some View {
         GeometryReader { geometry in
+            if isShownOnboarding {
+                UserOnboarding(isShownOnboarding: $isShownOnboarding)
+            } else {
                 ZStack {
                     Color(.white).ignoresSafeArea()
                     
@@ -39,25 +44,24 @@ struct UserHome: View {
                     }
                     
                     if isInvestmentConfirmed {
+                        
+                        VStack(alignment: .center) {
+                            Spacer()
                             
-                            VStack(alignment: .center) {
-                                Spacer()
-                                
-                                Text("Congratulations!").font(Font.custom("Nunito-Bold", size: 40))
-                                
-                                Text("Your investment has been received. Thank you for trusting PARC!").font(Font.custom("Nunito-Bold", size: 16))
-                                    .multilineTextAlignment(.center)
-                                    .padding(.top, -25)
-                                    .frame(width: 270)
-                                
-                                Spacer()
-                            }
-                            .foregroundColor(.black)
-                            .frame(width: max(0, geometry.size.width))
+                            Text("Congratulations!").font(Font.custom("Nunito-Bold", size: 40))
                             
+                            Text("Your investment has been received. Thank you for trusting PARC!").font(Font.custom("Nunito-Bold", size: 16))
+                                .multilineTextAlignment(.center)
+                                .padding(.top, -25)
+                                .frame(width: 270)
+                            
+                            Spacer()
+                        }
+                        .foregroundColor(.black)
+                        .frame(width: max(0, geometry.size.width))
+                        
                         LottieView(name: "confetti", speed: 0.5, loop: false).frame(width: max(0, geometry.size.width))
                     }
-                    
                     
                     VStack(alignment: .leading) {
                         HStack {
@@ -75,18 +79,18 @@ struct UserHome: View {
                                     }
                                 } else {
                                     Image(systemName: "person.crop.circle")
-                                            .resizable()
-                                            .frame(width: 50, height: 50)
+                                        .resizable()
+                                        .frame(width: 50, height: 50)
                                 }
                             }
-//                            }
-//                        else {
-//                                Button(action: { account_shown.toggle() }) {
-//                                    Image(systemName: "person.crop.circle")
-//                                        .resizable()
-//                                        .frame(width: 50, height: 50)
-//                                }
-//                            }
+                            //                            }
+                            //                        else {
+                            //                                Button(action: { account_shown.toggle() }) {
+                            //                                    Image(systemName: "person.crop.circle")
+                            //                                        .resizable()
+                            //                                        .frame(width: 50, height: 50)
+                            //                                }
+                            //                            }
                         }
                         
                         if selectedTab == .house {
@@ -138,6 +142,11 @@ struct UserHome: View {
                             withAnimation(.easeOut(duration: 0.5)) {
                                 imageURL = URL(string: picture)!
                                 isShownHomePage = false
+                                if !onboarding_completed {
+                                    isShownOnboarding.toggle()
+                                }
+                                //                                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                                //                                }
                             }
                         }
                         
@@ -149,6 +158,8 @@ struct UserHome: View {
                 .navigationDestination(isPresented: $account_shown) {
                     UserAccount(imageURL: $imageURL)
                 }
+            }
+            
             }
     }
 }
@@ -245,29 +256,10 @@ struct UserHomeContent: View {
                                                 .padding(.horizontal,12)
                                                 .padding(.top, -3)
                                                 
-                                                ZStack {
-                                                    Rectangle()
-                                                        .foregroundColor(.clear)
-                                                        .frame(width: max(0, geometry.size.width - 22), height: 8)
-                                                        .background(Color(red: 0.85, green: 0.85, blue: 0.85).opacity(0.6))
-                                                        .cornerRadius(100)
-                                                        .padding(.leading, 11)
-                                                    
-                                                    HStack {
-                                                        Rectangle()
-                                                            .foregroundColor(.clear)
-                                                            .frame(width: max(0, geometry.size.width - 200), height: 8)
-                                                            .background(Color("Secondary"))
-                                                            .cornerRadius(100)
-                                                        
-                                                        Spacer()
-                                                    }
-                                                    .frame(width: max(0, geometry.size.width - 105))
-                                                    .padding(.leading, -70)
-                                                    
-                                                    
-                                                }
-                                                .padding(.top, -5)
+                                                ProgressView(value: /*@START_MENU_TOKEN@*/0.5/*@END_MENU_TOKEN@*/)
+                                                    .tint(Color("Secondary"))
+                                                    .scaleEffect(x: 1, y: 2, anchor: .center)
+                                                    .padding(.horizontal, 11).padding(.top, -1)
                                                 
                                                 HStack {
                                                     Text("Minimum Investment Amount - £\(min_investment_amount)")
@@ -304,7 +296,9 @@ struct UserHomeContent: View {
                     }
             }
     }
+    
 }
+
 //
 //struct UserHomeView_Previews: PreviewProvider {
 //    static var previews: some View {
