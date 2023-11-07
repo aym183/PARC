@@ -22,6 +22,7 @@ struct AdminHome: View {
     var titles = ["McDonald's", "Starbucks", "Dominos", "Chipotle", "Subway"]
     @State var opportunity_title = ""
     @State var opportunity_logo = ""
+    @ObservedObject var readDB = ReadDB()
     
     var body: some View {
         GeometryReader { geometry in
@@ -32,7 +33,9 @@ struct AdminHome: View {
                         HStack {
                             Text("PARC").font(Font.custom("Nunito-Black", size: 60)).foregroundColor(Color("Secondary"))
                             Spacer()
-                            Button(action: { admin_account_click_shown.toggle() }) {
+                            Button(action: { 
+                                print(readDB.franchise_data)
+                                admin_account_click_shown.toggle() }) {
                                 Image(systemName: "person.crop.circle")
                                     .resizable()
                                     .frame(width: 50, height: 50)
@@ -329,11 +332,15 @@ struct AdminHome: View {
                 }
                 }
             }
+            .onAppear {
+                readDB.franchise_data = []
+                readDB.getFranchises()
+            }
             .navigationDestination(isPresented: $admin_payout_form_shown){
                 AdminPayoutForm()
             }
             .navigationDestination(isPresented: $admin_opportunity_form_shown){
-                AdminOpportunityForm()
+                AdminOpportunityForm(franchise_data: $readDB.franchise_data)
             }
             .navigationDestination(isPresented: $admin_trading_form_shown){
                 AdminTradingForm()

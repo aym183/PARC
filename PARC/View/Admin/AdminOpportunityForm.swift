@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct AdminOpportunityForm: View {
+    @Binding var franchise_data: [DropdownMenuOption]
     @State var franchise = ""
     @State var location = ""
     @State var asking_price = ""
@@ -15,6 +16,7 @@ struct AdminOpportunityForm: View {
     @State var min_investment_amount = ""
     @State var opportunity_close_date = ""
     @State var franchise_form_shown = false
+    @State private var selectedFranchise: DropdownMenuOption? = nil
     @State private var date = Date()
 //    @State private var selectedDate = Date()
     let dateRange: ClosedRange<Date> = {
@@ -45,20 +47,9 @@ struct AdminOpportunityForm: View {
                             .padding(.bottom, -5).padding(.leading,2.5)
                         
                         HStack {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 5)
-                                    .fill(Color.white)
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 5)
-                                            .stroke(Color.black, lineWidth: 1.25)
-                                    )
-                                    .frame(width: max(0, geometry.size.width - 125), height: 50)
-                                
-                                TextField("", text: $franchise).padding().frame(width: max(0, geometry.size.width-120), height: 50)
-                                    .foregroundColor(.black)
-                                    .cornerRadius(5)
-                                    .font(Font.custom("Nunito-Bold", size: 16))
-                            }
+                            
+                            DropdownMenu(selectedOption: self.$selectedFranchise, placeholder: "Select", options: franchise_data)
+                                .frame(width: max(0, geometry.size.width - 100))
                             
                             Button(action: { franchise_form_shown.toggle() }) {
                                 ZStack {
@@ -72,7 +63,7 @@ struct AdminOpportunityForm: View {
                                 }
                             }
                         }
-                        .padding(.top, 0.5)
+                        .padding(.top, 0.5).padding(.leading, 2.5)
                         
                         Text("Location").font(Font.custom("Nunito-Bold", size: 18))
                             .padding(.top, 10).padding(.bottom, -5).padding(.leading,2.5)
@@ -199,12 +190,15 @@ struct AdminOpportunityForm: View {
                 }
             }
             .sheet(isPresented: $franchise_form_shown) {
-                AdminFranchiseForm(franchise_form_shown: $franchise_form_shown).presentationDetents([.height(750)])
+                AdminFranchiseForm(franchise_form_shown: $franchise_form_shown, franchise_data: $franchise_data).presentationDetents([.height(750)])
+            }
+            .onAppear {
+                print(franchise_data)
             }
         }
     }
 }
 
 #Preview {
-    AdminOpportunityForm()
+    AdminOpportunityForm(franchise_data: .constant([]))
 }

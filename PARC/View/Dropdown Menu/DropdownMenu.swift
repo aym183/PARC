@@ -10,8 +10,12 @@ import SwiftUI
 struct DropdownMenu: View {
     @State var isOptionsPresented: Bool = false
     @Binding var selectedOption: DropdownMenuOption?
+    @State private var selectedBackground: DropdownMenuOption? = nil
     let placeholder: String
     let options: [DropdownMenuOption]
+    
+    let dropdownListHeight: CGFloat = 180
+    let padding_bottom_value: CGFloat = 130
     
     var body: some View {
         Button(action: {
@@ -29,17 +33,16 @@ struct DropdownMenu: View {
                 Image(systemName: self.isOptionsPresented ? "chevron.up" : "chevron.down")
                     .fontWeight(.medium)
             }
-
         }
         .padding()
         .overlay {
             RoundedRectangle(cornerRadius: 5)
-                .stroke(.gray, lineWidth: 1.5)
+                .stroke(.black, lineWidth: 1.25)
         }
         .overlay {
             VStack {
                 if self.isOptionsPresented {
-                    Spacer(minLength: 280)
+                    Spacer(minLength: dropdownListHeight) // Set the height
                     DropdownMenuList(options: self.options) { option in
                         self.isOptionsPresented = false
                         self.selectedOption = option
@@ -47,15 +50,7 @@ struct DropdownMenu: View {
                 }
             }
         }
-//        .padding(.horizontal, 10)
-        .padding(
-            .bottom, self.isOptionsPresented
-            ? CGFloat(self.options.count*32) > 300
-                ? 350
-                : CGFloat(self.options.count*32)
-            : 0
-        )
-        
+        .padding(.bottom, self.isOptionsPresented ? padding_bottom_value : 0)
     }
 }
 

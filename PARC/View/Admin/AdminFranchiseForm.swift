@@ -20,6 +20,7 @@ struct AdminFranchiseForm: View {
     @State var showImagePicker = false
     @State var image: UIImage?
     @Binding var franchise_form_shown: Bool
+    @Binding var franchise_data: [DropdownMenuOption]
     
     var body: some View {
         
@@ -156,37 +157,37 @@ struct AdminFranchiseForm: View {
                             }
                             
                             // Insert Dropdown
-                            HStack {
-                                Text("Industry").font(Font.custom("Nunito-Bold", size: 18))
-                                    .padding(.top, 5).padding(.bottom, -5).padding(.leading,2.5)
-                                Spacer()
-                            }
-                            
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 5)
-                                    .fill(Color.white)
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 5)
-                                            .stroke(Color.black, lineWidth: 1.25)
-                                    )
-                                    .frame(width: max(0, geometry.size.width - 45), height: 50)
-                                
-                                HStack {
-                                    Text("Restaurant").padding()
-                                        .foregroundColor(.black)
-                                        .autocorrectionDisabled(true)
-                                        .autocapitalization(.none)
-                                        .font(Font.custom("Nunito-Bold", size: 16))
-                                    
-                                    Spacer()
-                                }
-                                .cornerRadius(5)
-                                .opacity(0.5)
-                            }
+//                            HStack {
+//                                Text("Industry").font(Font.custom("Nunito-Bold", size: 18))
+//                                    .padding(.top, 5).padding(.bottom, -5).padding(.leading,2.5)
+//                                Spacer()
+//                            }
+//                            
+//                            ZStack {
+//                                RoundedRectangle(cornerRadius: 5)
+//                                    .fill(Color.white)
+//                                    .overlay(
+//                                        RoundedRectangle(cornerRadius: 5)
+//                                            .stroke(Color.black, lineWidth: 1.25)
+//                                    )
+//                                    .frame(width: max(0, geometry.size.width - 45), height: 50)
+//                                
+//                                HStack {
+//                                    Text("Restaurant").padding()
+//                                        .foregroundColor(.black)
+//                                        .autocorrectionDisabled(true)
+//                                        .autocapitalization(.none)
+//                                        .font(Font.custom("Nunito-Bold", size: 16))
+//                                    
+//                                    Spacer()
+//                                }
+//                                .cornerRadius(5)
+//                                .opacity(0.5)
+//                            }
                             
                             HStack {
                                 Text("Total No of Franchises").font(Font.custom("Nunito-Bold", size: 18))
-                                    .padding(.top, 10).padding(.bottom, -5).padding(.leading,2.5)
+                                    .padding(.top, 5).padding(.bottom, -5).padding(.leading,2.5)
                                 Spacer()
                             }
                             
@@ -299,6 +300,8 @@ struct AdminFranchiseForm: View {
                             
                             Button(action: {
                                 DispatchQueue.global(qos: .userInteractive).async {
+                                    self.franchise_data.append(DropdownMenuOption(option: self.name))
+                                    
                                     CreateDB().createFranchise(name: self.name, logo: "null for now", description: self.description, no_of_franchises: self.noOfFranchises, avg_franchise_mom_revenues: self.MoMRevenue, avg_startup_capital: self.startupCapital, avg_revenue_18_months: self.monthRev18, ebitda_estimate: self.ebitdaEstimate) { response in
                                         
                                         if response == "Franchise Created" {
@@ -343,5 +346,5 @@ struct AdminFranchiseForm: View {
 }
 
 #Preview {
-    AdminFranchiseForm(franchise_form_shown: .constant(true))
+    AdminFranchiseForm(franchise_form_shown: .constant(true), franchise_data: .constant([]))
 }

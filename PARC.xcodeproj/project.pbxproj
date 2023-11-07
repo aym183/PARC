@@ -48,6 +48,7 @@
 		6180FAE72AED550900A99D6D /* AdminTradingForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6180FAE62AED550900A99D6D /* AdminTradingForm.swift */; };
 		61956B292AF969510038378E /* AdminFranchiseForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61956B282AF969510038378E /* AdminFranchiseForm.swift */; };
 		61956B2B2AFA3E4A0038378E /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61956B2A2AFA3E4A0038378E /* ImagePicker.swift */; };
+		61956B2D2AFA92A80038378E /* Franchise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61956B2C2AFA92A80038378E /* Franchise.swift */; };
 		619F4C0F2AE00F7100D7A861 /* UserHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619F4C0E2AE00F7100D7A861 /* UserHome.swift */; };
 		61DBDFC42ADEF83F00AE41FA /* PARCApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DBDFC32ADEF83F00AE41FA /* PARCApp.swift */; };
 		61DBDFC62ADEF83F00AE41FA /* LandingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DBDFC52ADEF83F00AE41FA /* LandingPage.swift */; };
@@ -95,6 +96,7 @@
 		6180FAE62AED550900A99D6D /* AdminTradingForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminTradingForm.swift; sourceTree = "<group>"; };
 		61956B282AF969510038378E /* AdminFranchiseForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminFranchiseForm.swift; sourceTree = "<group>"; };
 		61956B2A2AFA3E4A0038378E /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		61956B2C2AFA92A80038378E /* Franchise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Franchise.swift; sourceTree = "<group>"; };
 		619F4C0E2AE00F7100D7A861 /* UserHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserHome.swift; sourceTree = "<group>"; };
 		61DBDFC02ADEF83F00AE41FA /* PARC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PARC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61DBDFC32ADEF83F00AE41FA /* PARCApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PARCApp.swift; sourceTree = "<group>"; };
@@ -212,6 +214,7 @@
 				6136EC0B2AF4F35500A09DDA /* UpdateDB.swift */,
 				6136EC0D2AF4F35C00A09DDA /* ReadDB.swift */,
 				6136EC0F2AF4F36500A09DDA /* DeleteDB.swift */,
+				61956B2C2AFA92A80038378E /* Franchise.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -378,6 +381,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61956B2D2AFA92A80038378E /* Franchise.swift in Sources */,
 				615243D22AE1290400A18880 /* UserMarketplace.swift in Sources */,
 				619F4C0F2AE00F7100D7A861 /* UserHome.swift in Sources */,
 				6179DC322AEE31B100A83F9A /* AdminOpportunityClick.swift in Sources */,
