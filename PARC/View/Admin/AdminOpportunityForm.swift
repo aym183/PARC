@@ -14,6 +14,7 @@ struct AdminOpportunityForm: View {
     @State var equity_offered = ""
     @State var min_investment_amount = ""
     @State var opportunity_close_date = ""
+    @State var franchise_form_shown = false
     @State private var date = Date()
 //    @State private var selectedDate = Date()
     let dateRange: ClosedRange<Date> = {
@@ -59,7 +60,7 @@ struct AdminOpportunityForm: View {
                                     .font(Font.custom("Nunito-Bold", size: 16))
                             }
                             
-                            Button(action: {}) {
+                            Button(action: { franchise_form_shown.toggle() }) {
                                 ZStack {
                                     Circle()
                                         .fill(Color("Secondary"))
@@ -196,6 +197,9 @@ struct AdminOpportunityForm: View {
                     .frame(width: max(0, geometry.size.width-40), height: max(0, geometry.size.height))
                     .foregroundColor(.black)
                 }
+            }
+            .sheet(isPresented: $franchise_form_shown) {
+                AdminFranchiseForm(franchise_form_shown: $franchise_form_shown).presentationDetents([.height(750)])
             }
         }
     }
