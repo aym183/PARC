@@ -30,8 +30,8 @@ struct UserOpportunity: View {
     @Binding var min_investment_amount: String
     @Binding var target_raise: String
     @State var user_invest_shown = false
-    @State var investment_titles = ["Location", "Type", "Equity Offered", "Share Price", "", ""]
-    @State var investment_values = ["Stratford, London", "Equity", "12.54%", "£38.42", "", ""]
+    @State var investment_titles = ["Location", "Type", "Equity Offered", "", ""]
+    @State var investment_values = ["Stratford, London", "Equity", "12.54%", "", ""]
     
     var body: some View {
         GeometryReader { geometry in

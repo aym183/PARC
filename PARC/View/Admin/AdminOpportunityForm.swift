@@ -46,7 +46,7 @@ struct AdminOpportunityForm: View {
                         Text("Franchise").font(Font.custom("Nunito-Bold", size: 18))
                             .padding(.bottom, -5).padding(.leading,2.5)
                         
-                        HStack {
+                        HStack(spacing: 15) {
                             
                             DropdownMenu(selectedOption: self.$selectedFranchise, placeholder: "Select", options: franchise_data)
                                 .frame(width: max(0, geometry.size.width - 100))

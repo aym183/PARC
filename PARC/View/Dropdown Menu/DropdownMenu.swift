@@ -42,10 +42,18 @@ struct DropdownMenu: View {
         .overlay {
             VStack {
                 if self.isOptionsPresented {
-                    Spacer(minLength: dropdownListHeight) // Set the height
-                    DropdownMenuList(options: self.options) { option in
-                        self.isOptionsPresented = false
-                        self.selectedOption = option
+                    if self.options.count == 0 {
+                        Spacer(minLength: dropdownListHeight - 20)
+                        Text("No Franchises Added")
+                            .font(Font.custom("Nunito-Medium", size: 15))
+                            .foregroundColor(.black)
+                        
+                    } else {
+                        Spacer(minLength: dropdownListHeight) // Set the height
+                        DropdownMenuList(options: self.options) { option in
+                            self.isOptionsPresented = false
+                            self.selectedOption = option
+                        }
                     }
                 }
             }

@@ -302,6 +302,6 @@ struct UserHomeContent: View {
 //
 //struct UserHomeView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        UserHome()
+//        UserHome(isInvestmentConfirmed: .constant(false), isShownHomePage: .constant(false))
 //    }
 //}
