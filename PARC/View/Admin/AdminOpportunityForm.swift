@@ -16,6 +16,7 @@ struct AdminOpportunityForm: View {
     @State var min_investment_amount = ""
     @State var opportunity_close_date = ""
     @State var franchise_form_shown = false
+    @State var admin_home_shown = false
     @State private var selectedFranchise: DropdownMenuOption? = nil
     @State private var date = Date()
 //    @State private var selectedDate = Date()
@@ -64,7 +65,7 @@ struct AdminOpportunityForm: View {
                             }
                         }
                         .padding(.top, 0.5).padding(.leading, 2.5)
-                        
+                    
                         Text("Location").font(Font.custom("Nunito-Bold", size: 18))
                             .padding(.top, 10).padding(.bottom, -5).padding(.leading,2.5)
                         
@@ -165,12 +166,13 @@ struct AdminOpportunityForm: View {
                         Spacer()
                         
                         Button(action: {
-                            print(franchise)
-                            print(location)
-                            print(asking_price)
-                            print(equity_offered)
-                            print(min_investment_amount)
-                            print(date)
+                            CreateDB().create_opportunity(franchise_name: selectedFranchise!.option, location: location, asking_price: asking_price, equity_offered: equity_offered, min_invest_amount: min_investment_amount, close_date: String(describing: date)) { response in
+                                if response == "Opportunity Created" {
+                                    admin_home_shown.toggle()
+                                }
+                            }
+                                
+                            
                         }) {
                             HStack {
                                 Text("Submit")
@@ -192,8 +194,8 @@ struct AdminOpportunityForm: View {
             .sheet(isPresented: $franchise_form_shown) {
                 AdminFranchiseForm(franchise_form_shown: $franchise_form_shown, franchise_data: $franchise_data).presentationDetents([.height(750)])
             }
-            .onAppear {
-                print(franchise_data)
+            .navigationDestination(isPresented: $admin_home_shown) {
+                AdminHome().navigationBarBackButtonHidden(true)
             }
         }
     }

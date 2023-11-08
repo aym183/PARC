@@ -49,4 +49,29 @@ class ReadDB: ObservableObject {
 //            }
         }.resume()
     }
+    
+    func getOpportunityNumber() {
+        
+        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/franchises")!
+
+        var request = URLRequest(url: apiUrl)
+        request.httpMethod = "GET"
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let data = data, let responseText = String(data: data, encoding: .utf8) {
+                
+                do {
+                    if let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                        DispatchQueue.main.async {
+                            if let itemsArray = jsonObject["Items"] as? [[String: Any]] {
+                            }
+                        }
+                    }
+                } catch {
+                    print("Error")
+                }
+            }
+        }.resume()
+    }
+    
 }

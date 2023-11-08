@@ -8,9 +8,9 @@
 import Foundation
 
 class CreateDB: ObservableObject {
+    let currentDate = Date()
     
     func createUser(email: String, first_name: String, last_name: String, full_name: String, picture: String, completion: @escaping (String?) -> Void) {
-        let currentDate = Date()
         
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/users?email=\(email)&first_name=\(first_name)&last_name=\(last_name)&full_name=\(full_name)&picture=\(picture)&date_joined=\(currentDate)")!
 
@@ -66,6 +66,49 @@ class CreateDB: ObservableObject {
             } else if let error = error {
                 DispatchQueue.main.async {
                     print("Error creating franchise: \(error.localizedDescription)")
+                }
+            }
+        }.resume()
+    }
+    
+    func create_opportunity(franchise_name: String, location: String, asking_price: String, equity_offered: String, min_invest_amount: String, close_date: String, completion: @escaping (String?) -> Void) {
+        // Add date created and amount raised
+        print("function_started")
+        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/opportunities")!
+
+        var request = URLRequest(url: apiUrl)
+        request.httpMethod = "GET"
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let data = data, let responseText = String(data: data, encoding: .utf8) {
+                
+                do {
+                    if let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                        DispatchQueue.main.async {
+                            if let itemsArray = jsonObject["ScannedCount"] as? Int {
+                                let arrayLength = itemsArray+1
+                                let opportunityApiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/opportunities?opportunity_id=\(arrayLength)&franchise_name=\(franchise_name)&location=\(location)&asking_price=\(asking_price)&equity_offered=\(equity_offered)&min_invest_amount=\(min_invest_amount)&close_date=\(close_date)&date_created=\(self.currentDate)&amount_raised=\("0")&status=\("active")")!
+                                
+                                var request = URLRequest(url: opportunityApiUrl)
+                                request.httpMethod = "POST"
+
+                                URLSession.shared.dataTask(with: request) { data, response, error in
+                                    if let data = data, let responseText = String(data: data, encoding: .utf8) {
+                                        DispatchQueue.main.async {
+                                            print(responseText)
+                                            completion("Opportunity Created")
+                                        }
+                                    } else if let error = error {
+                                        DispatchQueue.main.async {
+                                            print("Error creating opportunity: \(error.localizedDescription)")
+                                        }
+                                    }
+                                }.resume()
+                            }
+                        }
+                    }
+                } catch {
+                    print("Error")
                 }
             }
         }.resume()
