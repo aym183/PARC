@@ -14,6 +14,17 @@ struct AdminPayoutForm: View {
     @State var payout_date = ""
     @State private var selectedOpportunity: DropdownMenuOption? = nil
     @Binding var opportunity_data : [DropdownMenuOption]
+    @State private var date = Date()
+//    @State private var selectedDate = Date()
+    let dateRange: ClosedRange<Date> = {
+        let calendar = Calendar.current
+        let startComponents = DateComponents(year: 2023, month: 11, day: 1)
+        let endComponents = DateComponents(year: 2050, month: 12, day: 31)
+        return calendar.date(from:startComponents)!
+            ...
+            calendar.date(from:endComponents)!
+    }()
+    
     
     var body: some View {
         GeometryReader { geometry in
@@ -58,7 +69,7 @@ struct AdminPayoutForm: View {
 //                            
 //                        }
                         
-                        Text("Amount Offered").font(Font.custom("Nunito-Bold", size: 18))
+                        Text("Amount Offered (£)").font(Font.custom("Nunito-Bold", size: 18))
                             .padding(.top, 10).padding(.bottom, -5).padding(.leading,2.5)
                         
                         ZStack {
@@ -101,26 +112,17 @@ struct AdminPayoutForm: View {
                         Text("Payout Date").font(Font.custom("Nunito-Bold", size: 18))
                             .padding(.top, 10).padding(.bottom, -5).padding(.leading,2.5)
                         
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 5)
-                                .fill(Color.white)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 5)
-                                        .stroke(Color.black, lineWidth: 1.25)
-                                )
-                                .frame(width: max(0, geometry.size.width - 45), height: 50)
-                            
-                            TextField("", text: $payout_date, prompt: Text("25/11/2023").foregroundColor(.gray).font(Font.custom("Nunito-Medium", size: 16))).padding().frame(width: max(0, geometry.size.width-40), height: 50)
-                                .foregroundColor(.black)
-                                .autocorrectionDisabled(true)
-                                .autocapitalization(.none)
-                                .font(Font.custom("Nunito-Bold", size: 16))
-                                .keyboardType(.numberPad)
-                        }
+                        DatePicker("Select a Date", selection: $date, in: dateRange, displayedComponents: [.date])
+                            .padding([.horizontal, .top], 2.5)
                         
                         Spacer()
                         
-                        Button(action: {}) {
+                        Button(action: {
+                            print(selectedOpportunity!.option)
+                            print(amount_offered)
+                            print(revenue_generated)
+                            print(date)
+                        }) {
                             HStack {
                                 Text("Submit")
                                     .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.06))

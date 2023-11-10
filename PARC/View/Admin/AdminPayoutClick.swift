@@ -10,8 +10,8 @@ import SwiftUI
 struct AdminPayoutClick: View {
     var payout_data_titles = ["Investors", "Revenue Generated (past month)", "% of Revenue", "Payout Date"]
     var payout_data_values = ["500", "£750,000", "6.66%", "15/04/2023", "15/06/2023"]
-    var opportunity_data_titles = ["Opportunity ID", "Opportunity Name", "Location", "Share Price"]
-    var opportunity_data_values = ["24", "McDonald's", "Stratford, London", "£38.42"]
+    var opportunity_data_titles = ["Opportunity ID", "Opportunity Name", "Location"]
+    var opportunity_data_values = ["24", "McDonald's", "Stratford, London"]
     
     var body: some View {
         GeometryReader { geometry in
