@@ -68,6 +68,29 @@ struct AdminFranchiseForm: View {
                                 
                                 if let image = self.image {
                                     Text("✅")
+                                        .onAppear {
+                                            CreateDB().uploadFranchiseLogoImage(image: image)
+//                                            let imageData = image.jpegData(compressionQuality: 0.8)
+//
+//                                            guard imageData != nil else {
+//                                                return
+//                                            }
+//                                            print(String(describing: imageData!))
+                                            
+//                                            let randomID = UUID().uuidString
+//                                            let path = "profile_images/\(randomID).jpg"
+//                                            
+                                            
+//                                            DispatchQueue.global(qos: .background).async {
+//                                                let fileRef = storage.child("profile_images/\(randomID).jpg")
+//                                                let uploadTask = fileRef.putData(imageData!, metadata: nil) { metadata, error in
+//                                                    if let error = error {
+//                                                        print("Error uploading profile image \(error.localizedDescription)")
+//                                                    }
+//                                                }
+//                                                print("File added to profile image")
+//                                            }
+                                        }
                                 }
                                 Spacer()
                             }
@@ -209,7 +232,7 @@ struct AdminFranchiseForm: View {
                             
                             // All these stats are per location
                             HStack {
-                                Text("Avg Franchise MoM Revenue").font(Font.custom("Nunito-Bold", size: 18))
+                                Text("Avg Franchise MoM Revenue (£)").font(Font.custom("Nunito-Bold", size: 18))
                                     .padding(.top, 10).padding(.bottom, -5).padding(.leading,2.5)
                                 Spacer()
                             }
@@ -231,7 +254,7 @@ struct AdminFranchiseForm: View {
                             }
                             
                             HStack {
-                                Text("Avg Startup Capital").font(Font.custom("Nunito-Bold", size: 18))
+                                Text("Avg Startup Capital (£)").font(Font.custom("Nunito-Bold", size: 18))
                                     .padding(.top, 10).padding(.bottom, -5).padding(.leading,2.5)
                                 Spacer()
                             }
@@ -253,7 +276,7 @@ struct AdminFranchiseForm: View {
                             }
                             
                             HStack {
-                                Text("Avg Revenue after 18 months").font(Font.custom("Nunito-Bold", size: 18))
+                                Text("Avg Revenue after 18 months (£)").font(Font.custom("Nunito-Bold", size: 18))
                                     .padding(.top, 10).padding(.bottom, -5).padding(.leading,2.5)
                                 Spacer()
                             }

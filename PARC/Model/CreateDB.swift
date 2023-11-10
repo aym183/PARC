@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 class CreateDB: ObservableObject {
     let currentDate = Date()
@@ -72,10 +73,8 @@ class CreateDB: ObservableObject {
     }
     
     func create_opportunity(franchise_name: String, location: String, asking_price: String, equity_offered: String, min_invest_amount: String, close_date: String, completion: @escaping (String?) -> Void) {
-        // Add date created and amount raised
-        print("function_started")
-        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/opportunities")!
 
+        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/opportunities")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
         
@@ -87,7 +86,7 @@ class CreateDB: ObservableObject {
                         DispatchQueue.main.async {
                             if let itemsArray = jsonObject["ScannedCount"] as? Int {
                                 let arrayLength = itemsArray+1
-                                let opportunityApiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/opportunities?opportunity_id=\(arrayLength)&franchise_name=\(franchise_name)&location=\(location)&asking_price=\(asking_price)&equity_offered=\(equity_offered)&min_invest_amount=\(min_invest_amount)&close_date=\(close_date)&date_created=\(self.currentDate)&amount_raised=\("0")&status=\("active")")!
+                                let opportunityApiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/opportunities?opportunity_id=\(arrayLength)&franchise_name=\(franchise_name)&location=\(location)&asking_price=\(asking_price)&equity_offered=\(equity_offered)&min_invest_amount=\(min_invest_amount)&close_date=\(close_date)&date_created=\(self.currentDate)&amount_raised=0&status=\("active")&investors=0")!
                                 
                                 var request = URLRequest(url: opportunityApiUrl)
                                 request.httpMethod = "POST"
@@ -112,5 +111,34 @@ class CreateDB: ObservableObject {
                 }
             }
         }.resume()
+    }
+    
+    func uploadFranchiseLogoImage(image: UIImage) {
+        
+        let imageData = image.jpegData(compressionQuality: 0.8)
+        guard imageData != nil else {
+            return
+        }
+        let randomID = UUID().uuidString
+        let path = "\(randomID).jpg"
+        
+        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/images?image=\(imageData!)&image_title=\(path)")!
+        
+        var request = URLRequest(url: apiUrl)
+        request.httpMethod = "POST"
+
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let data = data, let responseText = String(data: data, encoding: .utf8) {
+                DispatchQueue.main.async {
+                    print(responseText)
+//                    completion("Franchise Logo Image Created")
+                }
+            } else if let error = error {
+                DispatchQueue.main.async {
+                    print("Error uploading franchise logo: \(error.localizedDescription)")
+                }
+            }
+        }.resume()
+        
     }
 }

@@ -12,6 +12,7 @@ struct AdminOpportunityClick: View {
     var data_values = ["24", "Stratford, London", "Equity", "£400,000", "£1,000,000", "500", "£100", "18/08/2023"]
     @Binding var opportunity_logo: String
     @Binding var opportunity_title: String
+    @Binding var opportunity_data: [String:String]
     
     var body: some View {
         GeometryReader { geometry in
@@ -25,7 +26,7 @@ struct AdminOpportunityClick: View {
                                 .aspectRatio(contentMode: .fill)
                                 .frame(width: 80, height: 80)
                             
-                            Text(opportunity_title)
+                            Text(String(describing: opportunity_data["franchise"]!))
                                 .font(Font.custom("Nunito-Bold", size: 30))
                         }
                         
@@ -72,23 +73,119 @@ struct AdminOpportunityClick: View {
                             .overlay(.black)
                             .padding(.bottom, 5)
                         
-                        ForEach(0..<data_titles.count, id: \.self) {index in
-                            HStack {
-                                Text(data_titles[index])
-                                    .foregroundColor(.gray)
-                                Spacer()
-                                Text(data_values[index])
-                            }
-                            .font(Font.custom("Nunito-Medium", size: 14))
-                            .padding(.vertical, 6)
-                            
-                            if index < data_titles.count - 1 {
-                                Divider()
-                                    .overlay(.gray)
-                                    .frame(height: 1)
-                                    .opacity(0.5)
-                            }
+                        HStack {
+                            Text("Opportunity ID")
+                                .foregroundColor(.gray)
+                            Spacer()
+                            Text(String(describing: opportunity_data["opportunity_id"]!))
                         }
+                        .font(Font.custom("Nunito-Medium", size: 14))
+                        .padding(.vertical, 6)
+                        
+                        Divider()
+                            .overlay(.gray)
+                            .frame(height: 1)
+                            .opacity(0.5)
+
+                        HStack {
+                            Text("Location")
+                                .foregroundColor(.gray)
+                            Spacer()
+                            Text(String(describing: opportunity_data["location"]!))
+                        }
+                        .font(Font.custom("Nunito-Medium", size: 14))
+                        .padding(.vertical, 6)
+                        
+                        Divider()
+                            .overlay(.gray)
+                            .frame(height: 1)
+                            .opacity(0.5)
+                        
+                        HStack {
+                            Text("Type")
+                                .foregroundColor(.gray)
+                            Spacer()
+                            Text("Equity")
+                        }
+                        .font(Font.custom("Nunito-Medium", size: 14))
+                        .padding(.vertical, 6)
+                        
+                        Divider()
+                            .overlay(.gray)
+                            .frame(height: 1)
+                            .opacity(0.5)
+                        
+                        HStack {
+                            Text("Money Raised")
+                                .foregroundColor(.gray)
+                            Spacer()
+                            Text("£\(formattedNumber(input_number: Int(opportunity_data["amount_raised"]!)!))")
+                        }
+                        .font(Font.custom("Nunito-Medium", size: 14))
+                        .padding(.vertical, 6)
+                        
+                        Divider()
+                            .overlay(.gray)
+                            .frame(height: 1)
+                            .opacity(0.5)
+                        
+                        // change to comma for large no.s
+                        HStack {
+                            Text("Target Raised")
+                                .foregroundColor(.gray)
+                            Spacer()
+                            Text("£\(formattedNumber(input_number: Int(opportunity_data["asking_price"]!)!))")
+                        }
+                        .font(Font.custom("Nunito-Medium", size: 14))
+                        .padding(.vertical, 6)
+                        
+                        Divider()
+                            .overlay(.gray)
+                            .frame(height: 1)
+                            .opacity(0.5)
+                        
+                        HStack {
+                            Text("Investors")
+                                .foregroundColor(.gray)
+                            Spacer()
+                            Text("\(String(describing: opportunity_data["investors"]!))")
+                        }
+                        .font(Font.custom("Nunito-Medium", size: 14))
+                        .padding(.vertical, 6)
+                        
+                        Divider()
+                            .overlay(.gray)
+                            .frame(height: 1)
+                            .opacity(0.5)
+                        
+                        HStack {
+                            Text("Minimum Investment")
+                                .foregroundColor(.gray)
+                            Spacer()
+                            Text("£\(formattedNumber(input_number: Int(opportunity_data["min_invest_amount"]!)!))")
+                        }
+                        .font(Font.custom("Nunito-Medium", size: 14))
+                        .padding(.vertical, 6)
+                        
+                        Divider()
+                            .overlay(.gray)
+                            .frame(height: 1)
+                            .opacity(0.5)
+                        
+                        HStack {
+                            Text("Investment Deadline")
+                                .foregroundColor(.gray)
+                            Spacer()
+                            Text(String(describing: opportunity_data["close_date"]!))
+                        }
+                        .font(Font.custom("Nunito-Medium", size: 14))
+                        .padding(.vertical, 6)
+                        
+                        Divider()
+                            .overlay(.gray)
+                            .frame(height: 1)
+                            .opacity(0.5)
+                        
                         
                         Spacer()
                     }
@@ -101,6 +198,6 @@ struct AdminOpportunityClick: View {
     }
 }
 
-#Preview {
-    AdminOpportunityClick(opportunity_logo: .constant("McDonalds"), opportunity_title: .constant("McDonalds"))
-}
+//#Preview {
+//    AdminOpportunityClick(opportunity_logo: .constant("McDonalds"), opportunity_title: .constant("McDonalds"))
+//}

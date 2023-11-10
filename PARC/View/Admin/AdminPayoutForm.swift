@@ -12,6 +12,8 @@ struct AdminPayoutForm: View {
     @State var amount_offered = ""
     @State var revenue_generated = ""
     @State var payout_date = ""
+    @State private var selectedOpportunity: DropdownMenuOption? = nil
+    @Binding var opportunity_data : [DropdownMenuOption]
     
     var body: some View {
         GeometryReader { geometry in
@@ -32,25 +34,29 @@ struct AdminPayoutForm: View {
                         Text("Opportunity").font(Font.custom("Nunito-Bold", size: 18))
                             .padding(.bottom, -5).padding(.leading,2.5)
                         
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 5)
-                                .fill(Color.white)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 5)
-                                        .stroke(Color.black, lineWidth: 1.25)
-                                )
-                                .frame(width: max(0, geometry.size.width - 45), height: 50)
-                            
-                            TextField("", text: $opportunity).padding().frame(width: max(0, geometry.size.width-40), height: 50)
-                                .foregroundColor(.black)
-                                .autocorrectionDisabled(true)
-                                .autocapitalization(.none)
-                            //                            .border(Color.black, width: 1)
-                                .cornerRadius(5)
-                                .font(Font.custom("Nunito-Bold", size: 16))
-                            
-                            
-                        }
+                        DropdownMenu(selectedOption: self.$selectedOpportunity, placeholder: "Select", options: opportunity_data)
+                            .frame(width: max(0, geometry.size.width - 100))
+                            .padding(.leading,2.5)
+                        
+//                        ZStack {
+//                            RoundedRectangle(cornerRadius: 5)
+//                                .fill(Color.white)
+//                                .overlay(
+//                                    RoundedRectangle(cornerRadius: 5)
+//                                        .stroke(Color.black, lineWidth: 1.25)
+//                                )
+//                                .frame(width: max(0, geometry.size.width - 45), height: 50)
+//                            
+//                            TextField("", text: $opportunity).padding().frame(width: max(0, geometry.size.width-40), height: 50)
+//                                .foregroundColor(.black)
+//                                .autocorrectionDisabled(true)
+//                                .autocapitalization(.none)
+//                            //                            .border(Color.black, width: 1)
+//                                .cornerRadius(5)
+//                                .font(Font.custom("Nunito-Bold", size: 16))
+//                            
+//                            
+//                        }
                         
                         Text("Amount Offered").font(Font.custom("Nunito-Bold", size: 18))
                             .padding(.top, 10).padding(.bottom, -5).padding(.leading,2.5)
@@ -137,5 +143,5 @@ struct AdminPayoutForm: View {
 }
 
 #Preview {
-    AdminPayoutForm()
+    AdminPayoutForm(opportunity_data: .constant([]))
 }
