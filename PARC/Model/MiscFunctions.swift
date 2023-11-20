@@ -10,18 +10,22 @@ import SwiftUI
 
 func convertDate(dateString: String) -> String {
 
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+    let components = dateString.components(separatedBy: " ")
 
-    if let date = dateFormatter.date(from: dateString) {
-
-      dateFormatter.dateFormat = "dd/MM/yyyy"
-      
-      let formattedDate = dateFormatter.string(from: date)
-      
-      return(formattedDate)
+    // The first component should contain the date part
+    if let datePart = components.first {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let date = dateFormatter.date(from: datePart)
+        dateFormatter.dateFormat = "dd/MM/yyyy"
+        let formattedDate = dateFormatter.string(from: date!)
+        return formattedDate
+    } else {
+        print("Failed to extract the date.")
     }
-    return("")
+      
+//    return(formattedDate)
+    return("nil")
 }
 
 func getDaysRemaining(dateString: String) -> Int? {

@@ -11,6 +11,7 @@ import SwiftUI
 class ReadDB: ObservableObject {
     @Published var franchise_data: [DropdownMenuOption] = []
     @Published var opportunity_data: [[String: String]] = []
+    @Published var payout_data: [[String: String]] = []
     @Published var opportunity_data_dropdown: [DropdownMenuOption] = []
     
     func getFranchises() {
@@ -35,7 +36,7 @@ class ReadDB: ObservableObject {
                         }
                     }
                 } catch {
-                    print("error")
+                    print("Error getting franchises: \(error.localizedDescription)")
                 }
             }
 //                    print(responseText)
@@ -62,7 +63,7 @@ class ReadDB: ObservableObject {
         request.httpMethod = "GET"
         
         URLSession.shared.dataTask(with: request) { data, response, error in
-            if let data = data, let responseText = String(data: data, encoding: .utf8) {
+            if let data = data {
                 do {
                     if let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
                         DispatchQueue.main.async {
@@ -95,32 +96,55 @@ class ReadDB: ObservableObject {
                         }
                     }
                 } catch {
-                    print("error")
+                    print("Error getting opportunities: \(error.localizedDescription)")
                 }
             }
         }.resume()
     }
     
+    func getPayouts() {
+        var keysArray = ["revenue_generated", "date_scheduled", "status", "opportunity_id", "date_created", "payout_id", "amount_offered"]
+        var temp_dict: [String: String] = [:]
+        
+        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/payouts")!
+        var request = URLRequest(url: apiUrl)
+        request.httpMethod = "GET"
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let data = data, let responseText = String(data: data, encoding: .utf8) {
+                do {
+                    if let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                        DispatchQueue.main.async {
+                            if let itemsArray = jsonObject["Items"] as? [[String : Any]] {
+                                for value in itemsArray.reversed() {
+                                    for data in keysArray.reversed() {
+                                        if let nameDictionary = value[data] as? [String: String] {
+                                            if data == "opportunity_id" || data == "payout_id" {
+                                                if let nValue = nameDictionary["N"] {
+                                                    temp_dict[data] = nValue
+                                                }
+                                            } else if let sValue = nameDictionary["S"] {
+                                                temp_dict[data] = sValue
+                                            }
+                                        }
+//                                        if let nameDictionary = value[data] as? [String: String], let sValue = nameDictionary["S"] {
+//                                            temp_dict[data] = sValue
+//                                        }
+                                    }
+                                    self.payout_data.append(temp_dict)
+                                    temp_dict = [:]
+//                                    self.opportunity_data.append(value)
+                                }
+                            }
+                        }
+                    }
+                } catch {
+                    print("Error getting payots: \(error.localizedDescription)")
+                }
+            }
+        }.resume()
+        
+        
+    }
+    
 }
-
-//["min_invest_amount": {
-//    S = 200;
-//}, "location": {
-//    S = "Westminster, London";
-//}, "date_created": {
-//    S = "2023-11-08 11:40:51  0000";
-//}, "equity_offered": {
-//    S = 80;
-//}, "amount_raised": {
-//    S = 0;
-//}, "opportunity_id": {
-//    N = 1;
-//}, "close_date": {
-//    S = "2023-11-30 11:40:00  0000";
-//}, "status": {
-//    S = active;
-//}, "franchise": {
-//    S = "TGI Friday\U2019s";
-//}, "asking_price": {
-//    S = 1500000;
-//}]

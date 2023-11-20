@@ -194,7 +194,7 @@ struct AdminHome: View {
                         
                         ScrollView(.horizontal, showsIndicators: false) {
                             LazyHGrid(rows: rows, spacing: 20) {
-                                ForEach(0..<5, id: \.self ) { index in
+                                ForEach(0..<readDB.payout_data.count+1, id: \.self ) { index in
                                     
                                     if index == 0 {
                                         Button(action: { admin_payout_form_shown.toggle() }) {
@@ -233,23 +233,33 @@ struct AdminHome: View {
                                                     )
                                                 
                                                 VStack {
-                                                    Text("15/06/2023")
-                                                        .font(Font.custom("Nunito-Bold", size: 16))
+                                                    ZStack {
+                                                        RoundedRectangle(cornerRadius: 5)
+                                                            .fill(Color("Amber"))
+                                                            .frame(width: max(0, geometry.size.width-300), height: 25)
+                                                        
+                                                        Text("Scheduled")
+                                                            .font(Font.custom("Nunito-ExtraBold", size: 12))
+                                                            .foregroundColor(.white)
+                                                    }
                                                     
                                                     Spacer()
-                                                    
-                                                    Text("+£50,000")
-                                                        .font(Font.custom("Nunito-ExtraBold", size: 25))
-                                                        .foregroundColor(Color("Profit"))
+
+                                                    Text("+£\(String(describing:   formattedNumber(input_number: Int(readDB.payout_data[index-1]["amount_offered"]!)!)))")
+                                                        .font(Font.custom("Nunito-Bold", size: 25))
+//                                                        .foregroundColor(Color("Profit"))
                                                     
                                                     Spacer()
                                                     
                                                     HStack {
-                                                        Text("Investors - 500")
+                                                        
+                                                        Text(String(describing: 500))
+
+//    readDB.opportunity_data[Int(readDB.payout_data[index-1]["oportunity_id"])-1]["investors"]
                                                         Divider()
                                                             .frame(height: 15)
                                                         
-                                                        Text("Opportunity ID - 5")
+                                                        Text(String(describing: convertDate(dateString: readDB.payout_data[index-1]["date_created"]!)))
                                                     }
                                                     .font(Font.custom("Nunito-Bold", size: 6.5))
                                                     .foregroundColor(Color("Custom_Gray"))
@@ -357,9 +367,11 @@ struct AdminHome: View {
             .onAppear {
                 readDB.franchise_data = []
                 readDB.opportunity_data = []
+                readDB.payout_data = []
                 readDB.opportunity_data_dropdown = []
                 readDB.getOpportunities()
                 readDB.getFranchises()
+                readDB.getPayouts()
             }
             .navigationDestination(isPresented: $admin_payout_form_shown){
                 AdminPayoutForm(opportunity_data: $readDB.opportunity_data_dropdown)
@@ -383,6 +395,13 @@ struct AdminHome: View {
                 AdminAccount()
             }
         }
+    
+}
+
+extension Collection {
+    subscript(safe index: Index) -> Element? {
+        return indices.contains(index) ? self[index] : nil
+    }
 }
 
 #Preview {
