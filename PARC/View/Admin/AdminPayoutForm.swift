@@ -16,10 +16,10 @@ struct AdminPayoutForm: View {
     @Binding var opportunity_data : [DropdownMenuOption]
     @State private var date = Date()
 //    @State private var selectedDate = Date()
-    let dateRange: ClosedRange<Date> = {
-        let calendar = Calendar.current
-        let startComponents = DateComponents(year: 2023, month: 11, day: 1)
-        let endComponents = DateComponents(year: 2050, month: 12, day: 31)
+    var dateRange: ClosedRange<Date> = {
+        var calendar = Calendar.current
+        var startComponents = DateComponents(year: 2023, month: 11, day: 20)
+        var endComponents = DateComponents(year: 2050, month: 12, day: 31)
         return calendar.date(from:startComponents)!
             ...
             calendar.date(from:endComponents)!
@@ -46,7 +46,7 @@ struct AdminPayoutForm: View {
                             .padding(.bottom, -5).padding(.leading,2.5)
                         
                         DropdownMenu(selectedOption: self.$selectedOpportunity, placeholder: "Select", options: opportunity_data)
-                            .frame(width: max(0, geometry.size.width - 100))
+                            .frame(width: max(0, geometry.size.width - 45))
                             .padding(.leading,2.5)
                         
 //                        ZStack {
@@ -141,6 +141,7 @@ struct AdminPayoutForm: View {
                     .foregroundColor(.black)
                 }
             }
+
     }
     }
 }
