@@ -67,8 +67,8 @@ class ReadDB: ObservableObject {
                     if let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
                         DispatchQueue.main.async {
                             if let itemsArray = jsonObject["Items"] as? [[String : Any]] {
-                                for value in itemsArray {
-                                    for data in keysArray {
+                                for value in itemsArray.reversed() {
+                                    for data in keysArray.reversed() {
                                         if let nameDictionary = value[data] as? [String: String] {
                                             if data == "opportunity_id" {
                                                 if let nValue = nameDictionary["N"] {
@@ -77,9 +77,7 @@ class ReadDB: ObservableObject {
                                             } else if let sValue = nameDictionary["S"] {
                                                 temp_dict[data] = sValue
                                             }
-                                            
                                         }
-                                        
 //                                        if let nameDictionary = value[data] as? [String: String], let sValue = nameDictionary["S"] {
 //                                            temp_dict[data] = sValue
 //                                        }
@@ -87,10 +85,9 @@ class ReadDB: ObservableObject {
                                     let amountRaised = Int(temp_dict["amount_raised"] ?? "0") ?? 0
                                     let askingPrice = Int(temp_dict["asking_price"] ?? "1") ?? 1
                                     let ratio = Double(amountRaised) / Double(askingPrice)
-                                    
                                     temp_dict["ratio"] = String(describing: ratio)
                                     self.opportunity_data.append(temp_dict)
-                                    self.opportunity_data_dropdown.append(DropdownMenuOption(option: "\(temp_dict["opportunity_id"]!) - \(temp_dict["franchise"]!) - \(temp_dict["date_created"]!)"))
+                                    self.opportunity_data_dropdown.append(DropdownMenuOption(option: "\(temp_dict["opportunity_id"]!) - \(temp_dict["franchise"]!) - \(temp_dict["location"]!) - \(temp_dict["date_created"]!)"))
                                     temp_dict = [:]
 //                                    self.opportunity_data.append(value)
                                 }

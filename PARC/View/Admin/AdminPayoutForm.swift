@@ -141,7 +141,6 @@ struct AdminPayoutForm: View {
                     .foregroundColor(.black)
                 }
             }
-
     }
     }
 }
