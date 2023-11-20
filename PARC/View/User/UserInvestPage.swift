@@ -61,26 +61,26 @@ struct UserInvestPage: View {
                         }
                         .accentColor(Color("Secondary"))
                     
-                    HStack {
-                        if annual_income_int >= 200000 {
-                            Text("Annual Income: £\(annual_income_int)+")
-                        } else {
-                            Text("Annual Income: £\(annual_income_int)")
-                        }
-                    }
-                    .font(Font.custom("Nunito-Medium", size: 18))
-                    .padding(.top, 10).padding(.bottom, -5)
-                    
-                    Slider(value: $annual_income, in: 20000...200000, step: 1000)
-                        .onReceive([annual_income].publisher.first()) { value in
-                            annual_income_int = Int(annual_income)
-                            calculateInvestmentLimit()
-                            withAnimation(.easeOut(duration: 0.2)) {
-                                user_ready_to_invest = true
-                            }
-                        }
-                        .accentColor(Color("Secondary"))
-                    
+//                    HStack {
+//                        if annual_income_int >= 200000 {
+//                            Text("Annual Income: £\(annual_income_int)+")
+//                        } else {
+//                            Text("Annual Income: £\(annual_income_int)")
+//                        }
+//                    }
+//                    .font(Font.custom("Nunito-Medium", size: 18))
+//                    .padding(.top, 10).padding(.bottom, -5)
+//                    
+//                    Slider(value: $annual_income, in: 20000...200000, step: 1000)
+//                        .onReceive([annual_income].publisher.first()) { value in
+//                            annual_income_int = Int(annual_income)
+//                            calculateInvestmentLimit()
+//                            withAnimation(.easeOut(duration: 0.2)) {
+//                                user_ready_to_invest = true
+//                            }
+//                        }
+//                        .accentColor(Color("Secondary"))
+//                    
                     Divider()
                         .overlay(Color("Custom_Gray"))
                         .opacity(0.5)
@@ -196,17 +196,7 @@ struct UserInvestPage: View {
     }
     
     private func calculateInvestmentLimit() {
-        if net_worth_int >= investment_threshold && annual_income_int >= investment_threshold && annual_income_int > net_worth_int {
-            investment_limit = 10*(annual_income_int/100)
-        } else if  net_worth_int >= investment_threshold && annual_income_int >= investment_threshold && annual_income_int < net_worth_int {
-            investment_limit = 10*(net_worth_int/100)
-        } else if (net_worth_int < investment_threshold || annual_income_int < investment_threshold) && annual_income_int < net_worth_int {
-            investment_limit = 5*(net_worth_int/100)
-        } else if (net_worth_int < investment_threshold || annual_income_int < investment_threshold) && annual_income_int > net_worth_int {
-            investment_limit = 5*(annual_income_int/100)
-        } else {
-            investment_limit = 0
-        }
+        investment_limit = 10*(net_worth_int/100)
     }
 }
 
