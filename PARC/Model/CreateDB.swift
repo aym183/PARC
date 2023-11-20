@@ -142,7 +142,7 @@ class CreateDB: ObservableObject {
         
     }
     
-    func createPayout(status: String, revenue_generated: String, opportunity_data: String, date_scheduled: String, amount_offered: String) {
+    func createPayout(revenue_generated: String, opportunity_id: Int, date_scheduled: String, amount_offered: String, completion: @escaping (String?) -> Void) {
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/payouts")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
@@ -155,7 +155,7 @@ class CreateDB: ObservableObject {
                         DispatchQueue.main.async {
                             if let itemsArray = jsonObject["ScannedCount"] as? Int {
                                 let arrayLength = itemsArray+1
-                                let opportunityApiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/payouts?status=\(status)&revenue_generated=\(revenue_generated)&payout_id=\(arrayLength)&opportunity_id=2&date_scheduled=\(date_scheduled)&date_created=\(self.currentDate)")!
+                                let opportunityApiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/payouts?status=Scheduled&revenue_generated=\(revenue_generated)&payout_id=\(arrayLength)&opportunity_id=\(opportunity_id)&date_scheduled=\(date_scheduled)&date_created=\(self.currentDate)&amount_offered=\(amount_offered)")!
                                 
                                 var request = URLRequest(url: opportunityApiUrl)
                                 request.httpMethod = "POST"
@@ -164,7 +164,7 @@ class CreateDB: ObservableObject {
                                     if let data = data, let responseText = String(data: data, encoding: .utf8) {
                                         DispatchQueue.main.async {
                                             print(responseText)
-//                                            completion("Opportunity Created")
+                                            completion("Payout Created")
                                         }
                                     } else if let error = error {
                                         DispatchQueue.main.async {

@@ -330,7 +330,6 @@ struct AdminFranchiseForm: View {
                                         if response == "Franchise Created" {
                                             franchise_form_shown.toggle()
                                         }
-                                        
                                     }
                                 }
                             }) {

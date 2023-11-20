@@ -166,12 +166,13 @@ struct AdminOpportunityForm: View {
                         Spacer()
                         
                         Button(action: {
-                            CreateDB().create_opportunity(franchise_name: selectedFranchise!.option, location: location, asking_price: asking_price, equity_offered: equity_offered, min_invest_amount: min_investment_amount, close_date: String(describing: date)) { response in
-                                if response == "Opportunity Created" {
-                                    admin_home_shown.toggle()
+                            DispatchQueue.global(qos: .userInteractive).async {
+                                CreateDB().create_opportunity(franchise_name: selectedFranchise!.option, location: location, asking_price: asking_price, equity_offered: equity_offered, min_invest_amount: min_investment_amount, close_date: String(describing: date)) { response in
+                                    if response == "Opportunity Created" {
+                                        admin_home_shown.toggle()
+                                    }
                                 }
                             }
-                                
                             
                         }) {
                             HStack {

@@ -24,6 +24,7 @@ struct AdminPayoutForm: View {
             ...
             calendar.date(from:endComponents)!
     }()
+    @State var admin_home_shown = false
     
     
     var body: some View {
@@ -118,11 +119,18 @@ struct AdminPayoutForm: View {
                         Spacer()
                         
                         Button(action: {
-                            print(selectedOpportunity!.option)
-                            print(amount_offered)
-                            print(revenue_generated)
-                            print(date)
-                            
+                            let components = selectedOpportunity!.option.components(separatedBy: "-")
+                            if let opportunityID = Int((components.first?.trimmingCharacters(in: .whitespaces))!) {
+                                DispatchQueue.global(qos: .userInteractive).async {
+                                    CreateDB().createPayout(revenue_generated: revenue_generated, opportunity_id: opportunityID, date_scheduled: String(describing: date), amount_offered: amount_offered) { response in
+                                        if response == "Payout Created" {
+                                            admin_home_shown.toggle()
+                                        }
+                                    }
+                                }
+                            } else {
+                                print("Unable to opportunity sub-data")
+                            }
                         }) {
                             HStack {
                                 Text("Submit")
@@ -140,6 +148,9 @@ struct AdminPayoutForm: View {
                     .frame(width: max(0, geometry.size.width-40), height: max(0, geometry.size.height))
                     .foregroundColor(.black)
                 }
+            }
+            .navigationDestination(isPresented: $admin_home_shown) {
+                AdminHome().navigationBarBackButtonHidden(true)
             }
     }
     }
