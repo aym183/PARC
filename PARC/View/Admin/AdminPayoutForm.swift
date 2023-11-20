@@ -122,6 +122,7 @@ struct AdminPayoutForm: View {
                             print(amount_offered)
                             print(revenue_generated)
                             print(date)
+                            
                         }) {
                             HStack {
                                 Text("Submit")
