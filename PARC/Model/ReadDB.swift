@@ -9,28 +9,46 @@ import Foundation
 import SwiftUI
 
 class ReadDB: ObservableObject {
-    @Published var franchise_data: [DropdownMenuOption] = []
+    @Published var franchise_data_dropdown: [DropdownMenuOption] = []
+    @Published var franchise_data: [[String: String]] = []
     @Published var opportunity_data: [[String: String]] = []
     @Published var payout_data: [[String: String]] = []
     @Published var opportunity_data_dropdown: [DropdownMenuOption] = []
     
     func getFranchises() {
+        var temp_dict: [String: String] = [:]
+        let keysArray = ["description", "avg_revenue_18_months", "name", "logo", "industry", "no_of_franchises", "ebitda_estimate", "avg_franchise_mom_revenues", "avg_startup_capital"]
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/franchises")!
 
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
         
         URLSession.shared.dataTask(with: request) { data, response, error in
-            if let data = data, let responseText = String(data: data, encoding: .utf8) {
+            if let data = data {
                 
                 do {
                     if let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
                         DispatchQueue.main.async {
                             if let itemsArray = jsonObject["Items"] as? [[String: Any]] {
-                                for value in itemsArray {
-                                    if let nameDictionary = value["name"] as? [String: String], let sValue = nameDictionary["S"] {
-                                        self.franchise_data.append(DropdownMenuOption(option: sValue))
+                                for value in itemsArray.reversed() {
+                                    for data in keysArray.reversed() {
+                                        if let nameDictionary = value[data] as? [String: String] {
+                                            if data == "opportunity_id" {
+                                                if let nValue = nameDictionary["N"] {
+                                                    temp_dict[data] = nValue
+                                                }
+                                            } else if let sValue = nameDictionary["S"] {
+                                                temp_dict[data] = sValue
+                                            }
+                                        }
                                     }
+                                    self.franchise_data.append(temp_dict)
+                                    self.franchise_data_dropdown.append(DropdownMenuOption(option: temp_dict["name"]!))
+                                    temp_dict = [:]
+//                                    print(value)
+//                                    if let nameDictionary = value["name"] as? [String: String], let sValue = nameDictionary["S"] {
+//                                        self.franchise_data_dropdown.append(DropdownMenuOption(option: sValue))
+//                                    }
                                 }
                             }
                         }

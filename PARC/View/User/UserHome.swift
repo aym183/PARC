@@ -102,7 +102,7 @@ struct UserHome: View {
                                 .frame(height: 1)
                                 .overlay(.black)
                             
-                            UserHomeContent(opportunity_data: $readDB.opportunity_data)
+                            UserHomeContent(opportunity_data: $readDB.opportunity_data, franchise_data: $readDB.franchise_data)
                         } else if selectedTab == .chartPie {
                             Text("Portfolio")
                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.065))
@@ -149,10 +149,13 @@ struct UserHome: View {
                                 //                                }
                             }
                         }
+                        readDB.franchise_data = []
                         readDB.opportunity_data = []
+                        readDB.getFranchises()
                         readDB.getOpportunities() { response in
                             if response == "Fetched all opportunities" {
-                                print(readDB.opportunity_data)
+//                                print(readDB.opportunity_data)
+                                print("Fetched opportunities")
                             }
                         }
                         
@@ -182,6 +185,7 @@ struct UserHomeContent: View {
     @State var target_raise = "£3,500,000"
     @State var opportunity_shown = false
     @Binding var opportunity_data: [[String: String]]
+    @Binding var franchise_data: [[String: String]]
 
     
     var body: some View {
@@ -231,7 +235,7 @@ struct UserHomeContent: View {
                                                     Spacer()
                                                 }
                                                 
-                                                Text("A golden opportunity for those seeking a turnkey, globally renowned business in the fast-food industry, backed by a proven system of success and ongoing support.")
+                                                Text(franchise_data[franchise_data.firstIndex(where: { $0["name"] == opportunity_data[index]["franchise"]! })!]["description"]!)
                                                     .foregroundColor(Color("Custom_Gray"))
                                                     .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.030))
                                                     .frame(height: 50)

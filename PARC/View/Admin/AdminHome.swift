@@ -395,7 +395,7 @@ struct AdminHome: View {
                 }
             }
             .onAppear {
-                readDB.franchise_data = []
+                readDB.franchise_data_dropdown = []
                 readDB.opportunity_data = []
                 readDB.payout_data = []
                 readDB.opportunity_data_dropdown = []
@@ -410,7 +410,7 @@ struct AdminHome: View {
                 AdminPayoutForm(opportunity_data: $readDB.opportunity_data_dropdown)
             }
             .navigationDestination(isPresented: $admin_opportunity_form_shown){
-                AdminOpportunityForm(franchise_data: $readDB.franchise_data)
+                AdminOpportunityForm(franchise_data: $readDB.franchise_data_dropdown)
             }
             .navigationDestination(isPresented: $admin_trading_form_shown){
                 AdminTradingForm()
