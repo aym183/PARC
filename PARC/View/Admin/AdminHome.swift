@@ -24,6 +24,7 @@ struct AdminHome: View {
     @State var opportunity_title = ""
     @State var opportunity_logo = ""
     @State var opportunity_data: [String:String] = [:]
+    @State var payout_data: [String:String] = [:]
     @ObservedObject var readDB = ReadDB()
     
     var body: some View {
@@ -223,7 +224,11 @@ struct AdminHome: View {
                                             .frame(width: 135, height: 140)
                                         }
                                     } else {
-                                        Button(action: { admin_payout_click_shown.toggle() }) {
+                                        Button(action: {
+                                            opportunity_data = readDB.opportunity_data[Int(readDB.payout_data[index-1]["opportunity_id"]!)!-1]
+                                            payout_data = readDB.payout_data[index-1]
+                                            admin_payout_click_shown.toggle()
+                                        }) {
                                             ZStack {
                                                 RoundedRectangle(cornerRadius: 5)
                                                     .fill(Color.white)
@@ -417,7 +422,7 @@ struct AdminHome: View {
                 AdminTradingClick()
             }
             .navigationDestination(isPresented: $admin_payout_click_shown){
-                AdminPayoutClick()
+                AdminPayoutClick(opportunity_data: $opportunity_data, payout_data: $payout_data)
             }
             .navigationDestination(isPresented: $admin_account_click_shown){
                 AdminAccount()

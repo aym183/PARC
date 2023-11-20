@@ -132,6 +132,10 @@ class ReadDB: ObservableObject {
 //                                            temp_dict[data] = sValue
 //                                        }
                                     }
+                                    let revenue_generated = Int(temp_dict["revenue_generated"] ?? "0") ?? 0
+                                    let amount_offered = Int(temp_dict["amount_offered"] ?? "1") ?? 1
+                                    let percentage_of_revenue = (Double(amount_offered) / Double(revenue_generated))*100
+                                    temp_dict["percentage_of_revenue"] = "\(String(describing: percentage_of_revenue))%"
                                     self.payout_data.append(temp_dict)
                                     temp_dict = [:]
 //                                    self.opportunity_data.append(value)

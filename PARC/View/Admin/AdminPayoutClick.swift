@@ -9,9 +9,11 @@ import SwiftUI
 
 struct AdminPayoutClick: View {
     var payout_data_titles = ["Investors", "Revenue Generated (past month)", "% of Revenue", "Payout Date"]
-    var payout_data_values = ["500", "£750,000", "6.66%", "15/04/2023", "15/06/2023"]
+    var payout_data_values = ["investors", "revenue_generated", "percentage_of_revenue", "date_scheduled"]
     var opportunity_data_titles = ["Opportunity ID", "Opportunity Name", "Location"]
-    var opportunity_data_values = ["24", "McDonald's", "Stratford, London"]
+    var opportunity_data_values = ["opportunity_id", "franchise", "location"]
+    @Binding var opportunity_data: [String:String]
+    @Binding var payout_data: [String:String]
     
     var body: some View {
         GeometryReader { geometry in
@@ -19,7 +21,7 @@ struct AdminPayoutClick: View {
                 Color(.white).ignoresSafeArea()
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack {
-                        Text("+£50,000")
+                        Text("+£\(String(describing:   formattedNumber(input_number: Int(payout_data["amount_offered"]!)!)))")
                             .font(Font.custom("Nunito-ExtraBold", size: 50))
                             .foregroundColor(Color("Profit"))
                         
@@ -67,25 +69,63 @@ struct AdminPayoutClick: View {
                             .overlay(.black)
                             .padding(.bottom, 5)
                         
-                        ForEach(0..<payout_data_titles.count, id: \.self) {index in
-                            HStack {
-                                Text(payout_data_titles[index])
-                                    .foregroundColor(.gray)
-                                Spacer()
-                                
-                                Text(payout_data_values[index])
-                            }
-                            .font(Font.custom("Nunito-Medium", size: 14))
-                            .padding(.vertical, 6)
+                        HStack {
+                            Text("Investors")
+                                .foregroundColor(.gray)
+                            Spacer()
                             
-                            if index < payout_data_titles.count - 1 {
-                                Divider()
-                                    .overlay(.gray)
-                                    .frame(height: 1)
-                                    .opacity(0.5)
-                            }
+                            Text(opportunity_data["investors"]!)
+                           
                         }
+                        .font(Font.custom("Nunito-Medium", size: 14))
+                        .padding(.vertical, 6)
                         
+                        Divider()
+                            .overlay(.gray)
+                            .frame(height: 1)
+                            .opacity(0.5)
+                        
+                        HStack {
+                            Text("Revenue Generated (past month)")
+                                .foregroundColor(.gray)
+                            Spacer()
+                            
+                            Text("£\(formattedNumber(input_number: Int(payout_data["revenue_generated"]!)!))")
+                           
+                        }
+                        .font(Font.custom("Nunito-Medium", size: 14))
+                        .padding(.vertical, 6)
+                        
+                        Divider()
+                            .overlay(.gray)
+                            .frame(height: 1)
+                            .opacity(0.5)
+                        
+                        HStack {
+                            Text("% of revenue paid out")
+                                .foregroundColor(.gray)
+                            Spacer()
+                            
+                            Text("\(payout_data["percentage_of_revenue"]!)")
+                           
+                        }
+                        .font(Font.custom("Nunito-Medium", size: 14))
+                        .padding(.vertical, 6)
+                        
+                        Divider()
+                            .overlay(.gray)
+                            .frame(height: 1)
+                            .opacity(0.5)
+                        
+                        HStack {
+                            Text("Payout Date")
+                                .foregroundColor(.gray)
+                            Spacer()
+                            Text(String(describing: convertDate(dateString:payout_data["date_scheduled"]!)))
+                           
+                        }
+                        .font(Font.custom("Nunito-Medium", size: 14))
+                        .padding(.vertical, 6)
                         
                         HStack {
                             Text("Opportunity Details")
@@ -107,7 +147,7 @@ struct AdminPayoutClick: View {
                                     .foregroundColor(.gray)
                                 Spacer()
                                 
-                                Text(opportunity_data_values[index])
+                                Text(opportunity_data[opportunity_data_values[index]]!)
                             }
                             .font(Font.custom("Nunito-Medium", size: 14))
                             .padding(.vertical, 6)
@@ -132,7 +172,7 @@ struct AdminPayoutClick: View {
         }
     }
 }
-
-#Preview {
-    AdminPayoutClick()
-}
+//
+//#Preview {
+//    AdminPayoutClick()
+//}
