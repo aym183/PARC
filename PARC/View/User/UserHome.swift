@@ -102,7 +102,9 @@ struct UserHome: View {
                                 .frame(height: 1)
                                 .overlay(.black)
                             
-                            UserHomeContent(opportunity_data: $readDB.opportunity_data, franchise_data: $readDB.franchise_data)
+                            if readDB.opportunity_data != [] && readDB.franchise_data != [] {
+                                UserHomeContent(opportunity_data: $readDB.opportunity_data, franchise_data: $readDB.franchise_data)
+                            }
                         } else if selectedTab == .chartPie {
                             Text("Portfolio")
                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.065))
@@ -185,6 +187,7 @@ struct UserHomeContent: View {
     @State var target_raise = "£3,500,000"
     @State var opportunity_shown = false
     @Binding var opportunity_data: [[String: String]]
+    @State var selected_opportunity: [String: String] = [:]
     @Binding var franchise_data: [[String: String]]
 
     
@@ -194,10 +197,10 @@ struct UserHomeContent: View {
                         ForEach(0..<opportunity_data.count, id: \.self) { index in
                             
                             Button(action: {
-                                print("You clicked \(titles[index])")
-                                bg_image = bg_images[index]
-                                logo = logo_images[index]
-                                title = titles[index]
+                                selected_opportunity = opportunity_data[index]
+//                                bg_image = bg_images[index]
+//                                logo = logo_images[index]
+//                                title = titles[index]
                                 opportunity_shown.toggle()
                             }) {
                                 ZStack{
@@ -235,7 +238,7 @@ struct UserHomeContent: View {
                                                     Spacer()
                                                 }
                                                 
-                                                Text(franchise_data[franchise_data.firstIndex(where: { $0["name"] == opportunity_data[index]["franchise"]! })!]["description"]!)
+                                                Text(franchise_data[franchise_data.firstIndex(where: { $0["name"] == opportunity_data[index]["franchise"]!})!]["description"]!)
                                                     .foregroundColor(Color("Custom_Gray"))
                                                     .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.030))
                                                     .frame(height: 50)
@@ -303,7 +306,7 @@ struct UserHomeContent: View {
                     }
                     .frame(width: max(0, geometry.size.width))
                     .navigationDestination(isPresented: $opportunity_shown) {
-                        UserOpportunity(bg_image: $bg_image, logo: $logo, title: $title, progress: $progress, min_investment_amount: $min_investment_amount, target_raise: $target_raise)
+                        UserOpportunityClick(opportunity_data: $selected_opportunity, franchise_data: $franchise_data)
                     }
             }
     }

@@ -22,16 +22,18 @@ import SwiftUI
 //    }
 //}
 
-struct UserOpportunity: View {
-    @Binding var bg_image: String
-    @Binding var logo: String
-    @Binding var title: String
-    @Binding var progress: String
-    @Binding var min_investment_amount: String
-    @Binding var target_raise: String
+struct UserOpportunityClick: View {
+//    @Binding var bg_image: String
+//    @Binding var logo: String
+//    @Binding var title: String
+//    @Binding var progress: String
+//    @Binding var min_investment_amount: String
+//    @Binding var target_raise: String
+    @Binding var opportunity_data: [String: String]
+    @Binding var franchise_data: [[String: String]]
     @State var user_invest_shown = false
-    @State var investment_titles = ["Location", "Type", "Equity Offered", "", ""]
-    @State var investment_values = ["Stratford, London", "Equity", "12.54%", "", ""]
+//    @State var investment_titles = ["Location", "Type", "Equity Offered", "", ""]
+//    @State var investment_values = ["location", "Equity", "equity_offered", "", ""]
     
     var body: some View {
         GeometryReader { geometry in
@@ -39,7 +41,7 @@ struct UserOpportunity: View {
                 Color(.white).ignoresSafeArea()
                 
                 ScrollView(.vertical, showsIndicators: false) {
-                    Image(bg_image)
+                    Image("store_live")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: max(0, geometry.size.width))
@@ -48,18 +50,18 @@ struct UserOpportunity: View {
                     VStack {
                         
                         HStack {
-                            Image(logo)
+                            Image("McDonalds")
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .frame(width: 50, height: 50)
                             
-                            Text(title)
+                            Text(String(describing: opportunity_data["franchise"]!))
                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.055))
                             
                             Spacer()
                         }
                         
-                        Text("A golden opportunity for those seeking a turnkey, globally renowned business in the fast-food industry, backed by a proven system of success and ongoing support.")
+                        Text(franchise_data[franchise_data.firstIndex(where: { $0["name"] == opportunity_data["franchise"]! })!]["description"]!)
                             .frame(width: max(0, geometry.size.width - 40))
                             .foregroundColor(Color("Custom_Gray"))
                             .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.030))
@@ -67,7 +69,7 @@ struct UserOpportunity: View {
 
                         
                         HStack {
-                            Text(progress)
+                            Text("\(String(describing: Int(Double(opportunity_data["ratio"]!)!*100)))% - \(getDaysRemaining(dateString: String(describing: opportunity_data["close_date"]!))!) days left")
                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.024))
                                 .foregroundColor(Color("Custom_Gray"))
                             Spacer()
@@ -81,7 +83,7 @@ struct UserOpportunity: View {
                                 
                                 HStack {
                                     Image("gbr").resizable().frame(width: 10, height: 10)
-                                    Text("London")
+                                    Text(String(describing: opportunity_data["location"]!))
                                         .font(Font.custom("Nunito-Bold", size: 8))
                                         .foregroundColor(Color("Custom_Gray"))
                                         .padding(.leading, -7.5)
@@ -90,7 +92,7 @@ struct UserOpportunity: View {
                         }
                         .padding(.top, -3)
                         
-                        ProgressView(value: /*@START_MENU_TOKEN@*/0.5/*@END_MENU_TOKEN@*/)
+                        ProgressView(value: Double(opportunity_data["ratio"]!))
                             .tint(Color("Secondary"))
                             .scaleEffect(x: 1, y: 2, anchor: .center)
                             .padding(.top, -1)
@@ -119,13 +121,13 @@ struct UserOpportunity: View {
 //                        .padding(.top, -5)
                         
                         HStack {
-                            Text("Minimum Investment Amount - £\(min_investment_amount)")
+                            Text("Minimum Investment Amount - £\(opportunity_data["min_invest_amount"]!)")
                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.024))
                                 .foregroundColor(Color("Custom_Gray"))
                             
                             Spacer()
                             
-                            Text(target_raise)
+                            Text("£\(String(describing: formattedNumber(input_number:Int(opportunity_data["asking_price"]!)!)))")
                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.024))
                                 .foregroundColor(Color("Custom_Gray"))
                             
@@ -141,7 +143,7 @@ struct UserOpportunity: View {
                         
                         HStack {
                             VStack(alignment: .leading) {
-                                Text("£900,000")
+                                Text("£\(String(describing: formattedNumber(input_number:Int(opportunity_data["amount_raised"]!)!)))")
                                     .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.075))
                                 Text("Invested")
                                     .foregroundColor(Color("Custom_Gray"))
@@ -151,7 +153,7 @@ struct UserOpportunity: View {
                             Spacer()
                             
                             VStack(alignment: .leading) {
-                                Text("400")
+                                Text("\(String(describing: opportunity_data["investors"]!))")
                                     .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.075))
                                 Text("Investors")
                                     .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.03))
@@ -254,22 +256,50 @@ struct UserOpportunity: View {
                             .padding(.top, -15)
                         
                        
-                        ForEach(0..<investment_titles.count, id: \.self) {index in
                             HStack {
-                                Text(investment_titles[index])
+                                Text("Location")
                                     .foregroundColor(Color("Custom_Gray"))
                                 Spacer()
-                                Text(investment_values[index])
-                                }
-                                .font(Font.custom("Nunito-SemiBold", size: 14))
-                            if index < 3 {
-                                Divider()
-                                    .overlay(.gray)
-                                    .frame(height: 1)
-                                    .opacity(0.5)
+                                Text(opportunity_data["location"]!)
                             }
+                            .font(Font.custom("Nunito-SemiBold", size: 14))
+                            .padding(.vertical, 5)
+                        
+                            Divider()
+                                .overlay(.gray)
+                                .frame(height: 1)
+                                .opacity(0.5)
+                                .padding(.vertical, 5)
+                        
+                        HStack {
+                            Text("Type")
+                                .foregroundColor(Color("Custom_Gray"))
+                            Spacer()
+                            Text("Equity")
                         }
+                        .font(Font.custom("Nunito-SemiBold", size: 14))
                         .padding(.vertical, 5)
+                    
+                        Divider()
+                            .overlay(.gray)
+                            .frame(height: 1)
+                            .opacity(0.5)
+                            .padding(.vertical, 5)
+                        
+                        HStack {
+                            Text("Equity Offered")
+                                .foregroundColor(Color("Custom_Gray"))
+                            Spacer()
+                            Text("\(opportunity_data["equity_offered"]!)%")
+                        }
+                        .font(Font.custom("Nunito-SemiBold", size: 14))
+                        .padding(.vertical, 5)
+                    
+                        Divider()
+                            .overlay(.gray)
+                            .frame(height: 1)
+                            .opacity(0.5)
+                            .padding(.vertical, 5)
                         
                     }
                     .frame(width: max(0, geometry.size.width - 40))
@@ -299,6 +329,6 @@ struct UserOpportunity: View {
     }
 }
 
-#Preview {
-    UserOpportunity(bg_image: .constant("store_live"), logo: .constant("McDonalds"), title: .constant("McDonald's"), progress: .constant("250,000"), min_investment_amount: .constant("100"), target_raise: .constant("250,000,000"))
-}
+//#Preview {
+//    UserOpportunityClick(bg_image: .constant("store_live"), logo: .constant("McDonalds"), title: .constant("McDonald's"), progress: .constant("250,000"), min_investment_amount: .constant("100"), target_raise: .constant("250,000,000"))
+//}
