@@ -18,7 +18,7 @@ struct UserHome: View {
     @AppStorage("picture") var picture: String = ""
     @AppStorage("onboarding_completed") var onboarding_completed: Bool = false
     @State var imageURL = URL(string: "")
-
+    @ObservedObject var readDB = ReadDB()
     
     var body: some View {
         GeometryReader { geometry in
@@ -102,7 +102,7 @@ struct UserHome: View {
                                 .frame(height: 1)
                                 .overlay(.black)
                             
-                            UserHomeContent()
+                            UserHomeContent(opportunity_data: $readDB.opportunity_data)
                         } else if selectedTab == .chartPie {
                             Text("Portfolio")
                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.065))
@@ -149,6 +149,12 @@ struct UserHome: View {
                                 //                                }
                             }
                         }
+                        readDB.opportunity_data = []
+                        readDB.getOpportunities() { response in
+                            if response == "Fetched all opportunities" {
+                                print(readDB.opportunity_data)
+                            }
+                        }
                         
                     }
                     .opacity(isInvestmentConfirmed ? 0 : 1)
@@ -175,11 +181,13 @@ struct UserHomeContent: View {
     @State var min_investment_amount = "100"
     @State var target_raise = "£3,500,000"
     @State var opportunity_shown = false
+    @Binding var opportunity_data: [[String: String]]
+
     
     var body: some View {
             GeometryReader { geometry in
-                    ScrollView(.vertical, showsIndicators: false){
-                        ForEach(0..<2, id: \.self) {index in
+                    ScrollView(.vertical, showsIndicators: false) {
+                        ForEach(0..<opportunity_data.count, id: \.self) { index in
                             
                             Button(action: {
                                 print("You clicked \(titles[index])")
@@ -189,7 +197,7 @@ struct UserHomeContent: View {
                                 opportunity_shown.toggle()
                             }) {
                                 ZStack{
-                                    Image(bg_images[index])
+                                    Image(bg_images[0])
                                         .resizable()
                                         .frame(height: 250)
                                         .cornerRadius(5)
@@ -209,16 +217,16 @@ struct UserHomeContent: View {
                                             
                                             VStack(alignment: .leading) {
                                                 HStack {
-                                                    Image(logo_images[index])
+                                                    Image(logo_images[0])
                                                         .resizable()
                                                         .aspectRatio(contentMode: .fit)
                                                         .frame(width: 40, height: 30)
                                                         .padding(.top, 10).padding(.leading, 5)
                                                     
-                                                    Text(titles[index])
-                                                        .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.045))
+                                                    Text(String(describing: opportunity_data[index]["franchise"]!))
+                                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.045))
                                                         .foregroundColor(.black)
-                                                        .padding(.top, 10).padding(.leading, -5)
+                                                        .padding(.top, 10).padding(.leading, -7.5)
                                                     
                                                     Spacer()
                                                 }
@@ -231,7 +239,7 @@ struct UserHomeContent: View {
                                                     .padding(.horizontal, 12).padding(.top, -12)
                                                 
                                                 HStack {
-                                                    Text(progress)
+                                                    Text("\(String(describing: Int(Double(opportunity_data[index]["ratio"]!)!*100)))% - \(getDaysRemaining(dateString: String(describing: opportunity_data[index]["close_date"]!))!) days left")
                                                         .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.024))
                                                         .foregroundColor(Color("Custom_Gray"))
                                                         .frame(alignment: .leading)
@@ -246,7 +254,7 @@ struct UserHomeContent: View {
                                                         
                                                         HStack {
                                                             Image("gbr").resizable().frame(width: 10, height: 10)
-                                                            Text("London")
+                                                            Text(String(describing: opportunity_data[index]["location"]!))
                                                                 .font(Font.custom("Nunito-Bold", size: 8))
                                                                 .foregroundColor(Color("Custom_Gray"))
                                                                 .padding(.leading, -7.5)
@@ -256,19 +264,18 @@ struct UserHomeContent: View {
                                                 .padding(.horizontal,12)
                                                 .padding(.top, -3)
                                                 
-                                                ProgressView(value: /*@START_MENU_TOKEN@*/0.5/*@END_MENU_TOKEN@*/)
+                                                ProgressView(value: Double(opportunity_data[index]["ratio"]!))
                                                     .tint(Color("Secondary"))
                                                     .scaleEffect(x: 1, y: 2, anchor: .center)
                                                     .padding(.horizontal, 11).padding(.top, -1)
                                                 
                                                 HStack {
-                                                    Text("Minimum Investment Amount - £\(min_investment_amount)")
+                                                    Text("Minimum Investment Amount - £\(opportunity_data[index]["min_invest_amount"]!)")
                                                     .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.024))
                                                         .foregroundColor(Color("Custom_Gray"))
                                                         .frame(alignment: .leading)
                                                     Spacer()
-                                                    
-                                                    Text(target_raise)
+                                                    Text("£\(String(describing: formattedNumber(input_number:Int(opportunity_data[index]["asking_price"]!)!)))")
                                                         .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.024))
                                                         .foregroundColor(Color("Custom_Gray"))
                                                         .frame(alignment: .leading)
