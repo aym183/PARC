@@ -14,6 +14,7 @@ struct AdminPayoutClick: View {
     var opportunity_data_values = ["opportunity_id", "franchise", "location"]
     @Binding var opportunity_data: [String:String]
     @Binding var payout_data: [String:String]
+    @Binding var admin_payout_click_shown: Bool
     
     var body: some View {
         GeometryReader { geometry in
@@ -39,7 +40,13 @@ struct AdminPayoutClick: View {
                             }
                             .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 4)
                             
-                            Button(action: { UpdateDB().updateTable(primary_key: "payout_id", primary_key_value: payout_data["payout_id"]!, table: "payouts", updated_key: "status", updated_value: "Cancelled") }) {
+                            Button(action: { UpdateDB().updateTable(primary_key: "payout_id", primary_key_value: payout_data["payout_id"]!, table: "payouts", updated_key: "status", updated_value: "Cancelled") { response in
+                                if response == "payouts status updated" {
+                                        admin_payout_click_shown.toggle()
+                                }
+                            }
+                            }
+                            ) {
                                 HStack {
                                     Text("Cancel Payout")
                                         .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.038))
@@ -169,6 +176,9 @@ struct AdminPayoutClick: View {
                     .padding(.top)
                 }
             }
+//            .navigationDestination(isPresented: $admin_payout_click_shown) {
+//                AdminHome().navigationBarBackButtonHidden(true)
+//            }
         }
     }
 }

@@ -422,7 +422,7 @@ struct AdminHome: View {
                 AdminTradingClick()
             }
             .navigationDestination(isPresented: $admin_payout_click_shown){
-                AdminPayoutClick(opportunity_data: $opportunity_data, payout_data: $payout_data)
+                AdminPayoutClick(opportunity_data: $opportunity_data, payout_data: $payout_data, admin_payout_click_shown: $admin_payout_click_shown)
             }
             .navigationDestination(isPresented: $admin_account_click_shown){
                 AdminAccount()
