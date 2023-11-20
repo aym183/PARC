@@ -234,13 +234,31 @@ struct AdminHome: View {
                                                 
                                                 VStack {
                                                     ZStack {
-                                                        RoundedRectangle(cornerRadius: 5)
-                                                            .fill(Color("Amber"))
-                                                            .frame(width: max(0, geometry.size.width-300), height: 25)
-                                                        
-                                                        Text("Scheduled")
-                                                            .font(Font.custom("Nunito-ExtraBold", size: 12))
-                                                            .foregroundColor(.white)
+                                                        if readDB.payout_data[index-1]["status"] == "Scheduled" {
+                                                            RoundedRectangle(cornerRadius: 5)
+                                                                .fill(Color("Amber"))
+                                                                .frame(width: max(0, geometry.size.width-300), height: 25)
+                                                            
+                                                            Text(String(describing: readDB.payout_data[index-1]["status"]!))
+                                                                .font(Font.custom("Nunito-ExtraBold", size: 12))
+                                                                .foregroundColor(.white)
+                                                        } else if readDB.payout_data[index-1]["status"] == "Completed" {
+                                                            RoundedRectangle(cornerRadius: 5)
+                                                                .fill(Color("Profit"))
+                                                                .frame(width: max(0, geometry.size.width-300), height: 25)
+                                                            
+                                                            Text(String(describing: readDB.payout_data[index-1]["status"]!))
+                                                                .font(Font.custom("Nunito-ExtraBold", size: 12))
+                                                                .foregroundColor(.white)
+                                                        } else if readDB.payout_data[index-1]["status"] == "Cancelled" {
+                                                            RoundedRectangle(cornerRadius: 5)
+                                                                .fill(Color("Loss"))
+                                                                .frame(width: max(0, geometry.size.width-300), height: 25)
+                                                            
+                                                            Text(String(describing: readDB.payout_data[index-1]["status"]!))
+                                                                .font(Font.custom("Nunito-ExtraBold", size: 12))
+                                                                .foregroundColor(.white)
+                                                        }
                                                     }
                                                     
                                                     Spacer()
@@ -253,13 +271,20 @@ struct AdminHome: View {
                                                     
                                                     HStack {
                                                         
-                                                        Text(String(describing: 500))
-
-//    readDB.opportunity_data[Int(readDB.payout_data[index-1]["oportunity_id"])-1]["investors"]
+                                                        Text("Investors: \(String(describing: readDB.opportunity_data[Int(readDB.payout_data[index-1]["opportunity_id"]!)!-1]["investors"]!))")
+                                                        
+                                                        //    readDB.opportunity_data[Int(readDB.payout_data[index-1]["oportunity_id"])-1]["investors"]
                                                         Divider()
                                                             .frame(height: 15)
                                                         
-                                                        Text(String(describing: convertDate(dateString: readDB.payout_data[index-1]["date_created"]!)))
+                                                        if readDB.payout_data[index-1]["status"] == "Scheduled" {
+                                                            Text("Scheduled: \(String(describing: convertDate(dateString: readDB.payout_data[index-1]["date_scheduled"]!)))")
+                                                        } else if readDB.payout_data[index-1]["status"] == "Completed" {
+                                                            Text("Created: \(String(describing: convertDate(dateString: readDB.payout_data[index-1]["date_created"]!)))")
+                                                            
+                                                        } else if readDB.payout_data[index-1]["status"] == "Cancelled" {
+                                                            Text("Created: \(String(describing: convertDate(dateString: readDB.payout_data[index-1]["date_created"]!)))")
+                                                        }
                                                     }
                                                     .font(Font.custom("Nunito-Bold", size: 6.5))
                                                     .foregroundColor(Color("Custom_Gray"))
@@ -369,9 +394,12 @@ struct AdminHome: View {
                 readDB.opportunity_data = []
                 readDB.payout_data = []
                 readDB.opportunity_data_dropdown = []
-                readDB.getOpportunities()
                 readDB.getFranchises()
-                readDB.getPayouts()
+                readDB.getOpportunities() { response in
+                    if response == "Fetched all opportunities" {
+                        readDB.getPayouts()
+                    }
+                }
             }
             .navigationDestination(isPresented: $admin_payout_form_shown){
                 AdminPayoutForm(opportunity_data: $readDB.opportunity_data_dropdown)

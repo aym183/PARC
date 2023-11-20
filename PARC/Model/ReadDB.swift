@@ -54,7 +54,7 @@ class ReadDB: ObservableObject {
         }.resume()
     }
     
-    func getOpportunities() {
+    func getOpportunities(completion: @escaping (String?) -> Void) {
         var keysArray = ["min_invest_amount", "location", "date_created", "equity_offered", "amount_raised", "close_date", "status", "franchise", "asking_price", "opportunity_id", "investors"]
         var temp_dict: [String: String] = [:]
         
@@ -92,6 +92,7 @@ class ReadDB: ObservableObject {
                                     temp_dict = [:]
 //                                    self.opportunity_data.append(value)
                                 }
+                                completion("Fetched all opportunities")
                             }
                         }
                     }
