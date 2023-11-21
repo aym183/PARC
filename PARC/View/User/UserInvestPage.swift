@@ -25,6 +25,9 @@ struct UserInvestPage: View {
     @State var user_ready_to_invest = false
     @State var isShownHomePage = false
     @Binding var user_invest_shown: Bool
+    @Binding var asking_price: Double
+    @Binding var equity_offered: Double
+    @State var equity_value = 0.0
     
     var body: some View {
         GeometryReader { geometry in
@@ -156,10 +159,22 @@ struct UserInvestPage: View {
                             Spacer()
                             Text("Invalid Amount").foregroundColor(.red).font(Font.custom("Nunito-Medium", size: min(geometry.size.width, geometry.size.height) * 0.035)).fontWeight(.bold)
                         }
+                    } else if isInvestmentAmountValid && investment_amount != "" {
+                        HStack {
+                            Spacer()
+                            Text("\(String(format: "%.3f", (Double(investment_amount)!/equity_value)*100))% of equity").font(Font.custom("Nunito-Medium", size: min(geometry.size.width, geometry.size.height) * 0.035)).fontWeight(.bold)
+                        }
                     }
                     
                     Spacer()
-                    Button(action: { home_page_shown.toggle() }) {
+                    Button(action: { 
+//                        print("Equity offered is: \(equity_offered)")
+//                        print("Asking price is: \(asking_price)")
+//                        print("Investment amount is: \(Int(investment_amount)!)")
+//                        print("Full value of opportunity: \(equity_value)")
+//                        print("% owned by user: \(String(format: "%.2f", (Double(investment_amount)!/equity_value)*100))%")
+                        home_page_shown.toggle()
+                    }) {
                         HStack {
                             Text("Confirm Investment")
                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.06))
@@ -184,6 +199,9 @@ struct UserInvestPage: View {
             .navigationDestination(isPresented: $home_page_shown) {
                 UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isShownHomePage: $isShownHomePage).navigationBarBackButtonHidden(true)
             }
+            .onAppear {
+                equity_value = (asking_price*100)/(equity_offered)
+            }
         }
     }
     
@@ -200,6 +218,6 @@ struct UserInvestPage: View {
     }
 }
 
-//#Preview {
-//    UserInvestPage()
-//}
+#Preview {
+    UserInvestPage(user_invest_shown: .constant(false), asking_price: .constant(1000000.0), equity_offered: .constant(80.0))
+}

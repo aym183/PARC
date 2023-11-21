@@ -32,6 +32,8 @@ struct UserOpportunityClick: View {
     @Binding var opportunity_data: [String: String]
     @Binding var franchise_data: [[String: String]]
     @State var user_invest_shown = false
+    @State var asking_price = 0.0
+    @State var equity_offered = 0.0
 //    @State var investment_titles = ["Location", "Type", "Equity Offered", "", ""]
 //    @State var investment_values = ["location", "Equity", "equity_offered", "", ""]
     
@@ -306,7 +308,11 @@ struct UserOpportunityClick: View {
                 }
                 .foregroundColor(.black)
                 
-                Button(action: { user_invest_shown.toggle() }) {
+                Button(action: {
+                    asking_price = Double(opportunity_data["asking_price"]!)!
+                    equity_offered = Double(opportunity_data["equity_offered"]!)!
+                    user_invest_shown.toggle()
+                }) {
                     HStack {
                         Text("Invest")
                             .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.06))
@@ -321,7 +327,7 @@ struct UserOpportunityClick: View {
                 
             }
             .navigationDestination(isPresented: $user_invest_shown) {
-                UserInvestPage(user_invest_shown: $user_invest_shown)
+                UserInvestPage(user_invest_shown: $user_invest_shown, asking_price: $asking_price, equity_offered: $equity_offered)
             }
 //            .frame(width: max(0, geometry.size.width), height: max(0, geometry.size.height - 20))
             
