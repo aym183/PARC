@@ -25,7 +25,10 @@ struct UserInvestPage: View {
     @Binding var asking_price: Double
     @Binding var equity_offered: Double
     @Binding var opportunity_id: String
+    @Binding var amount_offered: String
+    @Binding var investors: String
     @State var equity_value = 0.0
+    @State var updated_amount_offered = 0
     @AppStorage("email") var email: String = ""
     
     var body: some View {
@@ -174,11 +177,25 @@ struct UserInvestPage: View {
 //                        print("% owned by user: \(String(format: "%.2f", (Double(investment_amount)!/equity_value)*100))%")
                         
                         // Add user holdings, user transaction opportunities, update opportunity amount
+                        updated_amount_offered = Int(amount_offered)! + Int(investment_amount)!
                         DispatchQueue.global(qos: .userInteractive).async {
-                            CreateDB().createUserInvestmentHolding(opportunity_id: opportunity_id, email: email, equity: String(format: "%.3f", (Double(investment_amount)!/equity_value)*100), amount: investment_amount)
-                            
+                            UpdateDB().updateTable(primary_key: "opportunity_id", primary_key_value: opportunity_id, table: "opportunities", updated_key: "amount_raised", updated_value: String(describing: updated_amount_offered)) { response in
+                                
+                                if response == "opportunities amount_raised updated" {
+                                    UpdateDB().updateTable(primary_key: "opportunity_id", primary_key_value: opportunity_id, table: "opportunities", updated_key: "investors", updated_value: investors) { second_response in
+                                        
+                                        if second_response == "opportunities investors updated" {
+                                            home_page_shown.toggle()
+                                            
+                                            CreateDB().createUserInvestmentHolding(opportunity_id: opportunity_id, email: email, equity: String(format: "%.3f", (Double(investment_amount)!/equity_value)*100), amount: investment_amount)
+                                            
+                                            CreateDB().createOpportunityTransaction(opportunity_id: opportunity_id, email: email, amount: investment_amount)
+                                        }
+                                    }
+                                }
+                                
+                            }
                         }
-                        home_page_shown.toggle()
                     }) {
                         HStack {
                             Text("Confirm Investment")

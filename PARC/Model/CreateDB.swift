@@ -182,10 +182,46 @@ class CreateDB: ObservableObject {
         }.resume()
     }
     
-//    func createOpportunityTransaction() {
-//
-//    }
-//    
+    func createOpportunityTransaction(opportunity_id: String, email: String, amount: String) {
+        
+        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/transactions")!
+        var request = URLRequest(url: apiUrl)
+        request.httpMethod = "GET"
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let data = data, let responseText = String(data: data, encoding: .utf8) {
+                
+                do {
+                    if let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                        DispatchQueue.main.async {
+                            if let itemsArray = jsonObject["ScannedCount"] as? Int {
+                                let arrayLength = itemsArray+1
+                                let opportunityApiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/transactions?transaction_id=\(arrayLength)&opportunity_id=\(Int(opportunity_id)!)&status=Confirmed&user_email=\(email)&transaction_date=\(Date.now)&amount_paid=\(amount)")!
+                                
+                                var request = URLRequest(url: opportunityApiUrl)
+                                request.httpMethod = "POST"
+
+                                URLSession.shared.dataTask(with: request) { data, response, error in
+                                    if let data = data, let responseText = String(data: data, encoding: .utf8) {
+                                        DispatchQueue.main.async {
+                                            print("User holding created: \(responseText)")
+                                        }
+                                    } else if let error = error {
+                                        DispatchQueue.main.async {
+                                            print("Error creating user holding: \(error.localizedDescription)")
+                                        }
+                                    }
+                                }.resume()
+                            }
+                        }
+                    }
+                } catch {
+                    print("Error")
+                }
+            }
+        }.resume()
+    }
+    
     func createUserInvestmentHolding(opportunity_id: String, email: String, equity: String, amount: String) {
 
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/user-holdings")!
