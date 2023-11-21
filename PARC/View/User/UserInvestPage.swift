@@ -14,9 +14,6 @@ struct UserInvestPage: View {
     @State var investment_amount = ""
     @State var net_worth: Double = 0
     @State var net_worth_int: Int = 0
-    @State var annual_income: Double = 0
-    @State var annual_income_int: Int = 0
-    @State var investment_threshold = 102000
     @State var investment_limit = 0
     @State var min_investment = 100
     @State var isInvestmentAmountValid: Bool = false
@@ -27,7 +24,9 @@ struct UserInvestPage: View {
     @Binding var user_invest_shown: Bool
     @Binding var asking_price: Double
     @Binding var equity_offered: Double
+    @Binding var opportunity_id: String
     @State var equity_value = 0.0
+    @AppStorage("email") var email: String = ""
     
     var body: some View {
         GeometryReader { geometry in
@@ -173,6 +172,12 @@ struct UserInvestPage: View {
 //                        print("Investment amount is: \(Int(investment_amount)!)")
 //                        print("Full value of opportunity: \(equity_value)")
 //                        print("% owned by user: \(String(format: "%.2f", (Double(investment_amount)!/equity_value)*100))%")
+                        
+                        // Add user holdings, user transaction opportunities, update opportunity amount
+                        DispatchQueue.global(qos: .userInteractive).async {
+                            CreateDB().createUserInvestmentHolding(opportunity_id: opportunity_id, email: email, equity: String(format: "%.3f", (Double(investment_amount)!/equity_value)*100), amount: investment_amount)
+                            
+                        }
                         home_page_shown.toggle()
                     }) {
                         HStack {
@@ -218,6 +223,6 @@ struct UserInvestPage: View {
     }
 }
 
-#Preview {
-    UserInvestPage(user_invest_shown: .constant(false), asking_price: .constant(1000000.0), equity_offered: .constant(80.0))
-}
+//#Preview {
+//    UserInvestPage(user_invest_shown: .constant(false), asking_price: .constant(1000000.0), equity_offered: .constant(80.0))
+//}
