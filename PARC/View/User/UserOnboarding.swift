@@ -183,7 +183,7 @@ struct UserOnboarding: View {
                                             } else {
                                                 print("Has Invested")
                                             }
-                                            
+                                            isShownOnboarding.toggle()
                                         }) {
                                                 Text("Submit")
                                                     .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.05))

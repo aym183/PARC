@@ -16,6 +16,7 @@ struct UserHome: View {
     @State var isShownOnboarding = false
     @AppStorage("first_name") var firstName: String = ""
     @AppStorage("picture") var picture: String = ""
+    @AppStorage("email") var email: String = ""
     @AppStorage("onboarding_completed") var onboarding_completed: Bool = false
     @State var imageURL = URL(string: "")
     @ObservedObject var readDB = ReadDB()
@@ -68,7 +69,9 @@ struct UserHome: View {
                             Text("PARC").font(Font.custom("Nunito-Black", size: 60)).foregroundColor(Color("Secondary"))
                             Spacer()
                             
-                            Button(action: { account_shown.toggle() }) {
+                            Button(action: {
+                                print(readDB.user_holdings_data)
+                                account_shown.toggle() }) {
                                 if imageURL != nil {
                                     URLImage(imageURL!) { image in
                                         image
@@ -103,7 +106,7 @@ struct UserHome: View {
                                 .overlay(.black)
                             
                             if readDB.opportunity_data != [] && readDB.franchise_data != [] {
-                                UserHomeContent(opportunity_data: $readDB.opportunity_data, franchise_data: $readDB.franchise_data)
+                                UserHomeContent(opportunity_data: $readDB.opportunity_data, franchise_data: $readDB.franchise_data, user_holdings_data: $readDB.user_holdings_data)
                             }
                         } else if selectedTab == .chartPie {
                             Text("Portfolio")
@@ -133,16 +136,17 @@ struct UserHome: View {
                     .frame(width: max(0, geometry.size.width-40), height: max(0, geometry.size.height - 20))
                     .foregroundColor(.black)
                     .onAppear {
+
                         DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                             withAnimation(.easeOut(duration: 0.5)) {
-//                                imageURL = URL(string: picture)!
+                                imageURL = URL(string: picture)!
                                 isInvestmentConfirmed = false
                             }
                         }
                         
                         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                             withAnimation(.easeOut(duration: 0.5)) {
-//                                imageURL = URL(string: picture)!
+                                imageURL = URL(string: picture)!
                                 isShownHomePage = false
                                 if !onboarding_completed {
                                     isShownOnboarding.toggle()
@@ -153,7 +157,9 @@ struct UserHome: View {
                         }
                         readDB.franchise_data = []
                         readDB.opportunity_data = []
+                        readDB.user_holdings_data = []
                         readDB.getFranchises()
+                        readDB.getUserHoldings(email: email)
                         readDB.getOpportunities() { response in
                             if response == "Fetched all opportunities" {
 //                                print(readDB.opportunity_data)
@@ -189,6 +195,7 @@ struct UserHomeContent: View {
     @Binding var opportunity_data: [[String: String]]
     @State var selected_opportunity: [String: String] = [:]
     @Binding var franchise_data: [[String: String]]
+    @Binding var user_holdings_data: [[String: String]]
 
     
     var body: some View {

@@ -161,6 +161,9 @@ extension LandingContent {
                             
                             if response == "User Created" {
                                 CreateDB().create_onboarding_email(name: self.userProfile.given_name, email: self.userProfile.email)
+                            } else if response == "User already exists" {
+                                UserDefaults.standard.set(true, forKey: "onboarding_completed")
+                                print("User already exists")
                             }
                         }
                     }

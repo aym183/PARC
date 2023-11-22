@@ -12,25 +12,74 @@ class CreateDB: ObservableObject {
     let currentDate = Date()
     
     func createUser(email: String, first_name: String, last_name: String, full_name: String, picture: String, completion: @escaping (String?) -> Void) {
-        
-        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/users?email=\(email)&first_name=\(first_name)&last_name=\(last_name)&full_name=\(full_name)&picture=\(picture)&date_joined=\(currentDate)&balance=0")!
+        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/users")!
+        var getRequest = URLRequest(url: apiUrl)
+        getRequest.httpMethod = "GET"
 
-        var request = URLRequest(url: apiUrl)
-        request.httpMethod = "POST"
+        URLSession.shared.dataTask(with: getRequest) { data, response, error in
+            if let data = data {
+                do {
+                    if let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                        if let itemsArray = jsonObject["Items"] as? [[String: Any]] {
+                            let userExists = itemsArray.contains { item in
+                                if let itemEmail = item["email"] as? String {
+                                    return itemEmail == email
+                                }
+                                return false
+                            }
+                            if userExists {
+                                DispatchQueue.main.async {
+                                    completion("User already exists")
+                                }
+                            } else {
+                                let userApiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/users?email=\(email)&first_name=\(first_name)&last_name=\(last_name)&full_name=\(full_name)&picture=\(picture)&date_joined=\(Date.now)&balance=0")!
 
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            if let data = data, let responseText = String(data: data, encoding: .utf8) {
-                DispatchQueue.main.async {
-                    print(responseText)
-                    completion("User Created")
+                                var postRequest = URLRequest(url: userApiUrl)
+                                postRequest.httpMethod = "POST"
+
+                                URLSession.shared.dataTask(with: postRequest) { postData, postResponse, postError in
+                                    if let postData = postData, let postResponseText = String(data: postData, encoding: .utf8) {
+                                        DispatchQueue.main.async {
+                                            print(postResponseText)
+                                            completion("User Created")
+                                        }
+                                    } else if let postError = postError {
+                                        DispatchQueue.main.async {
+                                            print("Error creating User: \(postError.localizedDescription)")
+                                        }
+                                    }
+                                }.resume()
+                            }
+                        }
+                    }
+                } catch {
+                    print("Error parsing JSON")
                 }
             } else if let error = error {
-                DispatchQueue.main.async {
-                    print("Error creating user: \(error.localizedDescription)")
-                }
+                print("Error performing GET request: \(error.localizedDescription)")
             }
         }.resume()
     }
+        
+//        
+//        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/users?email=\(email)&first_name=\(first_name)&last_name=\(last_name)&full_name=\(full_name)&picture=\(picture)&date_joined=\(currentDate)&balance=0")!
+//
+//        var request = URLRequest(url: apiUrl)
+//        request.httpMethod = "POST"
+//
+//        URLSession.shared.dataTask(with: request) { data, response, error in
+//            if let data = data, let responseText = String(data: data, encoding: .utf8) {
+//                DispatchQueue.main.async {
+//                    print(responseText)
+//                    completion("User Created")
+//                }
+//            } else if let error = error {
+//                DispatchQueue.main.async {
+//                    print("Error creating user: \(error.localizedDescription)")
+//                }
+//            }
+//        }.resume()
+//    }
     
     func create_onboarding_email(name: String, email: String) {
         let apiUrl = URL(string: "https://brdh472ip2.execute-api.us-east-1.amazonaws.com/development/emails/send-intro-email?email=\(email)&name=\(name)")!
@@ -107,7 +156,7 @@ class CreateDB: ObservableObject {
                         DispatchQueue.main.async {
                             if let itemsArray = jsonObject["ScannedCount"] as? Int {
                                 let arrayLength = itemsArray+1
-                                let opportunityApiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/opportunities?opportunity_id=\(arrayLength)&franchise_name=\(franchise_name)&location=\(location)&asking_price=\(asking_price)&equity_offered=\(equity_offered)&min_invest_amount=\(min_invest_amount)&close_date=\(close_date)&date_created=\(self.currentDate)&amount_raised=0&status=\("active")&investors=0")!
+                                let opportunityApiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/opportunities?opportunity_id=\(arrayLength)&franchise_name=\(franchise_name)&location=\(location)&asking_price=\(asking_price)&equity_offered=\(equity_offered)&min_invest_amount=\(min_invest_amount)&close_date=\(close_date)&date_created=\(Date.now)&amount_raised=0&status=\("active")&investors=0")!
                                 
                                 var request = URLRequest(url: opportunityApiUrl)
                                 request.httpMethod = "POST"
@@ -176,7 +225,7 @@ class CreateDB: ObservableObject {
                         DispatchQueue.main.async {
                             if let itemsArray = jsonObject["ScannedCount"] as? Int {
                                 let arrayLength = itemsArray+1
-                                let opportunityApiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/payouts?status=Scheduled&revenue_generated=\(revenue_generated)&payout_id=\(arrayLength)&opportunity_id=\(opportunity_id)&date_scheduled=\(date_scheduled)&date_created=\(self.currentDate)&amount_offered=\(amount_offered)")!
+                                let opportunityApiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/payouts?status=Scheduled&revenue_generated=\(revenue_generated)&payout_id=\(arrayLength)&opportunity_id=\(opportunity_id)&date_scheduled=\(date_scheduled)&date_created=\(Date.now)&amount_offered=\(amount_offered)")!
                                 
                                 var request = URLRequest(url: opportunityApiUrl)
                                 request.httpMethod = "POST"

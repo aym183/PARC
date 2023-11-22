@@ -13,6 +13,7 @@ class ReadDB: ObservableObject {
     @Published var franchise_data: [[String: String]] = []
     @Published var opportunity_data: [[String: String]] = []
     @Published var payout_data: [[String: String]] = []
+    @Published var user_holdings_data: [[String: String]] = []
     @Published var opportunity_data_dropdown: [DropdownMenuOption] = []
     
     func getFranchises() {
@@ -166,8 +167,59 @@ class ReadDB: ObservableObject {
                 }
             }
         }.resume()
+    }
+    
+    func getUserHoldings(email: String) {
         
+        var keysArray = ["user_holdings_id", "user_email", "status", "opportunity_id", "equity", "amount"]
+        var temp_dict: [String: String] = [:]
         
+        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/user-holdings")!
+        var request = URLRequest(url: apiUrl)
+        request.httpMethod = "GET"
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let data = data, let responseText = String(data: data, encoding: .utf8) {
+                do {
+                    if let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                        DispatchQueue.main.async {
+                            if let itemsArray = jsonObject["Items"] as? [[String : Any]] {
+                                for value in itemsArray.reversed() {
+                                    for data in keysArray.reversed() {
+                                        if let emailCheck = value["user_email"] as? [String: String], emailCheck["S"] == email {
+                                            if let nameDictionary = value[data] as? [String: String] {
+                                                    if data == "opportunity_id" || data == "user_holdings_id" {
+                                                            temp_dict[data] = nameDictionary["N"]
+                                                    }
+                                                    else if let sValue = nameDictionary["S"] {
+                                                        temp_dict[data] = sValue
+                                                    }
+                                            }
+                                        }
+//                                        if let nameDictionary = value[data] as? [String: String], let sValue = nameDictionary["S"] {
+//                                            temp_dict[data] = sValue
+//                                        }
+                                    }
+//                                    let revenue_generated = Int(temp_dict["revenue_generated"] ?? "0") ?? 0
+//                                    let amount_offered = Int(temp_dict["amount_offered"] ?? "1") ?? 1
+//                                    let percentage_of_revenue = (Double(amount_offered) / Double(revenue_generated))*100
+//                                    temp_dict["percentage_of_revenue"] = "\(String(describing: percentage_of_revenue))%"
+                                    if temp_dict != [:] {
+                                        self.user_holdings_data.append(temp_dict)
+                                        temp_dict = [:]
+                                    }
+                                    
+                                    
+//                                    self.opportunity_data.append(value)
+                                }
+                            }
+                        }
+                    }
+                } catch {
+                    print("Error getting payots: \(error.localizedDescription)")
+                }
+            }
+        }.resume()
     }
     
 }
