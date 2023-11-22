@@ -25,6 +25,7 @@ struct UserInvestPage: View {
     @Binding var asking_price: Double
     @Binding var equity_offered: Double
     @Binding var opportunity_id: String
+    @Binding var opportunity_name: String
     @Binding var amount_offered: String
     @Binding var investors: String
     @State var equity_value = 0.0
@@ -190,6 +191,8 @@ struct UserInvestPage: View {
                                             CreateDB().createUserInvestmentHolding(opportunity_id: opportunity_id, email: email, equity: String(format: "%.3f", (Double(investment_amount)!/equity_value)*100), amount: investment_amount)
                                             
                                             CreateDB().createOpportunityTransaction(opportunity_id: opportunity_id, email: email, amount: investment_amount)
+                                            
+                                            CreateDB().createInvestmentConfirmation(email: email, amount: investment_amount, opportunity_name: opportunity_name)
                                         }
                                     }
                                 }

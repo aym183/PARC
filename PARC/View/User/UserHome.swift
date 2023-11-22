@@ -135,14 +135,14 @@ struct UserHome: View {
                     .onAppear {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                             withAnimation(.easeOut(duration: 0.5)) {
-                                imageURL = URL(string: picture)!
+//                                imageURL = URL(string: picture)!
                                 isInvestmentConfirmed = false
                             }
                         }
                         
                         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                             withAnimation(.easeOut(duration: 0.5)) {
-                                imageURL = URL(string: picture)!
+//                                imageURL = URL(string: picture)!
                                 isShownHomePage = false
                                 if !onboarding_completed {
                                     isShownOnboarding.toggle()

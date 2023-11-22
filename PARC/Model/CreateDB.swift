@@ -33,7 +33,7 @@ class CreateDB: ObservableObject {
     }
     
     func create_onboarding_email(name: String, email: String) {
-        let apiUrl = URL(string: "https://brdh472ip2.execute-api.us-east-1.amazonaws.com/beta/emails/send-intro-email?email=\(email)&name=\(name)")!
+        let apiUrl = URL(string: "https://brdh472ip2.execute-api.us-east-1.amazonaws.com/development/emails/send-intro-email?email=\(email)&name=\(name)")!
 
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "POST"
@@ -49,6 +49,27 @@ class CreateDB: ObservableObject {
                 }
             }
         }.resume()
+    }
+    
+    func createInvestmentConfirmation(email: String, amount: String, opportunity_name: String) {
+        
+        let apiUrl = URL(string: "https://brdh472ip2.execute-api.us-east-1.amazonaws.com/development/emails/investment_confirmed?email=\(email)&amount=\(amount)&opportunity_name=\(opportunity_name)")!
+
+        var request = URLRequest(url: apiUrl)
+        request.httpMethod = "POST"
+
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let data = data, let responseText = String(data: data, encoding: .utf8) {
+                DispatchQueue.main.async {
+                    print("Investment confirmation created \(responseText)")
+                }
+            } else if let error = error {
+                DispatchQueue.main.async {
+                    print("Error creating investment confirmation: \(error.localizedDescription)")
+                }
+            }
+        }.resume()
+        
     }
     
     func createFranchise(name: String, logo: String, description: String, no_of_franchises: String, avg_franchise_mom_revenues: String, avg_startup_capital: String, avg_revenue_18_months: String, ebitda_estimate: String, completion: @escaping (String?) -> Void) {
@@ -204,11 +225,11 @@ class CreateDB: ObservableObject {
                                 URLSession.shared.dataTask(with: request) { data, response, error in
                                     if let data = data, let responseText = String(data: data, encoding: .utf8) {
                                         DispatchQueue.main.async {
-                                            print("User holding created: \(responseText)")
+                                            print("Opportunity Transaction created: \(responseText)")
                                         }
                                     } else if let error = error {
                                         DispatchQueue.main.async {
-                                            print("Error creating user holding: \(error.localizedDescription)")
+                                            print("Error creating opportunity transaction: \(error.localizedDescription)")
                                         }
                                     }
                                 }.resume()

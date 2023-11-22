@@ -37,6 +37,7 @@ struct UserOpportunityClick: View {
     @State var opportunity_id = ""
     @State var amount_offered = ""
     @State var investors = ""
+    @State var opportunity_name = ""
 //    @State var investment_titles = ["Location", "Type", "Equity Offered", "", ""]
 //    @State var investment_values = ["location", "Equity", "equity_offered", "", ""]
     
@@ -317,6 +318,7 @@ struct UserOpportunityClick: View {
                     opportunity_id = opportunity_data["opportunity_id"]!
                     amount_offered = opportunity_data["amount_raised"]!
                     investors = String(describing: Int(opportunity_data["investors"]!)! + 1)
+                    opportunity_name = opportunity_data["franchise"]!
                     user_invest_shown.toggle()
                 }) {
                     HStack {
@@ -333,7 +335,7 @@ struct UserOpportunityClick: View {
                 
             }
             .navigationDestination(isPresented: $user_invest_shown) {
-                UserInvestPage(user_invest_shown: $user_invest_shown, asking_price: $asking_price, equity_offered: $equity_offered, opportunity_id: $opportunity_id, amount_offered: $amount_offered, investors: $investors)
+                UserInvestPage(user_invest_shown: $user_invest_shown, asking_price: $asking_price, equity_offered: $equity_offered, opportunity_id: $opportunity_id, opportunity_name: $opportunity_name, amount_offered: $amount_offered, investors: $investors)
             }
 //            .frame(width: max(0, geometry.size.width), height: max(0, geometry.size.height - 20))
             
