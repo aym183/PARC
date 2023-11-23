@@ -37,6 +37,9 @@ struct UserPortfolio: View {
     var titles = ["McDonald's", "Starbucks", "Chipotle"]
     var invested_amount = [500, 200, 250]
     @State private var index = 0
+    @Binding var portfolio_data: [[String: String]]
+    @Binding var opportunity_data: [[String: String]]
+    
     var body: some View {
         GeometryReader { geometry in
                 
@@ -76,47 +79,59 @@ struct UserPortfolio: View {
                         .frame(height: 1)
                         .padding(.bottom, 10)
                     
-                    ForEach((0..<3), id: \.self) { index in
-                        Button(action: {}) {
-                            HStack {
-                                Text("\(index+1).")
-                                    .font(Font.custom("Nunito-Bold", size: 15))
-                                
-                                Image(logo_images[index])
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: 45, height: 45)
-                                
-                                VStack(alignment: .leading) {
-                                    Text(titles[index])
-                                      .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.045))
-                                      .foregroundColor(.black)
+                    if portfolio_data.count != 0 {
+                        ForEach(0..<10, id: \.self) { index in
+                            Button(action: {}) {
+                                HStack {
+//                                    Text("\(index+1).")
+//                                        .font(Font.custom("Nunito-Bold", size: 15))
                                     
-                                    Text("Invested - £1400")
-                                      .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.027))
-                                      .foregroundColor(Color("Custom_Gray"))
-                                }
-                                .padding(.leading)
-                                
-                                Spacer()
-                                
-                                if invested_amount[index] >= 500 {
-                                    Text("£\(invested_amount[index])")
+                                    Image(logo_images[0])
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .frame(width: 50, height: 50)
+                                        .padding(.leading, 10)
+                                    
+                                    VStack(alignment: .leading) {
+                                        
+                                        Text(String(describing: opportunity_data[Int(portfolio_data[index]["opportunity_id"]!)! - 1]["franchise"]!))
+                                          .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.045))
+                                          .foregroundColor(.black)
+                                        
+//                                        Invested - £\(formattedNumber(input_number: Int(portfolio_data[index]["amount"]!)!))
+                                        Text("Date Created - \(portfolio_data[index]["date_created"]!)")
+                                          .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.027))
+                                          .foregroundColor(Color("Custom_Gray"))
+                                    }
+                                    .padding(.leading)
+                                    
+                                    Spacer()
+                                    
+                                    //Should be something regarding payouts? or date created
+                                    Text("+£\(formattedNumber(input_number: Int(portfolio_data[index]["amount"]!)!))")
                                       .font(Font.custom("Nunito-Black", size: min(geometry.size.width, geometry.size.height) * 0.055))
-                                      .foregroundColor(Color("Profit"))
-                                } else {
-                                    Text("£\(invested_amount[index])")
-                                      .font(Font.custom("Nunito-Black", size: min(geometry.size.width, geometry.size.height) * 0.055))
-                                      .foregroundColor(Color("Loss"))
+                                    
+//                                    if Int(portfolio_data[index]["amount"]!)! >= 500 {
+//                                        Text("+£\(formattedNumber(input_number: Int(portfolio_data[index]["amount"]!)!))")
+//                                          .font(Font.custom("Nunito-Black", size: min(geometry.size.width, geometry.size.height) * 0.055))
+//                                          .foregroundColor(Color("Profit"))
+//                                    } else {
+//                                        Text("-£\(formattedNumber(input_number: Int(portfolio_data[index]["amount"]!)!))")
+//                                          .font(Font.custom("Nunito-Black", size: min(geometry.size.width, geometry.size.height) * 0.055))
+//                                          .foregroundColor(Color("Loss"))
+//                                    }
+                                    
                                 }
                                 
                             }
+                            Divider()
+                                .overlay(Color("Custom_Gray"))
+                                .frame(height: 0.5)
                             
                         }
-                        Divider()
-                            .overlay(Color("Custom_Gray"))
-                            .frame(height: 0.5)
-                        
+                    } else {
+                        Text("No investments yet.")
+                            .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.055))
                     }
                 }
                 
@@ -129,6 +144,6 @@ struct UserPortfolio: View {
 
 struct UserPortfolio_Previews: PreviewProvider {
     static var previews: some View {
-        UserPortfolio()
+        UserPortfolio(portfolio_data: .constant([[:]]), opportunity_data: .constant([[:]]))
     }
 }

@@ -20,6 +20,8 @@ struct UserHome: View {
     @AppStorage("onboarding_completed") var onboarding_completed: Bool = false
     @State var imageURL = URL(string: "")
     @ObservedObject var readDB = ReadDB()
+    @State var portfolio_data: [[String: String]] = []
+    @State var opportunity_data: [[String: String]] = []
     
     var body: some View {
         GeometryReader { geometry in
@@ -116,7 +118,7 @@ struct UserHome: View {
                                 .frame(height: 1)
                                 .overlay(.black)
                             
-                            UserPortfolio()
+                            UserPortfolio(portfolio_data: $portfolio_data, opportunity_data: $opportunity_data)
                         } else {
                             Text("Secondary Market")
                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.065))
@@ -159,11 +161,16 @@ struct UserHome: View {
                         readDB.opportunity_data = []
                         readDB.user_holdings_data = []
                         readDB.getFranchises()
-                        readDB.getUserHoldings(email: email)
+                        readDB.getUserHoldings(email: email) { response in
+                            if response == "Fetched user holdings" {
+                                self.portfolio_data = readDB.user_holdings_data
+                            }
+                        }
                         readDB.getOpportunities() { response in
                             if response == "Fetched all opportunities" {
 //                                print(readDB.opportunity_data)
                                 print("Fetched opportunities")
+                                self.opportunity_data = readDB.opportunity_data
                             }
                         }
                         
