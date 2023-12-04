@@ -81,7 +81,7 @@ struct UserPortfolio: View {
                     
                     if portfolio_data.count != 0 {
                         ForEach(0..<10, id: \.self) { index in
-                            Button(action: {}) {
+//                            Button(action: {}) {
                                 HStack {
 //                                    Text("\(index+1).")
 //                                        .font(Font.custom("Nunito-Bold", size: 15))
@@ -99,7 +99,7 @@ struct UserPortfolio: View {
                                           .foregroundColor(.black)
                                         
 //                                        Invested - £\(formattedNumber(input_number: Int(portfolio_data[index]["amount"]!)!))
-                                        Text("Date Created - \(portfolio_data[index]["date_created"]!)")
+                                        Text("Date Created - \(convertDate(dateString: portfolio_data[index]["transaction_date"]!))")
                                           .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.027))
                                           .foregroundColor(Color("Custom_Gray"))
                                     }
@@ -123,7 +123,7 @@ struct UserPortfolio: View {
                                     
                                 }
                                 
-                            }
+//                            }
                             Divider()
                                 .overlay(Color("Custom_Gray"))
                                 .frame(height: 0.5)
