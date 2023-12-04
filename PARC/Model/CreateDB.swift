@@ -212,7 +212,7 @@ class CreateDB: ObservableObject {
         
     }
     
-    func createPayout(revenue_generated: String, opportunity_id: Int, date_scheduled: String, amount_offered: String, completion: @escaping (String?) -> Void) {
+    func createPayout(revenue_generated: String, opportunity_id: Int, date_scheduled: String, amount_offered: String, user_holdings: [[String: String]], completion: @escaping (String?) -> Void) {
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/payouts")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
@@ -225,7 +225,7 @@ class CreateDB: ObservableObject {
                         DispatchQueue.main.async {
                             if let itemsArray = jsonObject["ScannedCount"] as? Int {
                                 let arrayLength = itemsArray+1
-                                let opportunityApiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/payouts?status=Scheduled&revenue_generated=\(revenue_generated)&payout_id=\(arrayLength)&opportunity_id=\(opportunity_id)&date_scheduled=\(date_scheduled)&date_created=\(Date.now)&amount_offered=\(amount_offered)")!
+                                let opportunityApiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/payouts?status=Completed&revenue_generated=\(revenue_generated)&payout_id=\(arrayLength)&opportunity_id=\(opportunity_id)&date_scheduled=\(date_scheduled)&date_created=\(Date.now)&amount_offered=\(amount_offered)")!
                                 
                                 var request = URLRequest(url: opportunityApiUrl)
                                 request.httpMethod = "POST"
@@ -234,6 +234,7 @@ class CreateDB: ObservableObject {
                                     if let data = data, let responseText = String(data: data, encoding: .utf8) {
                                         DispatchQueue.main.async {
                                             print(responseText)
+                                            CreateDB().createUserPayout(opportunity_id: opportunity_id, user_holdings: user_holdings, amount_offered: amount_offered, payout_id: arrayLength)
                                             completion("Payout Created")
                                         }
                                     } else if let error = error {
@@ -242,6 +243,79 @@ class CreateDB: ObservableObject {
                                         }
                                     }
                                 }.resume()
+                            }
+                        }
+                    }
+                } catch {
+                    print("Error")
+                }
+            }
+        }.resume()
+    }
+    
+    // Reference GPT
+    
+    func createUserPayout(opportunity_id: Int, user_holdings: [[String: String]], amount_offered: String, payout_id: Int) {
+        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/payouts/user-payouts")!
+        var request = URLRequest(url: apiUrl)
+        request.httpMethod = "GET"
+        
+        var request_data: [[String: String]] = []
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let data = data, let responseText = String(data: data, encoding: .utf8) {
+                do {
+                    if let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                        DispatchQueue.main.async {
+                            if let itemsArray = jsonObject["ScannedCount"] as? Int {
+                                var arrayLength = itemsArray+1
+                                for holding in user_holdings {
+                                    if Int(holding["opportunity_id"]!)! == opportunity_id {
+                                        var calculated_amount = Float(amount_offered)!*Float(holding["equity"]!)!
+                                        request_data.append(["opportunity_id": String(describing: opportunity_id), "user_email": String(describing: holding["user_email"]!), "equity": String(describing: holding["equity"]!), "amount_received": String(describing: Int(calculated_amount)), "user_payout_id": String(describing: arrayLength), "payout_date": String(describing: self.currentDate)])
+                                        arrayLength+=1
+                                    }
+                                }
+                                
+                                if request_data.count != 0 {
+                                    let jsonData: Data
+                                    do {
+                                        jsonData = try JSONSerialization.data(withJSONObject: request_data)
+                                    } catch {
+                                        print("Error encoding data to JSON: \(error)")
+                                        return
+                                    }
+                                    
+                                    let userPayoutApiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/payouts/user-payouts")!
+                                    
+                                    var request = URLRequest(url: userPayoutApiUrl)
+                                    request.httpMethod = "POST"
+                                    request.httpBody = jsonData
+                                    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                                    
+                                    URLSession.shared.dataTask(with: request) { data, response, error in
+                                        if let error = error {
+                                            DispatchQueue.main.async {
+                                                print("Error creating user payout: \(error.localizedDescription)")
+                                            }
+                                        } else if let httpResponse = response as? HTTPURLResponse {
+                                            if (200..<300).contains(httpResponse.statusCode), let data = data {
+                                                // Success: HTTP status code is in the range [200, 300) and data is present
+                                                if let responseText = String(data: data, encoding: .utf8) {
+                                                    DispatchQueue.main.async {
+                                                        print("Response: \(responseText)")
+                                                    }
+                                                }
+                                            } else {
+                                                // Error: HTTP status code is outside the range [200, 300)
+                                                DispatchQueue.main.async {
+                                                    print("Error creating user payout. Status code: \(httpResponse.statusCode)")
+                                                }
+                                            }
+                                        }
+                                    }.resume()
+
+                                }
                             }
                         }
                     }

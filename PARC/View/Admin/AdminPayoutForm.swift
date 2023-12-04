@@ -14,6 +14,7 @@ struct AdminPayoutForm: View {
     @State var payout_date = ""
     @State private var selectedOpportunity: DropdownMenuOption? = nil
     @Binding var opportunity_data : [DropdownMenuOption]
+    @Binding var user_holdings_data : [[String: String]]
     @State private var date = Date()
 //    @State private var selectedDate = Date()
     var dateRange: ClosedRange<Date> = {
@@ -122,7 +123,7 @@ struct AdminPayoutForm: View {
                             let components = selectedOpportunity!.option.components(separatedBy: "-")
                             if let opportunityID = Int((components.first?.trimmingCharacters(in: .whitespaces))!) {
                                 DispatchQueue.global(qos: .userInteractive).async {
-                                    CreateDB().createPayout(revenue_generated: revenue_generated, opportunity_id: opportunityID, date_scheduled: String(describing: date), amount_offered: amount_offered) { response in
+                                    CreateDB().createPayout(revenue_generated: revenue_generated, opportunity_id: opportunityID, date_scheduled: String(describing: date), amount_offered: amount_offered, user_holdings: user_holdings_data) { response in
                                         if response == "Payout Created" {
                                             admin_home_shown.toggle()
                                         }
@@ -156,6 +157,6 @@ struct AdminPayoutForm: View {
     }
 }
 
-#Preview {
-    AdminPayoutForm(opportunity_data: .constant([]))
-}
+//#Preview {
+//    AdminPayoutForm(opportunity_data: .constant([]))
+//}

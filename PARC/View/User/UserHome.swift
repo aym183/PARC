@@ -21,6 +21,8 @@ struct UserHome: View {
     @State var imageURL = URL(string: "")
     @ObservedObject var readDB = ReadDB()
     @State var portfolio_data: [[String: String]] = []
+    @State var holdings_value: Int = 0
+    @State var chart_values: [Float] = []
     @State var opportunity_data: [[String: String]] = []
     
     var body: some View {
@@ -72,8 +74,9 @@ struct UserHome: View {
                             Spacer()
                             
                             Button(action: {
-                                print(readDB.user_holdings_data)
-                                account_shown.toggle() }) {
+                                CreateDB().createUserPayout(opportunity_id: 1, user_holdings: readDB.full_user_holdings_data, amount_offered: "2000000", payout_id: 2)
+//                                account_shown.toggle()
+                                 }) {
                                 if imageURL != nil {
                                     URLImage(imageURL!) { image in
                                         image
@@ -118,7 +121,7 @@ struct UserHome: View {
                                 .frame(height: 1)
                                 .overlay(.black)
                             
-                            UserPortfolio(portfolio_data: $portfolio_data, opportunity_data: $opportunity_data)
+                            UserPortfolio(portfolio_data: $portfolio_data, holdings_value: $holdings_value, chart_values: $chart_values, opportunity_data: $opportunity_data)
                         } else {
                             Text("Secondary Market")
                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.065))
@@ -141,14 +144,14 @@ struct UserHome: View {
 
                         DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                             withAnimation(.easeOut(duration: 0.5)) {
-                                imageURL = URL(string: picture)!
+//                                imageURL = URL(string: picture)!
                                 isInvestmentConfirmed = false
                             }
                         }
                         
                         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                             withAnimation(.easeOut(duration: 0.5)) {
-                                imageURL = URL(string: picture)!
+//                                imageURL = URL(string: picture)!
                                 isShownHomePage = false
                                 if !onboarding_completed {
                                     isShownOnboarding.toggle()
@@ -160,10 +163,14 @@ struct UserHome: View {
                         readDB.franchise_data = []
                         readDB.opportunity_data = []
                         readDB.user_holdings_data = []
+                        readDB.full_user_holdings_data = []
                         readDB.getFranchises()
+                        readDB.getAllUserHoldings()
                         readDB.getUserHoldings(email: email) { response in
                             if response == "Fetched user holdings" {
                                 self.portfolio_data = readDB.user_holdings_data
+                                self.holdings_value = calculateTotalHoldings(input: self.portfolio_data)
+                                self.chart_values = calculatePortionHoldings(input: portfolio_data, holdings_value: calculateTotalHoldings(input: self.portfolio_data))
                             }
                         }
                         readDB.getOpportunities() { response in

@@ -9,36 +9,57 @@ import SwiftUI
 import Charts
 
 struct ChartData: Identifiable, Plottable {
-    init?(primitivePlottable: Int) {
+    init?(primitivePlottable: Float) {
         self.primitivePlottable = primitivePlottable
         self.color = .blue
     }
     
-    init?(primitivePlottable: Int, color: Color) {
+    init?(primitivePlottable: Float, color: Color) {
         self.primitivePlottable = primitivePlottable
         self.color = color
     }
     
     var id = UUID()
-    let primitivePlottable: Int
-    let color: Color
+    let primitivePlottable: Float
+    var color: Color
 }
 
-let data: [ChartData] = [
-    .init(primitivePlottable: 20, color: .blue),
-    .init(primitivePlottable: 55, color: Color("Secondary")),
-    .init(primitivePlottable: 25, color: .yellow),
-].compactMap({ $0 })
+var data: [ChartData] = [].compactMap({ $0 })
 
 struct UserPortfolio: View {
     var metrics = ["£15,000.62", "£2,200.62", "23.49%"]
-    var metric_description = ["Estimated Share Value", "Payouts Received", "Average Profit Margin"]
+    var metric_description = ["Estimated Holdings", "Payouts Received", "Average Profit Margin"]
     var logo_images = ["McDonalds", "Starbucks", "Chipotle"]
     var titles = ["McDonald's", "Starbucks", "Chipotle"]
     var invested_amount = [500, 200, 250]
     @State private var index = 0
     @Binding var portfolio_data: [[String: String]]
+    @Binding var holdings_value: Int
+    @Binding var chart_values: [Float]
     @Binding var opportunity_data: [[String: String]]
+    let random_colors: [Color] = [
+        .red, .green, .blue, .orange, .purple, .pink, .yellow,
+        .teal, .indigo, .cyan, .brown,
+        .gray, .black, Color("Primary"),
+        Color(red: 0.8, green: 0.2, blue: 0.6),
+        Color(red: 0.4, green: 0.7, blue: 0.9),
+        Color(red: 0.2, green: 0.5, blue: 0.3),
+        Color(red: 0.9, green: 0.6, blue: 0.1),
+        Color(red: 0.7, green: 0.4, blue: 0.8),
+        Color(red: 0.1, green: 0.3, blue: 0.5),
+        Color(red: 0.6, green: 0.8, blue: 0.4),
+        Color(red: 0.3, green: 0.1, blue: 0.7),
+        Color(red: 0.5, green: 0.9, blue: 0.2),
+        Color(red: 0.8, green: 0.7, blue: 0.4),
+        Color(red: 0.2, green: 0.4, blue: 0.6),
+        Color(red: 0.9, green: 0.3, blue: 0.5),
+        Color(red: 0.1, green: 0.6, blue: 0.8),
+        Color(red: 0.7, green: 0.5, blue: 0.2),
+        Color(red: 0.4, green: 0.8, blue: 0.1),
+        Color(red: 0.6, green: 0.2, blue: 0.9),
+        Color(red: 0.3, green: 0.9, blue: 0.7),
+        Color(red: 0.5, green: 0.1, blue: 0.4),
+    ]
     
     var body: some View {
         GeometryReader { geometry in
@@ -57,7 +78,7 @@ struct UserPortfolio: View {
                             }
                             
                             VStack(alignment: .center) {
-                                Text(metrics[index])
+                                Text("£\(formattedNumber(input_number: holdings_value))")
                                   .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.1))
                                   .foregroundColor(.black)
                                 
@@ -80,7 +101,7 @@ struct UserPortfolio: View {
                         .padding(.bottom, 10)
                     
                     if portfolio_data.count != 0 {
-                        ForEach(0..<10, id: \.self) { index in
+                        ForEach(0..<portfolio_data.count, id: \.self) { index in
 //                            Button(action: {}) {
                                 HStack {
 //                                    Text("\(index+1).")
@@ -99,7 +120,7 @@ struct UserPortfolio: View {
                                           .foregroundColor(.black)
                                         
 //                                        Invested - £\(formattedNumber(input_number: Int(portfolio_data[index]["amount"]!)!))
-                                        Text("Date Created - \(convertDate(dateString: portfolio_data[index]["transaction_date"]!))")
+                                        Text("Date Bought - \(convertDate(dateString: portfolio_data[index]["transaction_date"]!))")
                                           .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.027))
                                           .foregroundColor(Color("Custom_Gray"))
                                     }
@@ -138,12 +159,49 @@ struct UserPortfolio: View {
             }
             .foregroundColor(.black)
             .frame(width: max(0, geometry.size.width))
+            .onAppear {
+                
+//                let chart_values: [String] = ["10.5", "20.3", "30.7"] // Replace with your actual values
+//                let colors: [Color] = [.red, .green, .blue, ] // Replace with your actual colors
+
+                data.append(contentsOf: chart_values.compactMap { value in
+//                    /*if let floatValue = Float(value)*/ {
+                        return ChartData(primitivePlottable: value) ?? ChartData(primitivePlottable: 0)
+//                    }
+//                    return nil
+                })
+
+                // Assuming colors.count matches chart_values.count
+                for (index, color) in random_colors.enumerated() {
+                    if index < data.count {
+                        data[index].color = color
+                    } else {
+                        
+                    }
+                }
+                
+//                ForEach(0..<chart_values.count, id: \.self) { index in
+//                    data.append(.init(primitivePlottable: Int(chart_values[index]), color: colors.randomElement() ?? .gray)!)
+                    
+//                    data.append(contentsOf: chart_values.compactMap { value in
+//                        if let intValue = Int(chart_values[index]) {
+//                            return ChartData(primitivePlottable: intValue) ?? ChartData(primitivePlottable: 0)
+//                        }
+//                        return nil
+//                    })
+                    
+                    
+//                    data.append(.init(primitivePlottable: , color: colors.randomElement() ?? .gray))
+//                }
+//                .init(primitivePlottable: 55, color: Color("Secondary")),
+//                .init(primitivePlottable: 25, color: .yellow),
+            }
         }
     }
 }
 
-struct UserPortfolio_Previews: PreviewProvider {
-    static var previews: some View {
-        UserPortfolio(portfolio_data: .constant([[:]]), opportunity_data: .constant([[:]]))
-    }
-}
+//struct UserPortfolio_Previews: PreviewProvider {
+//    static var previews: some View {
+//        UserPortfolio(portfolio_data: .constant([[:]]), opportunity_data: .constant([[:]]))
+//    }
+//}

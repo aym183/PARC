@@ -14,6 +14,7 @@ class ReadDB: ObservableObject {
     @Published var opportunity_data: [[String: String]] = []
     @Published var payout_data: [[String: String]] = []
     @Published var user_holdings_data: [[String: String]] = []
+    @Published var full_user_holdings_data: [[String: String]] = []
     @Published var opportunity_data_dropdown: [DropdownMenuOption] = []
     
     func getFranchises() {
@@ -223,4 +224,43 @@ class ReadDB: ObservableObject {
         }.resume()
     }
     
+    func getAllUserHoldings() {
+        var keysArray = ["user_holdings_id", "user_email", "status", "opportunity_id", "equity", "amount", "transaction_date"]
+        var temp_dict: [String: String] = [:]
+        
+        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/user-holdings")!
+        var request = URLRequest(url: apiUrl)
+        request.httpMethod = "GET"
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let data = data, let responseText = String(data: data, encoding: .utf8) {
+                do {
+                    if let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                        DispatchQueue.main.async {
+                            if let itemsArray = jsonObject["Items"] as? [[String : Any]] {
+                                for value in itemsArray.reversed() {
+                                    for data in keysArray.reversed() {
+                                            if let nameDictionary = value[data] as? [String: String] {
+                                                    if data == "opportunity_id" || data == "user_holdings_id" {
+                                                            temp_dict[data] = nameDictionary["N"]
+                                                    }
+                                                    else if let sValue = nameDictionary["S"] {
+                                                        temp_dict[data] = sValue
+                                                    }
+                                            }
+                                    }
+                                    if temp_dict != [:] {
+                                        self.full_user_holdings_data.append(temp_dict)
+                                        temp_dict = [:]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } catch {
+                    print("Error getting payots: \(error.localizedDescription)")
+                }
+            }
+        }.resume()
+    }
 }

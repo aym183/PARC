@@ -399,7 +399,9 @@ struct AdminHome: View {
                 readDB.opportunity_data = []
                 readDB.payout_data = []
                 readDB.opportunity_data_dropdown = []
+                readDB.full_user_holdings_data = []
                 readDB.getFranchises()
+                readDB.getAllUserHoldings()
                 readDB.getOpportunities() { response in
                     if response == "Fetched all opportunities" {
                         readDB.getPayouts()
@@ -407,7 +409,7 @@ struct AdminHome: View {
                 }
             }
             .navigationDestination(isPresented: $admin_payout_form_shown){
-                AdminPayoutForm(opportunity_data: $readDB.opportunity_data_dropdown)
+                AdminPayoutForm(opportunity_data: $readDB.opportunity_data_dropdown, user_holdings_data: $readDB.full_user_holdings_data)
             }
             .navigationDestination(isPresented: $admin_opportunity_form_shown){
                 AdminOpportunityForm(franchise_data: $readDB.franchise_data_dropdown)
