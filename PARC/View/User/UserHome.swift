@@ -163,9 +163,7 @@ struct UserHome: View {
                         readDB.franchise_data = []
                         readDB.opportunity_data = []
                         readDB.user_holdings_data = []
-                        readDB.full_user_holdings_data = []
                         readDB.getFranchises()
-                        readDB.getAllUserHoldings()
                         readDB.getUserHoldings(email: email) { response in
                             if response == "Fetched user holdings" {
                                 self.portfolio_data = readDB.user_holdings_data
