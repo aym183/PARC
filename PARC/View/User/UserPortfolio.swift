@@ -28,10 +28,8 @@ var holdings_data: [ChartData] = [].compactMap({ $0 })
 var payouts_data: [ChartData] = [].compactMap({ $0 })
 
 struct UserPortfolio: View {
-    var metrics = ["£15,000.62", "£2,200.62", "23.49%"]
-    var metric_description = ["Estimated Holdings", "Payouts Received", "Average Profit Margin"]
+    var metric_description = ["Estimated Holdings", "Payouts Received"]
     var logo_images = ["McDonalds", "Starbucks", "Chipotle"]
-    var invested_amount = [500, 200, 250]
     @State private var index = 0
     @Binding var portfolio_data: [[String: String]]
     @Binding var user_payouts_data: [[String: String]]
@@ -41,7 +39,7 @@ struct UserPortfolio: View {
     @Binding var chart_values: [Float]
     @Binding var opportunity_data: [[String: String]]
     let random_colors: [Color] = [
-        .red, .green, .blue, .orange, .purple, .pink, .yellow,
+        .yellow, .orange, .blue, .green, .purple, .pink, .red,
         .teal, .indigo, .cyan, .brown,
         .gray, .black, Color("Primary"),
         Color(red: 0.8, green: 0.2, blue: 0.6),
@@ -72,7 +70,7 @@ struct UserPortfolio: View {
                 
                 ScrollView(.vertical, showsIndicators: false) {
                     TabView(selection: $index) {
-                        ForEach((0..<3), id: \.self) { index in
+                        ForEach((0..<2), id: \.self) { index in
                             
                             ZStack {
                                 if index == 0 {
@@ -107,7 +105,7 @@ struct UserPortfolio: View {
                         }
                         }
                     }
-                    .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
+                    .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                     .frame(height: geometry.size.height - 200)
                     
                     Divider()
@@ -123,7 +121,7 @@ struct UserPortfolio: View {
 //                                    Text("\(index+1).")
 //                                        .font(Font.custom("Nunito-Bold", size: 15))
                                     
-                                    Image(logo_images[0])
+                                    Image(logo_images.randomElement()!)
                                         .resizable()
                                         .aspectRatio(contentMode: .fill)
                                         .frame(width: 50, height: 50)
@@ -144,9 +142,10 @@ struct UserPortfolio: View {
                                     
                                     Spacer()
                                     
-                                    //Should be something regarding payouts? or date created
+                                    // Payouts this is -> Justification for no portfolio details page
                                     Text("+£\(formattedNumber(input_number: Int(portfolio_data[index]["amount"]!)!))")
-                                      .font(Font.custom("Nunito-Black", size: min(geometry.size.width, geometry.size.height) * 0.055))
+                                      .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.055))
+                                      .foregroundColor(Color("Profit"))
                                     
 //                                    if Int(portfolio_data[index]["amount"]!)! >= 500 {
 //                                        Text("+£\(formattedNumber(input_number: Int(portfolio_data[index]["amount"]!)!))")
@@ -209,6 +208,6 @@ struct UserPortfolio: View {
 
 //struct UserPortfolio_Previews: PreviewProvider {
 //    static var previews: some View {
-//        UserPortfolio(portfolio_data: .constant([[:]]), opportunity_data: .constant([[:]]))
+//        UserPortfolio(portfolio_data: .constant([[:]]), user_payouts_data: .constant([[:]]), payouts_chart_values: .constant([5.0, 5.0, 10.0]), payouts_value: .constant(20000), holdings_value: .constant(200000), chart_values: .constant([5.0, 5.0, 10.0]), opportunity_data: .constant([[:]]))
 //    }
 //}
