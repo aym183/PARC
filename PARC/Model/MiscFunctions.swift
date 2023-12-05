@@ -78,6 +78,7 @@ func calculatePortionHoldings(input: [[String: String]], holdings_value: Int) ->
     
 }
 
+// GPT - REFERENCE
 func calculatePayoutOpportunities(input: [[String: String]]) -> [Float] {
     var outputArray: [Float] = []
     var indexMap: [String: Int] = [:]
@@ -93,4 +94,22 @@ func calculatePayoutOpportunities(input: [[String: String]]) -> [Float] {
         }
     }
     return outputArray
+}
+
+// GPT - REFERENCE
+func sortArrayByDate(inputArray: [[String: String]]) -> [[String: String]] {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyy-MM-dd"
+
+    let sortedArray = inputArray.sorted { dict1, dict2 in
+        guard let dateString1 = dict1["transaction_date"],
+              let dateString2 = dict2["transaction_date"],
+              let date1 = dateFormatter.date(from: dateString1),
+              let date2 = dateFormatter.date(from: dateString2) else {
+            return false
+        }
+        return date1 > date2
+    }
+
+    return sortedArray
 }
