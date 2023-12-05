@@ -271,7 +271,7 @@ class CreateDB: ObservableObject {
                                 var arrayLength = itemsArray+1
                                 for holding in user_holdings {
                                     if Int(holding["opportunity_id"]!)! == opportunity_id {
-                                        var calculated_amount = Float(amount_offered)!*Float(holding["equity"]!)!
+                                        var calculated_amount = (Float(amount_offered)!*Float(holding["equity"]!)!)/100
                                         request_data.append(["opportunity_id": String(describing: opportunity_id), "user_email": String(describing: holding["user_email"]!), "equity": String(describing: holding["equity"]!), "amount_received": String(describing: Int(calculated_amount)), "user_payout_id": String(describing: arrayLength), "payout_date": String(describing: self.currentDate)])
                                         arrayLength+=1
                                     }

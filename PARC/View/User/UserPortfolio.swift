@@ -24,16 +24,19 @@ struct ChartData: Identifiable, Plottable {
     var color: Color
 }
 
-var data: [ChartData] = [].compactMap({ $0 })
+var holdings_data: [ChartData] = [].compactMap({ $0 })
+var payouts_data: [ChartData] = [].compactMap({ $0 })
 
 struct UserPortfolio: View {
     var metrics = ["£15,000.62", "£2,200.62", "23.49%"]
     var metric_description = ["Estimated Holdings", "Payouts Received", "Average Profit Margin"]
     var logo_images = ["McDonalds", "Starbucks", "Chipotle"]
-    var titles = ["McDonald's", "Starbucks", "Chipotle"]
     var invested_amount = [500, 200, 250]
     @State private var index = 0
     @Binding var portfolio_data: [[String: String]]
+    @Binding var user_payouts_data: [[String: String]]
+    @Binding var payouts_chart_values: [Float]
+    @Binding var payouts_value: Int
     @Binding var holdings_value: Int
     @Binding var chart_values: [Float]
     @Binding var opportunity_data: [[String: String]]
@@ -72,15 +75,28 @@ struct UserPortfolio: View {
                         ForEach((0..<3), id: \.self) { index in
                             
                             ZStack {
-                            Chart(data) { item in
-                                SectorMark(angle: .value("Label", item), innerRadius: .ratio(0.8))
-                                    .foregroundStyle(item.color)
-                            }
-                            
+                                if index == 0 {
+                                    Chart(holdings_data) { item in
+                                        SectorMark(angle: .value("Label", item), innerRadius: .ratio(0.8))
+                                            .foregroundStyle(item.color)
+                                    }
+                                } else {
+                                    Chart(payouts_data) { item in
+                                        SectorMark(angle: .value("Label", item), innerRadius: .ratio(0.8))
+                                            .foregroundStyle(item.color)
+                                    }
+                                }
+
                             VStack(alignment: .center) {
-                                Text("£\(formattedNumber(input_number: holdings_value))")
-                                  .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.1))
-                                  .foregroundColor(.black)
+                                if index == 0 {
+                                    Text("£\(formattedNumber(input_number: holdings_value))")
+                                      .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.1))
+                                      .foregroundColor(.black)
+                                } else {
+                                    Text("£\(formattedNumber(input_number: payouts_value))")
+                                      .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.1))
+                                      .foregroundColor(.black)
+                                }
                                 
                                 Text(metric_description[index])
                                     .foregroundStyle(Color("Custom_Gray"))
@@ -160,41 +176,32 @@ struct UserPortfolio: View {
             .foregroundColor(.black)
             .frame(width: max(0, geometry.size.width))
             .onAppear {
-                
-//                let chart_values: [String] = ["10.5", "20.3", "30.7"] // Replace with your actual values
-//                let colors: [Color] = [.red, .green, .blue, ] // Replace with your actual colors
 
-                data.append(contentsOf: chart_values.compactMap { value in
-//                    /*if let floatValue = Float(value)*/ {
+                holdings_data = []
+                payouts_data = []
+                holdings_data.append(contentsOf: chart_values.compactMap { value in
                         return ChartData(primitivePlottable: value) ?? ChartData(primitivePlottable: 0)
-//                    }
-//                    return nil
+                })
+                
+                payouts_data.append(contentsOf: payouts_chart_values.compactMap { value in
+                        return ChartData(primitivePlottable: value) ?? ChartData(primitivePlottable: 0)
                 })
 
-                // Assuming colors.count matches chart_values.count
                 for (index, color) in random_colors.enumerated() {
-                    if index < data.count {
-                        data[index].color = color
+                    if index < holdings_data.count {
+                        holdings_data[index].color = color
+                    } else {
+                        
+                    }
+                }                
+                
+                for (index, color) in random_colors.enumerated() {
+                    if index < payouts_data.count {
+                        payouts_data[index].color = color
                     } else {
                         
                     }
                 }
-                
-//                ForEach(0..<chart_values.count, id: \.self) { index in
-//                    data.append(.init(primitivePlottable: Int(chart_values[index]), color: colors.randomElement() ?? .gray)!)
-                    
-//                    data.append(contentsOf: chart_values.compactMap { value in
-//                        if let intValue = Int(chart_values[index]) {
-//                            return ChartData(primitivePlottable: intValue) ?? ChartData(primitivePlottable: 0)
-//                        }
-//                        return nil
-//                    })
-                    
-                    
-//                    data.append(.init(primitivePlottable: , color: colors.randomElement() ?? .gray))
-//                }
-//                .init(primitivePlottable: 55, color: Color("Secondary")),
-//                .init(primitivePlottable: 25, color: .yellow),
             }
         }
     }

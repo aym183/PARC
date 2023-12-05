@@ -21,8 +21,11 @@ struct UserHome: View {
     @State var imageURL = URL(string: "")
     @ObservedObject var readDB = ReadDB()
     @State var portfolio_data: [[String: String]] = []
+    @State var user_payouts_data: [[String: String]] = []
     @State var holdings_value: Int = 0
+    @State var payouts_value: Int = 0
     @State var chart_values: [Float] = []
+    @State var payouts_chart_values: [Float] = []
     @State var opportunity_data: [[String: String]] = []
     
     var body: some View {
@@ -121,7 +124,7 @@ struct UserHome: View {
                                 .frame(height: 1)
                                 .overlay(.black)
                             
-                            UserPortfolio(portfolio_data: $portfolio_data, holdings_value: $holdings_value, chart_values: $chart_values, opportunity_data: $opportunity_data)
+                            UserPortfolio(portfolio_data: $portfolio_data, user_payouts_data: $user_payouts_data, payouts_chart_values: $payouts_chart_values, payouts_value: $payouts_value, holdings_value: $holdings_value, chart_values: $chart_values, opportunity_data: $opportunity_data)
                         } else {
                             Text("Secondary Market")
                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.065))
@@ -156,24 +159,31 @@ struct UserHome: View {
                                 if !onboarding_completed {
                                     isShownOnboarding.toggle()
                                 }
-                                //                                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                                //                                }
                             }
                         }
                         readDB.franchise_data = []
                         readDB.opportunity_data = []
                         readDB.user_holdings_data = []
+                        readDB.full_user_holdings_data = []
+                        readDB.user_payout_data = []
                         readDB.getFranchises()
+                        readDB.getAllUserHoldings()
+                        readDB.getUserPayouts(email: email) { response in
+                            if response == "Fetched user payouts" {
+                                self.user_payouts_data = readDB.user_payout_data
+                                self.payouts_value = calculateTotalValue(input: self.user_payouts_data, field: "amount_received")
+                                self.payouts_chart_values = calculatePayoutOpportunities(input: self.user_payouts_data)
+                            }
+                        }
                         readDB.getUserHoldings(email: email) { response in
                             if response == "Fetched user holdings" {
                                 self.portfolio_data = readDB.user_holdings_data
-                                self.holdings_value = calculateTotalHoldings(input: self.portfolio_data)
-                                self.chart_values = calculatePortionHoldings(input: portfolio_data, holdings_value: calculateTotalHoldings(input: self.portfolio_data))
+                                self.holdings_value = calculateTotalValue(input: self.portfolio_data, field: "amount")
+                                self.chart_values = calculatePortionHoldings(input: portfolio_data, holdings_value: calculateTotalValue(input: self.portfolio_data, field: "amount"))
                             }
                         }
                         readDB.getOpportunities() { response in
                             if response == "Fetched all opportunities" {
-//                                print(readDB.opportunity_data)
                                 print("Fetched opportunities")
                                 self.opportunity_data = readDB.opportunity_data
                             }

@@ -50,13 +50,13 @@ func formattedNumber(input_number: Int) -> String {
     return numberFormatter.string(from: NSNumber(value: input_number)) ?? ""
 }
 
-func calculateTotalHoldings(input: [[String: String]]) -> Int {
+func calculateTotalValue(input: [[String: String]], field: String) -> Int {
     
     var final_amount = 0
     
     if input.count != 0 {
         for x in input {
-            final_amount += Int(x["amount"]!)!
+            final_amount += Int(x[field]!)!
         }
         return final_amount
     }
@@ -76,4 +76,21 @@ func calculatePortionHoldings(input: [[String: String]], holdings_value: Int) ->
     }
     return [0]
     
+}
+
+func calculatePayoutOpportunities(input: [[String: String]]) -> [Float] {
+    var outputArray: [Float] = []
+    var indexMap: [String: Int] = [:]
+
+    for dict in input {
+        if let opportunityID = dict["opportunity_id"] {
+            if let index = indexMap[opportunityID] {
+                outputArray[index] += 1
+            } else {
+                indexMap[opportunityID] = outputArray.count
+                outputArray.append(1)
+            }
+        }
+    }
+    return outputArray
 }
