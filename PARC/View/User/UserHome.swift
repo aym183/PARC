@@ -77,8 +77,8 @@ struct UserHome: View {
                             Spacer()
                             
                             Button(action: {
-                                CreateDB().createUserPayout(opportunity_id: 1, user_holdings: readDB.full_user_holdings_data, amount_offered: "2000000", payout_id: 2)
-//                                account_shown.toggle()
+//                                CreateDB().createUserPayout(opportunity_id: 2, user_holdings: readDB.full_user_holdings_data, amount_offered: "2000000", payout_id: 2)
+                                account_shown.toggle()
                                  }) {
                                 if imageURL != nil {
                                     URLImage(imageURL!) { image in
@@ -266,6 +266,7 @@ struct UserHomeContent: View {
                                                     
                                                     Spacer()
                                                 }
+                                                .padding(.leading, -2.5)
                                                 
                                                 Text(franchise_data[franchise_data.firstIndex(where: { $0["name"] == opportunity_data[index]["franchise"]!})!]["description"]!)
                                                     .foregroundColor(Color("Custom_Gray"))

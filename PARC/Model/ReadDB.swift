@@ -215,12 +215,10 @@ class ReadDB: ObservableObject {
         }.resume()
     }
     
-    
     func getUserHoldings(email: String, completion: @escaping (String?) -> Void) {
         
         var keysArray = ["user_holdings_id", "user_email", "status", "opportunity_id", "equity", "amount", "transaction_date"]
         var temp_dict: [String: String] = [:]
-        
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/user-holdings")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
