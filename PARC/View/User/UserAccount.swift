@@ -10,6 +10,7 @@ import URLImage
 
 struct UserAccount: View {
     @Binding var imageURL: URL?
+    @Binding var payoutsValue: Int
     
     var body: some View {
         GeometryReader { geometry in
@@ -113,7 +114,7 @@ struct UserAccount: View {
                             Text("Balance")
                                 .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.052))
                             Spacer()
-                            Text("£10,000")
+                            Text("£\(formattedNumber(input_number: payoutsValue))")
                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.052))
                                 .foregroundColor(.black)
                                 .padding(.trailing, 13)
