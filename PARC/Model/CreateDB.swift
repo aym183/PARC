@@ -102,7 +102,7 @@ class CreateDB: ObservableObject {
     
     func createInvestmentConfirmation(email: String, amount: String, opportunity_name: String) {
         
-        let apiUrl = URL(string: "https://brdh472ip2.execute-api.us-east-1.amazonaws.com/development/emails/investment_confirmed?email=\(email)&amount=\(amount)&opportunity_name=\(opportunity_name)")!
+        let apiUrl = URL(string: "https://brdh472ip2.execute-api.us-east-1.amazonaws.com/development/emails/investment-confirmed?email=\(email)&amount=\(amount)&opportunity_name=\(opportunity_name)")!
 
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "POST"
