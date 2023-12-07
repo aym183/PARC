@@ -62,7 +62,7 @@ struct AdminHome: View {
                                                     .fill(Color.white)
                                                     .overlay(
                                                         RoundedRectangle(cornerRadius: 5)
-                                                            .stroke(Color.black, lineWidth: 1.25)
+                                                            .stroke(Color.gray, lineWidth: 1.25)
                                                     )
                                                 
                                                 VStack {
@@ -93,7 +93,7 @@ struct AdminHome: View {
                                                     .fill(Color.white)
                                                     .overlay(
                                                         RoundedRectangle(cornerRadius: 5)
-                                                            .stroke(Color.black, lineWidth: 1.25)
+                                                            .stroke(Color.gray, lineWidth: 1.25)
                                                     )
                                                     .frame(width: 160, height: 140)
                                             }
@@ -204,7 +204,7 @@ struct AdminHome: View {
                                                     .fill(Color.white)
                                                     .overlay(
                                                         RoundedRectangle(cornerRadius: 5)
-                                                            .stroke(Color.black, lineWidth: 1.25)
+                                                            .stroke(Color.gray, lineWidth: 1.25)
                                                     )
                                                 
                                                 VStack {
@@ -234,7 +234,7 @@ struct AdminHome: View {
                                                     .fill(Color.white)
                                                     .overlay(
                                                         RoundedRectangle(cornerRadius: 5)
-                                                            .stroke(Color.black, lineWidth: 1.25)
+                                                            .stroke(Color.gray, lineWidth: 1.25)
                                                     )
                                                 
                                                 VStack {
@@ -323,7 +323,7 @@ struct AdminHome: View {
                                                     .fill(Color.white)
                                                     .overlay(
                                                         RoundedRectangle(cornerRadius: 5)
-                                                            .stroke(Color.black, lineWidth: 1.25)
+                                                            .stroke(Color.gray, lineWidth: 1.25)
                                                     )
                                                 
                                                 VStack {
@@ -349,7 +349,7 @@ struct AdminHome: View {
                                                     .fill(Color.white)
                                                     .overlay(
                                                         RoundedRectangle(cornerRadius: 5)
-                                                            .stroke(Color.black, lineWidth: 1.25)
+                                                            .stroke(Color.gray, lineWidth: 1.25)
                                                     )
                                                 
                                                 VStack {
