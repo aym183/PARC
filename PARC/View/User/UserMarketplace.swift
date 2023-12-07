@@ -17,132 +17,158 @@ struct UserMarketplace: View {
     @State var marketplace_bottom_sheet_shown = false
     @State var marketplace_list_shares_shown = false
     @State var marketplace_shown = false
+    @State var marketplace_deadline_passed = true
     @State var title = ""
     @State var logo = ""
     
     var body: some View {
         GeometryReader { geometry in
-            ZStack(alignment: .bottomTrailing) {
-                Color(.white).ignoresSafeArea()
-                ScrollView(.vertical, showsIndicators: false) {
+            
+            if marketplace_deadline_passed {
+                ZStack {
+                    Color(.white).ignoresSafeArea()
                     VStack {
-                        HStack {
-                            VStack {
-                                Text("Volume Traded")
-                                Text("£10B+")
-                                    .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.065))
-                                    .padding(.top, 3)
-                            }
-                            
-                            Spacer()
-                            
-                            VStack {
-                                Text("Deals Completed")
-                                Text("15")
-                                    .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.065))
-                                    .padding(.top, 3)
-                            }
-                            
-                            Spacer()
-                            
-                            VStack {
-                                Text("Average Returns")
-                                Text("£10,000")
-                                    .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.065))
-                                    .padding(.top, 3)
-                            }
-                        }
-                        .multilineTextAlignment(.center)
-                        .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.030))
-                        .padding(.top, 10)
+                        Spacer()
+                        Text("☹️")
+                            .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.3))
+                            .padding(.bottom, -20)
                         
-                        HStack {
-                            Text("Businesses")
-                            Spacer()
-                            Text("Estimated Valuation")
-                            Spacer()
-                            Text("% Change")
-                            Spacer()
-                            Text("Available Shares")
-                        }
-                        .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.03))
-                        .padding(.top)
+                        Text("Trading Window is closed")
+                            .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.065))
                         
-                        Divider()
-                            .overlay(Color("Custom_Gray"))
-                            .frame(height: 1)
-                            .padding(.top, -5)
-                        
-                        ForEach((0..<8), id: \.self) { index in
-                            Button(action: {
-                                title = title_texts[index]
-                                logo = logo_images[index]
-                                marketplace_click_shown.toggle()
-                            }) {
-                                HStack {
-                                    VStack {
-                                        Image(logo_images[index])
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fill)
-                                            .frame(width: 55, height: 55)
-                                        
-                                        Text(title_texts[index])
-                                            .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.03))
-                                        
-                                    }
-                                    Spacer()
-                                    
-                                    Text(valuation_data[index])
-                                    
-                                    Spacer()
-                                    
-                                    if percent_changes[index] >= 500 {
-                                        Text("\(percent_changes[index])%")
-                                            .foregroundColor(Color("Profit"))
-                                    } else {
-                                        Text("\(percent_changes[index])%")
-                                            .foregroundColor(Color("Loss"))
-                                    }
-                                    
-                                    Spacer()
-                                    
-                                    Text(available_shares[index])
-                                    
-                                }
-                                .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.035))
-                            }
-                            
-                            if index != 3 {
-                                Divider()
-                                    .overlay(Color("Custom_Gray")).opacity(0.6)
-                                    .frame(height: 0.5)
-                                    .padding(.vertical, 5)
-                            }
-                        }
+                        Text("You will be notified when the next one starts")
+                            .frame(width: 210)
+                            .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.045))
+                            .padding(.top, -15)
+                        Spacer()
                     }
+                    .multilineTextAlignment(.center)
                     .foregroundColor(.black)
+                    .padding(.bottom)
                 }
-                Button(action: { marketplace_bottom_sheet_shown.toggle() }) {
-                    ZStack {
-                        Circle()
-                            .fill(Color("Secondary"))
-                            .frame(width: 50, height: 50)
-                        
-                        Image(systemName: "plus")
-                            .font(Font.custom("Nunito-Black", size: min(geometry.size.width, geometry.size.height) * 0.055))
-                            .foregroundColor(.white)
+            } else {
+                ZStack(alignment: .bottomTrailing) {
+                    Color(.white).ignoresSafeArea()
+                    ScrollView(.vertical, showsIndicators: false) {
+                        VStack {
+                            HStack {
+                                VStack {
+                                    Text("Volume Traded")
+                                    Text("£10B+")
+                                        .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.065))
+                                        .padding(.top, 3)
+                                }
+                                
+                                Spacer()
+                                
+                                VStack {
+                                    Text("Deals Completed")
+                                    Text("15")
+                                        .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.065))
+                                        .padding(.top, 3)
+                                }
+                                
+                                Spacer()
+                                
+                                VStack {
+                                    Text("Average Returns")
+                                    Text("£10,000")
+                                        .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.065))
+                                        .padding(.top, 3)
+                                }
+                            }
+                            .multilineTextAlignment(.center)
+                            .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.030))
+                            .padding(.top, 10)
+                            
+                            HStack {
+                                Text("Businesses")
+                                Spacer()
+                                Text("Estimated Valuation")
+                                Spacer()
+                                Text("% Change")
+                                Spacer()
+                                Text("Available Shares")
+                            }
+                            .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.03))
+                            .padding(.top)
+                            
+                            Divider()
+                                .overlay(Color("Custom_Gray"))
+                                .frame(height: 1)
+                                .padding(.top, -5)
+                            
+                            ForEach((0..<8), id: \.self) { index in
+                                Button(action: {
+                                    title = title_texts[index]
+                                    logo = logo_images[index]
+                                    marketplace_click_shown.toggle()
+                                }) {
+                                    HStack {
+                                        VStack {
+                                            Image(logo_images[index])
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fill)
+                                                .frame(width: 55, height: 55)
+                                            
+                                            Text(title_texts[index])
+                                                .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.03))
+                                            
+                                        }
+                                        Spacer()
+                                        
+                                        Text(valuation_data[index])
+                                        
+                                        Spacer()
+                                        
+                                        if percent_changes[index] >= 500 {
+                                            Text("\(percent_changes[index])%")
+                                                .foregroundColor(Color("Profit"))
+                                        } else {
+                                            Text("\(percent_changes[index])%")
+                                                .foregroundColor(Color("Loss"))
+                                        }
+                                        
+                                        Spacer()
+                                        
+                                        Text(available_shares[index])
+                                        
+                                    }
+                                    .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.035))
+                                }
+                                
+                                if index != 3 {
+                                    Divider()
+                                        .overlay(Color("Custom_Gray")).opacity(0.6)
+                                        .frame(height: 0.5)
+                                        .padding(.vertical, 5)
+                                }
+                            }
+                        }
+                        .foregroundColor(.black)
                     }
+                    Button(action: { marketplace_bottom_sheet_shown.toggle() }) {
+                        ZStack {
+                            Circle()
+                                .fill(Color("Secondary"))
+                                .frame(width: 50, height: 50)
+                            
+                            Image(systemName: "plus")
+                                .font(Font.custom("Nunito-Black", size: min(geometry.size.width, geometry.size.height) * 0.055))
+                                .foregroundColor(.white)
+                        }
+                    }
+                    .padding(.trailing, 15).padding(.bottom)
                 }
-                .padding(.trailing, 15).padding(.bottom)
-            }
-            .navigationDestination(isPresented: $marketplace_click_shown) {
-                UserMarketplaceClick(title: $title, logo: $title)
-            }
-            .navigationDestination(isPresented: $marketplace_list_shares_shown) {
-                UserListShares(marketplace_shown: $marketplace_shown)
-            }
-            .sheet(isPresented: $marketplace_bottom_sheet_shown) {
-                UserMarketplaceBottomSheet(marketplace_bottom_sheet_shown: $marketplace_bottom_sheet_shown, marketplace_list_shares_shown: $marketplace_list_shares_shown).presentationDetents([.height(200)])
+                .navigationDestination(isPresented: $marketplace_click_shown) {
+                    UserMarketplaceClick(title: $title, logo: $title)
+                }
+                .navigationDestination(isPresented: $marketplace_list_shares_shown) {
+                    UserListShares(marketplace_shown: $marketplace_shown)
+                }
+                .sheet(isPresented: $marketplace_bottom_sheet_shown) {
+                    UserMarketplaceBottomSheet(marketplace_bottom_sheet_shown: $marketplace_bottom_sheet_shown, marketplace_list_shares_shown: $marketplace_list_shares_shown).presentationDetents([.height(200)])
+                }
             }
         }
     }

@@ -68,7 +68,7 @@ struct AdminHome: View {
                                                 VStack {
                                                     Text("Add Opportunity")
                                                         .font(Font.custom("Nunito-ExtraBold", size: 15))
-                                                        .foregroundColor(Color("Secondary"))
+                                                        .foregroundColor(.black)
                                                         .padding(.bottom)
                                                     ZStack {
                                                         Circle()
