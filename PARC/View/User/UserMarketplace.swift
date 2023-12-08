@@ -11,13 +11,13 @@ struct UserMarketplace: View {
     var logo_images = ["McDonalds", "Chipotle", "Dominos", "Subway", "McDonalds", "Chipotle", "Dominos", "Subway"]
     var title_texts = ["McDonald's", "Chipotle", "Dominos", "Subway", "McDonald's", "Chipotle", "Dominos", "Subway"]
     var valuation_data = ["£3.5M", "£700.5K", "£7.25M", "£100K", "£3.5M", "£700.5K", "£7.25M", "£100K"]
-    var percent_changes = [502, 200, 10, 60, 502, 200, 10, 60]
-    var available_shares = ["£55,000", "£35,000", "£1,000", "£49,760", "£55,000", "£35,000", "£1,000", "£49,760"]
+    var payouts = ["£10K", "£100K", "£2.5M", "£10K", "£100K", "£2.5M", "£10K", "£100K"]
+    var available_shares = ["£55,000", "£35,000", "£10,000", "£49,760", "£55,000", "£35,000", "£1,000", "£49,760"]
     @State var marketplace_click_shown = false
     @State var marketplace_bottom_sheet_shown = false
     @State var marketplace_list_shares_shown = false
     @State var marketplace_shown = false
-    @State var marketplace_deadline_passed = true
+    @State var marketplace_deadline_passed = false
     @State var title = ""
     @State var logo = ""
     
@@ -51,54 +51,54 @@ struct UserMarketplace: View {
                     Color(.white).ignoresSafeArea()
                     ScrollView(.vertical, showsIndicators: false) {
                         VStack {
-                            HStack {
-                                VStack {
-                                    Text("Volume Traded")
-                                    Text("£10B+")
-                                        .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.065))
-                                        .padding(.top, 3)
-                                }
-                                
-                                Spacer()
-                                
-                                VStack {
-                                    Text("Deals Completed")
-                                    Text("15")
-                                        .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.065))
-                                        .padding(.top, 3)
-                                }
-                                
-                                Spacer()
-                                
-                                VStack {
-                                    Text("Average Returns")
-                                    Text("£10,000")
-                                        .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.065))
-                                        .padding(.top, 3)
-                                }
-                            }
-                            .multilineTextAlignment(.center)
-                            .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.030))
-                            .padding(.top, 10)
+//                            HStack {
+//                                VStack {
+//                                    Text("Volume Traded")
+//                                    Text("£10B+")
+//                                        .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.065))
+//                                        .padding(.top, 3)
+//                                }
+//                                
+//                                Spacer()
+//                                
+//                                VStack {
+//                                    Text("Deals Completed")
+//                                    Text("15")
+//                                        .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.065))
+//                                        .padding(.top, 3)
+//                                }
+//                                
+//                                Spacer()
+//                                
+//                                VStack {
+//                                    Text("Average Returns")
+//                                    Text("£10,000")
+//                                        .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.065))
+//                                        .padding(.top, 3)
+//                                }
+//                            }
+//                            .multilineTextAlignment(.center)
+//                            .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.030))
+//                            .padding(.top, 10)
                             
                             HStack {
                                 Text("Businesses")
                                 Spacer()
                                 Text("Estimated Valuation")
                                 Spacer()
-                                Text("% Change")
+                                Text("Payouts")
                                 Spacer()
                                 Text("Available Shares")
                             }
                             .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.03))
-                            .padding(.top)
+                            .padding(.top, 10)
                             
                             Divider()
                                 .overlay(Color("Custom_Gray"))
                                 .frame(height: 1)
                                 .padding(.top, -5)
                             
-                            ForEach((0..<8), id: \.self) { index in
+                            ForEach((0..<6), id: \.self) { index in
                                 Button(action: {
                                     title = title_texts[index]
                                     logo = logo_images[index]
@@ -111,28 +111,32 @@ struct UserMarketplace: View {
                                                 .aspectRatio(contentMode: .fill)
                                                 .frame(width: 55, height: 55)
                                             
-                                            Text(title_texts[index])
-                                                .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.03))
+//                                            Text(title_texts[index])
+//                                                .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.03))
                                             
                                         }
                                         Spacer()
                                         
-                                        Text(valuation_data[index])
-                                        
-                                        Spacer()
-                                        
-                                        if percent_changes[index] >= 500 {
-                                            Text("\(percent_changes[index])%")
-                                                .foregroundColor(Color("Profit"))
-                                        } else {
-                                            Text("\(percent_changes[index])%")
-                                                .foregroundColor(Color("Loss"))
+                                        VStack {
+                                            Text(valuation_data[index])
                                         }
-                                        
                                         Spacer()
                                         
-                                        Text(available_shares[index])
+//                                        if percent_changes[index] >= 500 {
+//                                            Text("\(percent_changes[index])%")
+//                                                .foregroundColor(Color("Profit"))
+//                                        } else {
+//                                            Text("\(percent_changes[index])%")
+//                                                .foregroundColor(Color("Loss"))
+//                                        }
+                                        VStack {
+                                            Text("\(payouts[index])")
+                                        }
+                                        Spacer()
                                         
+                                        VStack {
+                                            Text(available_shares[index])
+                                        }
                                     }
                                     .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.035))
                                 }
@@ -144,9 +148,21 @@ struct UserMarketplace: View {
                                         .padding(.vertical, 5)
                                 }
                             }
+                            Button(action: {}) {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .fill(Color("Secondary"))
+                                    Text("Show More")
+                                        .foregroundColor(.white)
+                                        .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.035))
+                                }
+                                .frame(width: 100, height: 40)
+                            }
                         }
                         .foregroundColor(.black)
+                        
                     }
+                                   
                     Button(action: { marketplace_bottom_sheet_shown.toggle() }) {
                         ZStack {
                             Circle()

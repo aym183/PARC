@@ -57,6 +57,31 @@ struct UserListShares: View {
                         
                     }
                     
+                    Text("Holding").font(Font.custom("Nunito-Bold", size: 18))
+                        .padding(.top).padding(.bottom, -5)
+                    
+                    // Replace with dropdown of all added franchise
+                    
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 5)
+                            .fill(Color.white)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 5)
+                                    .stroke(Color.black, lineWidth: 1.25)
+                            )
+                            .frame(width: max(0, geometry.size.width - 40), height: 50)
+                        
+                        TextField("", text: $franchise).padding().frame(width: max(0, geometry.size.width-40), height: 50)
+                            .foregroundColor(.black)
+                            .autocorrectionDisabled(true)
+                            .autocapitalization(.none)
+//                            .border(Color.black, width: 1)
+                            .cornerRadius(5)
+                            .font(Font.custom("Nunito-Bold", size: 16))
+
+                        
+                    }
+                    
                     Text("Shares").font(Font.custom("Nunito-Bold", size: 18))
                         .padding(.top, 10).padding(.bottom, -5)
                     
@@ -138,7 +163,7 @@ struct UserListShares: View {
         }
     }
 }
-//
-//#Preview {
-//    UserListShares()
-//}
+
+#Preview {
+    UserListShares(marketplace_shown: .constant(false))
+}
