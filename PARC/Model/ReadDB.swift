@@ -306,6 +306,7 @@ class ReadDB: ObservableObject {
         var current_status = ""
         var trading_window_id = ""
         var trading_window_active = false
+        var trading_window_completed = false
         
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/trading-windows")!
         var request = URLRequest(url: apiUrl)
@@ -330,15 +331,17 @@ class ReadDB: ObservableObject {
                                         }
                                     }
                                     self.trading_window_data.append(temp_dict)
-                                    if let comparisonResult = compareDates(date1String: currentFormattedDate, date2String: dateStringByAddingDays(days: Int(temp_dict["duration"]!)!, dateString: convertDate(dateString: temp_dict["start_date"]!))!) {
-                                        if (comparisonResult == .orderedAscending) && (currentFormattedDate >= "17/12/2023") {
+                        
+                                    if isTradingWindowActive(targetDate: currentFormattedDate, start: convertDate(dateString: temp_dict["start_date"]!), end: dateStringByAddingDays(days: Int(temp_dict["duration"]!)!, dateString: convertDate(dateString: temp_dict["start_date"]!))!)! {
                                             trading_window_active = true
                                             current_status = temp_dict["status"]!
                                             trading_window_id = temp_dict["trading-window-id"]!
                                             UserDefaults.standard.set("true", forKey: "trading_window_active")
-                                        }
-                                    } else {
-                                        print("Invalid date format")
+                                    } else if isTradingWindowComplete(targetDate: currentFormattedDate, end: dateStringByAddingDays(days: Int(temp_dict["duration"]!)!, dateString: convertDate(dateString: temp_dict["start_date"]!))!)! {
+                                            trading_window_completed = true
+                                            current_status = temp_dict["status"]!
+                                            trading_window_id = temp_dict["trading-window-id"]!
+                                            UserDefaults.standard.set("false", forKey: "trading_window_active")
                                     }
                                     temp_dict = [:]
                                 }
@@ -346,11 +349,23 @@ class ReadDB: ObservableObject {
                                     UpdateDB().updateTable(primary_key: "trading-window-id", primary_key_value: trading_window_id, table: "trading-windows", updated_key: "status", updated_value: "Ongoing") { response in
                                         
                                         if response == "trading-windows status updated" {
-                                            print("Trading window updated")
+                                            print("Trading window ongoing updated")
+                                        }
+                                        
+                                    }
+                                } 
+                                
+                                else if trading_window_completed && current_status == "Ongoing" {
+                                    UpdateDB().updateTable(primary_key: "trading-window-id", primary_key_value: trading_window_id, table: "trading-windows", updated_key: "status", updated_value: "Completed") { response in
+                                        
+                                        if response == "trading-windows status updated" {
+                                            print("Trading window completed updated")
                                         }
                                         
                                     }
                                 }
+                                
+                                //Add converting of Ongoing to Completed
                             }
                         }
                     }

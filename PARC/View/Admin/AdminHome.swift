@@ -360,11 +360,11 @@ struct AdminHome: View {
                                                     ZStack {
                                                         if readDB.trading_window_data[index-1]["status"] == "Scheduled" {
                                                             RoundedRectangle(cornerRadius: 5)
-                                                                .fill(Color("Amber"))
+                                                                .fill(.blue)
                                                                 .frame(width: max(0, geometry.size.width-300), height: 25)
                                                         } else if readDB.trading_window_data[index-1]["status"] == "Ongoing"  {
                                                             RoundedRectangle(cornerRadius: 5)
-                                                                .fill(.blue)
+                                                                .fill(Color("Amber"))
                                                                 .frame(width: max(0, geometry.size.width-300), height: 25)
                                                         } else if readDB.trading_window_data[index-1]["status"] == "Completed"  {
                                                             RoundedRectangle(cornerRadius: 5)

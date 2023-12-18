@@ -28,14 +28,29 @@ func convertDate(dateString: String) -> String {
     return("nil")
 }
 
-func compareDates(date1String: String, date2String: String) -> ComparisonResult? {
+// GPT - REFERENCE
+func isTradingWindowActive(targetDate: String, start startDate: String, end endDate: String) -> Bool? {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "dd/MM/yyyy"
 
-    if let date1 = dateFormatter.date(from: date1String),
-       let date2 = dateFormatter.date(from: date2String) {
-        
-        return date1.compare(date2)
+    if let target = dateFormatter.date(from: targetDate),
+       let start = dateFormatter.date(from: startDate),
+       let end = dateFormatter.date(from: endDate) {
+
+        return target >= start && target <= end
+    }
+
+    return nil
+}
+
+func isTradingWindowComplete(targetDate: String, end endDate: String) -> Bool? {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "dd/MM/yyyy"
+
+    if let target = dateFormatter.date(from: targetDate),
+       let end = dateFormatter.date(from: endDate) {
+
+        return target > end
     }
 
     return nil
