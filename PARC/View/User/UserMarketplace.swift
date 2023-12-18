@@ -17,14 +17,14 @@ struct UserMarketplace: View {
     @State var marketplace_bottom_sheet_shown = false
     @State var marketplace_list_shares_shown = false
     @State var marketplace_shown = false
-    @State var marketplace_deadline_passed = true
+    @Binding var trading_window_active: Bool
     @State var title = ""
     @State var logo = ""
     
     var body: some View {
         GeometryReader { geometry in
             
-            if marketplace_deadline_passed {
+            if !trading_window_active {
                 ZStack {
                     Color(.white).ignoresSafeArea()
                     VStack {
@@ -190,8 +190,8 @@ struct UserMarketplace: View {
     }
 }
 
-struct UserMarketplace_Previews: PreviewProvider {
-    static var previews: some View {
-        UserMarketplace()
-    }
-}
+//struct UserMarketplace_Previews: PreviewProvider {
+//    static var previews: some View {
+//        UserMarketplace()
+//    }
+//}

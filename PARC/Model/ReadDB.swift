@@ -18,6 +18,8 @@ class ReadDB: ObservableObject {
     @Published var trading_window_data: [[String: String]] = []
     @Published var full_user_holdings_data: [[String: String]] = []
     @Published var opportunity_data_dropdown: [DropdownMenuOption] = []
+    @Published var trading_window_active: Bool = false
+    @State var currentFormattedDate: String = convertDate(dateString: String(describing: Date()))
     
     func getFranchises() {
         var temp_dict: [String: String] = [:]
@@ -311,7 +313,7 @@ class ReadDB: ObservableObject {
             if let data = data {
                 do {
                     if let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
-                        DispatchQueue.main.async {
+                        DispatchQueue.main.async { [self] in
                             if let itemsArray = jsonObject["Items"] as? [[String : Any]] {
                                 for value in itemsArray.reversed() {
                                     for data in keysArray.reversed() {
@@ -326,6 +328,14 @@ class ReadDB: ObservableObject {
                                         }
                                     }
                                     self.trading_window_data.append(temp_dict)
+                                    if let comparisonResult = compareDates(date1String: currentFormattedDate, date2String: dateStringByAddingDays(days: Int(temp_dict["duration"]!)!, dateString: convertDate(dateString: temp_dict["start_date"]!))!) {
+                                        if (comparisonResult == .orderedAscending) && (currentFormattedDate >= "17/12/2023") {
+                                            print("Trading window active")
+                                            self.trading_window_active = true
+                                        }
+                                    } else {
+                                        print("Invalid date format")
+                                    }
                                     temp_dict = [:]
                                 }
                             }

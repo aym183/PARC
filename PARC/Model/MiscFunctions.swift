@@ -28,6 +28,19 @@ func convertDate(dateString: String) -> String {
     return("nil")
 }
 
+func compareDates(date1String: String, date2String: String) -> ComparisonResult? {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "dd/MM/yyyy"
+
+    if let date1 = dateFormatter.date(from: date1String),
+       let date2 = dateFormatter.date(from: date2String) {
+        
+        return date1.compare(date2)
+    }
+
+    return nil
+}
+
 func getDaysRemaining(dateString: String) -> Int? {
     let formatter = DateFormatter()
     formatter.dateFormat = "dd/MM/yyyy" // Set the date format to match "DD/MM/YYYY"
@@ -41,6 +54,22 @@ func getDaysRemaining(dateString: String) -> Int? {
     }
 
     return nil // Return nil in case of any errors
+}
+
+// GPT - REFERENCE
+func dateStringByAddingDays(days: Int, dateString: String) -> String? {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "dd/MM/yyyy"
+    
+    if let inputDate = dateFormatter.date(from: dateString) {
+        let calendar = Calendar.current
+        if let modifiedDate = calendar.date(byAdding: .day, value: days, to: inputDate) {
+            let newDateString = dateFormatter.string(from: modifiedDate)
+            return newDateString
+        }
+    }
+    
+    return nil
 }
 
 func formattedNumber(input_number: Int) -> String {

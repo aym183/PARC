@@ -133,7 +133,7 @@ struct UserHome: View {
                                 .frame(height: 1)
                                 .overlay(.black)
                             
-                            UserMarketplace()
+                            UserMarketplace(trading_window_active: $readDB.trading_window_active)
                         }
                         
                         
@@ -144,6 +144,12 @@ struct UserHome: View {
                     .frame(width: max(0, geometry.size.width-40), height: max(0, geometry.size.height - 20))
                     .foregroundColor(.black)
                     .onAppear {
+//                        print(convertDate(dateString: String(describing: Date())))
+//                        if "20/12/2023" >= convertDate(dateString: String(describing: Date())) {
+//                            print(dateStringByAddingDays(days: 30, dateString: "20/12/2023"))
+//                        } else {
+//                            print(false)
+//                        }
 
                         DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                             withAnimation(.easeOut(duration: 0.5)) {
@@ -166,8 +172,10 @@ struct UserHome: View {
                         readDB.user_holdings_data = []
                         readDB.full_user_holdings_data = []
                         readDB.user_payout_data = []
+                        readDB.trading_window_data = []
                         readDB.getFranchises()
                         readDB.getAllUserHoldings()
+                        readDB.getTradingWindows()
                         readDB.getUserPayouts(email: email) { response in
                             if response == "Fetched user payouts" {
                                 self.user_payouts_data = readDB.user_payout_data
