@@ -328,7 +328,6 @@ class ReadDB: ObservableObject {
                                     self.trading_window_data.append(temp_dict)
                                     temp_dict = [:]
                                 }
-                                print(self.trading_window_data)
                             }
                         }
                     }

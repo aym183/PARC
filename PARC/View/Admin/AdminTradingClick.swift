@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct AdminTradingClick: View {
-    var data_titles = ["Trading Volume", "Trades", "Start Date", "End Date", "Most Traded Opportunity", "Biggest Trade"]
+    var data_titles = ["Trading Volume", "Trades", "Scheduled Date", "Duration", "Most Traded Opportunity", "Biggest Trade"]
     var data_values = ["£178,000,000", "Check", "21/03/2023", "15/04/2023", "McDonald's, 25", "McDonald's - £1.5M"]
+    @Binding var selected_trading_window: [String: String]
     
     var body: some View {
         GeometryReader { geometry in
@@ -19,7 +20,6 @@ struct AdminTradingClick: View {
                     VStack {
                         Text("500 Trades")
                             .font(Font.custom("Nunito-ExtraBold", size: 50))
-                            .foregroundColor(Color("Profit"))
                         
                         HStack(spacing: 20) {
                             Button(action: {}) {
@@ -82,6 +82,10 @@ struct AdminTradingClick: View {
                                         .foregroundColor(Color.white)
                                         .cornerRadius(5)
                                     }
+                                } else if data_titles[index] == "Scheduled Date" {
+                                    Text(convertDate(dateString: selected_trading_window["start_date"]!))
+                                } else if data_titles[index] == "Duration" {
+                                    Text("\(String(describing: selected_trading_window["duration"]!)) days")
                                 } else {
                                     Text(data_values[index])
                                 }
@@ -105,10 +109,13 @@ struct AdminTradingClick: View {
                     .padding(.top)
                 }
             }
+            .onAppear() {
+                print(selected_trading_window)
+            }
         }
     }
 }
 
-#Preview {
-    AdminTradingClick()
-}
+//#Preview {
+//    AdminTradingClick()
+//}

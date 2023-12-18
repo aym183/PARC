@@ -25,6 +25,7 @@ struct AdminHome: View {
     @State var opportunity_logo = ""
     @State var opportunity_data: [String:String] = [:]
     @State var payout_data: [String:String] = [:]
+    @State var selected_trading_window: [String: String] = [:]
     @ObservedObject var readDB = ReadDB()
     
     var body: some View {
@@ -343,7 +344,10 @@ struct AdminHome: View {
                                             .frame(width: 135, height: 140)
                                         }
                                     } else {
-                                        Button(action: { admin_trading_click_shown.toggle() }) {
+                                        Button(action: {
+                                            selected_trading_window = readDB.trading_window_data[index-1]
+                                            admin_trading_click_shown.toggle()
+                                        }) {
                                             ZStack {
                                                 RoundedRectangle(cornerRadius: 5)
                                                     .fill(Color.white)
@@ -444,7 +448,7 @@ struct AdminHome: View {
                 AdminOpportunityClick(opportunity_logo: $opportunity_logo, opportunity_title: $opportunity_title, opportunity_data: $opportunity_data)
             }
             .navigationDestination(isPresented: $admin_trading_click_shown){
-                AdminTradingClick()
+                AdminTradingClick(selected_trading_window: $selected_trading_window)
             }
             .navigationDestination(isPresented: $admin_payout_click_shown){
                 AdminPayoutClick(opportunity_data: $opportunity_data, payout_data: $payout_data, admin_payout_click_shown: $admin_payout_click_shown)
