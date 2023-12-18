@@ -314,7 +314,7 @@ struct AdminHome: View {
                         
                         ScrollView(.horizontal, showsIndicators: false) {
                             LazyHGrid(rows: rows, spacing: 20) {
-                                ForEach(0..<5, id: \.self ) { index in
+                                ForEach(0..<readDB.trading_window_data.count+1, id: \.self ) { index in
                                     
                                     if index == 0 {
                                         Button(action: { admin_trading_form_shown.toggle() }) {
@@ -354,11 +354,25 @@ struct AdminHome: View {
                                                 
                                                 VStack {
                                                     ZStack {
-                                                        RoundedRectangle(cornerRadius: 5)
-                                                            .fill(Color("Profit"))
-                                                            .frame(width: max(0, geometry.size.width-300), height: 25)
+                                                        if readDB.trading_window_data[index-1]["status"] == "Scheduled" {
+                                                            RoundedRectangle(cornerRadius: 5)
+                                                                .fill(Color("Amber"))
+                                                                .frame(width: max(0, geometry.size.width-300), height: 25)
+                                                        } else if readDB.trading_window_data[index-1]["status"] == "Ongoing"  {
+                                                            RoundedRectangle(cornerRadius: 5)
+                                                                .fill(.blue)
+                                                                .frame(width: max(0, geometry.size.width-300), height: 25)
+                                                        } else if readDB.trading_window_data[index-1]["status"] == "Completed"  {
+                                                            RoundedRectangle(cornerRadius: 5)
+                                                                .fill(Color("Profit"))
+                                                                .frame(width: max(0, geometry.size.width-300), height: 25)
+                                                        } else if readDB.trading_window_data[index-1]["status"] == "Cancelled"  {
+                                                            RoundedRectangle(cornerRadius: 5)
+                                                                .fill(Color("Loss"))
+                                                                .frame(width: max(0, geometry.size.width-300), height: 25)
+                                                        }
                                                         
-                                                        Text("Completed")
+                                                        Text(String(describing: readDB.trading_window_data[index-1]["status"]!))
                                                             .font(Font.custom("Nunito-ExtraBold", size: 12))
                                                             .foregroundColor(.white)
                                                     }
@@ -375,8 +389,11 @@ struct AdminHome: View {
                                                         Divider()
                                                             .frame(height: 15)
                                                         
-                                                        // Replace with variable status according to stats (Completed, Ongoing)
-                                                        Text("Created: 21/06/2023")
+                                                        if readDB.trading_window_data[index-1]["status"] == "Scheduled" {
+                                                            Text("Scheduled: \(convertDate(dateString: readDB.trading_window_data[index-1]["start_date"]!))")
+                                                        } else {
+                                                            Text("Started: \(convertDate(dateString: readDB.trading_window_data[index-1]["start_date"]!))")
+                                                        }
                                                     }
                                                     .font(Font.custom("Nunito-Bold", size: 6.5))
                                                     .foregroundColor(Color("Custom_Gray"))
@@ -410,6 +427,7 @@ struct AdminHome: View {
                 readDB.getOpportunities() { response in
                     if response == "Fetched all opportunities" {
                         readDB.getPayouts()
+                        readDB.getTradingWindows()
                     }
                 }
             }

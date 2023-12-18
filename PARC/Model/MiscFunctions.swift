@@ -70,7 +70,6 @@ func calculatePortionHoldings(input: [[String: String]], holdings_value: Int) ->
         for holding in input {
             let amount = Float(holding["amount"]!)!
             output_array.append((amount/Float(holdings_value))*100)
-//            print("-----")
         }
         return output_array
     }

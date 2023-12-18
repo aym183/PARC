@@ -298,4 +298,44 @@ class ReadDB: ObservableObject {
             }
         }.resume()
     }
+    
+    func getTradingWindows() {
+        var keysArray = ["trading-window-id", "start_date", "status", "duration"]
+        var temp_dict: [String: String] = [:]
+        
+        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/trading-windows")!
+        var request = URLRequest(url: apiUrl)
+        request.httpMethod = "GET"
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let data = data {
+                do {
+                    if let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                        DispatchQueue.main.async {
+                            if let itemsArray = jsonObject["Items"] as? [[String : Any]] {
+                                for value in itemsArray.reversed() {
+                                    for data in keysArray.reversed() {
+                                        if let nameDictionary = value[data] as? [String: String] {
+                                            if data == "trading-window-id" {
+                                                if let nValue = nameDictionary["N"] {
+                                                    temp_dict[data] = nValue
+                                                }
+                                            } else if let sValue = nameDictionary["S"] {
+                                                temp_dict[data] = sValue
+                                            }
+                                        }
+                                    }
+                                    self.trading_window_data.append(temp_dict)
+                                    temp_dict = [:]
+                                }
+                                print(self.trading_window_data)
+                            }
+                        }
+                    }
+                } catch {
+                    print("Error getting opportunities: \(error.localizedDescription)")
+                }
+            }
+        }.resume()
+    }
 }
