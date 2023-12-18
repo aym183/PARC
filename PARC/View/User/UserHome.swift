@@ -239,7 +239,7 @@ struct UserHomeContent: View {
                                         .cornerRadius(5)
                                     
                                     Rectangle()
-                                        .stroke(Color.gray, lineWidth: 2)
+                                        
                                         .frame(height: 250)
                                         .cornerRadius(2.5)
                                     

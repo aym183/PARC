@@ -16,6 +16,19 @@ struct UserMarketplaceBottomSheet: View {
             ZStack {
                 Color(.white).ignoresSafeArea()
                 VStack {
+                    
+//                    Button(action: {}) {
+//                        HStack {
+//                            Text("Your Offers")
+//                                .font(Font.custom("Nunito-Bold", size: 22))
+//                        }
+//                        .frame(width: max(0, geometry.size.width-40), height: 55)
+//                        .background(Color("Secondary"))
+//                        .foregroundColor(Color.white)
+//                        .border(Color.black, width: 1)
+//                        .cornerRadius(5)
+//                        .padding(.top, 10)
+//                    }
 
                     Button(action: {}) {
                         HStack {

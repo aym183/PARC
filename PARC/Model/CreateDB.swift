@@ -406,4 +406,45 @@ class CreateDB: ObservableObject {
         }.resume()
         
     }
+    
+    func createTradingWindow(start_date: String, duration: String, status: String, completion: @escaping (String?) -> Void) {
+        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/trading-windows")!
+        var request = URLRequest(url: apiUrl)
+        request.httpMethod = "GET"
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let data = data, let responseText = String(data: data, encoding: .utf8) {
+                
+                do {
+                    if let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                        DispatchQueue.main.async {
+                            if let itemsArray = jsonObject["ScannedCount"] as? Int {
+                                let arrayLength = itemsArray+1
+                                let opportunityApiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/trading-windows?trading_window_id=\(arrayLength)&status=\(status)&start_date=\(start_date)&duration=\(duration)")!
+                                
+                                var request = URLRequest(url: opportunityApiUrl)
+                                request.httpMethod = "POST"
+
+                                URLSession.shared.dataTask(with: request) { data, response, error in
+                                    if let data = data, let responseText = String(data: data, encoding: .utf8) {
+                                        DispatchQueue.main.async {
+                                            print(responseText)
+                                            completion("Trading Window Created")
+                                        }
+                                    } else if let error = error {
+                                        DispatchQueue.main.async {
+                                            print("Error creating trading window: \(error.localizedDescription)")
+                                        }
+                                    }
+                                }.resume()
+                            }
+                        }
+                    }
+                } catch {
+                    print("Error")
+                }
+            }
+        }.resume()
+        
+    }
 }

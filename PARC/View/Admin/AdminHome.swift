@@ -68,7 +68,7 @@ struct AdminHome: View {
                                                 VStack {
                                                     Text("Add Opportunity")
                                                         .font(Font.custom("Nunito-ExtraBold", size: 15))
-                                                        .foregroundColor(.black)
+                                                        .foregroundColor(Color("Secondary"))
                                                         .padding(.bottom)
                                                     ZStack {
                                                         Circle()
@@ -353,25 +353,30 @@ struct AdminHome: View {
                                                     )
                                                 
                                                 VStack {
-                                                    Text("15/06/2023")
-                                                        .font(Font.custom("Nunito-Bold", size: 16))
+                                                    ZStack {
+                                                        RoundedRectangle(cornerRadius: 5)
+                                                            .fill(Color("Profit"))
+                                                            .frame(width: max(0, geometry.size.width-300), height: 25)
+                                                        
+                                                        Text("Completed")
+                                                            .font(Font.custom("Nunito-ExtraBold", size: 12))
+                                                            .foregroundColor(.white)
+                                                    }
                                                     
                                                     Spacer()
                                                     
                                                     Text("500 Trades")
-                                                        .font(Font.custom("Nunito-ExtraBold", size: 25))
-                                                        .foregroundColor(Color("Profit"))
+                                                        .font(Font.custom("Nunito-Bold", size: 25))
                                                     
                                                     Spacer()
                                                     
                                                     HStack {
-                                                        Text("Total Spend - £500k")
+                                                        Text("Volume - £500k")
                                                         Divider()
                                                             .frame(height: 15)
                                                         
                                                         // Replace with variable status according to stats (Completed, Ongoing)
-                                                        Text("Completed")
-                                                            .foregroundColor(Color("Profit"))
+                                                        Text("Created: 21/06/2023")
                                                     }
                                                     .font(Font.custom("Nunito-Bold", size: 6.5))
                                                     .foregroundColor(Color("Custom_Gray"))

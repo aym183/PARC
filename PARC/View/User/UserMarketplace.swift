@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct UserMarketplace: View {
-    var logo_images = ["McDonalds", "Chipotle", "Dominos", "Subway", "McDonalds", "Chipotle", "Dominos", "Subway"]
-    var title_texts = ["McDonald's", "Chipotle", "Dominos", "Subway", "McDonald's", "Chipotle", "Dominos", "Subway"]
+    var logo_images = ["McDonalds", "Chipotle", "Dominos", "McDonalds", "Dominos", "Chipotle", "Dominos", "Subway"]
+    var title_texts = ["McDonald's", "Chipotle", "Dominos", "McDonald's", "Dominos", "Chipotle", "Dominos", "Subway"]
     var valuation_data = ["£3.5M", "£700.5K", "£7.25M", "£100K", "£3.5M", "£700.5K", "£7.25M", "£100K"]
     var payouts = ["£10K", "£100K", "£2.5M", "£10K", "£100K", "£2.5M", "£10K", "£100K"]
     var available_shares = ["£55,000", "£35,000", "£10,000", "£49,760", "£55,000", "£35,000", "£1,000", "£49,760"]
@@ -98,7 +98,7 @@ struct UserMarketplace: View {
                                 .frame(height: 1)
                                 .padding(.top, -5)
                             
-                            ForEach((0..<6), id: \.self) { index in
+                            ForEach((0..<5), id: \.self) { index in
                                 Button(action: {
                                     title = title_texts[index]
                                     logo = logo_images[index]
@@ -109,7 +109,7 @@ struct UserMarketplace: View {
                                             Image(logo_images[index])
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fill)
-                                                .frame(width: 55, height: 55)
+                                                .frame(width: 50, height: 50)
                                             
 //                                            Text(title_texts[index])
 //                                                .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.03))
@@ -141,7 +141,7 @@ struct UserMarketplace: View {
                                     .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.035))
                                 }
                                 
-                                if index != 3 {
+                                if index != 5 {
                                     Divider()
                                         .overlay(Color("Custom_Gray")).opacity(0.6)
                                         .frame(height: 0.5)
@@ -183,7 +183,7 @@ struct UserMarketplace: View {
                     UserListShares(marketplace_shown: $marketplace_shown)
                 }
                 .sheet(isPresented: $marketplace_bottom_sheet_shown) {
-                    UserMarketplaceBottomSheet(marketplace_bottom_sheet_shown: $marketplace_bottom_sheet_shown, marketplace_list_shares_shown: $marketplace_list_shares_shown).presentationDetents([.height(200)])
+                    UserMarketplaceBottomSheet(marketplace_bottom_sheet_shown: $marketplace_bottom_sheet_shown, marketplace_list_shares_shown: $marketplace_list_shares_shown).presentationDetents([.height(250)])
                 }
             }
         }

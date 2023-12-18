@@ -15,6 +15,7 @@ class ReadDB: ObservableObject {
     @Published var payout_data: [[String: String]] = []
     @Published var user_payout_data: [[String: String]] = []
     @Published var user_holdings_data: [[String: String]] = []
+    @Published var trading_window_data: [[String: String]] = []
     @Published var full_user_holdings_data: [[String: String]] = []
     @Published var opportunity_data_dropdown: [DropdownMenuOption] = []
     
