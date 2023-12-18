@@ -166,10 +166,7 @@ struct AdminPayoutClick: View {
                                     .opacity(0.5)
                             }
                         }
-                        
-                        
                         Spacer()
-                        
                     }
                     .frame(width: max(0, geometry.size.width-40), height: max(0, geometry.size.height - 20))
                     .foregroundColor(.black)

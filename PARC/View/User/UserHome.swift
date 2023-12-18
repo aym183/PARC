@@ -239,9 +239,10 @@ struct UserHomeContent: View {
                                         .cornerRadius(5)
                                     
                                     Rectangle()
-                                        
+                                        .opacity(0)
                                         .frame(height: 250)
                                         .cornerRadius(2.5)
+                                        .border(.gray, width: 1)
                                     
                                     VStack {
                                         Spacer()
@@ -261,7 +262,6 @@ struct UserHomeContent: View {
                                                     
                                                     Text(String(describing: opportunity_data[index]["franchise"]!))
                                                         .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.045))
-                                                        .foregroundColor(.black)
                                                         .padding(.top, 10).padding(.leading, -7.5)
                                                     
                                                     Spacer()
@@ -330,6 +330,7 @@ struct UserHomeContent: View {
                                     }
                                 }
                                 .padding(.top)
+                                .foregroundColor(.black)
                             }
                             .id(index)
                         }

@@ -426,6 +426,7 @@ struct AdminHome: View {
                 readDB.payout_data = []
                 readDB.opportunity_data_dropdown = []
                 readDB.full_user_holdings_data = []
+                readDB.trading_window_data = []
                 readDB.getFranchises()
                 readDB.getAllUserHoldings()
                 readDB.getOpportunities() { response in

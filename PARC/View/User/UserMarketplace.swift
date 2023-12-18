@@ -17,7 +17,7 @@ struct UserMarketplace: View {
     @State var marketplace_bottom_sheet_shown = false
     @State var marketplace_list_shares_shown = false
     @State var marketplace_shown = false
-    @State var marketplace_deadline_passed = false
+    @State var marketplace_deadline_passed = true
     @State var title = ""
     @State var logo = ""
     

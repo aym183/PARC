@@ -300,7 +300,7 @@ class ReadDB: ObservableObject {
     }
     
     func getTradingWindows() {
-        var keysArray = ["trading-window-id", "start_date", "status", "duration"]
+        var keysArray = ["trading-window-id", "start_date", "status", "duration", "trading_volume"]
         var temp_dict: [String: String] = [:]
         
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/trading-windows")!
