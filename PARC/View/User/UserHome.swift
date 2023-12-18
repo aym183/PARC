@@ -133,7 +133,7 @@ struct UserHome: View {
                                 .frame(height: 1)
                                 .overlay(.black)
                             
-                            UserMarketplace(trading_window_active: $readDB.trading_window_active)
+                            UserMarketplace()
                         }
                         
                         

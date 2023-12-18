@@ -17,14 +17,14 @@ struct UserMarketplace: View {
     @State var marketplace_bottom_sheet_shown = false
     @State var marketplace_list_shares_shown = false
     @State var marketplace_shown = false
-    @Binding var trading_window_active: Bool
+    @AppStorage("trading_window-active") var trading_window_active: String = ""
     @State var title = ""
     @State var logo = ""
     
     var body: some View {
         GeometryReader { geometry in
             
-            if !trading_window_active {
+            if trading_window_active == "false" {
                 ZStack {
                     Color(.white).ignoresSafeArea()
                     VStack {

@@ -18,7 +18,6 @@ class ReadDB: ObservableObject {
     @Published var trading_window_data: [[String: String]] = []
     @Published var full_user_holdings_data: [[String: String]] = []
     @Published var opportunity_data_dropdown: [DropdownMenuOption] = []
-    @Published var trading_window_active: Bool = false
     @State var currentFormattedDate: String = convertDate(dateString: String(describing: Date()))
     
     func getFranchises() {
@@ -306,6 +305,7 @@ class ReadDB: ObservableObject {
         var temp_dict: [String: String] = [:]
         var current_status = ""
         var trading_window_id = ""
+        var trading_window_active = false
         
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/trading-windows")!
         var request = URLRequest(url: apiUrl)
@@ -332,17 +332,17 @@ class ReadDB: ObservableObject {
                                     self.trading_window_data.append(temp_dict)
                                     if let comparisonResult = compareDates(date1String: currentFormattedDate, date2String: dateStringByAddingDays(days: Int(temp_dict["duration"]!)!, dateString: convertDate(dateString: temp_dict["start_date"]!))!) {
                                         if (comparisonResult == .orderedAscending) && (currentFormattedDate >= "17/12/2023") {
-                                            print("Trading window active")
+                                            trading_window_active = true
                                             current_status = temp_dict["status"]!
                                             trading_window_id = temp_dict["trading-window-id"]!
-                                            self.trading_window_active = true
+                                            UserDefaults.standard.set("true", forKey: "trading_window_active")
                                         }
                                     } else {
                                         print("Invalid date format")
                                     }
                                     temp_dict = [:]
                                 }
-                                if self.trading_window_active && current_status == "Scheduled"  {
+                                if trading_window_active && current_status == "Scheduled"  {
                                     UpdateDB().updateTable(primary_key: "trading-window-id", primary_key_value: trading_window_id, table: "trading-windows", updated_key: "status", updated_value: "Ongoing") { response in
                                         
                                         if response == "trading-windows status updated" {
