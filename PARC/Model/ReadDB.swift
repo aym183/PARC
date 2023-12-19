@@ -95,7 +95,25 @@ class ReadDB: ObservableObject {
                             if let itemsArray = jsonObject["Items"] as? [[String : Any]] {
                                 for value in itemsArray.reversed() {
                                     for data in keysArray.reversed() {
-                                        if let activeCheck = value["status"] as? [String: String], activeCheck["S"] == "active" {
+                                        if let activeCheck = value["status"] as? [String: String],
+                                           let dateCheck = value["close_date"] as? [String: String],
+                                           activeCheck["S"] == "active" && getDaysRemaining(dateString: dateCheck["S"]!)! < 1 {
+                                            
+                                            if let nameDictionary = value[data] as? [String: String] {
+                                                if data == "opportunity_id" {
+                                                    if let nValue = nameDictionary["N"] {
+                                                        DispatchQueue.global(qos: .userInteractive).async {
+                                                            UpdateDB().updateTable(primary_key: "opportunity_id", primary_key_value: nValue, table: "opportunities", updated_key: "status", updated_value: "completed") { response in
+                                                                if response == "opportunities status updated" {
+                                                                    print("opportunities status updated")
+                                                                }
+                                                        }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            
+                                        } else if let activeCheck = value["status"] as? [String: String], activeCheck["S"] == "active"  {
                                             if let nameDictionary = value[data] as? [String: String] {
                                                 if data == "opportunity_id" {
                                                     if let nValue = nameDictionary["N"] {
@@ -104,6 +122,7 @@ class ReadDB: ObservableObject {
                                                 } else if let sValue = nameDictionary["S"] {
                                                     temp_dict[data] = sValue
                                                 }
+                                                
                                             }
                                         }
                                     }
