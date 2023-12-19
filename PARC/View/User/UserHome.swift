@@ -113,8 +113,8 @@ struct UserHome: View {
                                 .frame(height: 1)
                                 .overlay(.black)
                             
-                            if readDB.opportunity_data != [] && readDB.franchise_data != [] {
-                                UserHomeContent(opportunity_data: $readDB.opportunity_data, franchise_data: $readDB.franchise_data, user_holdings_data: $readDB.user_holdings_data)
+                            if readDB.user_opportunity_data != [] && readDB.franchise_data != [] {
+                                UserHomeContent(opportunity_data: $readDB.user_opportunity_data, franchise_data: $readDB.franchise_data, user_holdings_data: $readDB.user_holdings_data)
                             }
                         } else if selectedTab == .chartPie {
                             Text("Portfolio")
@@ -168,7 +168,7 @@ struct UserHome: View {
                             }
                         }
                         readDB.franchise_data = []
-                        readDB.opportunity_data = []
+                        readDB.user_opportunity_data = []
                         readDB.user_holdings_data = []
                         readDB.full_user_holdings_data = []
                         readDB.user_payout_data = []
@@ -190,10 +190,14 @@ struct UserHome: View {
                                 self.chart_values = calculatePortionHoldings(input: portfolio_data, holdings_value: calculateTotalValue(input: self.portfolio_data, field: "amount"))
                             }
                         }
-                        readDB.getOpportunities() { response in
+                        readDB.getUserOpportunities() { response in
                             if response == "Fetched all opportunities" {
                                 print("Fetched opportunities")
-                                self.opportunity_data = readDB.opportunity_data
+                                self.opportunity_data = readDB.user_opportunity_data
+                                
+//                                ForEach(0..<opportunity_data.count, id: \.self) { index in
+//                                    if opportunity_data
+//                                }
                             }
                         }
                         
@@ -233,7 +237,7 @@ struct UserHomeContent: View {
                     ScrollView(.vertical, showsIndicators: false) {
                         ForEach(0..<opportunity_data.count, id: \.self) { index in
                             
-                            if getDaysRemaining(dateString: String(describing: opportunity_data[index]["close_date"]!))! > 0 {
+//                            if getDaysRemaining(dateString: String(describing: opportunity_data[index]["close_date"]!))! > 0 {
                                 Button(action: {
                                     selected_opportunity = opportunity_data[index]
                                     //                                bg_image = bg_images[index]
@@ -342,7 +346,7 @@ struct UserHomeContent: View {
                                     .foregroundColor(.black)
                                 }
                                 .id(index)
-                            }
+//                            }
                         }
                     }
                     .frame(width: max(0, geometry.size.width))

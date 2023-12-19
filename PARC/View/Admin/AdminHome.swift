@@ -55,7 +55,7 @@ struct AdminHome: View {
                         
                         ScrollView(.horizontal, showsIndicators: false) {
                             LazyHGrid(rows: rows, spacing: 20) {
-                                ForEach(0..<readDB.opportunity_data.count+1, id: \.self ) { index in
+                                ForEach(0..<readDB.admin_opportunity_data.count+1, id: \.self ) { index in
                                     if index == 0 {
                                         Button(action: { admin_opportunity_form_shown.toggle() }) {
                                             ZStack {
@@ -82,12 +82,12 @@ struct AdminHome: View {
                                             }
                                             .frame(width: 135, height: 140)
                                         }
-                                    } else if getDaysRemaining(dateString: String(describing: readDB.opportunity_data[index-1]["close_date"]!))! < 1 {
+                                    } else if getDaysRemaining(dateString: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))! < 1 {
                                         ZStack {
                                             Button(action: {
                                                 opportunity_logo = logo_images[index-1]
                                                 opportunity_title = titles[index-1]
-                                                opportunity_data = readDB.opportunity_data[index-1]
+                                                opportunity_data = readDB.admin_opportunity_data[index-1]
                                                 admin_opportunity_click_shown.toggle()
                                             }) {
                                                 RoundedRectangle(cornerRadius: 5)
@@ -107,7 +107,7 @@ struct AdminHome: View {
                                                         .frame(width: 40, height: 40)
                                                         .padding([.leading, .top], 10)
                                                     
-                                                    Text(String(describing: readDB.opportunity_data[index-1]["franchise"]!))
+                                                    Text(String(describing: readDB.admin_opportunity_data[index-1]["franchise"]!))
                                                         .font(Font.custom("Nunito-Bold", size: 16))
                                                         .padding(.top, 10)
                                                     Spacer()
@@ -125,7 +125,7 @@ struct AdminHome: View {
                                                         
                                                         HStack(spacing: 10) {
                                                             Image("gbr").resizable().frame(width: 10, height: 10)
-                                                            Text(String(describing: readDB.opportunity_data[index-1]["location"]!))
+                                                            Text(String(describing: readDB.admin_opportunity_data[index-1]["location"]!))
                                                                 .font(Font.custom("Nunito-Bold", size: 8))
                                                                 .foregroundColor(Color("Custom_Gray"))
                                                                 .padding(.leading, -7.5)
@@ -135,13 +135,13 @@ struct AdminHome: View {
                                                     
                                                     Spacer()
                                                     
-                                                    Text("Created - \(convertDate(dateString: String(describing: readDB.opportunity_data[index-1]["date_created"]!)))")
+                                                    Text("Created - \(convertDate(dateString: String(describing: readDB.admin_opportunity_data[index-1]["date_created"]!)))")
                                                         .font(Font.custom("Nunito-Bold", size: 7))
                                                         .foregroundColor(Color("Custom_Gray"))
                                                 }
                                                 .padding(.horizontal, 10)
                                                 
-                                                ProgressView(value: Double(readDB.opportunity_data[index-1]["ratio"]!))
+                                                ProgressView(value: Double(readDB.admin_opportunity_data[index-1]["ratio"]!))
                                                     .tint(Color("Secondary"))
                                                     .scaleEffect(x: 1, y: 2, anchor: .center)
                                                     .padding(.top,3)
@@ -167,7 +167,7 @@ struct AdminHome: View {
                                             Button(action: {
                                                 opportunity_logo = logo_images[index-1]
                                                 opportunity_title = titles[index-1]
-                                                opportunity_data = readDB.opportunity_data[index-1]
+                                                opportunity_data = readDB.admin_opportunity_data[index-1]
                                                 admin_opportunity_click_shown.toggle()
                                             }) {
                                                 RoundedRectangle(cornerRadius: 5)
@@ -187,7 +187,7 @@ struct AdminHome: View {
                                                         .frame(width: 40, height: 40)
                                                         .padding([.leading, .top], 10)
                                                     
-                                                    Text(String(describing: readDB.opportunity_data[index-1]["franchise"]!))
+                                                    Text(String(describing: readDB.admin_opportunity_data[index-1]["franchise"]!))
                                                         .font(Font.custom("Nunito-Bold", size: 16))
                                                         .padding(.top, 10)
                                                     Spacer()
@@ -205,7 +205,7 @@ struct AdminHome: View {
                                                         
                                                         HStack(spacing: 10) {
                                                             Image("gbr").resizable().frame(width: 10, height: 10)
-                                                            Text(String(describing: readDB.opportunity_data[index-1]["location"]!))
+                                                            Text(String(describing: readDB.admin_opportunity_data[index-1]["location"]!))
                                                                 .font(Font.custom("Nunito-Bold", size: 8))
                                                                 .foregroundColor(Color("Custom_Gray"))
                                                                 .padding(.leading, -7.5)
@@ -215,36 +215,36 @@ struct AdminHome: View {
                                                     
                                                     Spacer()
                                                     
-                                                    Text("Created - \(convertDate(dateString: String(describing: readDB.opportunity_data[index-1]["date_created"]!)))")
+                                                    Text("Created - \(convertDate(dateString: String(describing: readDB.admin_opportunity_data[index-1]["date_created"]!)))")
                                                         .font(Font.custom("Nunito-Bold", size: 7))
                                                         .foregroundColor(Color("Custom_Gray"))
                                                 }
                                                 .padding(.horizontal, 10)
                                                 
-                                                ProgressView(value: Double(readDB.opportunity_data[index-1]["ratio"]!))
+                                                ProgressView(value: Double(readDB.admin_opportunity_data[index-1]["ratio"]!))
                                                     .tint(Color("Secondary"))
                                                     .scaleEffect(x: 1, y: 2, anchor: .center)
                                                     .padding(.top,3)
                                                     .frame(width: 140)
                                                 
                                                 HStack {
-                                                    if getDaysRemaining(dateString: String(describing: readDB.opportunity_data[index-1]["close_date"]!))! <= 5 {
+                                                    if getDaysRemaining(dateString: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))! <= 5 {
                                                         
-                                                        Text("\(getDaysRemaining(dateString: String(describing: readDB.opportunity_data[index-1]["close_date"]!))!) days left")
+                                                        Text("\(getDaysRemaining(dateString: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))!) days left")
                                                             .font(Font.custom("Nunito-ExtraBold", size: 15))
                                                             .foregroundColor(Color("Loss"))
                                                             .padding(.leading, 10)
                                                         
-                                                    } else if getDaysRemaining(dateString: String(describing: readDB.opportunity_data[index-1]["close_date"]!))! > 5 && getDaysRemaining(dateString: String(describing: readDB.opportunity_data[index-1]["close_date"]!))! < 15 {
+                                                    } else if getDaysRemaining(dateString: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))! > 5 && getDaysRemaining(dateString: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))! < 15 {
                                                         
-                                                        Text("\(getDaysRemaining(dateString: String(describing: readDB.opportunity_data[index-1]["close_date"]!))!) days left")
+                                                        Text("\(getDaysRemaining(dateString: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))!) days left")
                                                             .font(Font.custom("Nunito-ExtraBold", size: 15))
                                                             .foregroundColor(Color("Amber"))
                                                             .padding(.leading, 10)
                                                         
                                                     } else {
                                                         
-                                                        Text("\(getDaysRemaining(dateString: String(describing: readDB.opportunity_data[index-1]["close_date"]!))!) days left")
+                                                        Text("\(getDaysRemaining(dateString: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))!) days left")
                                                             .font(Font.custom("Nunito-ExtraBold", size: 15))
                                                             .foregroundColor(.black)
                                                             .padding(.leading, 10)
@@ -306,7 +306,7 @@ struct AdminHome: View {
                                         }
                                     } else {
                                         Button(action: {
-                                            opportunity_data = readDB.opportunity_data[Int(readDB.payout_data[index-1]["opportunity_id"]!)!-1]
+                                            opportunity_data = readDB.admin_opportunity_data[Int(readDB.payout_data[index-1]["opportunity_id"]!)!-1]
                                             payout_data = readDB.payout_data[index-1]
                                             admin_payout_click_shown.toggle()
                                         }) {
@@ -357,7 +357,7 @@ struct AdminHome: View {
                                                     
                                                     HStack {
                                                         
-                                                        Text("Investors: \(String(describing: readDB.opportunity_data[Int(readDB.payout_data[index-1]["opportunity_id"]!)!-1]["investors"]!))")
+                                                        Text("Investors: \(String(describing: readDB.admin_opportunity_data[Int(readDB.payout_data[index-1]["opportunity_id"]!)!-1]["investors"]!))")
                                                         
                                                         //    readDB.opportunity_data[Int(readDB.payout_data[index-1]["oportunity_id"])-1]["investors"]
                                                         Divider()
@@ -502,14 +502,14 @@ struct AdminHome: View {
             }
             .onAppear {
                 readDB.franchise_data_dropdown = []
-                readDB.opportunity_data = []
+                readDB.admin_opportunity_data = []
                 readDB.payout_data = []
                 readDB.opportunity_data_dropdown = []
                 readDB.full_user_holdings_data = []
                 readDB.trading_window_data = []
                 readDB.getFranchises()
                 readDB.getAllUserHoldings()
-                readDB.getOpportunities() { response in
+                readDB.getAdminOpportunities() { response in
                     if response == "Fetched all opportunities" {
                         readDB.getPayouts()
                         readDB.getTradingWindows()

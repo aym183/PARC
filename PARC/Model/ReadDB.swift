@@ -11,7 +11,8 @@ import SwiftUI
 class ReadDB: ObservableObject {
     @Published var franchise_data_dropdown: [DropdownMenuOption] = []
     @Published var franchise_data: [[String: String]] = []
-    @Published var opportunity_data: [[String: String]] = []
+    @Published var admin_opportunity_data: [[String: String]] = []
+    @Published var user_opportunity_data: [[String: String]] = []
     @Published var payout_data: [[String: String]] = []
     @Published var user_payout_data: [[String: String]] = []
     @Published var user_holdings_data: [[String: String]] = []
@@ -77,7 +78,52 @@ class ReadDB: ObservableObject {
         }.resume()
     }
     
-    func getOpportunities(completion: @escaping (String?) -> Void) {
+    func getUserOpportunities(completion: @escaping (String?) -> Void) {
+        var keysArray = ["min_invest_amount", "location", "date_created", "equity_offered", "amount_raised", "close_date", "status", "franchise", "asking_price", "opportunity_id", "investors"]
+        var temp_dict: [String: String] = [:]
+        
+        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/opportunities")!
+        var request = URLRequest(url: apiUrl)
+        request.httpMethod = "GET"
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let data = data {
+                do {
+                    if let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                        DispatchQueue.main.async {
+                            if let itemsArray = jsonObject["Items"] as? [[String : Any]] {
+                                for value in itemsArray.reversed() {
+                                    for data in keysArray.reversed() {
+                                        if let nameDictionary = value[data] as? [String: String] {
+                                            if data == "opportunity_id" {
+                                                if let nValue = nameDictionary["N"] {
+                                                    temp_dict[data] = nValue
+                                                }
+                                            } else if let sValue = nameDictionary["S"] {
+                                                temp_dict[data] = sValue
+                                            }
+                                        }
+                                    }
+                                    let amountRaised = Int(temp_dict["amount_raised"] ?? "0") ?? 0
+                                    let askingPrice = Int(temp_dict["asking_price"] ?? "1") ?? 1
+                                    let ratio = Double(amountRaised) / Double(askingPrice)
+                                    temp_dict["ratio"] = String(describing: ratio)
+                                    self.user_opportunity_data.append(temp_dict)
+//                                    self.opportunity_data_dropdown.append(DropdownMenuOption(option: "\(temp_dict["opportunity_id"]!) - \(temp_dict["franchise"]!) - \(temp_dict["location"]!) - \(temp_dict["date_created"]!)"))
+                                    temp_dict = [:]
+                                }
+                                completion("Fetched all opportunities")
+                            }
+                        }
+                    }
+                } catch {
+                    print("Error getting opportunities: \(error.localizedDescription)")
+                }
+            }
+        }.resume()
+    }
+    
+    func getAdminOpportunities(completion: @escaping (String?) -> Void) {
         var keysArray = ["min_invest_amount", "location", "date_created", "equity_offered", "amount_raised", "close_date", "status", "franchise", "asking_price", "opportunity_id", "investors"]
         var temp_dict: [String: String] = [:]
         
@@ -110,7 +156,7 @@ class ReadDB: ObservableObject {
                                     let askingPrice = Int(temp_dict["asking_price"] ?? "1") ?? 1
                                     let ratio = Double(amountRaised) / Double(askingPrice)
                                     temp_dict["ratio"] = String(describing: ratio)
-                                    self.opportunity_data.append(temp_dict)
+                                    self.admin_opportunity_data.append(temp_dict)
                                     self.opportunity_data_dropdown.append(DropdownMenuOption(option: "\(temp_dict["opportunity_id"]!) - \(temp_dict["franchise"]!) - \(temp_dict["location"]!) - \(temp_dict["date_created"]!)"))
                                     temp_dict = [:]
 //                                    self.opportunity_data.append(value)
