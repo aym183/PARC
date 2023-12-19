@@ -82,6 +82,86 @@ struct AdminHome: View {
                                             }
                                             .frame(width: 135, height: 140)
                                         }
+                                    } else if getDaysRemaining(dateString: String(describing: readDB.opportunity_data[index-1]["close_date"]!))! < 1 {
+                                        ZStack {
+                                            Button(action: {
+                                                opportunity_logo = logo_images[index-1]
+                                                opportunity_title = titles[index-1]
+                                                opportunity_data = readDB.opportunity_data[index-1]
+                                                admin_opportunity_click_shown.toggle()
+                                            }) {
+                                                RoundedRectangle(cornerRadius: 5)
+                                                    .fill(Color.white)
+                                                    .overlay(
+                                                        RoundedRectangle(cornerRadius: 5)
+                                                            .stroke(Color.gray, lineWidth: 1.25)
+                                                    )
+                                                    .frame(width: 160, height: 140)
+                                            }
+                                            
+                                            VStack {
+                                                HStack {
+                                                    Image(logo_images[index-1])
+                                                        .resizable()
+                                                        .aspectRatio(contentMode: .fill)
+                                                        .frame(width: 40, height: 40)
+                                                        .padding([.leading, .top], 10)
+                                                    
+                                                    Text(String(describing: readDB.opportunity_data[index-1]["franchise"]!))
+                                                        .font(Font.custom("Nunito-Bold", size: 16))
+                                                        .padding(.top, 10)
+                                                    Spacer()
+                                                }
+                                                Spacer()
+                                                
+                                                HStack {
+                                                    
+                                                    ZStack {
+                                                        Rectangle()
+                                                            .foregroundColor(.clear)
+                                                            .frame(width: 50, height: 14)
+                                                            .background(Color(red: 0.85, green: 0.85, blue: 0.85).opacity(0.5))
+                                                            .cornerRadius(5)
+                                                        
+                                                        HStack(spacing: 10) {
+                                                            Image("gbr").resizable().frame(width: 10, height: 10)
+                                                            Text(String(describing: readDB.opportunity_data[index-1]["location"]!))
+                                                                .font(Font.custom("Nunito-Bold", size: 8))
+                                                                .foregroundColor(Color("Custom_Gray"))
+                                                                .padding(.leading, -7.5)
+                                                        }
+//                                                        .padding(.trailing, 15)
+                                                    }
+                                                    
+                                                    Spacer()
+                                                    
+                                                    Text("Created - \(convertDate(dateString: String(describing: readDB.opportunity_data[index-1]["date_created"]!)))")
+                                                        .font(Font.custom("Nunito-Bold", size: 7))
+                                                        .foregroundColor(Color("Custom_Gray"))
+                                                }
+                                                .padding(.horizontal, 10)
+                                                
+                                                ProgressView(value: Double(readDB.opportunity_data[index-1]["ratio"]!))
+                                                    .tint(Color("Secondary"))
+                                                    .scaleEffect(x: 1, y: 2, anchor: .center)
+                                                    .padding(.top,3)
+                                                    .frame(width: 140)
+                                                
+                                                HStack {
+                                                    
+                                                    Text("Completed")
+                                                            .font(Font.custom("Nunito-ExtraBold", size: 12))
+                                                            .foregroundColor(Color("Profit"))
+                                                    Spacer()
+                                                }
+                                                .padding(.horizontal, 10)
+                                                
+                                                
+                                                
+                                            }
+                                            .padding(.bottom, 10)
+                                        }
+                                        .frame(width: 160, height: 140)
                                     } else {
                                         ZStack {
                                             Button(action: {
