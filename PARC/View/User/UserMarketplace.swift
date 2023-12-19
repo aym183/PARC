@@ -153,7 +153,7 @@ struct UserMarketplace: View {
                             }
                             
                             // Add condition to remove Show more if only limite businesses have shares
-                            Button(action: {}) {
+                            Button(action: {}) { 
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 10)
                                         .fill(Color("Secondary"))

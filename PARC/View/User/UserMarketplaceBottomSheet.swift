@@ -38,7 +38,6 @@ struct UserMarketplaceBottomSheet: View {
                         .frame(width: max(0, geometry.size.width-40), height: 55)
                         .background(Color("Secondary"))
                         .foregroundColor(Color.white)
-                        .border(Color.black, width: 1)
                         .cornerRadius(5)
                         .padding(.top, 10)
                     }
@@ -54,7 +53,6 @@ struct UserMarketplaceBottomSheet: View {
                         .frame(width: max(0, geometry.size.width-40), height: 55)
                         .background(Color("Secondary"))
                         .foregroundColor(Color.white)
-                        .border(Color.black, width: 1)
                         .cornerRadius(5)
                         .padding(.top, 10)
                     }
@@ -67,7 +65,6 @@ struct UserMarketplaceBottomSheet: View {
                         .frame(width: max(0, geometry.size.width-40), height: 55)
                         .background(Color("Secondary"))
                         .foregroundColor(Color.white)
-                        .border(Color.black, width: 1)
                         .cornerRadius(5)
                         .padding(.top, 10)
                     }

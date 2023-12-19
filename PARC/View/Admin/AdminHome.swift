@@ -135,7 +135,7 @@ struct AdminHome: View {
                                                     
                                                     Spacer()
                                                     
-                                                    Text("Created - \(String(describing: readDB.opportunity_data[index-1]["date_created"]!))")
+                                                    Text("Created - \(convertDate(dateString: String(describing: readDB.opportunity_data[index-1]["date_created"]!)))")
                                                         .font(Font.custom("Nunito-Bold", size: 7))
                                                         .foregroundColor(Color("Custom_Gray"))
                                                 }
@@ -284,12 +284,12 @@ struct AdminHome: View {
                                                             .frame(height: 15)
                                                         
                                                         if readDB.payout_data[index-1]["status"] == "Scheduled" {
-                                                            Text("Scheduled: \(String(describing: convertDate(dateString: readDB.payout_data[index-1]["date_scheduled"]!)))")
+                                                            Text("Scheduled: \(convertDate(dateString: String(describing: readDB.payout_data[index-1]["date_scheduled"]!)))")
                                                         } else if readDB.payout_data[index-1]["status"] == "Completed" {
-                                                            Text("Created: \(String(describing: convertDate(dateString: readDB.payout_data[index-1]["date_created"]!)))")
+                                                            Text("Created: \(convertDate(dateString: String(describing: readDB.payout_data[index-1]["date_created"]!)))")
                                                             
                                                         } else if readDB.payout_data[index-1]["status"] == "Cancelled" {
-                                                            Text("Created: \(String(describing: convertDate(dateString: readDB.payout_data[index-1]["date_created"]!)))")
+                                                            Text("Created: \(convertDate(dateString: String(describing: readDB.payout_data[index-1]["date_created"]!)))")
                                                         }
                                                     }
                                                     .font(Font.custom("Nunito-Bold", size: 6.5))
