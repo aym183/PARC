@@ -74,30 +74,35 @@ struct UserMarketplaceClick: View {
                             Text("Total Value")
                         }
                         .padding(.vertical, 7.5)
-                        .font(Font.custom("Nunito-Bold", size: 11))
+                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.029))
                         
-                        ForEach(0..<4, id: \.self) {index in
-                            HStack(alignment: .center, spacing: 50) {
+                        ForEach(0..<4, id: \.self) { index in
+                            HStack(spacing: 50) {
                                 Text(share_prices[index])
                                 Text(no_of_shares[index])
                                 Text(total_values[index])
                                 
                                 Button(action: {}) {
                                     HStack {
-                                        Text("Make Offer")
-                                            .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.028))
+                                        Text("Buy")
+                                            .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.04))
                                     }
                                     .frame(width: max(0, geometry.size.width-300), height: 40)
                                     .background(Color("Secondary"))
                                     .foregroundColor(Color.white)
-                                    .border(Color.black, width: 1)
                                     .cornerRadius(5)
-                                    .padding(.leading, -20)
                                 }
+                                .padding(.leading, -10)
 
                             }
-                            .font(Font.custom("Nunito-Bold", size: 16))
+                            .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.04))
                             .padding(.vertical, 5)
+                            .multilineTextAlignment(.leading)
+                            
+                            Divider()
+                                .overlay(.gray)
+                                .frame(height: 1)
+                                .opacity(0.5)
                         }
                     }
                     .foregroundColor(.black)
@@ -109,6 +114,6 @@ struct UserMarketplaceClick: View {
     }
 }
 
-//#Preview {
-//    UserMarketplaceClick()
-//}
+#Preview {
+    UserMarketplaceClick(title: .constant("McDonald's"), logo: .constant("McDonalds"))
+}

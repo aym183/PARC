@@ -112,9 +112,6 @@ struct AdminTradingClick: View {
                     .padding(.top)
                 }
             }
-            .onAppear() {
-                print(selected_trading_window)
-            }
         }
     }
 }

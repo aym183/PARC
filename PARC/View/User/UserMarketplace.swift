@@ -17,7 +17,8 @@ struct UserMarketplace: View {
     @State var marketplace_bottom_sheet_shown = false
     @State var marketplace_list_shares_shown = false
     @State var marketplace_shown = false
-    @AppStorage("trading_window_active") var trading_window_active: String = ""
+//    @AppStorage("trading_window_active") var trading_window_active: String = ""
+    var trading_window_active = "true"
     @State var title = ""
     @State var logo = ""
     
@@ -80,7 +81,7 @@ struct UserMarketplace: View {
 //                            .multilineTextAlignment(.center)
 //                            .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.030))
 //                            .padding(.top, 10)
-                            
+//                            (spacing: 40)
                             HStack {
                                 Text("Businesses")
                                 Spacer()
@@ -90,7 +91,7 @@ struct UserMarketplace: View {
                                 Spacer()
                                 Text("Available Shares")
                             }
-                            .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.03))
+                            .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.03))
                             .padding(.top, 10)
                             
                             Divider()
@@ -98,47 +99,49 @@ struct UserMarketplace: View {
                                 .frame(height: 1)
                                 .padding(.top, -5)
                             
-                            ForEach((0..<5), id: \.self) { index in
+                            ForEach((0..<3), id: \.self) { index in
                                 Button(action: {
                                     title = title_texts[index]
                                     logo = logo_images[index]
                                     marketplace_click_shown.toggle()
                                 }) {
                                     HStack {
-                                        VStack {
-                                            Image(logo_images[index])
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fill)
-                                                .frame(width: 50, height: 50)
+
+                                        Image(logo_images[index])
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fill)
+                                            .frame(width: 50, height: 50)
                                             
-//                                            Text(title_texts[index])
-//                                                .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.03))
-                                            
-                                        }
                                         Spacer()
                                         
-                                        VStack {
+                                        HStack {
                                             Text(valuation_data[index])
+                                            Spacer()
                                         }
-                                        Spacer()
+                                        .frame(width: 75)
+                                        .padding(.trailing, -50)
+
                                         
-//                                        if percent_changes[index] >= 500 {
-//                                            Text("\(percent_changes[index])%")
-//                                                .foregroundColor(Color("Profit"))
-//                                        } else {
-//                                            Text("\(percent_changes[index])%")
-//                                                .foregroundColor(Color("Loss"))
-//                                        }
-                                        VStack {
+                                        Spacer()
+                                    
+                                        HStack {
                                             Text("\(payouts[index])")
+                                            Spacer()
                                         }
+                                        .frame(width: 75)
+                                        .padding(.trailing, -70)
+                                        
                                         Spacer()
                                         
-                                        VStack {
+                                        HStack {
                                             Text(available_shares[index])
+                                            Spacer()
                                         }
+                                        .frame(width: 75)
+                                        .padding(.trailing, -50)
                                     }
-                                    .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.035))
+                                    .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.035))
+                                    .multilineTextAlignment(.leading)
                                 }
                                 
                                 if index != 5 {
@@ -148,6 +151,8 @@ struct UserMarketplace: View {
                                         .padding(.vertical, 5)
                                 }
                             }
+                            
+                            // Add condition to remove Show more if only limite businesses have shares
                             Button(action: {}) {
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 10)
@@ -177,7 +182,7 @@ struct UserMarketplace: View {
                     .padding(.trailing, 15).padding(.bottom)
                 }
                 .navigationDestination(isPresented: $marketplace_click_shown) {
-                    UserMarketplaceClick(title: $title, logo: $title)
+                    UserMarketplaceClick(title: $title, logo: $logo)
                 }
                 .navigationDestination(isPresented: $marketplace_list_shares_shown) {
                     UserListShares(marketplace_shown: $marketplace_shown)
@@ -190,8 +195,8 @@ struct UserMarketplace: View {
     }
 }
 
-//struct UserMarketplace_Previews: PreviewProvider {
-//    static var previews: some View {
-//        UserMarketplace()
-//    }
-//}
+struct UserMarketplace_Previews: PreviewProvider {
+    static var previews: some View {
+        UserMarketplace()
+    }
+}
