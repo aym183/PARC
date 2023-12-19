@@ -194,7 +194,6 @@ struct UserHome: View {
                             if response == "Fetched all opportunities" {
                                 print("Fetched opportunities")
                                 self.opportunity_data = readDB.user_opportunity_data
-                                
 //                                ForEach(0..<opportunity_data.count, id: \.self) { index in
 //                                    if opportunity_data
 //                                }

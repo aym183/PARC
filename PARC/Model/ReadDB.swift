@@ -78,6 +78,7 @@ class ReadDB: ObservableObject {
         }.resume()
     }
     
+    // Separated admin and user so that admin can get all opportunities and and user can get only active ones
     func getUserOpportunities(completion: @escaping (String?) -> Void) {
         var keysArray = ["min_invest_amount", "location", "date_created", "equity_offered", "amount_raised", "close_date", "status", "franchise", "asking_price", "opportunity_id", "investors"]
         var temp_dict: [String: String] = [:]
@@ -94,21 +95,25 @@ class ReadDB: ObservableObject {
                             if let itemsArray = jsonObject["Items"] as? [[String : Any]] {
                                 for value in itemsArray.reversed() {
                                     for data in keysArray.reversed() {
-                                        if let nameDictionary = value[data] as? [String: String] {
-                                            if data == "opportunity_id" {
-                                                if let nValue = nameDictionary["N"] {
-                                                    temp_dict[data] = nValue
+                                        if let activeCheck = value["status"] as? [String: String], activeCheck["S"] == "active" {
+                                            if let nameDictionary = value[data] as? [String: String] {
+                                                if data == "opportunity_id" {
+                                                    if let nValue = nameDictionary["N"] {
+                                                        temp_dict[data] = nValue
+                                                    }
+                                                } else if let sValue = nameDictionary["S"] {
+                                                    temp_dict[data] = sValue
                                                 }
-                                            } else if let sValue = nameDictionary["S"] {
-                                                temp_dict[data] = sValue
                                             }
                                         }
                                     }
                                     let amountRaised = Int(temp_dict["amount_raised"] ?? "0") ?? 0
                                     let askingPrice = Int(temp_dict["asking_price"] ?? "1") ?? 1
                                     let ratio = Double(amountRaised) / Double(askingPrice)
-                                    temp_dict["ratio"] = String(describing: ratio)
-                                    self.user_opportunity_data.append(temp_dict)
+                                    if ratio != 0.0 {
+                                        temp_dict["ratio"] = String(describing: ratio)
+                                        self.user_opportunity_data.append(temp_dict)
+                                    }
 //                                    self.opportunity_data_dropdown.append(DropdownMenuOption(option: "\(temp_dict["opportunity_id"]!) - \(temp_dict["franchise"]!) - \(temp_dict["location"]!) - \(temp_dict["date_created"]!)"))
                                     temp_dict = [:]
                                 }
@@ -139,15 +144,15 @@ class ReadDB: ObservableObject {
                             if let itemsArray = jsonObject["Items"] as? [[String : Any]] {
                                 for value in itemsArray.reversed() {
                                     for data in keysArray.reversed() {
-                                        if let nameDictionary = value[data] as? [String: String] {
-                                            if data == "opportunity_id" {
-                                                if let nValue = nameDictionary["N"] {
-                                                    temp_dict[data] = nValue
+                                            if let nameDictionary = value[data] as? [String: String] {
+                                                if data == "opportunity_id" {
+                                                    if let nValue = nameDictionary["N"] {
+                                                        temp_dict[data] = nValue
+                                                    }
+                                                } else if let sValue = nameDictionary["S"] {
+                                                    temp_dict[data] = sValue
                                                 }
-                                            } else if let sValue = nameDictionary["S"] {
-                                                temp_dict[data] = sValue
                                             }
-                                        }
 //                                        if let nameDictionary = value[data] as? [String: String], let sValue = nameDictionary["S"] {
 //                                            temp_dict[data] = sValue
 //                                        }
