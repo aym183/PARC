@@ -69,22 +69,22 @@ struct AdminAccount: View {
                                 .frame(width: max(0, geometry.size.width-233), height: 45)
                                 .background(Color("Secondary"))
                                 .foregroundColor(Color.white)
-                                .border(Color.black, width: 1)
+//                                .border(Color.black, width: 1)
                                 .cornerRadius(5)
                             }
                             
-                            Button(action: {}) {
-                                HStack {
-                                    Text("Withdraw")
-                                        .font(Font.custom("Nunito", size: min(geometry.size.width, geometry.size.height) * 0.055))
-                                        .fontWeight(.bold)
-                                }
-                                .frame(width: max(0, geometry.size.width-233), height: 45)
-                                .background(Color("Loss"))
-                                .foregroundColor(Color.white)
-                                .border(Color.black, width: 1)
-                                .cornerRadius(5)
-                            }
+//                            Button(action: {}) {
+//                                HStack {
+//                                    Text("Withdraw")
+//                                        .font(Font.custom("Nunito", size: min(geometry.size.width, geometry.size.height) * 0.055))
+//                                        .fontWeight(.bold)
+//                                }
+//                                .frame(width: max(0, geometry.size.width-233), height: 45)
+//                                .background(Color("Loss"))
+//                                .foregroundColor(Color.white)
+////                                .border(Color.black, width: 1)
+//                                .cornerRadius(5)
+//                            }
                             .padding(.leading, 15)
                             
                         }

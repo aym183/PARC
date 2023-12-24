@@ -27,6 +27,7 @@ struct UserHome: View {
     @State var chart_values: [Float] = []
     @State var payouts_chart_values: [Float] = []
     @State var opportunity_data: [[String: String]] = []
+    @State var admin_opportunity_data: [[String: String]] = []
     
     var body: some View {
         GeometryReader { geometry in
@@ -124,7 +125,7 @@ struct UserHome: View {
                                 .frame(height: 1)
                                 .overlay(.black)
                             
-                            UserPortfolio(portfolio_data: $portfolio_data, user_payouts_data: $user_payouts_data, payouts_chart_values: $payouts_chart_values, payouts_value: $payouts_value, holdings_value: $holdings_value, chart_values: $chart_values, opportunity_data: $opportunity_data)
+                            UserPortfolio(portfolio_data: $portfolio_data, user_payouts_data: $user_payouts_data, payouts_chart_values: $payouts_chart_values, payouts_value: $payouts_value, holdings_value: $holdings_value, chart_values: $chart_values, opportunity_data: $readDB.admin_opportunity_data)
                         } else {
                             Text("Secondary Market")
                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.065))
@@ -169,6 +170,7 @@ struct UserHome: View {
                         }
                         readDB.franchise_data = []
                         readDB.user_opportunity_data = []
+                        readDB.admin_opportunity_data = []
                         readDB.user_holdings_data = []
                         readDB.full_user_holdings_data = []
                         readDB.user_payout_data = []
@@ -190,10 +192,17 @@ struct UserHome: View {
                                 self.chart_values = calculatePortionHoldings(input: portfolio_data, holdings_value: calculateTotalValue(input: self.portfolio_data, field: "amount"))
                             }
                         }
+                        readDB.getAdminOpportunities() { response in
+                            if response == "Fetched all opportunities" {
+                                print("Fetched all opportunities")
+                                self.admin_opportunity_data = readDB.admin_opportunity_data
+                            }
+                        }
                         readDB.getUserOpportunities() { response in
                             if response == "Fetched all opportunities" {
                                 print("Fetched opportunities")
                                 self.opportunity_data = readDB.user_opportunity_data
+                                self.admin_opportunity_data = readDB.admin_opportunity_data
 //                                ForEach(0..<opportunity_data.count, id: \.self) { index in
 //                                    if opportunity_data
 //                                }

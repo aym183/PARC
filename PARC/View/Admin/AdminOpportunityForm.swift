@@ -172,6 +172,8 @@ struct AdminOpportunityForm: View {
                                         admin_home_shown.toggle()
                                     }
                                 }
+                                
+                                // Add opportunity email creation sent to users
                             }
                             
                         }) {

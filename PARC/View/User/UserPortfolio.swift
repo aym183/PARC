@@ -129,10 +129,20 @@ struct UserPortfolio: View {
                                     
                                     VStack(alignment: .leading) {
                                         
-                                        Text(String(describing: opportunity_data[Int(portfolio_data[index]["opportunity_id"]!)! - 1]["franchise"]!))
-                                          .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.045))
-                                          .foregroundColor(.black)
-                                        
+                                        if let opportunityID = Int(portfolio_data[index]["opportunity_id"]!) {
+                                            if let opportunity = opportunity_data.first(where: { $0["opportunity_id"] == String(opportunityID) }) {
+                                                if let franchise = opportunity["franchise"] {
+                                                    Text("\(franchise)")
+                                                        .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.045))
+                                                } else {
+                                                    Text("Franchise key not found")
+                                                }
+                                            } else {
+                                                Text("Opportunity not found")
+                                            }
+                                        } else {
+                                            Text("Invalid opportunity_id value")
+                                        }
 //                                        Invested - £\(formattedNumber(input_number: Int(portfolio_data[index]["amount"]!)!))
                                         Text("Date Bought - \(convertDate(dateString: portfolio_data[index]["transaction_date"]!))")
                                           .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.027))
@@ -175,7 +185,6 @@ struct UserPortfolio: View {
             .foregroundColor(.black)
             .frame(width: max(0, geometry.size.width))
             .onAppear {
-
                 holdings_data = []
                 payouts_data = []
                 holdings_data.append(contentsOf: chart_values.compactMap { value in

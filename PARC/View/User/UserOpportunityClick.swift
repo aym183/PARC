@@ -181,7 +181,7 @@ struct UserOpportunityClick: View {
                             .overlay(Color("Custom_Gray"))
                             .opacity(0.5)
                             .frame(height: 1)
-                            .padding(.top, 5)
+//                            .padding(.top, 1.5)
                         
 //                        Button(action: {}) {
 //                            HStack {
@@ -441,7 +441,7 @@ struct UserOpportunityClick: View {
                     .frame(width: max(0, geometry.size.width-40), height: 55)
                     .background(Color("Secondary"))
                     .foregroundColor(Color.white)
-                    .border(Color.black, width: 1)
+//                    .border(Color.black, width: 1)
                     .cornerRadius(5)
                     .padding(.bottom)
                 }
