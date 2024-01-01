@@ -30,7 +30,7 @@ struct AdminFranchiseForm: View {
                     ScrollView(.vertical, showsIndicators: false) {
                         VStack {
                             HStack {
-                                Text("Add Franchise")
+                                Text("Create Franchise")
                                     .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.065))
                                     .padding(.bottom, -5).padding(.top, 10)
                                 Spacer()

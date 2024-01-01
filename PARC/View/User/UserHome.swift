@@ -116,6 +116,8 @@ struct UserHome: View {
                             
                             if readDB.user_opportunity_data != [] && readDB.franchise_data != [] {
                                 UserHomeContent(opportunity_data: $readDB.user_opportunity_data, franchise_data: $readDB.franchise_data, user_holdings_data: $readDB.user_holdings_data)
+                            } else {
+                                UserHomeError()
                             }
                         } else if selectedTab == .chartPie {
                             Text("Portfolio")
@@ -245,125 +247,154 @@ struct UserHomeContent: View {
                     ScrollView(.vertical, showsIndicators: false) {
                         ForEach(0..<opportunity_data.count, id: \.self) { index in
                             
-//                            if getDaysRemaining(dateString: String(describing: opportunity_data[index]["close_date"]!))! > 0 {
-                                Button(action: {
-                                    selected_opportunity = opportunity_data[index]
-                                    //                                bg_image = bg_images[index]
-                                    //                                logo = logo_images[index]
-                                    //                                title = titles[index]
-                                    opportunity_shown.toggle()
-                                }) {
-                                    ZStack{
-                                        Image(bg_images[0])
-                                            .resizable()
-                                            .frame(height: 250)
-                                            .cornerRadius(5)
-                                        
-                                        Rectangle()
-                                            .opacity(0)
-                                            .frame(height: 250)
-                                            .cornerRadius(2.5)
-                                            .border(.gray, width: 1)
-                                        
-                                        VStack {
-                                            Spacer()
-                                            ZStack{
-                                                RoundedRectangle(cornerRadius: 5)
-                                                    .fill(.white)
-                                                    .frame(height: 150)
-                                                    .border(.gray, width: 1)
-                                                
-                                                VStack(alignment: .leading) {
-                                                    HStack {
-                                                        Image(logo_images[0])
-                                                            .resizable()
-                                                            .aspectRatio(contentMode: .fit)
-                                                            .frame(width: 40, height: 30)
-                                                            .padding(.top, 10).padding(.leading, 5)
-                                                        
-                                                        Text(String(describing: opportunity_data[index]["franchise"]!))
-                                                            .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.045))
-                                                            .padding(.top, 10).padding(.leading, -7.5)
-                                                        
-                                                        Spacer()
-                                                    }
-                                                    .padding(.leading, -2.5)
+                            //                            if getDaysRemaining(dateString: String(describing: opportunity_data[index]["close_date"]!))! > 0 {
+                            Button(action: {
+                                selected_opportunity = opportunity_data[index]
+                                //                                bg_image = bg_images[index]
+                                //                                logo = logo_images[index]
+                                //                                title = titles[index]
+                                opportunity_shown.toggle()
+                            }) {
+                                ZStack{
+                                    Image(bg_images[0])
+                                        .resizable()
+                                        .frame(height: 250)
+                                        .cornerRadius(5)
+                                    
+                                    Rectangle()
+                                        .opacity(0)
+                                        .frame(height: 250)
+                                        .cornerRadius(2.5)
+                                        .border(.gray, width: 1)
+                                    
+                                    VStack {
+                                        Spacer()
+                                        ZStack{
+                                            RoundedRectangle(cornerRadius: 5)
+                                                .fill(.white)
+                                                .frame(height: 150)
+                                                .border(.gray, width: 1)
+                                            
+                                            VStack(alignment: .leading) {
+                                                HStack {
+                                                    Image(logo_images[0])
+                                                        .resizable()
+                                                        .aspectRatio(contentMode: .fit)
+                                                        .frame(width: 40, height: 30)
+                                                        .padding(.top, 10).padding(.leading, 5)
                                                     
-                                                    Text(franchise_data[franchise_data.firstIndex(where: { $0["name"] == opportunity_data[index]["franchise"]!})!]["description"]!)
-                                                        .foregroundColor(Color("Custom_Gray"))
-                                                        .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.030))
-                                                        .frame(height: 50)
-                                                        .multilineTextAlignment(.leading)
-                                                        .padding(.horizontal, 12).padding(.top, -12)
-                                                    
-                                                    HStack {
-                                                        Text("\(String(describing: Int(Double(opportunity_data[index]["ratio"]!)!*100)))% - \(getDaysRemaining(dateString: String(describing: opportunity_data[index]["close_date"]!))!) days left")
-                                                            .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.024))
-                                                            .foregroundColor(Color("Custom_Gray"))
-                                                            .frame(alignment: .leading)
-                                                        Spacer()
-                                                        
-                                                        ZStack {
-                                                            Rectangle()
-                                                                .foregroundColor(.clear)
-                                                                .frame(width: 45, height: 14)
-                                                                .background(Color(red: 0.85, green: 0.85, blue: 0.85).opacity(0.5))
-                                                                .cornerRadius(5)
-                                                            
-                                                            HStack {
-                                                                Image("gbr").resizable().frame(width: 10, height: 10)
-                                                                Text(String(describing: opportunity_data[index]["location"]!))
-                                                                    .font(Font.custom("Nunito-Bold", size: 8))
-                                                                    .foregroundColor(Color("Custom_Gray"))
-                                                                    .padding(.leading, -7.5)
-                                                            }
-                                                        }
-                                                    }
-                                                    .padding(.horizontal,12)
-                                                    .padding(.top, -3)
-                                                    
-                                                    ProgressView(value: Double(opportunity_data[index]["ratio"]!))
-                                                        .tint(Color("Secondary"))
-                                                        .scaleEffect(x: 1, y: 2, anchor: .center)
-                                                        .padding(.horizontal, 11).padding(.top, -1)
-                                                    
-                                                    HStack {
-                                                        Text("Minimum Investment Amount - £\(opportunity_data[index]["min_invest_amount"]!)")
-                                                            .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.024))
-                                                            .foregroundColor(Color("Custom_Gray"))
-                                                            .frame(alignment: .leading)
-                                                        Spacer()
-                                                        Text("£\(String(describing: formattedNumber(input_number:Int(opportunity_data[index]["asking_price"]!)!)))")
-                                                            .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.024))
-                                                            .foregroundColor(Color("Custom_Gray"))
-                                                            .frame(alignment: .leading)
-                                                        
-                                                    }
-                                                    .padding(.horizontal,12)
-                                                    .padding(.top, -3)
-                                                    
+                                                    Text(String(describing: opportunity_data[index]["franchise"]!))
+                                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.045))
+                                                        .padding(.top, 10).padding(.leading, -7.5)
                                                     
                                                     Spacer()
+                                                }
+                                                .padding(.leading, -2.5)
+                                                
+                                                Text(franchise_data[franchise_data.firstIndex(where: { $0["name"] == opportunity_data[index]["franchise"]!})!]["description"]!)
+                                                    .foregroundColor(Color("Custom_Gray"))
+                                                    .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.030))
+                                                    .frame(height: 50)
+                                                    .multilineTextAlignment(.leading)
+                                                    .padding(.horizontal, 12).padding(.top, -12)
+                                                
+                                                HStack {
+                                                    Text("\(String(describing: Int(Double(opportunity_data[index]["ratio"]!)!*100)))% - \(getDaysRemaining(dateString: String(describing: opportunity_data[index]["close_date"]!))!) days left")
+                                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.024))
+                                                        .foregroundColor(Color("Custom_Gray"))
+                                                        .frame(alignment: .leading)
+                                                    Spacer()
+                                                    
+                                                    ZStack {
+                                                        Rectangle()
+                                                            .foregroundColor(.clear)
+                                                            .frame(width: 45, height: 14)
+                                                            .background(Color(red: 0.85, green: 0.85, blue: 0.85).opacity(0.5))
+                                                            .cornerRadius(5)
+                                                        
+                                                        HStack {
+                                                            Image("gbr").resizable().frame(width: 10, height: 10)
+                                                            Text(String(describing: opportunity_data[index]["location"]!))
+                                                                .font(Font.custom("Nunito-Bold", size: 8))
+                                                                .foregroundColor(Color("Custom_Gray"))
+                                                                .padding(.leading, -7.5)
+                                                        }
+                                                    }
+                                                }
+                                                .padding(.horizontal,12)
+                                                .padding(.top, -3)
+                                                
+                                                ProgressView(value: Double(opportunity_data[index]["ratio"]!))
+                                                    .tint(Color("Secondary"))
+                                                    .scaleEffect(x: 1, y: 2, anchor: .center)
+                                                    .padding(.horizontal, 11).padding(.top, -1)
+                                                
+                                                HStack {
+                                                    Text("Minimum Investment Amount - £\(opportunity_data[index]["min_invest_amount"]!)")
+                                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.024))
+                                                        .foregroundColor(Color("Custom_Gray"))
+                                                        .frame(alignment: .leading)
+                                                    Spacer()
+                                                    Text("£\(String(describing: formattedNumber(input_number:Int(opportunity_data[index]["asking_price"]!)!)))")
+                                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.024))
+                                                        .foregroundColor(Color("Custom_Gray"))
+                                                        .frame(alignment: .leading)
                                                     
                                                 }
-                                                .frame(height: 150)
+                                                .padding(.horizontal,12)
+                                                .padding(.top, -3)
+                                                
+                                                
+                                                Spacer()
+                                                
                                             }
+                                            .frame(height: 150)
                                         }
                                     }
-                                    .padding(.top)
-                                    .foregroundColor(.black)
                                 }
-                                .id(index)
-//                            }
-                        }
+                                .padding(.top)
+                                .foregroundColor(.black)
+                            }
+                            .id(index)
+                            //                            }
+                        
                     }
                     .frame(width: max(0, geometry.size.width))
                     .navigationDestination(isPresented: $opportunity_shown) {
                         UserOpportunityClick(opportunity_data: $selected_opportunity, franchise_data: $franchise_data)
                     }
+                }
             }
     }
     
+}
+
+struct UserHomeError: View {
+    var body: some View {
+        GeometryReader { geometry in
+            ZStack {
+                Color(.white).ignoresSafeArea()
+                VStack {
+                    Spacer()
+                    Text("☹️")
+                        .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.3))
+                        .padding(.bottom, -20)
+                    
+                    Text("No active opportunites")
+                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.065))
+                    
+                    Text("You will be notified when the next one starts")
+                        .frame(width: 210)
+                        .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.045))
+                        .padding(.top, -15)
+                    Spacer()
+                }
+                .multilineTextAlignment(.center)
+                .foregroundColor(.black)
+                .padding(.bottom)
+            }
+        }
+    }
 }
 
 //

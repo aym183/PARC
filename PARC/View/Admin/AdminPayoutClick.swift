@@ -24,7 +24,7 @@ struct AdminPayoutClick: View {
                     VStack {
                         Text("+£\(String(describing: formattedNumber(input_number: Int(payout_data["amount_offered"]!)!)))")
                             .font(Font.custom("Nunito-ExtraBold", size: 50))
-                            .foregroundColor(Color("Profit"))
+                            .foregroundColor(.black)
                         
                         HStack(spacing: 20) {
                             Button(action: {}) {
@@ -38,7 +38,7 @@ struct AdminPayoutClick: View {
                                 .cornerRadius(5)
                                 .padding(.bottom)
                             }
-                            .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 4)
+//                            .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 4)
                             
                             Button(action: { UpdateDB().updateTable(primary_key: "payout_id", primary_key_value: payout_data["payout_id"]!, table: "payouts", updated_key: "status", updated_value: "Cancelled") { response in
                                 if response == "payouts status updated" {
@@ -57,7 +57,7 @@ struct AdminPayoutClick: View {
                                 .cornerRadius(5)
                                 .padding(.bottom)
                             }
-                            .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 4)
+//                            .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 4)
                         }
                         //                    .padding(.top)
                         

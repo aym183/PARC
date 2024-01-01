@@ -41,7 +41,7 @@ struct UserOpportunityClick: View {
     @State var tiles_why_invest_1 = ["Passive Income", "Diversification"]
     @State var tiles_why_invest_description = ["Get a share of the profits every month and earn money while you sleep", "Strengthen your portfolio by investing in franchises of different types"]
     @State var tiles_why_invest_2 = ["Recession Proof", "Brand Value"]
-    @State var tiles_why_invest_description_2 = ["The need for food and beverages reamins during global economic crises", "The franchise has built up trust and credibility with its consumers globally"]
+    @State var tiles_why_invest_description_2 = ["The need for food and beverages remains during global economic crises", "The franchise has built up trust and credibility with its consumers globally"]
     @State var tiles_similar_franchise_1 = ["Dividend Payout", "Net Return"]
     @State var tiles_similar_franchise_images = ["Dividend_Payout", "Net_Return"]
     @State var tiles_similar_franchise_2 = ["Annual Profit", "Success Rate"]

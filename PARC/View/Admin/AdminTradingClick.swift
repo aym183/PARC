@@ -33,7 +33,7 @@ struct AdminTradingClick: View {
                                 .cornerRadius(5)
                                 .padding(.bottom)
                             }
-                            .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 4)
+//                            .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 4)
                             
                             Button(action: {}) {
                                 HStack {
@@ -46,7 +46,7 @@ struct AdminTradingClick: View {
                                 .cornerRadius(5)
                                 .padding(.bottom)
                             }
-                            .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 4)
+//                            .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 4)
                         }
                         //                    .padding(.top)
                         

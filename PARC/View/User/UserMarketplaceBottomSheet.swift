@@ -57,17 +57,17 @@ struct UserMarketplaceBottomSheet: View {
                         .padding(.top, 10)
                     }
                     
-                    Button(action: {}) {
-                        HStack {
-                            Text("Filter")
-                                .font(Font.custom("Nunito-Bold", size: 22))
-                        }
-                        .frame(width: max(0, geometry.size.width-40), height: 55)
-                        .background(Color("Secondary"))
-                        .foregroundColor(Color.white)
-                        .cornerRadius(5)
-                        .padding(.top, 10)
-                    }
+//                    Button(action: {}) {
+//                        HStack {
+//                            Text("Filter")
+//                                .font(Font.custom("Nunito-Bold", size: 22))
+//                        }
+//                        .frame(width: max(0, geometry.size.width-40), height: 55)
+//                        .background(Color("Secondary"))
+//                        .foregroundColor(Color.white)
+//                        .cornerRadius(5)
+//                        .padding(.top, 10)
+//                    }
                 }
                 .padding(.top,10)
                 .frame(width: max(0, geometry.size.width - 40))

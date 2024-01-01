@@ -138,7 +138,6 @@ struct UserMarketplace: View {
                                             Spacer()
                                         }
                                         .frame(width: 75)
-                                        .padding(.trailing, -50)
                                     }
                                     .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.035))
                                     .multilineTextAlignment(.leading)
@@ -157,7 +156,7 @@ struct UserMarketplace: View {
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 10)
                                         .fill(Color("Secondary"))
-                                    Text("Show More")
+                                    Text("Show more")
                                         .foregroundColor(.white)
                                         .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.035))
                                 }
@@ -188,7 +187,7 @@ struct UserMarketplace: View {
                     UserListShares(marketplace_shown: $marketplace_shown)
                 }
                 .sheet(isPresented: $marketplace_bottom_sheet_shown) {
-                    UserMarketplaceBottomSheet(marketplace_bottom_sheet_shown: $marketplace_bottom_sheet_shown, marketplace_list_shares_shown: $marketplace_list_shares_shown).presentationDetents([.height(250)])
+                    UserMarketplaceBottomSheet(marketplace_bottom_sheet_shown: $marketplace_bottom_sheet_shown, marketplace_list_shares_shown: $marketplace_list_shares_shown).presentationDetents([.height(150)])
                 }
             }
         }
