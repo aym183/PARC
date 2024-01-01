@@ -151,24 +151,25 @@ struct UserMarketplace: View {
                                 }
                                 
 //                                if index != 5 {
-//                                    Divider()
-//                                        .overlay(Color("Custom_Gray")).opacity(0.6)
-//                                        .frame(height: 0.5)
-//                                        .padding(.vertical, 5)
+                                    Divider()
+                                        .overlay(Color("Custom_Gray")).opacity(0.6)
+                                        .frame(height: 0.5)
+                                        .padding(.vertical, 5)
 //                                }
                             }
                             
                             // Add condition to remove Show more if only limite businesses have shares
-                            Button(action: {}) { 
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .fill(Color("Secondary"))
-                                    Text("Show more")
-                                        .foregroundColor(.white)
-                                        .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.035))
-                                }
-                                .frame(width: 100, height: 40)
-                            }
+//                            Button(action: {}) { 
+//                                ZStack {
+//                                    RoundedRectangle(cornerRadius: 10)
+//                                        .fill(Color("Secondary"))
+//                                    Text("Show more")
+//                                        .foregroundColor(.white)
+//                                        .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.035))
+//                                }
+//                                .frame(width: 100, height: 40)
+//                            }
+//                            .padding(.top)
                         }
                         .foregroundColor(.black)
                         
