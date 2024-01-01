@@ -15,6 +15,7 @@ class ReadDB: ObservableObject {
     @Published var user_opportunity_data: [[String: String]] = []
     @Published var payout_data: [[String: String]] = []
     @Published var user_payout_data: [[String: String]] = []
+    @Published var listed_shares: [[String: String]] = []
     @Published var user_holdings_data: [[String: String]] = []
     @Published var user_holdings_data_dropdown: [DropdownMenuOption] = []
     @Published var trading_window_data: [[String: String]] = []
@@ -292,6 +293,7 @@ class ReadDB: ObservableObject {
         
         var keysArray = ["opportunity_name", "user_holdings_id", "user_email", "status", "opportunity_id", "equity", "amount", "transaction_date"]
         var temp_dict: [String: String] = [:]
+        var listed_temp_dict: [String: String] = [:]
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/user-holdings")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
@@ -304,7 +306,7 @@ class ReadDB: ObservableObject {
                             if let itemsArray = jsonObject["Items"] as? [[String : Any]] {
                                 for value in itemsArray.reversed() {
                                     for data in keysArray.reversed() {
-                                        if let emailCheck = value["user_email"] as? [String: String], emailCheck["S"] == email {
+                                        if let ownedCheck = value["status"] as? [String: String], let emailCheck = value["user_email"] as? [String: String], emailCheck["S"] == email && ownedCheck["S"] == "Owned" {
                                             if let nameDictionary = value[data] as? [String: String] {
                                                     if data == "opportunity_id" || data == "user_holdings_id" {
                                                             temp_dict[data] = nameDictionary["N"]
@@ -313,12 +315,24 @@ class ReadDB: ObservableObject {
                                                         temp_dict[data] = sValue
                                                     }
                                             }
+                                        } else if let listedCheck = value["status"] as? [String: String], listedCheck["S"] == "Listed" {
+                                            if let nameDictionary = value[data] as? [String: String] {
+                                                    if data == "opportunity_id" || data == "user_holdings_id" {
+                                                            listed_temp_dict[data] = nameDictionary["N"]
+                                                    }
+                                                    else if let sValue = nameDictionary["S"] {
+                                                        listed_temp_dict[data] = sValue
+                                                    }
+                                            }
                                         }
                                     }
                                     if temp_dict != [:] {
                                         self.user_holdings_data.append(temp_dict)
                                         self.user_holdings_data_dropdown.append(DropdownMenuOption(option: "\(temp_dict["user_holdings_id"]!) - \(temp_dict["opportunity_name"]!) - £\(temp_dict["amount"]!) - \(convertDate(dateString: temp_dict["transaction_date"]!))"))
                                         temp_dict = [:]
+                                    } else if listed_temp_dict != [:] {
+                                        self.listed_shares.append(listed_temp_dict)
+                                        listed_temp_dict = [:]
                                     }
                                 }
                                 completion("Fetched user holdings")

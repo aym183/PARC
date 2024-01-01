@@ -23,6 +23,7 @@ struct UserMarketplace: View {
     @State var logo = ""
     @Binding var franchise_data: [DropdownMenuOption]
     @Binding var holding_data: [DropdownMenuOption]
+    @Binding var listed_shares: [[String: String]]
     
     var body: some View {
         GeometryReader { geometry in
@@ -181,6 +182,9 @@ struct UserMarketplace: View {
                         }
                     }
                     .padding(.trailing, 15).padding(.bottom)
+                }
+                .onAppear() {
+                    print(listed_shares)
                 }
                 .navigationDestination(isPresented: $marketplace_click_shown) {
                     UserMarketplaceClick(title: $title, logo: $logo)
