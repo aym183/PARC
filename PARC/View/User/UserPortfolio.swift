@@ -69,52 +69,54 @@ struct UserPortfolio: View {
                 Spacer()
                 
                 ScrollView(.vertical, showsIndicators: false) {
-                    TabView(selection: $index) {
-                        ForEach((0..<2), id: \.self) { index in
-                            
-                            ZStack {
-                                if index == 0 {
-                                    Chart(holdings_data) { item in
-                                        SectorMark(angle: .value("Label", item), innerRadius: .ratio(0.8))
-                                            .foregroundStyle(item.color)
-                                    }
-                                } else {
-                                    Chart(payouts_data) { item in
-                                        SectorMark(angle: .value("Label", item), innerRadius: .ratio(0.8))
-                                            .foregroundStyle(item.color)
-                                    }
-                                }
-
-                            VStack(alignment: .center) {
-                                if index == 0 {
-                                    Text("£\(formattedNumber(input_number: holdings_value))")
-                                      .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.1))
-                                      .foregroundColor(.black)
-                                } else {
-                                    Text("£\(formattedNumber(input_number: payouts_value))")
-                                      .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.1))
-                                      .foregroundColor(.black)
-                                }
-                                
-                                Text(metric_description[index])
-                                    .foregroundStyle(Color("Custom_Gray"))
-                                    .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.04))
-                                    .padding(.top, -36)
-                                
-                            }
-                        }
-                        }
-                    }
-                    .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-                    .frame(height: geometry.size.height - 200)
-                    
-                    Divider()
-                        .overlay(.black)
-                        .padding(.top)
-                        .frame(height: 1)
-                        .padding(.bottom, 10)
                     
                     if portfolio_data.count != 0 {
+                        
+                        TabView(selection: $index) {
+                            ForEach((0..<2), id: \.self) { index in
+                                
+                                ZStack {
+                                    if index == 0 {
+                                        Chart(holdings_data) { item in
+                                            SectorMark(angle: .value("Label", item), innerRadius: .ratio(0.8))
+                                                .foregroundStyle(item.color)
+                                        }
+                                    } else {
+                                        Chart(payouts_data) { item in
+                                            SectorMark(angle: .value("Label", item), innerRadius: .ratio(0.8))
+                                                .foregroundStyle(item.color)
+                                        }
+                                    }
+
+                                VStack(alignment: .center) {
+                                    if index == 0 {
+                                        Text("£\(formattedNumber(input_number: holdings_value))")
+                                          .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.1))
+                                          .foregroundColor(.black)
+                                    } else {
+                                        Text("£\(formattedNumber(input_number: payouts_value))")
+                                          .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.1))
+                                          .foregroundColor(.black)
+                                    }
+                                    
+                                    Text(metric_description[index])
+                                        .foregroundStyle(Color("Custom_Gray"))
+                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.04))
+                                        .padding(.top, -36)
+                                    
+                                }
+                            }
+                            }
+                        }
+                        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                        .frame(height: geometry.size.height - 200)
+                        
+                        Divider()
+                            .overlay(.black)
+                            .padding(.top)
+                            .frame(height: 1)
+                            .padding(.bottom, 10)
+                        
                         ForEach(0..<portfolio_data.count, id: \.self) { index in
 //                            Button(action: {}) {
                                 HStack {
@@ -176,8 +178,13 @@ struct UserPortfolio: View {
                             
                         }
                     } else {
-                        Text("No investments yet.")
-                            .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.055))
+                        Spacer()
+                        Text("☹️")
+                            .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.3))
+                            .padding(.bottom, -20)
+                        
+                        Text("No investments made yet")
+                            .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.065))
                     }
                 }
                 
