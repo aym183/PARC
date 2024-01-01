@@ -16,6 +16,7 @@ class ReadDB: ObservableObject {
     @Published var payout_data: [[String: String]] = []
     @Published var user_payout_data: [[String: String]] = []
     @Published var listed_shares: [[String: String]] = []
+    @Published var secondary_market_data: [String: Any] = [:]
     @Published var user_holdings_data: [[String: String]] = []
     @Published var user_holdings_data_dropdown: [DropdownMenuOption] = []
     @Published var trading_window_data: [[String: String]] = []
@@ -198,8 +199,8 @@ class ReadDB: ObservableObject {
         }.resume()
     }
     
-    func getPayouts() {
-        var keysArray = ["revenue_generated", "date_scheduled", "status", "opportunity_id", "date_created", "payout_id", "amount_offered"]
+    func getPayouts(completion: @escaping (String?) -> Void) {
+        var keysArray = ["franchise", "revenue_generated", "date_scheduled", "status", "opportunity_id", "date_created", "payout_id", "amount_offered"]
         var temp_dict: [String: String] = [:]
         
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/payouts")!
@@ -235,6 +236,7 @@ class ReadDB: ObservableObject {
                                     temp_dict = [:]
 //                                    self.opportunity_data.append(value)
                                 }
+                                completion("Fetched payouts")
                             }
                         }
                     }
@@ -335,6 +337,7 @@ class ReadDB: ObservableObject {
                                         listed_temp_dict = [:]
                                     }
                                 }
+                                self.secondary_market_data = transformListedShares(listed_shares: self.listed_shares)
                                 completion("Fetched user holdings")
                             }
                         }

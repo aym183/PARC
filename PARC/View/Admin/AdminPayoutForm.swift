@@ -122,8 +122,9 @@ struct AdminPayoutForm: View {
                         Button(action: {
                             let components = selectedOpportunity!.option.components(separatedBy: "-")
                             if let opportunityID = Int((components.first?.trimmingCharacters(in: .whitespaces))!) {
+                                var franchise = String(describing: components[1].trimmingCharacters(in: .whitespaces))
                                 DispatchQueue.global(qos: .userInteractive).async {
-                                    CreateDB().createPayout(revenue_generated: revenue_generated, opportunity_id: opportunityID, date_scheduled: String(describing: date), amount_offered: amount_offered, user_holdings: user_holdings_data) { response in
+                                    CreateDB().createPayout(franchise: franchise, revenue_generated: revenue_generated, opportunity_id: opportunityID, date_scheduled: String(describing: date), amount_offered: amount_offered, user_holdings: user_holdings_data) { response in
                                         if response == "Payout Created" {
                                             admin_home_shown.toggle()
                                         }

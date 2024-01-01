@@ -23,9 +23,11 @@ struct UserMarketplace: View {
     @State var logo = ""
     @Binding var franchise_data: [DropdownMenuOption]
     @Binding var holding_data: [DropdownMenuOption]
-    @Binding var listed_shares: [[String: String]]
+    @Binding var listed_shares: [String: Any]
+    @Binding var transformed_payouts_data: [String: Any]
     
     var body: some View {
+        let allKeys = Array(listed_shares.keys)
         GeometryReader { geometry in
             
             if trading_window_active == "false" {
@@ -102,7 +104,7 @@ struct UserMarketplace: View {
                                 .frame(height: 1)
                                 .padding(.top, -5)
                             
-                            ForEach((0..<3), id: \.self) { index in
+                            ForEach((0..<listed_shares.count), id: \.self) { index in
                                 Button(action: {
                                     title = title_texts[index]
                                     logo = logo_images[index]
@@ -110,7 +112,7 @@ struct UserMarketplace: View {
                                 }) {
                                     HStack {
 
-                                        Image(logo_images[index])
+                                        Image("McDonalds")
                                             .resizable()
                                             .aspectRatio(contentMode: .fill)
                                             .frame(width: 50, height: 50)
@@ -118,7 +120,7 @@ struct UserMarketplace: View {
                                         Spacer()
                                         
                                         HStack {
-                                            Text(valuation_data[index])
+                                            Text(String(describing: Array(listed_shares.keys)[index]))
                                             Spacer()
                                         }
                                         .frame(width: 75)
@@ -128,7 +130,8 @@ struct UserMarketplace: View {
                                         Spacer()
                                     
                                         HStack {
-                                            Text("\(payouts[index])")
+                                            
+                                            Text("ss")
                                             Spacer()
                                         }
                                         .frame(width: 75)
@@ -146,12 +149,12 @@ struct UserMarketplace: View {
                                     .multilineTextAlignment(.leading)
                                 }
                                 
-                                if index != 5 {
-                                    Divider()
-                                        .overlay(Color("Custom_Gray")).opacity(0.6)
-                                        .frame(height: 0.5)
-                                        .padding(.vertical, 5)
-                                }
+//                                if index != 5 {
+//                                    Divider()
+//                                        .overlay(Color("Custom_Gray")).opacity(0.6)
+//                                        .frame(height: 0.5)
+//                                        .padding(.vertical, 5)
+//                                }
                             }
                             
                             // Add condition to remove Show more if only limite businesses have shares
@@ -184,7 +187,7 @@ struct UserMarketplace: View {
                     .padding(.trailing, 15).padding(.bottom)
                 }
                 .onAppear() {
-                    print(listed_shares)
+                    print(transformed_payouts_data)
                 }
                 .navigationDestination(isPresented: $marketplace_click_shown) {
                     UserMarketplaceClick(title: $title, logo: $logo)

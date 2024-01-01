@@ -28,6 +28,7 @@ struct UserHome: View {
     @State var payouts_chart_values: [Float] = []
     @State var opportunity_data: [[String: String]] = []
     @State var admin_opportunity_data: [[String: String]] = []
+    @State var transformed_payouts_data: [String: Any] = [:]
     
     var body: some View {
         GeometryReader { geometry in
@@ -136,7 +137,7 @@ struct UserHome: View {
                                 .frame(height: 1)
                                 .overlay(.black)
                             
-                            UserMarketplace(franchise_data: $readDB.franchise_data_dropdown, holding_data: $readDB.user_holdings_data_dropdown, listed_shares: $readDB.listed_shares)
+                            UserMarketplace(franchise_data: $readDB.franchise_data_dropdown, holding_data: $readDB.user_holdings_data_dropdown, listed_shares: $readDB.secondary_market_data, transformed_payouts_data: $transformed_payouts_data)
                         }
                         
                         
@@ -179,9 +180,15 @@ struct UserHome: View {
                         readDB.full_user_holdings_data = []
                         readDB.user_payout_data = []
                         readDB.trading_window_data = []
+                        readDB.payout_data = []
                         readDB.getFranchises()
                         readDB.getAllUserHoldings()
                         readDB.getTradingWindows()
+                        readDB.getPayouts() { response in
+                            if response == "Fetched payouts" {
+                                self.transformed_payouts_data = transformPayouts(payouts_array: readDB.payout_data)
+                            }
+                        }
                         readDB.getUserPayouts(email: email) { response in
                             if response == "Fetched user payouts" {
                                 self.user_payouts_data = readDB.user_payout_data

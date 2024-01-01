@@ -511,7 +511,11 @@ struct AdminHome: View {
                 readDB.getAllUserHoldings()
                 readDB.getAdminOpportunities() { response in
                     if response == "Fetched all opportunities" {
-                        readDB.getPayouts()
+                        readDB.getPayouts() { response in
+                            if response == "Fetched payouts data" {
+                                print("payouts fetched")
+                            }
+                        }
                         readDB.getTradingWindows()
                     }
                 }

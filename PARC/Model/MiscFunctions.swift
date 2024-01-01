@@ -156,3 +156,35 @@ func sortArrayByDate(inputArray: [[String: String]]) -> [[String: String]] {
 
     return sortedArray
 }
+
+func transformListedShares(listed_shares: [[String: String]]) -> [String: Any] {
+    var traversed_franchises: [String:Any] = [:]
+    
+    for share in listed_shares {
+        var franchise = share["opportunity_name"]!
+        var amount = Int(share["amount"]!)!
+        if traversed_franchises.keys.contains(franchise) {
+            let transformed_amount = traversed_franchises[franchise] as! Int + amount
+            traversed_franchises[franchise] = transformed_amount
+        } else {
+            traversed_franchises[franchise] = amount
+        }
+    }
+    return traversed_franchises
+}
+
+func transformPayouts(payouts_array: [[String: String]]) -> [String: Any] {
+    var traversed_payouts: [String:Any] = [:]
+    
+    for share in payouts_array {
+        var franchise = share["franchise"]!
+        var amount = Int(share["amount_offered"]!)!
+        if traversed_payouts.keys.contains(franchise) {
+            let transformed_amount = traversed_payouts[franchise] as! Int + amount
+            traversed_payouts[franchise] = transformed_amount
+        } else {
+            traversed_payouts[franchise] = amount
+        }
+    }
+    return traversed_payouts
+}

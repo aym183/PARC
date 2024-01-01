@@ -214,7 +214,7 @@ class CreateDB: ObservableObject {
         
     }
     
-    func createPayout(revenue_generated: String, opportunity_id: Int, date_scheduled: String, amount_offered: String, user_holdings: [[String: String]], completion: @escaping (String?) -> Void) {
+    func createPayout(franchise: String, revenue_generated: String, opportunity_id: Int, date_scheduled: String, amount_offered: String, user_holdings: [[String: String]], completion: @escaping (String?) -> Void) {
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/payouts")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
@@ -227,7 +227,7 @@ class CreateDB: ObservableObject {
                         DispatchQueue.main.async {
                             if let itemsArray = jsonObject["ScannedCount"] as? Int {
                                 let arrayLength = itemsArray+1
-                                let opportunityApiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/payouts?status=Completed&revenue_generated=\(revenue_generated)&payout_id=\(arrayLength)&opportunity_id=\(opportunity_id)&date_scheduled=\(date_scheduled)&date_created=\(Date.now)&amount_offered=\(amount_offered)")!
+                                let opportunityApiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/payouts?status=Completed&revenue_generated=\(revenue_generated)&franchise=\(franchise)&payout_id=\(arrayLength)&opportunity_id=\(opportunity_id)&date_scheduled=\(date_scheduled)&date_created=\(Date.now)&amount_offered=\(amount_offered)")!
                                 
                                 var request = URLRequest(url: opportunityApiUrl)
                                 request.httpMethod = "POST"
