@@ -22,6 +22,7 @@ struct UserMarketplace: View {
     @State var title = ""
     @State var logo = ""
     @Binding var franchise_data: [DropdownMenuOption]
+    @Binding var holding_data: [DropdownMenuOption]
     
     var body: some View {
         GeometryReader { geometry in
@@ -185,7 +186,7 @@ struct UserMarketplace: View {
                     UserMarketplaceClick(title: $title, logo: $logo)
                 }
                 .navigationDestination(isPresented: $marketplace_list_shares_shown) {
-                    UserListShares(franchise_data: $franchise_data, marketplace_shown: $marketplace_shown)
+                    UserListShares(franchise_data: $franchise_data, holding_data: $holding_data, marketplace_shown: $marketplace_shown)
                 }
                 .sheet(isPresented: $marketplace_bottom_sheet_shown) {
                     UserMarketplaceBottomSheet(marketplace_bottom_sheet_shown: $marketplace_bottom_sheet_shown, marketplace_list_shares_shown: $marketplace_list_shares_shown).presentationDetents([.height(150)])

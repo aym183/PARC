@@ -44,7 +44,7 @@ struct DropdownMenu: View {
                 if self.isOptionsPresented {
                     if self.options.count == 0 {
                         Spacer(minLength: dropdownListHeight - 20)
-                        Text("No Franchises Added")
+                        Text("No available options")
                             .font(Font.custom("Nunito-Medium", size: 15))
                             .foregroundColor(.black)
                         

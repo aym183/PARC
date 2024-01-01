@@ -136,7 +136,7 @@ struct UserHome: View {
                                 .frame(height: 1)
                                 .overlay(.black)
                             
-                            UserMarketplace(franchise_data: $readDB.franchise_data_dropdown)
+                            UserMarketplace(franchise_data: $readDB.franchise_data_dropdown, holding_data: $readDB.user_holdings_data_dropdown)
                         }
                         
                         

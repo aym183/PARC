@@ -317,7 +317,7 @@ class ReadDB: ObservableObject {
                                     }
                                     if temp_dict != [:] {
                                         self.user_holdings_data.append(temp_dict)
-                                        self.user_holdings_data_dropdown.append(DropdownMenuOption(option: "Franchise - \(temp_dict["opportunity_name"]!), Amount - \(temp_dict["amount"]!)"))
+                                        self.user_holdings_data_dropdown.append(DropdownMenuOption(option: "\(temp_dict["user_holdings_id"]!) - \(temp_dict["opportunity_name"]!) - £\(temp_dict["amount"]!) - \(convertDate(dateString: temp_dict["transaction_date"]!))"))
                                         temp_dict = [:]
                                     }
                                 }
