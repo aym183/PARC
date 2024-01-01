@@ -124,26 +124,27 @@ struct UserMarketplace: View {
                                             Spacer()
                                         }
                                         .frame(width: 75)
-                                        .padding(.trailing, -50)
+                                        .padding(.trailing, -25)
 
                                         
                                         Spacer()
                                     
                                         HStack {
                                             
-                                            Text("ss")
+                                            Text("£\(formattedNumber(input_number: Int(String(describing: transformed_payouts_data[String(describing: Array(listed_shares.keys)[index])]!))!))")
                                             Spacer()
                                         }
                                         .frame(width: 75)
-                                        .padding(.trailing, -70)
+                                        .padding(.trailing, -30)
                                         
                                         Spacer()
                                         
                                         HStack {
-                                            Text(available_shares[index])
+                                            Text("£\(formattedNumber(input_number: Int(String(describing: Array(listed_shares.values)[index]))!))")
                                             Spacer()
                                         }
                                         .frame(width: 75)
+                                        .padding(.trailing, -20)
                                     }
                                     .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.035))
                                     .multilineTextAlignment(.leading)
@@ -185,9 +186,6 @@ struct UserMarketplace: View {
                         }
                     }
                     .padding(.trailing, 15).padding(.bottom)
-                }
-                .onAppear() {
-                    print(transformed_payouts_data)
                 }
                 .navigationDestination(isPresented: $marketplace_click_shown) {
                     UserMarketplaceClick(title: $title, logo: $logo)
