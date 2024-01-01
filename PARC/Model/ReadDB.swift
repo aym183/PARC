@@ -16,6 +16,7 @@ class ReadDB: ObservableObject {
     @Published var payout_data: [[String: String]] = []
     @Published var user_payout_data: [[String: String]] = []
     @Published var user_holdings_data: [[String: String]] = []
+    @Published var user_holdings_data_dropdown: [DropdownMenuOption] = []
     @Published var trading_window_data: [[String: String]] = []
     @Published var full_user_holdings_data: [[String: String]] = []
     @Published var opportunity_data_dropdown: [DropdownMenuOption] = []
@@ -289,7 +290,7 @@ class ReadDB: ObservableObject {
     
     func getUserHoldings(email: String, completion: @escaping (String?) -> Void) {
         
-        var keysArray = ["user_holdings_id", "user_email", "status", "opportunity_id", "equity", "amount", "transaction_date"]
+        var keysArray = ["opportunity_name", "user_holdings_id", "user_email", "status", "opportunity_id", "equity", "amount", "transaction_date"]
         var temp_dict: [String: String] = [:]
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/user-holdings")!
         var request = URLRequest(url: apiUrl)
@@ -316,6 +317,7 @@ class ReadDB: ObservableObject {
                                     }
                                     if temp_dict != [:] {
                                         self.user_holdings_data.append(temp_dict)
+                                        self.user_holdings_data_dropdown.append(DropdownMenuOption(option: "Franchise - \(temp_dict["opportunity_name"]!), Amount - \(temp_dict["amount"]!)"))
                                         temp_dict = [:]
                                     }
                                 }
@@ -331,7 +333,7 @@ class ReadDB: ObservableObject {
     }
     
     func getAllUserHoldings() {
-        var keysArray = ["user_holdings_id", "user_email", "status", "opportunity_id", "equity", "amount", "transaction_date"]
+        var keysArray = ["opportunity_name", "user_holdings_id", "user_email", "status", "opportunity_id", "equity", "amount", "transaction_date"]
         var temp_dict: [String: String] = [:]
         
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/user-holdings")!
@@ -407,6 +409,7 @@ class ReadDB: ObservableObject {
                                             current_status = temp_dict["status"]!
                                             trading_window_id = temp_dict["trading-window-id"]!
                                             UserDefaults.standard.set("true", forKey: "trading_window_active")
+                                        
                                     } else if isTradingWindowComplete(targetDate: currentFormattedDate, end: dateStringByAddingDays(days: Int(temp_dict["duration"]!)!, dateString: convertDate(dateString: temp_dict["start_date"]!))!)! {
                                             trading_window_completed = true
                                             current_status = temp_dict["status"]!
@@ -444,5 +447,9 @@ class ReadDB: ObservableObject {
                 }
             }
         }.resume()
+    }
+    
+    func getListedShares() {
+        
     }
 }

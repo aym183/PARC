@@ -21,6 +21,7 @@ struct UserMarketplace: View {
     var trading_window_active = "true"
     @State var title = ""
     @State var logo = ""
+    @Binding var franchise_data: [DropdownMenuOption]
     
     var body: some View {
         GeometryReader { geometry in
@@ -184,7 +185,7 @@ struct UserMarketplace: View {
                     UserMarketplaceClick(title: $title, logo: $logo)
                 }
                 .navigationDestination(isPresented: $marketplace_list_shares_shown) {
-                    UserListShares(marketplace_shown: $marketplace_shown)
+                    UserListShares(franchise_data: $franchise_data, marketplace_shown: $marketplace_shown)
                 }
                 .sheet(isPresented: $marketplace_bottom_sheet_shown) {
                     UserMarketplaceBottomSheet(marketplace_bottom_sheet_shown: $marketplace_bottom_sheet_shown, marketplace_list_shares_shown: $marketplace_list_shares_shown).presentationDetents([.height(150)])
@@ -194,8 +195,8 @@ struct UserMarketplace: View {
     }
 }
 
-struct UserMarketplace_Previews: PreviewProvider {
-    static var previews: some View {
-        UserMarketplace()
-    }
-}
+//struct UserMarketplace_Previews: PreviewProvider {
+//    static var previews: some View {
+//        UserMarketplace()
+//    }
+//}

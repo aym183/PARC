@@ -188,7 +188,7 @@ struct UserInvestPage: View {
                                         if second_response == "opportunities investors updated" {
                                             home_page_shown.toggle()
                                             
-                                            CreateDB().createUserInvestmentHolding(opportunity_id: opportunity_id, email: email, equity: String(format: "%.3f", (Double(investment_amount)!/equity_value)*100), amount: investment_amount)
+                                            CreateDB().createUserInvestmentHolding(opportunity_name: opportunity_name, opportunity_id: opportunity_id, email: email, equity: String(format: "%.3f", (Double(investment_amount)!/equity_value)*100), amount: investment_amount)
                                             
                                             CreateDB().createOpportunityTransaction(opportunity_id: opportunity_id, email: email, amount: investment_amount)
                                             

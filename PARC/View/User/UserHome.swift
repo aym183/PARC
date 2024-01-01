@@ -136,7 +136,7 @@ struct UserHome: View {
                                 .frame(height: 1)
                                 .overlay(.black)
                             
-                            UserMarketplace()
+                            UserMarketplace(franchise_data: $readDB.franchise_data_dropdown)
                         }
                         
                         
@@ -170,6 +170,7 @@ struct UserHome: View {
                                 }
                             }
                         }
+                        readDB.franchise_data_dropdown = []
                         readDB.franchise_data = []
                         readDB.user_opportunity_data = []
                         readDB.admin_opportunity_data = []

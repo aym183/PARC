@@ -368,7 +368,7 @@ class CreateDB: ObservableObject {
         }.resume()
     }
     
-    func createUserInvestmentHolding(opportunity_id: String, email: String, equity: String, amount: String) {
+    func createUserInvestmentHolding(opportunity_name: String, opportunity_id: String, email: String, equity: String, amount: String) {
 
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/user-holdings")!
         var request = URLRequest(url: apiUrl)
@@ -382,7 +382,7 @@ class CreateDB: ObservableObject {
                         DispatchQueue.main.async {
                             if let itemsArray = jsonObject["ScannedCount"] as? Int {
                                 let arrayLength = itemsArray+1
-                                let opportunityApiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/user-holdings?user_holdings_id=\(arrayLength)&opportunity_id=\(Int(opportunity_id)!)&status=Owned&user_email=\(email)&equity=\(equity)&amount=\(amount)&transaction_date=\(Date.now)")!
+                                let opportunityApiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/user-holdings?user_holdings_id=\(arrayLength)&opportunity_name=\(opportunity_name)&opportunity_id=\(Int(opportunity_id)!)&status=Owned&user_email=\(email)&equity=\(equity)&amount=\(amount)&transaction_date=\(Date.now)")!
                                 
                                 var request = URLRequest(url: opportunityApiUrl)
                                 request.httpMethod = "POST"

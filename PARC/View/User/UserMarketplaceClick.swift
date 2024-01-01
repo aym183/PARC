@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct UserMarketplaceClick: View {
-    @State var investment_titles = ["Location", "Type", "Equity Offered", "Share Price"]
-    @State var investment_values = ["Stratford, London", "Equity", "12.54%", "£38.42"]
+    @State var investment_titles = ["Industry", "Number of franchises", "Franchise Revenue (monthly)", "Estimated EBITDA"]
+    @State var investment_values = ["Food & Beverage", "50", "50,000", "42"]
     @State var share_prices = ["£400", "£560", "£230", "£120"]
     @State var no_of_shares = ["10", "60", "85", "90"]
     @State var total_values = ["£85,000", "£15,000", "£68,000", "£23,000"]
@@ -34,7 +34,7 @@ struct UserMarketplaceClick: View {
                             Spacer()
                         }
                         
-                        Text("Business Overview")
+                        Text("Franchise Overview")
                             .font(Font.custom("Nunito-Bold", size: 25))
                             .padding(.bottom, -5).padding(.top, 10)
                         
