@@ -430,6 +430,7 @@ class ReadDB: ObservableObject {
                                             current_status = temp_dict["status"]!
                                             trading_window_id = temp_dict["trading-window-id"]!
                                             UserDefaults.standard.set("true", forKey: "trading_window_active")
+                                            UserDefaults.standard.set(temp_dict["trading-window-id"], forKey: "trading_window_id")
                                         
                                     } else if isTradingWindowComplete(targetDate: currentFormattedDate, end: dateStringByAddingDays(days: Int(temp_dict["duration"]!)!, dateString: convertDate(dateString: temp_dict["start_date"]!))!)! {
                                             trading_window_completed = true

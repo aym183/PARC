@@ -11,9 +11,18 @@ struct UserMarketplaceClick: View {
     @State var investment_titles = ["Industry", "Number of franchises", "Franchise Revenue (monthly)", "Estimated EBITDA"]
     @State var investment_values = ["Food & Beverage", "50", "50,000", "42"]
     @State var share_prices = ["£400", "£560", "£230", "£120"]
-    @State var no_of_shares = ["0.05", "1.2", "0.89", "0.9"]
-    @State var total_values = ["£850", "£15,000", "£68,000", "£23,000"]
     @State var showingPaymentAlert = false
+    @State var home_page_shown = false
+    @State var isInvestmentConfirmed = true
+    @State var isShownHomePage = false
+    @AppStorage("trading_window_id") var trading_window_id: String = ""
+    @AppStorage("email") var email: String = ""
+    @State var selling_email = ""
+    @State var equity = ""
+    @State var amount = ""
+    @State var opportunity_id = ""
+    @State var opportunity_name = ""
+    @State var user_holding_id = ""
     @Binding var title: String
     @Binding var logo: String
     @Binding var shares_data: [[String: String]]
@@ -99,7 +108,15 @@ struct UserMarketplaceClick: View {
                                 .frame(width: 80)
                                 .padding(.leading, -20)
                                 
-                                Button(action: { showingPaymentAlert.toggle() }) {
+                                Button(action: {
+                                    selling_email = shares_data[index]["user_email"]!
+                                    equity = shares_data[index]["equity"]!
+                                    amount = shares_data[index]["amount"]!
+                                    opportunity_id = shares_data[index]["opportunity_id"]!
+                                    opportunity_name = shares_data[index]["opportunity_name"]!
+                                    user_holding_id = shares_data[index]["user_holdings_id"]!
+                                    showingPaymentAlert.toggle()
+                                }) {
                                     HStack {
                                         Text("Buy")
                                             .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.04))
@@ -125,16 +142,35 @@ struct UserMarketplaceClick: View {
                 .frame(width: max(0, geometry.size.width - 40))
                 .padding(.top,10)
             }
+            .onAppear() {
+                print(shares_data)
+            }
+            .navigationDestination(isPresented: $home_page_shown) {
+                UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isShownHomePage: $isShownHomePage).navigationBarBackButtonHidden(true)
+            }
             .alert(isPresented: $showingPaymentAlert) {
-                        Alert(
-                            title: Text("Are you sure you want to buy this?"),
-                            primaryButton: .default(Text("Yes")) {
-                                print("Confirming")
-                            },
-                            secondaryButton: .destructive(Text("No")) {
-                                print("Delete")
+                Alert(
+                    title: Text("Are you sure you want to buy this?"),
+                    primaryButton: .default(Text("Yes")) {
+                        
+                        DispatchQueue.global(qos: .userInteractive).async {
+                            CreateDB().createSecondaryMarketTransaction(opportunity_id: opportunity_id, trading_window_id: trading_window_id, price: amount, equity: equity, user_buying: email, user_selling: selling_email) { response in
+                                if response == "" {
+                                    UpdateDB().updateTable(primary_key: "user_holdings_id", primary_key_value: user_holding_id, table: "user-holdings", updated_key: "status", updated_value: "Sold") { response in
+                                        if response == "user-holdings status updated" {
+                                            home_page_shown.toggle()
+                                            CreateDB().createUserInvestmentHolding(opportunity_name: opportunity_name, opportunity_id: opportunity_id, email: email, equity: equity, amount: amount)
+                                        }
+                                    }
+                                }
                             }
-                        )
+                            CreateDB().createInvestmentConfirmation(email: email, amount: amount, opportunity_name: opportunity_name)
+                        }
+                    },
+                    secondaryButton: .destructive(Text("No")) {
+                        print("Delete")
+                    }
+                )
             }
             
         }

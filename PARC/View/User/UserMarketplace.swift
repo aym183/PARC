@@ -17,8 +17,7 @@ struct UserMarketplace: View {
     @State var marketplace_bottom_sheet_shown = false
     @State var marketplace_list_shares_shown = false
     @State var marketplace_shown = false
-//    @AppStorage("trading_window_active") var trading_window_active: String = ""
-    var trading_window_active = "true"
+    @AppStorage("trading_window_active") var trading_window_active: String = ""
     @State var title = ""
     @State var logo = ""
     @Binding var franchise_data: [DropdownMenuOption]

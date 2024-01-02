@@ -449,4 +449,45 @@ class CreateDB: ObservableObject {
         }.resume()
         
     }
+    
+    func createSecondaryMarketTransaction(opportunity_id: String, trading_window_id: String, price: String, equity: String, user_buying: String, user_selling: String, completion: @escaping (String?) -> Void) {
+        
+        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/transactions-secondary-market")!
+        var request = URLRequest(url: apiUrl)
+        request.httpMethod = "GET"
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let data = data, let responseText = String(data: data, encoding: .utf8) {
+                
+                do {
+                    if let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                        DispatchQueue.main.async {
+                            if let itemsArray = jsonObject["ScannedCount"] as? Int {
+                                let arrayLength = itemsArray+1
+                                let opportunityApiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/transactions-secondary-market?transaction_id=\(arrayLength)&opportunity_id=\(Int(opportunity_id)!)&trading_window_id=\(Int(trading_window_id)!)&price=\(price)&equity=\(equity)&user_buying=\(user_buying)&user_selling=\(user_selling)&transaction_date=\(Date.now)")!
+                                
+                                var request = URLRequest(url: opportunityApiUrl)
+                                request.httpMethod = "POST"
+
+                                URLSession.shared.dataTask(with: request) { data, response, error in
+                                    if let data = data, let responseText = String(data: data, encoding: .utf8) {
+                                        DispatchQueue.main.async {
+                                            print(responseText)
+                                            completion("Transactions Secondary Market Created")
+                                        }
+                                    } else if let error = error {
+                                        DispatchQueue.main.async {
+                                            print("Error creating transaction: \(error.localizedDescription)")
+                                        }
+                                    }
+                                }.resume()
+                            }
+                        }
+                    }
+                } catch {
+                    print("Error")
+                }
+            }
+        }.resume()
+    }
 }
