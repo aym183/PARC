@@ -53,6 +53,23 @@ struct UserMarketplace: View {
                     .foregroundColor(.black)
                     .padding(.bottom)
                 }
+            } else if trading_window_active == "true" && listed_shares.count == 0 {
+                ZStack {
+                    Color(.white).ignoresSafeArea()
+                    VStack {
+                        Spacer()
+                        Text("☹️")
+                            .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.3))
+                            .padding(.bottom, -20)
+                        
+                        Text("No shares currently listed")
+                            .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.065))
+                        Spacer()
+                    }
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(.black)
+                    .padding(.bottom)
+                }
             } else {
                 ZStack(alignment: .bottomTrailing) {
                     Color(.white).ignoresSafeArea()

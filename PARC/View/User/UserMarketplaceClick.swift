@@ -155,7 +155,7 @@ struct UserMarketplaceClick: View {
                         
                         DispatchQueue.global(qos: .userInteractive).async {
                             CreateDB().createSecondaryMarketTransaction(opportunity_id: opportunity_id, trading_window_id: trading_window_id, price: amount, equity: equity, user_buying: email, user_selling: selling_email) { response in
-                                if response == "" {
+                                if response == "Transactions Secondary Market Created" {
                                     UpdateDB().updateTable(primary_key: "user_holdings_id", primary_key_value: user_holding_id, table: "user-holdings", updated_key: "status", updated_value: "Sold") { response in
                                         if response == "user-holdings status updated" {
                                             home_page_shown.toggle()
