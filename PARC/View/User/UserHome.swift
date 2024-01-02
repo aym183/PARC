@@ -172,7 +172,7 @@ struct UserHome: View {
                             }
                         }
                         readDB.user_holdings_data_dropdown = []
-                        readDB.listed_shares = []
+                        readDB.listed_shares = [:]
                         readDB.franchise_data_dropdown = []
                         readDB.franchise_data = []
                         readDB.user_opportunity_data = []

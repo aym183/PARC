@@ -24,7 +24,8 @@ struct UserMarketplace: View {
     @Binding var franchise_data: [DropdownMenuOption]
     @Binding var holding_data: [DropdownMenuOption]
     @Binding var listed_shares: [String: Any]
-    @Binding var secondary_shares: [[String: String]]
+    @Binding var secondary_shares: [String: [[String: String]]]
+    @State var transformed_secondary_shares: [[String: String]] = []
     @Binding var transformed_payouts_data: [String: Any]
     
     var body: some View {
@@ -107,8 +108,9 @@ struct UserMarketplace: View {
                             
                             ForEach((0..<listed_shares.count), id: \.self) { index in
                                 Button(action: {
-                                    title = title_texts[index]
+                                    title = String(describing: Array(listed_shares.keys)[index])
                                     logo = logo_images[index]
+                                    transformed_secondary_shares = secondary_shares[title]!
                                     marketplace_click_shown.toggle()
                                 }) {
                                     HStack {
@@ -190,7 +192,7 @@ struct UserMarketplace: View {
                     .padding(.trailing, 15).padding(.bottom)
                 }
                 .navigationDestination(isPresented: $marketplace_click_shown) {
-                    UserMarketplaceClick(title: $title, logo: $logo, shares_data: $secondary_shares)
+                    UserMarketplaceClick(title: $title, logo: $logo, shares_data: $transformed_secondary_shares)
                 }
                 .navigationDestination(isPresented: $marketplace_list_shares_shown) {
                     UserListShares(franchise_data: $franchise_data, holding_data: $holding_data, marketplace_shown: $marketplace_shown)

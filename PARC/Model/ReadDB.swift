@@ -15,7 +15,7 @@ class ReadDB: ObservableObject {
     @Published var user_opportunity_data: [[String: String]] = []
     @Published var payout_data: [[String: String]] = []
     @Published var user_payout_data: [[String: String]] = []
-    @Published var listed_shares: [[String: String]] = []
+    @Published var listed_shares: [String: [[String: String]]] = [:]
     @Published var secondary_market_data: [String: Any] = [:]
     @Published var user_holdings_data: [[String: String]] = []
     @Published var user_holdings_data_dropdown: [DropdownMenuOption] = []
@@ -333,7 +333,11 @@ class ReadDB: ObservableObject {
                                         self.user_holdings_data_dropdown.append(DropdownMenuOption(option: "\(temp_dict["user_holdings_id"]!) - \(temp_dict["opportunity_name"]!) - £\(temp_dict["amount"]!) - \(convertDate(dateString: temp_dict["transaction_date"]!))"))
                                         temp_dict = [:]
                                     } else if listed_temp_dict != [:] {
-                                        self.listed_shares.append(listed_temp_dict)
+                                        if self.listed_shares.keys.contains(listed_temp_dict["opportunity_name"]!) {
+                                            self.listed_shares[listed_temp_dict["opportunity_name"]!]!.append(listed_temp_dict)
+                                        } else {
+                                            self.listed_shares[listed_temp_dict["opportunity_name"]!] = [listed_temp_dict]
+                                        }
                                         listed_temp_dict = [:]
                                     }
                                 }
