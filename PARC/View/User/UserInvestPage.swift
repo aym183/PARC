@@ -15,7 +15,6 @@ struct UserInvestPage: View {
     @State var net_worth: Double = 0
     @State var net_worth_int: Int = 0
     @State var investment_limit = 0
-    @State var min_investment = 100
     @State var isInvestmentAmountValid: Bool = false
     @State var home_page_shown = false
     @State var isInvestmentConfirmed = true
@@ -28,6 +27,7 @@ struct UserInvestPage: View {
     @Binding var opportunity_name: String
     @Binding var amount_offered: String
     @Binding var investors: String
+    @Binding var min_investment: String
     @State var equity_value = 0.0
     @State var updated_amount_offered = 0
     @AppStorage("email") var email: String = ""
@@ -112,7 +112,7 @@ struct UserInvestPage: View {
                                 .font(Font.custom("Nunito-Medium", size: 18))
                                 .padding(.top).padding(.bottom, -5)
                             
-                            Text("£100")
+                            Text("£\(formattedNumber(input_number: Int(min_investment)!))")
                                 .font(Font.custom("Nunito-Bold", size: 25))
                                 .padding(.bottom, -5)
                         }
@@ -231,7 +231,7 @@ struct UserInvestPage: View {
     }
     
     private func validateInvestmentAmount() {
-        if investment_amount != "" && (Int(investment_amount)! >= min_investment && Int(investment_amount)! <= investment_limit) {
+        if investment_amount != "" && (Int(investment_amount)! >= Int(min_investment)! && Int(investment_amount)! <= investment_limit) {
             isInvestmentAmountValid = true
         } else {
             isInvestmentAmountValid = false

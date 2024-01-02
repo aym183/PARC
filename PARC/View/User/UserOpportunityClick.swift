@@ -38,6 +38,7 @@ struct UserOpportunityClick: View {
     @State var amount_offered = ""
     @State var investors = ""
     @State var opportunity_name = ""
+    @State var min_investment_amount = ""
     @State var tiles_why_invest_1 = ["Passive Income", "Diversification"]
     @State var tiles_why_invest_description = ["Get a share of the profits every month and earn money while you sleep", "Strengthen your portfolio by investing in franchises of different types"]
     @State var tiles_why_invest_2 = ["Recession Proof", "Brand Value"]
@@ -432,6 +433,7 @@ struct UserOpportunityClick: View {
                     amount_offered = opportunity_data["amount_raised"]!
                     investors = String(describing: Int(opportunity_data["investors"]!)! + 1)
                     opportunity_name = opportunity_data["franchise"]!
+                    min_investment_amount = opportunity_data["min_invest_amount"]!
                     user_invest_shown.toggle()
                 }) {
                     HStack {
@@ -448,7 +450,7 @@ struct UserOpportunityClick: View {
                 
             }
             .navigationDestination(isPresented: $user_invest_shown) {
-                UserInvestPage(user_invest_shown: $user_invest_shown, asking_price: $asking_price, equity_offered: $equity_offered, opportunity_id: $opportunity_id, opportunity_name: $opportunity_name, amount_offered: $amount_offered, investors: $investors)
+                UserInvestPage(user_invest_shown: $user_invest_shown, asking_price: $asking_price, equity_offered: $equity_offered, opportunity_id: $opportunity_id, opportunity_name: $opportunity_name, amount_offered: $amount_offered, investors: $investors, min_investment: $min_investment_amount)
             }
         }
     }
