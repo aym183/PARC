@@ -317,7 +317,7 @@ class ReadDB: ObservableObject {
                                                         temp_dict[data] = sValue
                                                     }
                                             }
-                                        } else if let listedCheck = value["status"] as? [String: String], listedCheck["S"] == "Listed" {
+                                        } else if let listedCheck = value["status"] as? [String: String], let emailCheck = value["user_email"] as? [String: String], listedCheck["S"] == "Listed" && emailCheck["S"] != email {
                                             if let nameDictionary = value[data] as? [String: String] {
                                                     if data == "opportunity_id" || data == "user_holdings_id" {
                                                             listed_temp_dict[data] = nameDictionary["N"]

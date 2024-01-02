@@ -95,10 +95,9 @@ struct LandingContent: View {
                                 Text("Get Started")
                                     .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.075))
                             }
-                            .frame(width: 320, height: 60)
+                            .frame(width: max(0, geometry.size.width-50), height: 60)
                             .background(Color("Secondary"))
                             .foregroundColor(Color.white)
-                            .border(Color.black, width: 1)
                             .cornerRadius(5)
                         }
                         .padding(.bottom, 10)
