@@ -13,6 +13,7 @@ struct UserMarketplaceClick: View {
     @State var share_prices = ["£400", "£560", "£230", "£120"]
     @State var no_of_shares = ["0.05", "1.2", "0.89", "0.9"]
     @State var total_values = ["£850", "£15,000", "£68,000", "£23,000"]
+    @State var showingPaymentAlert = false
     @Binding var title: String
     @Binding var logo: String
     @Binding var shares_data: [[String: String]]
@@ -98,7 +99,7 @@ struct UserMarketplaceClick: View {
                                 .frame(width: 80)
                                 .padding(.leading, -20)
                                 
-                                Button(action: {}) {
+                                Button(action: { showingPaymentAlert.toggle() }) {
                                     HStack {
                                         Text("Buy")
                                             .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.04))
@@ -123,6 +124,17 @@ struct UserMarketplaceClick: View {
                 }
                 .frame(width: max(0, geometry.size.width - 40))
                 .padding(.top,10)
+            }
+            .alert(isPresented: $showingPaymentAlert) {
+                        Alert(
+                            title: Text("Are you sure you want to buy this?"),
+                            primaryButton: .default(Text("Yes")) {
+                                print("Confirming")
+                            },
+                            secondaryButton: .destructive(Text("No")) {
+                                print("Delete")
+                            }
+                        )
             }
             
         }
