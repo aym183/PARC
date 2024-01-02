@@ -11,10 +11,11 @@ struct UserMarketplaceClick: View {
     @State var investment_titles = ["Industry", "Number of franchises", "Franchise Revenue (monthly)", "Estimated EBITDA"]
     @State var investment_values = ["Food & Beverage", "50", "50,000", "42"]
     @State var share_prices = ["£400", "£560", "£230", "£120"]
-    @State var no_of_shares = ["10", "60", "85", "90"]
-    @State var total_values = ["£85,000", "£15,000", "£68,000", "£23,000"]
+    @State var no_of_shares = ["0.05", "1.2", "0.89", "0.9"]
+    @State var total_values = ["£850", "£15,000", "£68,000", "£23,000"]
     @Binding var title: String
     @Binding var logo: String
+    @Binding var shares_data: [[String: String]]
     
     var body: some View {
         GeometryReader { geometry in
@@ -68,19 +69,34 @@ struct UserMarketplaceClick: View {
                             .frame(height: 1)
                             .overlay(.black)
                         
-                        HStack(spacing: 15) {
+                        HStack(spacing: 20) {
                             Text("Share Price")
-                            Text("No of Shares")
+                            Text("Equity")
                             Text("Total Value")
                         }
                         .padding(.vertical, 7.5)
                         .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.029))
                         
                         ForEach(0..<4, id: \.self) { index in
-                            HStack(spacing: 50) {
-                                Text(share_prices[index])
-                                Text(no_of_shares[index])
-                                Text(total_values[index])
+                            HStack(spacing: 30) {
+                                HStack {
+                                    Text(share_prices[index])
+                                    Spacer()
+                                }
+                                .frame(width: 50)
+                                
+                                HStack {
+                                    Text(no_of_shares[index])
+                                    Spacer()
+                                }
+                                .frame(width: 50)
+                                
+                                HStack {
+                                    Text(total_values[index])
+                                    Spacer()
+                                }
+                                .frame(width: 70)
+                                .padding(.leading, -15)
                                 
                                 Button(action: {}) {
                                     HStack {
@@ -92,12 +108,11 @@ struct UserMarketplaceClick: View {
                                     .foregroundColor(Color.white)
                                     .cornerRadius(5)
                                 }
-                                .padding(.leading, -10)
+                                .padding(.leading, 10)
 
                             }
                             .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.04))
                             .padding(.vertical, 5)
-                            .multilineTextAlignment(.leading)
                             
                             Divider()
                                 .overlay(.gray)
@@ -110,10 +125,13 @@ struct UserMarketplaceClick: View {
                 .frame(width: max(0, geometry.size.width - 40))
                 .padding(.top,10)
             }
+            .onAppear() {
+                print(shares_data)
+            }
         }
     }
 }
 
 #Preview {
-    UserMarketplaceClick(title: .constant("McDonald's"), logo: .constant("McDonalds"))
+    UserMarketplaceClick(title: .constant("McDonald's"), logo: .constant("McDonalds"), shares_data: .constant([[:]]))
 }

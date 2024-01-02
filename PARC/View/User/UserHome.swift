@@ -137,7 +137,7 @@ struct UserHome: View {
                                 .frame(height: 1)
                                 .overlay(.black)
                             
-                            UserMarketplace(franchise_data: $readDB.franchise_data_dropdown, holding_data: $readDB.user_holdings_data_dropdown, listed_shares: $readDB.secondary_market_data, transformed_payouts_data: $transformed_payouts_data)
+                            UserMarketplace(franchise_data: $readDB.franchise_data_dropdown, holding_data: $readDB.user_holdings_data_dropdown, listed_shares: $readDB.secondary_market_data, secondary_shares: $readDB.listed_shares, transformed_payouts_data: $transformed_payouts_data)
                         }
                         
                         
@@ -171,6 +171,7 @@ struct UserHome: View {
                                 }
                             }
                         }
+                        readDB.user_holdings_data_dropdown = []
                         readDB.listed_shares = []
                         readDB.franchise_data_dropdown = []
                         readDB.franchise_data = []
