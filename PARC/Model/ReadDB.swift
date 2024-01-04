@@ -24,7 +24,9 @@ class ReadDB: ObservableObject {
     @Published var trading_window_transactions_data: [[String: String]] = []
     @Published var full_user_holdings_data: [[String: String]] = []
     @Published var opportunity_data_dropdown: [DropdownMenuOption] = []
+    @Published var secondary_market_transactions_ind: Int = 0
     @State var currentFormattedDate: String = convertDate(dateString: String(describing: Date()))
+    @AppStorage("email") var email: String = ""
     
     func getFranchises() {
         var temp_dict: [String: String] = [:]
@@ -498,5 +500,44 @@ class ReadDB: ObservableObject {
                 }
             }
         }.resume()
+    }
+    
+    func getTradingWindowTransactionsEmail() {
+        
+        let keysArray = ["user_selling", "user_buying", "trading_window_id", "opportunity_id", "equity", "transaction_date", "transaction_id", "price"]
+        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/transactions-secondary-market")!
+
+        var request = URLRequest(url: apiUrl)
+        request.httpMethod = "GET"
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let data = data {
+                
+                do {
+                    if let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                        DispatchQueue.main.async {
+                            if let itemsArray = jsonObject["Items"] as? [[String: Any]] {
+                                for value in itemsArray.reversed() {
+                                    for data in keysArray.reversed() {
+                                        if let emailCheck = value["user_selling"] as? [String: String], emailCheck["S"] == self.email {
+                                            if let nameDictionary = value[data] as? [String: String] {
+                                                if data == "price" {
+                                                    if let sValue = nameDictionary["S"] {
+                                                        self.secondary_market_transactions_ind += Int(sValue)!
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } catch {
+                    print("Error getting franchises: \(error.localizedDescription)")
+                }
+            }
+        }.resume()
+        
     }
 }

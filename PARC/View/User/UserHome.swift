@@ -182,9 +182,11 @@ struct UserHome: View {
                         readDB.user_payout_data = []
                         readDB.trading_window_data = []
                         readDB.payout_data = []
+                        readDB.secondary_market_transactions_ind = 0
                         readDB.getFranchises()
                         readDB.getAllUserHoldings()
                         readDB.getTradingWindows()
+                        readDB.getTradingWindowTransactionsEmail()
                         readDB.getPayouts() { response in
                             if response == "Fetched payouts" {
                                 self.transformed_payouts_data = transformPayouts(payouts_array: readDB.payout_data)
@@ -227,7 +229,7 @@ struct UserHome: View {
                     
                 }
                 .navigationDestination(isPresented: $account_shown) {
-                    UserAccount(payoutsValue: $payouts_value)
+                    UserAccount(payoutsValue: $payouts_value, secondaryTransactionsValue: $readDB.secondary_market_transactions_ind)
                 }
             }
             

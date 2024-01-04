@@ -9,7 +9,7 @@ import SwiftUI
 
 struct UserMarketplaceClick: View {
     @State var investment_titles = ["Industry", "Number of franchises", "Franchise Revenue (monthly)", "Estimated EBITDA"]
-    @State var investment_values = ["Food & Beverage", "50", "50,000", "42"]
+    @State var investment_values = ["Food & Beverage", "50", "£50,000", "42"]
     @State var share_prices = ["£400", "£560", "£230", "£120"]
     @State var showingPaymentAlert = false
     @State var home_page_shown = false
@@ -40,7 +40,7 @@ struct UserMarketplaceClick: View {
                                 .frame(width: 55, height: 55)
                             
                             Text(title)
-                                .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.065))
+                                .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.065))
                             
                             Spacer()
                         }

@@ -10,6 +10,7 @@ import URLImage
 
 struct UserAccount: View {
     @Binding var payoutsValue: Int
+    @Binding var secondaryTransactionsValue: Int
     @AppStorage("full_name") var fullName: String = ""
     
     var body: some View {
@@ -102,12 +103,12 @@ struct UserAccount: View {
                             Text("Balance")
                                 .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.052))
                             Spacer()
-                            Text("£\(formattedNumber(input_number: payoutsValue))")
+                            Text("£\(formattedNumber(input_number: payoutsValue+secondaryTransactionsValue))")
                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.052))
                                 .foregroundColor(.black)
                                 .padding(.trailing, 13)
                         }
-                        .padding(.leading).padding(.trailing, 30).padding(.top, 10)
+                        .padding(.leading).padding(.trailing).padding(.top, 10)
                     }
                     .padding(.top)
                     .foregroundColor(Color("Custom_Gray"))
@@ -153,8 +154,8 @@ struct UserAccount: View {
     }
 }
 
-struct UserAccount_Previews: PreviewProvider {
-    static var previews: some View {
-        UserAccount(payoutsValue: .constant(100))
-    }
-}
+//struct UserAccount_Previews: PreviewProvider {
+//    static var previews: some View {
+//        UserAccount(payoutsValue: .constant(100))
+//    }
+//}
