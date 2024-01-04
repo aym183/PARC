@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct UserMarketplaceClick: View {
-    @State var investment_titles = ["Industry", "Number of franchises", "Franchise Revenue (monthly)", "Estimated EBITDA"]
+    @State var investment_titles = ["Industry", "Number of franchises", "Franchise Revenue (monthly)", "Estimated EBITDA Margin"]
     @State var investment_values = ["Food & Beverage", "50", "£50,000", "42"]
     @State var share_prices = ["£400", "£560", "£230", "£120"]
     @State var showingPaymentAlert = false
@@ -26,6 +26,7 @@ struct UserMarketplaceClick: View {
     @Binding var title: String
     @Binding var logo: String
     @Binding var shares_data: [[String: String]]
+    @Binding var franchise_selected: [String: String]
     
     var body: some View {
         GeometryReader { geometry in
@@ -54,14 +55,29 @@ struct UserMarketplaceClick: View {
                             .overlay(.black)
                             .padding(.bottom, 10)
                         
-                        ForEach(0..<investment_titles.count, id: \.self) {index in
+                        ForEach(0..<investment_titles.count, id: \.self) { index in
                             HStack {
                                 Text(investment_titles[index])
                                     .foregroundColor(Color("Custom_Gray"))
                                 Spacer()
-                                Text(investment_values[index])
+                                
+                                if investment_titles[index] == "Industry" {
+                                    Text(franchise_selected["industry"]!)
+                                        .font(Font.custom("Nunito-SemiBold", size: 14))
+                                } else if investment_titles[index] == "Number of franchises" {
+                                    Text(franchise_selected["no_of_franchises"]!)
+                                        .font(Font.custom("Nunito-SemiBold", size: 14))
+                                } else if investment_titles[index] == "Franchise Revenue (monthly)" {
+                                    Text("£\(formattedNumber(input_number: Int(franchise_selected["avg_franchise_mom_revenues"]!)!))")
+                                        .font(Font.custom("Nunito-SemiBold", size: 14))
+                                } else if investment_titles[index] == "Estimated EBITDA Margin" {
+                                    Text("\(franchise_selected["ebitda_estimate"]!)%")
+                                        .font(Font.custom("Nunito-SemiBold", size: 14))
                                 }
-                                .font(Font.custom("Nunito-SemiBold", size: 14))
+                                 
+                            }
+                            .font(Font.custom("Nunito-SemiBold", size: 14))
+                            
                             if index != investment_titles.count-1 {
                                 Divider()
                                     .overlay(.gray)
@@ -172,8 +188,4 @@ struct UserMarketplaceClick: View {
             
         }
     }
-}
-
-#Preview {
-    UserMarketplaceClick(title: .constant("McDonald's"), logo: .constant("McDonalds"), shares_data: .constant([["opportunity_id": "2", "amount": "125000", "user_email": "ayman.ali1302@gmail.com", "equity": "0.567", "transaction_date": "2024-01-01 11:50:23  0000", "status": "Listed", "opportunity_name": "McDonald’s", "user_holdings_id": "1"], ["transaction_date": "2024-01-01 11:50:37  0000", "equity": "0.023", "user_email": "ayman.ali1302@gmail.com", "amount": "400", "opportunity_id": "2", "user_holdings_id": "2", "opportunity_name": "McDonald’s", "status": "Listed"]]))
 }
