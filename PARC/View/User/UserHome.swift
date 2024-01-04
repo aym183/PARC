@@ -227,7 +227,7 @@ struct UserHome: View {
                     
                 }
                 .navigationDestination(isPresented: $account_shown) {
-                    UserAccount(imageURL: $imageURL, payoutsValue: $payouts_value)
+                    UserAccount(payoutsValue: $payouts_value)
                 }
             }
             

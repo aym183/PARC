@@ -9,8 +9,8 @@ import SwiftUI
 import URLImage
 
 struct UserAccount: View {
-    @Binding var imageURL: URL?
     @Binding var payoutsValue: Int
+    @AppStorage("full_name") var fullName: String = ""
     
     var body: some View {
         GeometryReader { geometry in
@@ -19,23 +19,13 @@ struct UserAccount: View {
                 VStack(alignment: .center) {
                     HStack {
                         Button(action: {}) {
-                            if imageURL != nil {
-                                URLImage(imageURL!) { image in
-                                    image
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 120, height: 120)
-                                        .clipShape(RoundedRectangle(cornerRadius: 100))
-                                }
-                            } else {
                                 Image(systemName: "person.crop.circle")
                                         .resizable()
                                         .frame(width: 120, height: 120)
-                            }
                         }
                         
                         VStack(alignment: .leading) {
-                            Text("Ayman Ali")
+                            Text(fullName)
                                 .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.08))
 
                             Text("Member since November 2023")
@@ -75,7 +65,6 @@ struct UserAccount: View {
                                 .frame(width: 100, height: 35)
                                 .background(Color("Secondary"))
                                 .foregroundColor(Color.white)
-                                .border(Color.black, width: 1)
                                 .cornerRadius(5)
                             }
                         }
@@ -99,7 +88,6 @@ struct UserAccount: View {
                                 .frame(width: 100, height: 35)
                                 .background(Color("Secondary"))
                                 .foregroundColor(Color.white)
-                                .border(Color.black, width: 1)
                                 .cornerRadius(5)
                             }
                         }
@@ -119,25 +107,11 @@ struct UserAccount: View {
                                 .foregroundColor(.black)
                                 .padding(.trailing, 13)
                         }
-                        .padding(.horizontal).padding(.top, 10)
+                        .padding(.leading).padding(.trailing, 30).padding(.top, 10)
                     }
                     .padding(.top)
                     .foregroundColor(Color("Custom_Gray"))
                 
-                    Button(action: {}) {
-                        HStack {
-                            Text("Withdraw")
-                                .font(Font.custom("Nunito", size: min(geometry.size.width, geometry.size.height) * 0.055))
-                                .fontWeight(.bold)
-                        }
-                        .frame(width: max(0, geometry.size.width-50), height: 45)
-                        .background(Color("Secondary"))
-                        .foregroundColor(Color.white)
-                        .border(Color.black, width: 1)
-                        .cornerRadius(5)
-                    }
-                    .padding(.top, 40)
-                    
                     HStack {
                         
                         Button(action: {}) {
@@ -149,7 +123,6 @@ struct UserAccount: View {
                             .frame(width: max(0, geometry.size.width-233), height: 45)
                             .background(Color("Secondary"))
                             .foregroundColor(Color.white)
-//                            .border(Color.black, width: 1)
                             .cornerRadius(5)
                         }
                         
@@ -160,15 +133,14 @@ struct UserAccount: View {
                                     .fontWeight(.bold)
                             }
                             .frame(width: max(0, geometry.size.width-233), height: 45)
-                            .background(Color("Loss"))
+                            .background(Color("Secondary"))
                             .foregroundColor(Color.white)
-//                            .border(Color.black, width: 1)
                             .cornerRadius(5)
                         }
                         .padding(.leading, 15)
                         
                     }
-                    .padding(.top, 10)
+                    .padding(.top)
                     
                     Spacer()
                 }
@@ -181,8 +153,8 @@ struct UserAccount: View {
     }
 }
 
-//struct UserAccount_Previews: PreviewProvider {
-//    static var previews: some View {
-//        UserAccount()
-//    }
-//}
+struct UserAccount_Previews: PreviewProvider {
+    static var previews: some View {
+        UserAccount(payoutsValue: .constant(100))
+    }
+}
