@@ -33,6 +33,8 @@ struct AdminHome: View {
     @State var selected_trading_window: [String: String] = [:]
     @ObservedObject var readDB = ReadDB()
     var trading_window_transactions: [String:Int] = [:]
+    @State var trading_volume = 0
+    @State var no_of_trades = 0
     
     var body: some View {
         GeometryReader { geometry in
@@ -432,6 +434,8 @@ struct AdminHome: View {
                                     } else {
                                         Button(action: {
                                             selected_trading_window = readDB.trading_window_data[index-1]
+                                            trading_volume = readDB.transformed_trading_window_transactions_data["\(String(describing: index))_volume"]!
+                                            no_of_trades = readDB.transformed_trading_window_transactions_data["\(String(describing: index))_trades"]!
                                             admin_trading_click_shown.toggle()
                                         }) {
                                             ZStack {
@@ -550,7 +554,7 @@ struct AdminHome: View {
                 AdminOpportunityClick(opportunity_logo: $opportunity_logo, opportunity_title: $opportunity_title, opportunity_data: $opportunity_data)
             }
             .navigationDestination(isPresented: $admin_trading_click_shown){
-                AdminTradingClick(selected_trading_window: $selected_trading_window)
+                AdminTradingClick(selected_trading_window: $selected_trading_window, trading_volume: $trading_volume, no_of_trades: $no_of_trades)
             }
             .navigationDestination(isPresented: $admin_payout_click_shown){
                 AdminPayoutClick(opportunity_data: $opportunity_data, payout_data: $payout_data, admin_payout_click_shown: $admin_payout_click_shown)

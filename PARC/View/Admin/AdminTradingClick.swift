@@ -11,6 +11,8 @@ struct AdminTradingClick: View {
     var data_titles = ["Trading Volume", "Trades", "Scheduled Date", "Duration", "Most Traded Opportunity", "Biggest Trade"]
     var data_values = ["£178,000,000", "Check", "21/03/2023", "15/04/2023", "McDonald's, 25", "McDonald's - £1.5M"]
     @Binding var selected_trading_window: [String: String]
+    @Binding var trading_volume: Int
+    @Binding var no_of_trades: Int
     
     var body: some View {
         GeometryReader { geometry in
@@ -18,13 +20,13 @@ struct AdminTradingClick: View {
                 Color(.white).ignoresSafeArea()
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack {
-                        Text("500 Trades")
+                        Text("\(no_of_trades) Trades")
                             .font(Font.custom("Nunito-ExtraBold", size: 50))
                         
                         HStack(spacing: 20) {
                             Button(action: {}) {
                                 HStack {
-                                    Text("Edit Opportunity")
+                                    Text("Edit Window")
                                         .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.038))
                                 }
                                 .frame(width: max(0, geometry.size.width-240), height: 45)
@@ -37,7 +39,7 @@ struct AdminTradingClick: View {
                             
                             Button(action: {}) {
                                 HStack {
-                                    Text("Close Opportunity")
+                                    Text("Close Window")
                                         .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.038))
                                 }
                                 .frame(width: max(0, geometry.size.width-240), height: 45)
@@ -83,7 +85,7 @@ struct AdminTradingClick: View {
                                         .cornerRadius(5)
                                     }
                                 } else if data_titles[index] == "Trading Volume" {
-                                    Text("£\(formattedNumber(input_number: Int(selected_trading_window["trading_volume"]!)!))")
+                                    Text("£\(formattedNumber(input_number: trading_volume))")
                                 }
                                 else if data_titles[index] == "Scheduled Date" {
                                     Text(convertDate(dateString: selected_trading_window["start_date"]!))
