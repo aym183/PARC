@@ -20,6 +20,8 @@ class ReadDB: ObservableObject {
     @Published var user_holdings_data: [[String: String]] = []
     @Published var user_holdings_data_dropdown: [DropdownMenuOption] = []
     @Published var trading_window_data: [[String: String]] = []
+    @Published var transformed_trading_window_transactions_data: [String: Int] = [:]
+    @Published var trading_window_transactions_data: [[String: String]] = []
     @Published var full_user_holdings_data: [[String: String]] = []
     @Published var opportunity_data_dropdown: [DropdownMenuOption] = []
     @State var currentFormattedDate: String = convertDate(dateString: String(describing: Date()))
@@ -54,10 +56,6 @@ class ReadDB: ObservableObject {
                                     self.franchise_data.append(temp_dict)
                                     self.franchise_data_dropdown.append(DropdownMenuOption(option: temp_dict["name"]!))
                                     temp_dict = [:]
-//                                    print(value)
-//                                    if let nameDictionary = value["name"] as? [String: String], let sValue = nameDictionary["S"] {
-//                                        self.franchise_data_dropdown.append(DropdownMenuOption(option: sValue))
-//                                    }
                                 }
                             }
                         }
@@ -66,18 +64,6 @@ class ReadDB: ObservableObject {
                     print("Error getting franchises: \(error.localizedDescription)")
                 }
             }
-//                    print(responseText)
-//                let decoder = JSONDecoder()
-//                if let result = try? decoder.decode(Data.self, from: data) {
-//                    print("Error here")
-//                    self.franchise_data = result
-//                }
-//                
-//            } else if let error = error {
-//                DispatchQueue.main.async {
-//                    print("Error getting franchises: \(error.localizedDescription)")
-//                }
-//            }
         }.resume()
     }
     
@@ -471,7 +457,46 @@ class ReadDB: ObservableObject {
         }.resume()
     }
     
-    func getListedShares() {
+    func getTradingWindowTransactions() {
+//        self.transformed_trading_window_data = transformTradingWindowData(listed_shares: self.full_user_holdings_data)
+        var temp_dict: [String: String] = [:]
+        let keysArray = ["user_selling", "user_buying", "trading_window_id", "opportunity_id", "equity", "transaction_date", "transaction_id", "price"]
+        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/transactions-secondary-market")!
+
+        var request = URLRequest(url: apiUrl)
+        request.httpMethod = "GET"
         
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let data = data {
+                
+                do {
+                    if let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                        DispatchQueue.main.async {
+                            if let itemsArray = jsonObject["Items"] as? [[String: Any]] {
+                                for value in itemsArray.reversed() {
+                                    for data in keysArray.reversed() {
+                                        if let nameDictionary = value[data] as? [String: String] {
+                                            if data == "opportunity_id" || data == "trading_window_id" || data == "transaction_id"{
+                                                if let nValue = nameDictionary["N"] {
+                                                    temp_dict[data] = nValue
+                                                }
+                                            } else if let sValue = nameDictionary["S"] {
+                                                temp_dict[data] = sValue
+                                            }
+                                        }
+                                    }
+                                    self.trading_window_transactions_data.append(temp_dict)
+                                    temp_dict = [:]
+                                }
+                                self.transformed_trading_window_transactions_data = transformTradingWindowData(listed_shares: self.trading_window_transactions_data)
+//                                completion("Trading window transactions fetched")
+                            }
+                        }
+                    }
+                } catch {
+                    print("Error getting franchises: \(error.localizedDescription)")
+                }
+            }
+        }.resume()
     }
 }

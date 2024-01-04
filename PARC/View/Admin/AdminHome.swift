@@ -8,6 +8,11 @@
 import SwiftUI
 import Foundation
 
+//class TradingWindowTransactions {
+//    var id: String = ""
+//    var amount: Int = 0
+//    var no_of_trades: Int = 0
+//}
 struct AdminHome: View {
     var rows: [GridItem] = [
         GridItem(.flexible() , spacing: nil, alignment: nil),
@@ -27,6 +32,7 @@ struct AdminHome: View {
     @State var payout_data: [String:String] = [:]
     @State var selected_trading_window: [String: String] = [:]
     @ObservedObject var readDB = ReadDB()
+    var trading_window_transactions: [String:Int] = [:]
     
     var body: some View {
         GeometryReader { geometry in
@@ -463,24 +469,26 @@ struct AdminHome: View {
                                                     
                                                     Spacer()
                                                     
-                                                    Text("500 Trades")
-                                                        .font(Font.custom("Nunito-Bold", size: 25))
-                                                    
-                                                    Spacer()
-                                                    
-                                                    HStack {
-                                                        Text("Volume - £500k")
-                                                        Divider()
-                                                            .frame(height: 15)
+                                                    if readDB.transformed_trading_window_transactions_data.count != 0 {
+                                                        Text("\(readDB.transformed_trading_window_transactions_data["\(String(describing: index))_trades"]!) Trades")
+                                                            .font(Font.custom("Nunito-Bold", size: 25))
                                                         
-                                                        if readDB.trading_window_data[index-1]["status"] == "Scheduled" {
-                                                            Text("Scheduled: \(convertDate(dateString: readDB.trading_window_data[index-1]["start_date"]!))")
-                                                        } else {
-                                                            Text("Started: \(convertDate(dateString: readDB.trading_window_data[index-1]["start_date"]!))")
+                                                        Spacer()
+                                                        
+                                                        HStack {
+                                                            Text("Volume - £\(readDB.transformed_trading_window_transactions_data["\(String(describing: index))_volume"]!)")
+                                                            Divider()
+                                                                .frame(height: 15)
+                                                            
+                                                            if readDB.trading_window_data[index-1]["status"] == "Scheduled" {
+                                                                Text("Scheduled: \(convertDate(dateString: readDB.trading_window_data[index-1]["start_date"]!))")
+                                                            } else {
+                                                                Text("Started: \(convertDate(dateString: readDB.trading_window_data[index-1]["start_date"]!))")
+                                                            }
                                                         }
+                                                        .font(Font.custom("Nunito-Bold", size: 6.5))
+                                                        .foregroundColor(Color("Custom_Gray"))
                                                     }
-                                                    .font(Font.custom("Nunito-Bold", size: 6.5))
-                                                    .foregroundColor(Color("Custom_Gray"))
                                                 }
                                                 .padding(.vertical)
                                             }
@@ -507,6 +515,8 @@ struct AdminHome: View {
                 readDB.opportunity_data_dropdown = []
                 readDB.full_user_holdings_data = []
                 readDB.trading_window_data = []
+                readDB.trading_window_transactions_data = []
+                readDB.transformed_trading_window_transactions_data = [:]
                 readDB.getFranchises()
                 readDB.getAllUserHoldings()
                 readDB.getAdminOpportunities() { response in
@@ -517,6 +527,13 @@ struct AdminHome: View {
                             }
                         }
                         readDB.getTradingWindows()
+                        readDB.getTradingWindowTransactions() 
+//                        { response in
+//                            if response == "Trading window transactions fetched" {
+//                                print("trading window transactions fetched")
+//                                print(readDB.transformed_trading_window_transactions_data)
+//                            }
+//                        }
                     }
                 }
             }

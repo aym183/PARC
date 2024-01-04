@@ -175,6 +175,25 @@ func transformListedShares(listed_shares: [String: [[String: String]]]) -> [Stri
     return traversed_franchises
 }
 
+func transformTradingWindowData(listed_shares: [[String: String]]) -> [String: Int] {
+    var traversed_trading_window: [String: Int] = [:]
+    
+    for share in listed_shares {
+            var franchise = share["trading_window_id"]!
+            var amount = Int(share["price"]!)!
+            if traversed_trading_window.keys.contains(franchise) {
+                let transformed_amount = traversed_trading_window["\(franchise)_volume"]! + amount
+                let transformed_count = traversed_trading_window["\(franchise)_trades"]! + 1
+                traversed_trading_window["\(franchise)_volume"] = transformed_amount
+                traversed_trading_window["\(franchise)_trades"] = transformed_count
+            } else {
+                traversed_trading_window["\(franchise)_volume"] = amount
+                traversed_trading_window["\(franchise)_trades"] = 1
+            }
+    }
+    return traversed_trading_window
+}
+
 func textBeforeApostrophe(_ input: String) -> String? {
     guard let range = input.range(of: "'") else {
         return nil
