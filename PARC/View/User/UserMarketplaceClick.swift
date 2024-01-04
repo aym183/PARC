@@ -128,7 +128,7 @@ struct UserMarketplaceClick: View {
                                 }
 
                             }
-                            .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.04))
+                            .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.035))
                             .padding(.vertical, 5)
                             
                             Divider()
@@ -141,9 +141,6 @@ struct UserMarketplaceClick: View {
                 }
                 .frame(width: max(0, geometry.size.width - 40))
                 .padding(.top,10)
-            }
-            .onAppear() {
-                print(shares_data)
             }
             .navigationDestination(isPresented: $home_page_shown) {
                 UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isShownHomePage: $isShownHomePage).navigationBarBackButtonHidden(true)

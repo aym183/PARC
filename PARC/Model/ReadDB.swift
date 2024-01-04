@@ -476,7 +476,7 @@ class ReadDB: ObservableObject {
                                 for value in itemsArray.reversed() {
                                     for data in keysArray.reversed() {
                                         if let nameDictionary = value[data] as? [String: String] {
-                                            if data == "opportunity_id" || data == "trading_window_id" || data == "transaction_id"{
+                                            if data == "opportunity_id" || data == "trading_window_id" || data == "transaction_id" {
                                                 if let nValue = nameDictionary["N"] {
                                                     temp_dict[data] = nValue
                                                 }
