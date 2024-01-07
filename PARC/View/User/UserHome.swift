@@ -342,7 +342,7 @@ struct UserHomeContent: View {
                                                         .foregroundColor(Color("Custom_Gray"))
                                                         .frame(alignment: .leading)
                                                     Spacer()
-                                                    Text("£\(String(describing: formattedNumber(input_number:Int(opportunity_data[index]["asking_price"]!)!)))")
+                                                    Text("Target - £\(String(describing: formattedNumber(input_number:Int(opportunity_data[index]["asking_price"]!)!)))")
                                                         .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.024))
                                                         .foregroundColor(Color("Custom_Gray"))
                                                         .frame(alignment: .leading)

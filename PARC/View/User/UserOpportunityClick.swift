@@ -77,11 +77,12 @@ struct UserOpportunityClick: View {
                         Text(franchise_data[franchise_data.firstIndex(where: { $0["name"] == opportunity_data["franchise"]! })!]["description"]!)
                             .foregroundColor(Color("Custom_Gray"))
                             .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.030))
-                            .padding(.horizontal, 0.5)
+                            .frame(width: max(0, geometry.size.width-40), height: 50)
+                            .multilineTextAlignment(.leading)
 
                         HStack {
                             Text("\(String(describing: Int(Double(opportunity_data["ratio"]!)!*100)))% - \(getDaysRemaining(dateString: String(describing: opportunity_data["close_date"]!))!) days left")
-                                .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.024))
+                                .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.024))
                                 .foregroundColor(Color("Custom_Gray"))
                             Spacer()
                             
@@ -95,13 +96,13 @@ struct UserOpportunityClick: View {
                                 HStack {
                                     Image("gbr").resizable().frame(width: 10, height: 10)
                                     Text(String(describing: opportunity_data["location"]!))
-                                        .font(Font.custom("Nunito-Bold", size: 8))
+                                        .font(Font.custom("Nunito-SemiBold", size: 8))
                                         .foregroundColor(Color("Custom_Gray"))
                                         .padding(.leading, -7.5)
                                 }
                             }
                         }
-                        .padding(.top, -3)
+                        .padding(.top, 5)
                         
                         ProgressView(value: Double(opportunity_data["ratio"]!))
                             .tint(Color("Secondary"))
@@ -133,13 +134,13 @@ struct UserOpportunityClick: View {
                         
                         HStack {
                             Text("Minimum Investment Amount - £\(opportunity_data["min_invest_amount"]!)")
-                                .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.024))
+                                .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.024))
                                 .foregroundColor(Color("Custom_Gray"))
                             
                             Spacer()
                             
-                            Text("£\(String(describing: formattedNumber(input_number:Int(opportunity_data["asking_price"]!)!)))")
-                                .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.024))
+                            Text("Target - £\(String(describing: formattedNumber(input_number:Int(opportunity_data["asking_price"]!)!)))")
+                                .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.024))
                                 .foregroundColor(Color("Custom_Gray"))
                             
                         }
@@ -155,10 +156,10 @@ struct UserOpportunityClick: View {
                         HStack {
                             VStack(alignment: .leading) {
                                 Text("£\(String(describing: formattedNumber(input_number:Int(opportunity_data["amount_raised"]!)!)))")
-                                    .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.075))
+                                    .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.075))
                                 Text("Invested")
                                     .foregroundColor(Color("Custom_Gray"))
-                                    .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.035))
+                                    .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.035))
                                     .padding(.top, -25)
                             }
                             
@@ -166,10 +167,10 @@ struct UserOpportunityClick: View {
                             
                             VStack(alignment: .leading) {
                                 Text("\(String(describing: opportunity_data["investors"]!))")
-                                    .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.075))
+                                    .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.075))
                                 Text("Investors")
                                     .foregroundColor(Color("Custom_Gray"))
-                                    .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.035))
+                                    .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.035))
                                     .padding(.leading, 2).padding(.top, -25)
                             }
                             .multilineTextAlignment(.leading)
@@ -211,6 +212,7 @@ struct UserOpportunityClick: View {
                         
                         Divider()
                             .overlay(Color("Custom_Gray"))
+                            .opacity(0.5)
                             .frame(height: 1)
                             .padding(.top, -15)
                          
@@ -223,7 +225,7 @@ struct UserOpportunityClick: View {
                                     
                                     VStack {
                                         Text(tiles_why_invest_1[index])
-                                            .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.045))
+                                            .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.045))
                                             .padding(.bottom, 10)
                                         
                                         Text(tiles_why_invest_description[index])
@@ -242,7 +244,7 @@ struct UserOpportunityClick: View {
                                     
                                     VStack {
                                         Text(tiles_why_invest_2[index])
-                                            .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.045))
+                                            .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.045))
                                             .padding(.bottom, 10)
                                         
                                         Text(tiles_why_invest_description_2[index])
@@ -271,6 +273,7 @@ struct UserOpportunityClick: View {
                         
                         Divider()
                             .overlay(Color("Custom_Gray"))
+                            .opacity(0.5)
                             .frame(height: 1)
                             .padding(.top, -15)
 
@@ -285,7 +288,7 @@ struct UserOpportunityClick: View {
                                         
                                         if index == 0 {
                                             Text(tiles_similar_franchise_1[index])
-                                                .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.045))
+                                                .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.045))
                                             
                                             Image(tiles_similar_franchise_images[index])
                                                 .resizable()
@@ -295,7 +298,7 @@ struct UserOpportunityClick: View {
                                             
                                         } else {
                                             Text(tiles_similar_franchise_1[index])
-                                                .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.045))
+                                                .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.045))
                                                 .padding(.top, -5)
                                             
                                             Image(tiles_similar_franchise_images[index])
@@ -322,7 +325,7 @@ struct UserOpportunityClick: View {
                                     
                                     VStack {
                                         Text(tiles_similar_franchise_2[index])
-                                            .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.045))
+                                            .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.045))
                                             .padding(.top, -5)
                                         
                                         if index == 0 {
@@ -372,6 +375,7 @@ struct UserOpportunityClick: View {
                         
                         Divider()
                             .overlay(Color("Custom_Gray"))
+                            .opacity(0.5)
                             .frame(height: 1)
                             .padding(.top, -15)
                         
@@ -383,12 +387,12 @@ struct UserOpportunityClick: View {
                                 Text(opportunity_data["location"]!)
                             }
                             .font(Font.custom("Nunito-SemiBold", size: 14))
-                            .padding(.vertical, 5)
+                            .padding(.bottom, 5)
                         
                             Divider()
                                 .overlay(Color("Custom_Gray"))
-                                .frame(height: 1)
                                 .opacity(0.5)
+                                .frame(height: 1)
                                 .padding(.vertical, 5)
                         
                         HStack {
@@ -402,8 +406,8 @@ struct UserOpportunityClick: View {
                     
                         Divider()
                             .overlay(Color("Custom_Gray"))
-                            .frame(height: 1)
                             .opacity(0.5)
+                            .frame(height: 1)
                             .padding(.vertical, 5)
                         
                         HStack {
@@ -417,8 +421,8 @@ struct UserOpportunityClick: View {
                     
                         Divider()
                             .overlay(Color("Custom_Gray"))
-                            .frame(height: 1)
                             .opacity(0.5)
+                            .frame(height: 1)
                             .padding(.vertical, 5)
                         
                     }
