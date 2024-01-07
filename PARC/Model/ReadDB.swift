@@ -123,8 +123,10 @@ class ReadDB: ObservableObject {
                                     if ratio != 0.0 {
                                         temp_dict["ratio"] = String(describing: ratio)
                                         self.user_opportunity_data.append(temp_dict)
+                                    } else if temp_dict.count != 0 {
+                                        temp_dict["ratio"] = "0.000001"
+                                        self.user_opportunity_data.append(temp_dict)
                                     }
-//                                    self.opportunity_data_dropdown.append(DropdownMenuOption(option: "\(temp_dict["opportunity_id"]!) - \(temp_dict["franchise"]!) - \(temp_dict["location"]!) - \(temp_dict["date_created"]!)"))
                                     temp_dict = [:]
                                 }
                                 completion("Fetched all opportunities")
