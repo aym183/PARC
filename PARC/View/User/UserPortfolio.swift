@@ -101,7 +101,7 @@ struct UserPortfolio: View {
                                     
                                     Text(metric_description[index])
                                         .foregroundStyle(Color("Custom_Gray"))
-                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.04))
+                                        .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.04))
                                         .padding(.top, -36)
                                     
                                 }
@@ -112,7 +112,8 @@ struct UserPortfolio: View {
                         .frame(height: geometry.size.height - 200)
                         
                         Divider()
-                            .overlay(.black)
+                            .overlay(Color("Custom_Gray"))
+                            .frame(height: 0.5)
                             .padding(.top)
                             .frame(height: 1)
                             .padding(.bottom, 10)
@@ -135,7 +136,7 @@ struct UserPortfolio: View {
                                             if let opportunity = opportunity_data.first(where: { $0["opportunity_id"] == String(opportunityID) }) {
                                                 if let franchise = opportunity["franchise"] {
                                                     Text("\(franchise)")
-                                                        .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.045))
+                                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.045))
                                                 } else {
                                                     Text("Franchise key not found")
                                                 }
@@ -147,10 +148,10 @@ struct UserPortfolio: View {
                                         }
 //                                        Invested - £\(formattedNumber(input_number: Int(portfolio_data[index]["amount"]!)!))
                                         Text("Date Bought - \(convertDate(dateString: portfolio_data[index]["transaction_date"]!))")
-                                          .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.027))
+                                          .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.027))
                                           .foregroundColor(Color("Custom_Gray"))
                                     }
-                                    .padding(.leading)
+                                    .padding(.leading, 10)
                                     
                                     Spacer()
                                     

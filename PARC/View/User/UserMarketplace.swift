@@ -121,6 +121,7 @@ struct UserMarketplace: View {
                             
                             Divider()
                                 .overlay(Color("Custom_Gray"))
+                                .opacity(0.5)
                                 .frame(height: 1)
                                 .padding(.top, -5)
                             
@@ -172,8 +173,9 @@ struct UserMarketplace: View {
                                 
 //                                if index != 5 {
                                     Divider()
-                                        .overlay(Color("Custom_Gray")).opacity(0.6)
-                                        .frame(height: 0.5)
+                                        .overlay(Color("Custom_Gray"))
+                                        .opacity(0.5)
+                                        .frame(height: 1)
                                         .padding(.vertical, 5)
 //                                }
                             }

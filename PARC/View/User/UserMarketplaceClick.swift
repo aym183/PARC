@@ -103,6 +103,12 @@ struct UserMarketplaceClick: View {
                         .padding(.vertical, 7.5)
                         .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.029))
                         
+                        Divider()
+                            .overlay(Color("Custom_Gray"))
+                            .opacity(0.5)
+                            .frame(height: 1)
+                            .padding(.top, -5)
+                        
                         ForEach(0..<shares_data.count, id: \.self) { index in
                             HStack(spacing: 30) {
                                 HStack {
@@ -148,9 +154,9 @@ struct UserMarketplaceClick: View {
                             .padding(.vertical, 5)
                             
                             Divider()
-                                .overlay(.gray)
-                                .frame(height: 1)
+                                .overlay(Color("Custom_Gray"))
                                 .opacity(0.5)
+                                .frame(height: 1)
                         }
                     }
                     .foregroundColor(.black)
