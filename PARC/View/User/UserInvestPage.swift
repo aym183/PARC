@@ -55,7 +55,7 @@ struct UserInvestPage: View {
                             Text("Net Worth: £\(net_worth_int)")
                         }
                     }
-                    .font(Font.custom("Nunito-Medium", size: 18))
+                    .font(Font.custom("Nunito-Bold", size: 18))
                     .padding(.top).padding(.bottom, -5)
                     
                     Slider(value: $net_worth, in: 10000...1000000, step: 1000)
@@ -92,33 +92,33 @@ struct UserInvestPage: View {
                         .overlay(Color("Custom_Gray"))
                         .opacity(0.5)
                         .frame(height: 1)
-                        .padding(.top, 5)
-                        .padding(.bottom, -7.5)
+                        .padding(.top, 10)
                     
                     HStack {
                         VStack(alignment: .leading) {
-                            Text("Your investment limit")
-                                .font(Font.custom("Nunito-Medium", size: 18))
-                                .padding(.top).padding(.bottom, -5)
-                            
-                            // Reference to investor.gov for calculation formula
-                            
                             Text("£\(investment_limit)")
-                                .font(Font.custom("Nunito-Bold", size: 25))
+                                .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.06))
                                 .padding(.bottom, -5)
+                            
+                            Text("Your investment limit")
+                                .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.04))
+                                .foregroundColor(Color("Custom_Gray"))
+                                .padding(.top, -5)
                         }
                         
                         VStack(alignment: .leading) {
-                            Text("Min investment")
-                                .font(Font.custom("Nunito-Medium", size: 18))
-                                .padding(.top).padding(.bottom, -5)
-                            
                             Text("£\(formattedNumber(input_number: Int(min_investment)!))")
-                                .font(Font.custom("Nunito-Bold", size: 25))
+                                .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.06))
                                 .padding(.bottom, -5)
+                            
+                            Text("Min investment")
+                                .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.04))
+                                .foregroundColor(Color("Custom_Gray"))
+                                .padding(.top, -5)
                         }
-                        .padding(.leading)
+                        .padding(.leading, 30)
                     }
+                    .padding(.bottom, 5).padding(.top, 10)
                     
                     Divider()
                         .overlay(Color("Custom_Gray"))
@@ -199,9 +199,9 @@ struct UserInvestPage: View {
                 .padding(.horizontal, 5)
                     
             }
-                .padding(.top, 10)
-                .foregroundColor(.black)
-                .frame(width: max(0, geometry.size.width - 40))
+            .padding(.top, 10)
+            .foregroundColor(.black)
+            .frame(width: max(0, geometry.size.width - 40))
             }
             .navigationDestination(isPresented: $home_page_shown) {
                 UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isShownHomePage: $isShownHomePage).navigationBarBackButtonHidden(true)
