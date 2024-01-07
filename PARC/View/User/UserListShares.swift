@@ -104,7 +104,7 @@ struct UserListShares: View {
                                 .foregroundColor(.black)
                                 .autocorrectionDisabled(true)
                                 .autocapitalization(.none)
-                                .font(Font.custom("Nunito-Bold", size: 16))
+                                .font(Font.custom("Nunito-SemiBold", size: 16))
                                 .keyboardType(.numberPad)
                         }
                         

@@ -60,7 +60,7 @@ struct AdminFranchiseForm: View {
                                     TextField("", text: $name, prompt: Text("McDonald's").foregroundColor(.gray).font(Font.custom("Nunito-Medium", size: 16))).padding().frame(width: max(0, geometry.size.width-40), height: 50)
                                         .foregroundColor(.black)
                                         .cornerRadius(5)
-                                        .font(Font.custom("Nunito-Bold", size: 16))
+                                        .font(Font.custom("Nunito-SemiBold", size: 16))
                                 }
                             
                             HStack {
@@ -138,7 +138,7 @@ struct AdminFranchiseForm: View {
                                     .frame(width: max(0, geometry.size.width-45), height: 100)
                                     .scrollContentBackground(.hidden)
                                     .cornerRadius(5)
-                                    .font(Font.custom("Nunito-Bold", size: 16))
+                                    .font(Font.custom("Nunito-SemiBold", size: 16))
                                     .onChange(of: self.description, perform: { value in
                                         withAnimation(.easeOut(duration: 0.2)) {
                                             validateDescriptionCount(value: value)
@@ -227,7 +227,7 @@ struct AdminFranchiseForm: View {
                                     .foregroundColor(.black)
                                     .autocorrectionDisabled(true)
                                     .autocapitalization(.none)
-                                    .font(Font.custom("Nunito-Bold", size: 16))
+                                    .font(Font.custom("Nunito-SemiBold", size: 16))
                             }
                             
                             // All these stats are per location
@@ -250,7 +250,7 @@ struct AdminFranchiseForm: View {
                                     .foregroundColor(.black)
                                     .autocorrectionDisabled(true)
                                     .autocapitalization(.none)
-                                    .font(Font.custom("Nunito-Bold", size: 16))
+                                    .font(Font.custom("Nunito-SemiBold", size: 16))
                             }
                             
                             HStack {
@@ -272,7 +272,7 @@ struct AdminFranchiseForm: View {
                                     .foregroundColor(.black)
                                     .autocorrectionDisabled(true)
                                     .autocapitalization(.none)
-                                    .font(Font.custom("Nunito-Bold", size: 16))
+                                    .font(Font.custom("Nunito-SemiBold", size: 16))
                             }
                             
                             HStack {
@@ -294,7 +294,7 @@ struct AdminFranchiseForm: View {
                                     .foregroundColor(.black)
                                     .autocorrectionDisabled(true)
                                     .autocapitalization(.none)
-                                    .font(Font.custom("Nunito-Bold", size: 16))
+                                    .font(Font.custom("Nunito-SemiBold", size: 16))
                             }
                             
                             HStack {
@@ -316,7 +316,7 @@ struct AdminFranchiseForm: View {
                                     .foregroundColor(.black)
                                     .autocorrectionDisabled(true)
                                     .autocapitalization(.none)
-                                    .font(Font.custom("Nunito-Bold", size: 16))
+                                    .font(Font.custom("Nunito-SemiBold", size: 16))
                             }
                             
                             Spacer()

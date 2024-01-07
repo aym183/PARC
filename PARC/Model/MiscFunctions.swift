@@ -144,6 +144,7 @@ func sortArrayByDate(inputArray: [[String: String]]) -> [[String: String]] {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd"
 
+//     HH:mm:ss ZZZZ
     let sortedArray = inputArray.sorted { dict1, dict2 in
         guard let dateString1 = dict1["transaction_date"],
               let dateString2 = dict2["transaction_date"],

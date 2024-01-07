@@ -78,9 +78,9 @@ struct AdminOpportunityForm: View {
                                 )
                                 .frame(width: max(0, geometry.size.width - 45), height: 50)
                             
-                            TextField("", text: $location, prompt: Text("Stratford, London").foregroundColor(.gray).font(Font.custom("Nunito-Medium", size: 16))).padding().frame(width: max(0, geometry.size.width-40), height: 50)
+                            TextField("", text: $location, prompt: Text("London").foregroundColor(.gray).font(Font.custom("Nunito-Medium", size: 16))).padding().frame(width: max(0, geometry.size.width-40), height: 50)
                                 .foregroundColor(.black)
-                                .font(Font.custom("Nunito-Bold", size: 16))
+                                .font(Font.custom("Nunito-SemiBold", size: 16))
                         }
                         
                         Text("Asking Price (£)").font(Font.custom("Nunito-Bold", size: 18))
@@ -97,7 +97,7 @@ struct AdminOpportunityForm: View {
                             
                             TextField("", text: $asking_price, prompt: Text("1500000").foregroundColor(.gray).font(Font.custom("Nunito-Medium", size: 16))).padding().frame(width: max(0, geometry.size.width-40), height: 50)
                                 .foregroundColor(.black)
-                                .font(Font.custom("Nunito-Bold", size: 16))
+                                .font(Font.custom("Nunito-SemiBold", size: 16))
                         }
                         
                         Text("Equity Offered (%)").font(Font.custom("Nunito-Bold", size: 18))
@@ -116,7 +116,7 @@ struct AdminOpportunityForm: View {
                                 .foregroundColor(.black)
                                 .autocorrectionDisabled(true)
                                 .autocapitalization(.none)
-                                .font(Font.custom("Nunito-Bold", size: 16))
+                                .font(Font.custom("Nunito-SemiBold", size: 16))
                         }
                         
                         Text("Minimum Investment Amount (£)").font(Font.custom("Nunito-Bold", size: 18))
@@ -135,7 +135,7 @@ struct AdminOpportunityForm: View {
                                 .foregroundColor(.black)
                                 .autocorrectionDisabled(true)
                                 .autocapitalization(.none)
-                                .font(Font.custom("Nunito-Bold", size: 16))
+                                .font(Font.custom("Nunito-SemiBold", size: 16))
                         }
                         
                         Text("Opportunity Close Date").font(Font.custom("Nunito-Bold", size: 18))
