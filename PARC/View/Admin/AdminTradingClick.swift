@@ -13,6 +13,7 @@ struct AdminTradingClick: View {
     @Binding var selected_trading_window: [String: String]
     @Binding var trading_volume: Int
     @Binding var no_of_trades: Int
+    @State var showingDeleteAlert = false
     
     var body: some View {
         GeometryReader { geometry in
@@ -37,7 +38,7 @@ struct AdminTradingClick: View {
                             }
 //                            .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 4)
                             
-                            Button(action: {}) {
+                            Button(action: { showingDeleteAlert.toggle() }) {
                                 HStack {
                                     Text("Close Window")
                                         .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.038))
@@ -113,6 +114,17 @@ struct AdminTradingClick: View {
                     .foregroundColor(.black)
                     .padding(.top)
                 }
+            }
+            .alert(isPresented: $showingDeleteAlert) {
+                Alert(
+                    title: Text("Are you sure you want to close this window?"),
+                    primaryButton: .default(Text("Yes")) {
+                        print("Yes")
+                    },
+                    secondaryButton: .destructive(Text("No")) {
+                        print("No")
+                    }
+                )
             }
         }
     }

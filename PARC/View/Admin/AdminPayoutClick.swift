@@ -15,6 +15,10 @@ struct AdminPayoutClick: View {
     @Binding var opportunity_data: [String:String]
     @Binding var payout_data: [String:String]
     @Binding var admin_payout_click_shown: Bool
+    @State var showingDeleteAlert = false
+    @State var payout_id = ""
+    
+    //Why state Binding or var?
     
     var body: some View {
         GeometryReader { geometry in
@@ -40,13 +44,10 @@ struct AdminPayoutClick: View {
                             }
 //                            .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 4)
                             
-                            Button(action: { UpdateDB().updateTable(primary_key: "payout_id", primary_key_value: payout_data["payout_id"]!, table: "payouts", updated_key: "status", updated_value: "Cancelled") { response in
-                                if response == "payouts status updated" {
-                                        admin_payout_click_shown.toggle()
-                                }
-                            }
-                            }
-                            ) {
+                            Button(action: { 
+                                showingDeleteAlert.toggle()
+                                payout_id = payout_data["payout_id"]!
+                            }) {
                                 HStack {
                                     Text("Cancel Payout")
                                         .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.038))
@@ -172,6 +173,21 @@ struct AdminPayoutClick: View {
                     .foregroundColor(.black)
                     .padding(.top)
                 }
+            }
+            .alert(isPresented: $showingDeleteAlert) {
+                Alert(
+                    title: Text("Are you sure you want to cancel this payout?"),
+                    primaryButton: .default(Text("Yes")) {
+                        UpdateDB().updateTable(primary_key: "payout_id", primary_key_value: payout_data["payout_id"]!, table: "payouts", updated_key: "status", updated_value: "Cancelled") { response in
+                        if response == "payouts status updated" {
+                            admin_payout_click_shown.toggle()
+                        }
+                    }
+                    },
+                    secondaryButton: .destructive(Text("No")) {
+                        print("No")
+                    }
+                )
             }
 //            .navigationDestination(isPresented: $admin_payout_click_shown) {
 //                AdminHome().navigationBarBackButtonHidden(true)

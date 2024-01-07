@@ -13,6 +13,7 @@ struct AdminOpportunityClick: View {
     @Binding var opportunity_logo: String
     @Binding var opportunity_title: String
     @Binding var opportunity_data: [String:String]
+    @State var showingDeleteAlert = false
     
     var body: some View {
         GeometryReader { geometry in
@@ -44,7 +45,7 @@ struct AdminOpportunityClick: View {
                             }
 //                            .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 4)
                             
-                            Button(action: {}) {
+                            Button(action: { showingDeleteAlert.toggle() }) {
                                 HStack {
                                     Text("Close Opportunity")
                                         .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.038))
@@ -192,6 +193,17 @@ struct AdminOpportunityClick: View {
                     .foregroundColor(.black)
                     .padding(.top)
                 }
+            }
+            .alert(isPresented: $showingDeleteAlert) {
+                Alert(
+                    title: Text("Are you sure you want to close this opportunity?"),
+                    primaryButton: .default(Text("Yes")) {
+                        print("Yes")
+                    },
+                    secondaryButton: .destructive(Text("No")) {
+                        print("No")
+                    }
+                )
             }
         }
     }
