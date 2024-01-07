@@ -171,7 +171,6 @@ class CreateDB: ObservableObject {
                                 URLSession.shared.dataTask(with: request) { data, response, error in
                                     if let data = data, let responseText = String(data: data, encoding: .utf8) {
                                         DispatchQueue.main.async {
-                                            print(responseText)
                                             completion("Opportunity Created")
                                         }
                                     } else if let error = error {
@@ -240,7 +239,6 @@ class CreateDB: ObservableObject {
                                 URLSession.shared.dataTask(with: request) { data, response, error in
                                     if let data = data, let responseText = String(data: data, encoding: .utf8) {
                                         DispatchQueue.main.async {
-                                            print(responseText)
                                             CreateDB().createUserPayout(opportunity_id: opportunity_id, user_holdings: user_holdings, amount_offered: amount_offered, payout_id: arrayLength)
                                             completion("Payout Created")
                                         }

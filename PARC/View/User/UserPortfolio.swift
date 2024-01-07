@@ -154,25 +154,23 @@ struct UserPortfolio: View {
                                     .padding(.leading, 10)
                                     
                                     Spacer()
-                                    
-                                    // Payouts this is -> Justification for no portfolio details page
-                                    Text("+£\(formattedNumber(input_number: Int(portfolio_data[index]["amount"]!)!))")
-                                      .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.055))
-                                      .foregroundColor(Color("Profit"))
-                                    
-//                                    if Int(portfolio_data[index]["amount"]!)! >= 500 {
-//                                        Text("+£\(formattedNumber(input_number: Int(portfolio_data[index]["amount"]!)!))")
-//                                          .font(Font.custom("Nunito-Black", size: min(geometry.size.width, geometry.size.height) * 0.055))
-//                                          .foregroundColor(Color("Profit"))
-//                                    } else {
-//                                        Text("-£\(formattedNumber(input_number: Int(portfolio_data[index]["amount"]!)!))")
-//                                          .font(Font.custom("Nunito-Black", size: min(geometry.size.width, geometry.size.height) * 0.055))
-//                                          .foregroundColor(Color("Loss"))
-//                                    }
-                                    
+                                      
+                                        // Reference GPT
+                                        if let opportunityID = portfolio_data[index]["opportunity_id"],
+                                           let equity = portfolio_data[index]["equity"],
+                                           let userIndex = user_payouts_data.firstIndex(where: {
+                                               $0["opportunity_id"] == opportunityID && $0["equity"] == equity
+                                           }) {
+                                            let foundElement = user_payouts_data[userIndex]["amount_received"]!
+                                            Text("+£\((foundElement))")
+                                                .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.055))
+                                                .foregroundColor(Color("Profit"))
+                                        } else {
+                                            Text("£0")
+                                                .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.055))
+                                        }
+
                                 }
-                                
-//                            }
                             Divider()
                                 .overlay(Color("Custom_Gray"))
                                 .frame(height: 0.5)
@@ -193,6 +191,7 @@ struct UserPortfolio: View {
             .foregroundColor(.black)
             .frame(width: max(0, geometry.size.width))
             .onAppear {
+                user_payouts_data = transformPayoutsArray(entries: user_payouts_data)
                 holdings_data = []
                 payouts_data = []
                 holdings_data.append(contentsOf: chart_values.compactMap { value in
@@ -228,3 +227,21 @@ struct UserPortfolio: View {
 //        UserPortfolio(portfolio_data: .constant([[:]]), user_payouts_data: .constant([[:]]), payouts_chart_values: .constant([5.0, 5.0, 10.0]), payouts_value: .constant(20000), holdings_value: .constant(200000), chart_values: .constant([5.0, 5.0, 10.0]), opportunity_data: .constant([[:]]))
 //    }
 //}
+
+
+// Payouts data for each holding
+
+//                                    Text("+£\(user_payouts_data[user_payouts_data.firstIndex(where: { $0["opportunity_id"] == portfolio_data[index]["opportunity_id"]! && })!]["amount_received"]!)")
+//                                      .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.055))
+//                                      .foregroundColor(Color("Profit"))
+                                    
+//                                    if Int(portfolio_data[index]["amount"]!)! >= 500 {
+//                                        Text("+£\(formattedNumber(input_number: Int(portfolio_data[index]["amount"]!)!))")
+//                                          .font(Font.custom("Nunito-Black", size: min(geometry.size.width, geometry.size.height) * 0.055))
+//                                          .foregroundColor(Color("Profit"))
+//                                    } else {
+//                                        Text("-£\(formattedNumber(input_number: Int(portfolio_data[index]["amount"]!)!))")
+//                                          .font(Font.custom("Nunito-Black", size: min(geometry.size.width, geometry.size.height) * 0.055))
+//                                          .foregroundColor(Color("Loss"))
+//                                    }
+                                    

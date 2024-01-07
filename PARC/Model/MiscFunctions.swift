@@ -240,3 +240,32 @@ func sortByDaysRemaining(array: [[String: String]]) -> [[String : String]] {
 
     return outputArray + completedArray
 }
+
+// Reference GPT
+func transformPayoutsArray(entries: [[String:String]]) -> [[String: String]]{
+    var resultDictionary: [String: Double] = [:]
+        for entry in entries {
+            if let opportunityID = entry["opportunity_id"], let equity = entry["equity"], let amountReceivedString = entry["amount_received"], let amountReceived = Double(amountReceivedString) {
+                let key = "\(opportunityID)-\(equity)"
+                resultDictionary[key, default: 0.0] += amountReceived
+            }
+        }
+
+        var resultArray: [[String: String]] = []
+
+        for (key, value) in resultDictionary {
+            let components = key.components(separatedBy: "-")
+            if components.count == 2 {
+                let opportunityID = components[0]
+                let equity = components[1]
+                let resultEntry: [String: String] = [
+                    "opportunity_id": opportunityID,
+                    "equity": equity,
+                    "amount_received": "\(value)"
+                ]
+                resultArray.append(resultEntry)
+            }
+        }
+
+        return resultArray
+}
