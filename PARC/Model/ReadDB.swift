@@ -176,6 +176,7 @@ class ReadDB: ObservableObject {
                                     temp_dict = [:]
 //                                    self.opportunity_data.append(value)
                                 }
+                                self.admin_opportunity_data = sortByDaysRemaining(array: self.admin_opportunity_data)
                                 completion("Fetched all opportunities")
                             }
                         }

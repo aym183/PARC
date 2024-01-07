@@ -217,3 +217,26 @@ func transformPayouts(payouts_array: [[String: String]]) -> [String: Any] {
     }
     return traversed_payouts
 }
+
+func sortByDaysRemaining(array: [[String: String]]) -> [[String : String]] {
+    // Add the deleted opportunities array here
+    var completedArray: [[String : String]] = []
+    var outputArray: [[String : String]]  = []
+    
+    for ind in array {
+        if getDaysRemaining(dateString: ind["close_date"]!)! > 1 {
+            outputArray.append(ind)
+        } else {
+            completedArray.append(ind)
+        }
+    }
+    
+    outputArray.sort {
+           guard let closeDate1 = $0["close_date"], let closeDate2 = $1["close_date"] else {
+               return false
+           }
+           return getDaysRemaining(dateString: closeDate1)! < getDaysRemaining(dateString: closeDate2)!
+    }
+
+    return outputArray + completedArray
+}
