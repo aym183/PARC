@@ -22,7 +22,7 @@ struct AdminAccount: View {
                         
                         VStack(alignment: .leading) {
                             Text("Ayman Ali")
-                                .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.08))
+                                .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.08))
                             
                             Text("Member since November 2023")
                                 .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.03))

@@ -27,7 +27,7 @@ struct UserAccount: View {
                         
                         VStack(alignment: .leading) {
                             Text(fullName)
-                                .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.08))
+                                .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.08))
 
                             Text("Member since November 2023")
                                 .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.03))
@@ -61,7 +61,7 @@ struct UserAccount: View {
                             Button(action: {}) {
                                 HStack {
                                     Text("Check")
-                                        .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.04))
+                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.04))
                                 }
                                 .frame(width: 100, height: 35)
                                 .background(Color("Secondary"))
@@ -84,7 +84,7 @@ struct UserAccount: View {
                             Button(action: {}) {
                                 HStack {
                                     Text("Set")
-                                        .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.04))
+                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.04))
                                 }
                                 .frame(width: 100, height: 35)
                                 .background(Color("Secondary"))

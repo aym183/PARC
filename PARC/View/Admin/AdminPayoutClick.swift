@@ -23,7 +23,7 @@ struct AdminPayoutClick: View {
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack {
                         Text("+£\(String(describing: formattedNumber(input_number: Int(payout_data["amount_offered"]!)!)))")
-                            .font(Font.custom("Nunito-ExtraBold", size: 50))
+                            .font(Font.custom("Nunito-Bold", size: 50))
                             .foregroundColor(.black)
                         
                         HStack(spacing: 20) {

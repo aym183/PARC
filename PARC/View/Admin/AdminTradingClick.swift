@@ -21,7 +21,7 @@ struct AdminTradingClick: View {
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack {
                         Text("\(no_of_trades) Trades")
-                            .font(Font.custom("Nunito-ExtraBold", size: 50))
+                            .font(Font.custom("Nunito-Bold", size: 50))
                         
                         HStack(spacing: 20) {
                             Button(action: {}) {
