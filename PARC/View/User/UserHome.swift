@@ -258,13 +258,8 @@ struct UserHomeContent: View {
             GeometryReader { geometry in
                     ScrollView(.vertical, showsIndicators: false) {
                         ForEach(0..<opportunity_data.count, id: \.self) { index in
-                            
-                            //                            if getDaysRemaining(dateString: String(describing: opportunity_data[index]["close_date"]!))! > 0 {
                             Button(action: {
                                 selected_opportunity = opportunity_data[index]
-                                //                                bg_image = bg_images[index]
-                                //                                logo = logo_images[index]
-                                //                                title = titles[index]
                                 opportunity_shown.toggle()
                             }) {
                                 ZStack{
@@ -312,7 +307,7 @@ struct UserHomeContent: View {
                                                 
                                                 HStack {
                                                     Text("\(String(describing: Int(Double(opportunity_data[index]["ratio"]!)!*100)))% - \(getDaysRemaining(dateString: String(describing: opportunity_data[index]["close_date"]!))!) days left")
-                                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.024))
+                                                        .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.024))
                                                         .foregroundColor(Color("Custom_Gray"))
                                                         .frame(alignment: .leading)
                                                     Spacer()
@@ -327,7 +322,7 @@ struct UserHomeContent: View {
                                                         HStack {
                                                             Image("gbr").resizable().frame(width: 10, height: 10)
                                                             Text(String(describing: opportunity_data[index]["location"]!))
-                                                                .font(Font.custom("Nunito-Bold", size: 8))
+                                                                .font(Font.custom("Nunito-SemiBold", size: 8))
                                                                 .foregroundColor(Color("Custom_Gray"))
                                                                 .padding(.leading, -7.5)
                                                         }
@@ -343,12 +338,12 @@ struct UserHomeContent: View {
                                                 
                                                 HStack {
                                                     Text("Minimum Investment Amount - £\(opportunity_data[index]["min_invest_amount"]!)")
-                                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.024))
+                                                        .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.024))
                                                         .foregroundColor(Color("Custom_Gray"))
                                                         .frame(alignment: .leading)
                                                     Spacer()
                                                     Text("£\(String(describing: formattedNumber(input_number:Int(opportunity_data[index]["asking_price"]!)!)))")
-                                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.024))
+                                                        .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.024))
                                                         .foregroundColor(Color("Custom_Gray"))
                                                         .frame(alignment: .leading)
                                                     

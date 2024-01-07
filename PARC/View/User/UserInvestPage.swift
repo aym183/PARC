@@ -30,6 +30,7 @@ struct UserInvestPage: View {
     @Binding var min_investment: String
     @State var equity_value = 0.0
     @State var updated_amount_offered = 0
+    @State var showingPaymentAlert = false
     @AppStorage("email") var email: String = ""
     
     var body: some View {
@@ -171,6 +172,7 @@ struct UserInvestPage: View {
                     
                     Spacer()
                     Button(action: { 
+                        showingPaymentAlert.toggle()
 //                        print("Equity offered is: \(equity_offered)")
 //                        print("Asking price is: \(asking_price)")
 //                        print("Investment amount is: \(Int(investment_amount)!)")
@@ -178,27 +180,7 @@ struct UserInvestPage: View {
 //                        print("% owned by user: \(String(format: "%.2f", (Double(investment_amount)!/equity_value)*100))%")
                         
                         // Add user holdings, user transaction opportunities, update opportunity amount
-                        updated_amount_offered = Int(amount_offered)! + Int(investment_amount)!
-                        DispatchQueue.global(qos: .userInteractive).async {
-                            UpdateDB().updateTable(primary_key: "opportunity_id", primary_key_value: opportunity_id, table: "opportunities", updated_key: "amount_raised", updated_value: String(describing: updated_amount_offered)) { response in
-                                
-                                if response == "opportunities amount_raised updated" {
-                                    UpdateDB().updateTable(primary_key: "opportunity_id", primary_key_value: opportunity_id, table: "opportunities", updated_key: "investors", updated_value: investors) { second_response in
-                                        
-                                        if second_response == "opportunities investors updated" {
-                                            home_page_shown.toggle()
-                                            
-                                            CreateDB().createUserInvestmentHolding(opportunity_name: opportunity_name, opportunity_id: opportunity_id, email: email, equity: String(format: "%.3f", (Double(investment_amount)!/equity_value)*100), amount: investment_amount)
-                                            
-                                            CreateDB().createOpportunityTransaction(opportunity_id: opportunity_id, email: email, amount: investment_amount)
-                                            
-                                            CreateDB().createInvestmentConfirmation(email: email, amount: investment_amount, opportunity_name: opportunity_name)
-                                        }
-                                    }
-                                }
-                                
-                            }
-                        }
+ 
                     }) {
                         HStack {
                             Text("Confirm Investment")
@@ -226,6 +208,38 @@ struct UserInvestPage: View {
             }
             .onAppear {
                 equity_value = (asking_price*100)/(equity_offered)
+            }
+            .alert(isPresented: $showingPaymentAlert) {
+                Alert(
+                    title: Text("Are you sure you want to buy this?"),
+                    primaryButton: .default(Text("Yes")) {
+                        
+                        updated_amount_offered = Int(amount_offered)! + Int(investment_amount)!
+                        DispatchQueue.global(qos: .userInteractive).async {
+                            UpdateDB().updateTable(primary_key: "opportunity_id", primary_key_value: opportunity_id, table: "opportunities", updated_key: "amount_raised", updated_value: String(describing: updated_amount_offered)) { response in
+                                
+                                if response == "opportunities amount_raised updated" {
+                                    UpdateDB().updateTable(primary_key: "opportunity_id", primary_key_value: opportunity_id, table: "opportunities", updated_key: "investors", updated_value: investors) { second_response in
+                                        
+                                        if second_response == "opportunities investors updated" {
+                                            home_page_shown.toggle()
+                                            
+                                            CreateDB().createUserInvestmentHolding(opportunity_name: opportunity_name, opportunity_id: opportunity_id, email: email, equity: String(format: "%.3f", (Double(investment_amount)!/equity_value)*100), amount: investment_amount)
+                                            
+                                            CreateDB().createOpportunityTransaction(opportunity_id: opportunity_id, email: email, amount: investment_amount)
+                                            
+                                            CreateDB().createInvestmentConfirmation(email: email, amount: investment_amount, opportunity_name: opportunity_name)
+                                        }
+                                    }
+                                }
+                                
+                            }
+                        }
+                    },
+                    secondaryButton: .destructive(Text("No")) {
+                        print("Delete")
+                    }
+                )
             }
         }
     }
