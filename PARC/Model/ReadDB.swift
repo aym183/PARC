@@ -59,6 +59,7 @@ class ReadDB: ObservableObject {
                                     self.franchise_data_dropdown.append(DropdownMenuOption(option: temp_dict["name"]!))
                                     temp_dict = [:]
                                 }
+//                                completion("Fetched all franchises")
                             }
                         }
                     }

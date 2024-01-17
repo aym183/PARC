@@ -162,7 +162,7 @@ struct UserPortfolio: View {
                                                $0["opportunity_id"] == opportunityID && $0["equity"] == equity
                                            }) {
                                             let foundElement = user_payouts_data[userIndex]["amount_received"]!
-                                            Text("+£\((foundElement))")
+                                            Text("+£\(foundElement)")
                                                 .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.055))
                                                 .foregroundColor(Color("Profit"))
                                         } else {

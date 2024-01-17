@@ -123,6 +123,7 @@ func calculatePortionHoldings(input: [[String: String]], holdings_value: Int) ->
 
 // GPT - REFERENCE
 func calculatePayoutOpportunities(input: [[String: String]]) -> [Float] {
+//    print(input)
     var outputArray: [Float] = []
     var indexMap: [String: Int] = [:]
 
@@ -242,6 +243,7 @@ func sortByDaysRemaining(array: [[String: String]]) -> [[String : String]] {
 }
 
 // Reference GPT
+// Wont show listed or sold shares
 func transformPayoutsArray(entries: [[String:String]]) -> [[String: String]]{
     var resultDictionary: [String: Double] = [:]
         for entry in entries {

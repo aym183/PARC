@@ -115,11 +115,11 @@ struct UserHome: View {
                                 .frame(height: 1)
                                 .overlay(.black)
                             
-                            if readDB.user_opportunity_data != [] && readDB.franchise_data != [] {
-                                UserHomeContent(opportunity_data: $readDB.user_opportunity_data, franchise_data: $readDB.franchise_data, user_holdings_data: $readDB.user_holdings_data)
-                            } else {
-                                UserHomeError()
-                            }
+//                            if readDB.user_opportunity_data != [] && readDB.franchise_data != [] {
+                                UserHomeContent(opportunity_data: $readDB.user_opportunity_data, franchise_data: $readDB.franchise_data, user_holdings_data: $readDB.user_holdings_data, readDB: readDB, email: $email, portfolio_data: $portfolio_data, transformed_payouts_data: $transformed_payouts_data, user_payouts_data: $user_payouts_data, payouts_value: $payouts_value, payouts_chart_values: $payouts_chart_values, admin_opportunity_data: $admin_opportunity_data, holdings_value: $holdings_value, chart_values: $chart_values)
+//                            } else {
+//                                UserHomeError()
+//                            }
                         } else if selectedTab == .chartPie {
                             Text("Portfolio")
                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.065))
@@ -208,13 +208,11 @@ struct UserHome: View {
                         }
                         readDB.getAdminOpportunities() { response in
                             if response == "Fetched all opportunities" {
-                                print("Fetched all opportunities")
                                 self.admin_opportunity_data = readDB.admin_opportunity_data
                             }
                         }
                         readDB.getUserOpportunities() { response in
                             if response == "Fetched all opportunities" {
-                                print("Fetched opportunities")
                                 self.opportunity_data = readDB.user_opportunity_data
                                 self.admin_opportunity_data = readDB.admin_opportunity_data
 //                                ForEach(0..<opportunity_data.count, id: \.self) { index in
@@ -240,136 +238,213 @@ struct UserHome: View {
 struct UserHomeContent: View {
     var bg_images = ["store_live", "store_live_2"]
     var logo_images = ["McDonalds", "Starbucks"]
-    var titles = ["McDonald's", "Starbucks"]
-    @State var bg_image = ""
-    @State var logo = ""
-    @State var title = ""
-    @State var progress = "90% - 12 days left"
-    @State var min_investment_amount = "100"
-    @State var target_raise = "£3,500,000"
     @State var opportunity_shown = false
     @Binding var opportunity_data: [[String: String]]
     @State var selected_opportunity: [String: String] = [:]
     @Binding var franchise_data: [[String: String]]
     @Binding var user_holdings_data: [[String: String]]
-
+    @ObservedObject var readDB: ReadDB
+    @Binding var email: String
+    @Binding var portfolio_data: [[String: String]]
+    @Binding var transformed_payouts_data : [String: Any]
+    @Binding var user_payouts_data: [[String: String]]
+    @Binding var payouts_value: Int
+    @Binding var payouts_chart_values: [Float]
+    @Binding var admin_opportunity_data: [[String: String]]
+    @Binding var holdings_value: Int
+    @Binding var chart_values: [Float]
+    @State var isRefreshing = false
+    @State private var counter = 2
     
     var body: some View {
             GeometryReader { geometry in
                     ScrollView(.vertical, showsIndicators: false) {
-                        ForEach(0..<opportunity_data.count, id: \.self) { index in
-                            Button(action: {
-                                selected_opportunity = opportunity_data[index]
-                                opportunity_shown.toggle()
-                            }) {
-                                ZStack{
-                                    Image(bg_images[0])
-                                        .resizable()
-                                        .frame(height: 250)
-                                        .cornerRadius(5)
-                                    
-                                    Rectangle()
-                                        .opacity(0)
-                                        .frame(height: 250)
-                                        .cornerRadius(2.5)
-                                        .border(.gray, width: 1)
-                                    
-                                    VStack {
-                                        Spacer()
-                                        ZStack{
-                                            RoundedRectangle(cornerRadius: 5)
-                                                .fill(.white)
-                                                .frame(height: 150)
-                                                .border(.gray, width: 1)
-                                            
-                                            VStack(alignment: .leading) {
-                                                HStack {
-                                                    Image(logo_images[0])
-                                                        .resizable()
-                                                        .aspectRatio(contentMode: .fit)
-                                                        .frame(width: 40, height: 30)
-                                                        .padding(.top, 10).padding(.leading, 5)
-                                                    
-                                                    Text(String(describing: opportunity_data[index]["franchise"]!))
-                                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.045))
-                                                        .padding(.top, 10).padding(.leading, -7.5)
-                                                    
-                                                    Spacer()
-                                                }
-                                                .padding(.leading, -2.5)
+                        
+                        if (isRefreshing == true) {
+                            VStack(alignment: .center) {
+                                Spacer()
+                                LottieView(name: "loading_3.0", speed: 1, loop: false).frame(width: 75, height: 75)
+                                Text("Loading...").font(Font.custom("Nunito-SemiBold", size: 20)).multilineTextAlignment(.center).padding(.horizontal).foregroundColor(.black).padding(.top, -5)
+                                Spacer()
+                            }
+                            .foregroundColor(.black).frame(width: max(0, geometry.size.width))
+                        } else {
+                            ForEach(0..<opportunity_data.count, id: \.self) { index in
+                                Button(action: {
+                                    selected_opportunity = opportunity_data[index]
+                                    opportunity_shown.toggle()
+                                }) {
+                                    ZStack{
+                                        Image(bg_images[0])
+                                            .resizable()
+                                            .frame(height: 250)
+                                            .cornerRadius(5)
+                                        
+                                        Rectangle()
+                                            .opacity(0)
+                                            .frame(height: 250)
+                                            .cornerRadius(2.5)
+                                            .border(.gray, width: 1)
+                                        
+                                        VStack {
+                                            Spacer()
+                                            ZStack{
+                                                RoundedRectangle(cornerRadius: 5)
+                                                    .fill(.white)
+                                                    .frame(height: 150)
+                                                    .border(.gray, width: 1)
                                                 
-                                                Text(franchise_data[franchise_data.firstIndex(where: { $0["name"] == opportunity_data[index]["franchise"]!})!]["description"]!)
-                                                    .foregroundColor(Color("Custom_Gray"))
-                                                    .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.030))
-                                                    .frame(height: 50)
-                                                    .multilineTextAlignment(.leading)
-                                                    .padding(.horizontal, 12).padding(.top, -12)
-                                                
-                                                HStack {
-                                                    Text("\(String(describing: Int(Double(opportunity_data[index]["ratio"]!)!*100)))% - \(getDaysRemaining(dateString: String(describing: opportunity_data[index]["close_date"]!))!) days left")
-                                                        .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.024))
-                                                        .foregroundColor(Color("Custom_Gray"))
-                                                        .frame(alignment: .leading)
-                                                    Spacer()
-                                                    
-                                                    ZStack {
-                                                        Rectangle()
-                                                            .foregroundColor(.clear)
-                                                            .frame(width: 45, height: 14)
-                                                            .background(Color(red: 0.85, green: 0.85, blue: 0.85).opacity(0.5))
-                                                            .cornerRadius(5)
+                                                VStack(alignment: .leading) {
+                                                    HStack {
+                                                        Image(logo_images[0])
+                                                            .resizable()
+                                                            .aspectRatio(contentMode: .fit)
+                                                            .frame(width: 40, height: 30)
+                                                            .padding(.top, 10).padding(.leading, 5)
                                                         
-                                                        HStack {
-                                                            Image("gbr").resizable().frame(width: 10, height: 10)
-                                                            Text(String(describing: opportunity_data[index]["location"]!))
-                                                                .font(Font.custom("Nunito-SemiBold", size: 8))
-                                                                .foregroundColor(Color("Custom_Gray"))
-                                                                .padding(.leading, -7.5)
+                                                        Text(String(describing: opportunity_data[index]["franchise"]!))
+                                                            .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.045))
+                                                            .padding(.top, 10).padding(.leading, -7.5)
+                                                        
+                                                        Spacer()
+                                                    }
+                                                    .padding(.leading, -2.5)
+                                                    
+                                                    Text(franchise_data[franchise_data.firstIndex(where: { $0["name"] == opportunity_data[index]["franchise"]!})!]["description"]!)
+                                                        .foregroundColor(Color("Custom_Gray"))
+                                                        .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.030))
+                                                        .frame(height: 50)
+                                                        .multilineTextAlignment(.leading)
+                                                        .padding(.horizontal, 12).padding(.top, -12)
+                                                    
+                                                    HStack {
+                                                        Text("\(String(describing: Int(Double(opportunity_data[index]["ratio"]!)!*100)))% - \(getDaysRemaining(dateString: String(describing: opportunity_data[index]["close_date"]!))!) days left")
+                                                            .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.024))
+                                                            .foregroundColor(Color("Custom_Gray"))
+                                                            .frame(alignment: .leading)
+                                                        Spacer()
+                                                        
+                                                        ZStack {
+                                                            Rectangle()
+                                                                .foregroundColor(.clear)
+                                                                .frame(width: 45, height: 14)
+                                                                .background(Color(red: 0.85, green: 0.85, blue: 0.85).opacity(0.5))
+                                                                .cornerRadius(5)
+                                                            
+                                                            HStack {
+                                                                Image("gbr").resizable().frame(width: 10, height: 10)
+                                                                Text(String(describing: opportunity_data[index]["location"]!))
+                                                                    .font(Font.custom("Nunito-SemiBold", size: 8))
+                                                                    .foregroundColor(Color("Custom_Gray"))
+                                                                    .padding(.leading, -7.5)
+                                                            }
                                                         }
                                                     }
-                                                }
-                                                .padding(.horizontal,12)
-                                                .padding(.top, -3)
-                                                
-                                                ProgressView(value: Double(opportunity_data[index]["ratio"]!))
-                                                    .tint(Color("Secondary"))
-                                                    .scaleEffect(x: 1, y: 2, anchor: .center)
-                                                    .padding(.horizontal, 11).padding(.top, -1)
-                                                
-                                                HStack {
-                                                    Text("Minimum Investment Amount - £\(opportunity_data[index]["min_invest_amount"]!)")
-                                                        .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.024))
-                                                        .foregroundColor(Color("Custom_Gray"))
-                                                        .frame(alignment: .leading)
+                                                    .padding(.horizontal,12)
+                                                    .padding(.top, -3)
+                                                    
+                                                    ProgressView(value: Double(opportunity_data[index]["ratio"]!))
+                                                        .tint(Color("Secondary"))
+                                                        .scaleEffect(x: 1, y: 2, anchor: .center)
+                                                        .padding(.horizontal, 11).padding(.top, -1)
+                                                    
+                                                    HStack {
+                                                        Text("Minimum Investment Amount - £\(opportunity_data[index]["min_invest_amount"]!)")
+                                                            .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.024))
+                                                            .foregroundColor(Color("Custom_Gray"))
+                                                            .frame(alignment: .leading)
+                                                        Spacer()
+                                                        Text("Target - £\(String(describing: formattedNumber(input_number:Int(opportunity_data[index]["asking_price"]!)!)))")
+                                                            .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.024))
+                                                            .foregroundColor(Color("Custom_Gray"))
+                                                            .frame(alignment: .leading)
+                                                        
+                                                    }
+                                                    .padding(.horizontal,12)
+                                                    .padding(.top, -3)
+                                                    
+                                                    
                                                     Spacer()
-                                                    Text("Target - £\(String(describing: formattedNumber(input_number:Int(opportunity_data[index]["asking_price"]!)!)))")
-                                                        .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.024))
-                                                        .foregroundColor(Color("Custom_Gray"))
-                                                        .frame(alignment: .leading)
                                                     
                                                 }
-                                                .padding(.horizontal,12)
-                                                .padding(.top, -3)
-                                                
-                                                
-                                                Spacer()
-                                                
+                                                .frame(height: 150)
                                             }
-                                            .frame(height: 150)
                                         }
                                     }
+                                    .padding(.top)
+                                    .foregroundColor(.black)
                                 }
-                                .padding(.top)
-                                .foregroundColor(.black)
-                            }
-                            .id(index)
-                            //                            }
-                        
+                                .id(index)
+                                //                            }
+                            
+                        }
+                        .frame(width: max(0, geometry.size.width))
+                        .navigationDestination(isPresented: $opportunity_shown) {
+                            UserOpportunityClick(opportunity_data: $selected_opportunity, franchise_data: $franchise_data)
+                        }
+                        }
+                }
+                .refreshable() {
+                    withAnimation(.easeOut(duration: 0.25)) {
+                        isRefreshing = true
                     }
-                    .frame(width: max(0, geometry.size.width))
-                    .navigationDestination(isPresented: $opportunity_shown) {
-                        UserOpportunityClick(opportunity_data: $selected_opportunity, franchise_data: $franchise_data)
+                    readDB.user_holdings_data_dropdown = []
+                    readDB.listed_shares = [:]
+                    readDB.franchise_data_dropdown = []
+                    readDB.franchise_data = []
+                    readDB.user_opportunity_data = []
+                    readDB.admin_opportunity_data = []
+                    readDB.user_holdings_data = []
+                    readDB.full_user_holdings_data = []
+                    readDB.user_payout_data = []
+                    readDB.trading_window_data = []
+                    readDB.payout_data = []
+                    readDB.secondary_market_transactions_ind = 0
+                    readDB.getFranchises()
+                    readDB.getAllUserHoldings()
+                    readDB.getTradingWindows()
+                    readDB.getTradingWindowTransactionsEmail()
+                    readDB.getPayouts() { response in
+                        if response == "Fetched payouts" {
+                            self.transformed_payouts_data = transformPayouts(payouts_array: readDB.payout_data)
+                        }
                     }
+                    readDB.getUserPayouts(email: email) { response in
+                        if response == "Fetched user payouts" {
+                            self.user_payouts_data = readDB.user_payout_data
+                            self.payouts_value = calculateTotalValue(input: self.user_payouts_data, field: "amount_received")
+                            self.payouts_chart_values = calculatePayoutOpportunities(input: self.user_payouts_data)
+                        }
+                    }
+                    readDB.getUserHoldings(email: email) { response in
+                        if response == "Fetched user holdings" {
+                            self.portfolio_data = sortArrayByDate(inputArray: readDB.user_holdings_data)
+                            self.holdings_value = calculateTotalValue(input: self.portfolio_data, field: "amount")
+                            self.chart_values = calculatePortionHoldings(input: portfolio_data, holdings_value: calculateTotalValue(input: self.portfolio_data, field: "amount"))
+                        }
+                    }
+                    readDB.getAdminOpportunities() { response in
+                        if response == "Fetched all opportunities" {
+                            self.admin_opportunity_data = readDB.admin_opportunity_data
+                        }
+                    }
+                    readDB.getUserOpportunities() { response in
+                        if response == "Fetched all opportunities" {
+                            self.opportunity_data = readDB.user_opportunity_data
+                            self.admin_opportunity_data = readDB.admin_opportunity_data
+                        }
+                    }
+                    
+                    Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
+                                    if self.counter > 0 {
+                                        self.counter -= 1
+                                    } else {
+                                        withAnimation(.easeOut(duration: 0.25)) {
+                                            isRefreshing = false
+                                        }
+                                        timer.invalidate()
+                                    }
+                                }
                 }
             }
     }
