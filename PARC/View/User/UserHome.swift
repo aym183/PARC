@@ -264,10 +264,10 @@ struct UserHomeContent: View {
                             VStack(alignment: .center) {
                                 Spacer()
                                 LottieView(name: "loading_3.0", speed: 1, loop: false).frame(width: 75, height: 75)
-                                Text("Loading...").font(Font.custom("Nunito-SemiBold", size: 20)).multilineTextAlignment(.center).padding(.horizontal).foregroundColor(.black).padding(.top, -5)
+                                Text("Loading...").font(Font.custom("Nunito-SemiBold", size: 20)).multilineTextAlignment(.center).foregroundColor(.black).padding(.top, -5)
                                 Spacer()
                             }
-                            .foregroundColor(.black).frame(width: max(0, geometry.size.width))
+                            .frame(width: max(0, geometry.size.width))
                         } else {
                             ForEach(0..<opportunity_data.count, id: \.self) { index in
                                 Button(action: {
