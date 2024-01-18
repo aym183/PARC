@@ -213,7 +213,11 @@ class ReadDB: ObservableObject {
                                                     temp_dict[data] = nValue
                                                 }
                                             } else if let sValue = nameDictionary["S"] {
-                                                temp_dict[data] = sValue
+                                                if data == "date_created" || data == "date_scheduled" {
+                                                    temp_dict[data] = convertDate(dateString: sValue)
+                                                } else {
+                                                    temp_dict[data] = sValue
+                                                }
                                             }
                                         }
 //                                        if let nameDictionary = value[data] as? [String: String], let sValue = nameDictionary["S"] {

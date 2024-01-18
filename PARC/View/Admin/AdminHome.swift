@@ -388,12 +388,12 @@ struct AdminHome: View {
                                                                 .frame(height: 15)
                                                             
                                                             if readDB.payout_data[index-1]["status"] == "Scheduled" {
-                                                                Text("Scheduled: \(convertDate(dateString: String(describing: readDB.payout_data[index-1]["date_scheduled"]!)))")
+                                                                Text("Scheduled: \(String(describing: readDB.payout_data[index-1]["date_scheduled"]!))")
                                                             } else if readDB.payout_data[index-1]["status"] == "Completed" {
-                                                                Text("Created: \(convertDate(dateString: String(describing: readDB.payout_data[index-1]["date_created"]!)))")
+                                                                Text("Created: \(String(describing: readDB.payout_data[index-1]["date_created"]!))")
                                                                 
                                                             } else if readDB.payout_data[index-1]["status"] == "Cancelled" {
-                                                                Text("Created: \(convertDate(dateString: String(describing: readDB.payout_data[index-1]["date_created"]!)))")
+                                                                Text("Created: \(String(describing: readDB.payout_data[index-1]["date_created"]!))")
                                                             }
                                                         }
                                                         .font(Font.custom("Nunito-SemiBold", size: 6.5))
@@ -581,8 +581,8 @@ struct AdminHome: View {
                 readDB.getAdminOpportunities() { response in
                     if response == "Fetched all opportunities" {
                         readDB.getPayouts() { response in
-                            if response == "Fetched payouts data" {
-                                print("payouts fetched")
+                            if response == "Fetched payouts" {
+                                readDB.payout_data = sortArrayByDate(inputArray: readDB.payout_data, field_name: "date_created", date_type: "dd/MM/yyyy")
                             }
                         }
                         readDB.getTradingWindows()

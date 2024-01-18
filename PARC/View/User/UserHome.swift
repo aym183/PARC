@@ -201,7 +201,7 @@ struct UserHome: View {
                         }
                         readDB.getUserHoldings(email: email) { response in
                             if response == "Fetched user holdings" {
-                                self.portfolio_data = sortArrayByDate(inputArray: readDB.user_holdings_data)
+                                self.portfolio_data = sortArrayByDate(inputArray: readDB.user_holdings_data, field_name: "transaction_date", date_type: "yyyy-MM-dd")
                                 self.holdings_value = calculateTotalValue(input: self.portfolio_data, field: "amount")
                                 self.chart_values = calculatePortionHoldings(input: portfolio_data, holdings_value: calculateTotalValue(input: self.portfolio_data, field: "amount"))
                             }
@@ -418,7 +418,7 @@ struct UserHomeContent: View {
                     }
                     readDB.getUserHoldings(email: email) { response in
                         if response == "Fetched user holdings" {
-                            self.portfolio_data = sortArrayByDate(inputArray: readDB.user_holdings_data)
+                            self.portfolio_data = sortArrayByDate(inputArray: readDB.user_holdings_data, field_name: "transaction_date", date_type: "yyyy-MM-dd")
                             self.holdings_value = calculateTotalValue(input: self.portfolio_data, field: "amount")
                             self.chart_values = calculatePortionHoldings(input: portfolio_data, holdings_value: calculateTotalValue(input: self.portfolio_data, field: "amount"))
                         }

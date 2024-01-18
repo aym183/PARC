@@ -129,7 +129,7 @@ struct AdminPayoutClick: View {
                             Text("Payout Date")
                                 .foregroundColor(.gray)
                             Spacer()
-                            Text(String(describing: convertDate(dateString:payout_data["date_scheduled"]!)))
+                            Text(String(describing: payout_data["date_scheduled"]!))
                            
                         }
                         .font(Font.custom("Nunito-Medium", size: 14))
