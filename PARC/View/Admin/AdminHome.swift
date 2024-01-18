@@ -490,20 +490,32 @@ struct AdminHome: View {
                                                         Spacer()
                                                         
                                                         if readDB.transformed_trading_window_transactions_data.count != 0 {
-                                                            Text("\(readDB.transformed_trading_window_transactions_data["\(String(describing: index))_trades"]!) Trades")
-                                                                .font(Font.custom("Nunito-Bold", size: 25))
                                                             
+                                                            if readDB.transformed_trading_window_transactions_data.keys.contains("\(String(describing: index))_trades") {
+                                                                Text("\(readDB.transformed_trading_window_transactions_data["\(String(describing: index))_trades"]!) Trades")
+                                                                    .font(Font.custom("Nunito-Bold", size: 25))
+                                                            } else {
+                                                                Text("0 Trades")
+                                                                    .font(Font.custom("Nunito-Bold", size: 25))
+                                                            }
+                                                 
                                                             Spacer()
                                                             
                                                             HStack {
-                                                                Text("Volume - £\(readDB.transformed_trading_window_transactions_data["\(String(describing: index))_volume"]!)")
+                                                                if readDB.transformed_trading_window_transactions_data.keys.contains("\(String(describing: index))_volume") {
+                                                                    Text("Volume - £\(readDB.transformed_trading_window_transactions_data["\(String(describing: index))_volume"]!)")
+                                                                } else {
+                                                                    Text("Volume - £0")
+                                                                    
+                                                                }
+                                                                
                                                                 Divider()
                                                                     .frame(height: 15)
                                                                 
                                                                 if readDB.trading_window_data[index-1]["status"] == "Scheduled" {
-                                                                    Text("Scheduled: \(convertDate(dateString: readDB.trading_window_data[index-1]["start_date"]!))")
+                                                                    Text("Scheduled: \(readDB.trading_window_data[index-1]["start_date"]!)")
                                                                 } else {
-                                                                    Text("Started: \(convertDate(dateString: readDB.trading_window_data[index-1]["start_date"]!))")
+                                                                    Text("Started: \(readDB.trading_window_data[index-1]["start_date"]!)")
                                                                 }
                                                             }
                                                             .font(Font.custom("Nunito-SemiBold", size: 6.5))

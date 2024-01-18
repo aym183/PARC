@@ -415,20 +415,24 @@ class ReadDB: ObservableObject {
                                                     temp_dict[data] = nValue
                                                 }
                                             } else if let sValue = nameDictionary["S"] {
-                                                temp_dict[data] = sValue
+                                                if data == "start_date" {
+                                                    temp_dict[data] = convertDate(dateString: sValue)
+                                                } else {
+                                                    temp_dict[data] = sValue
+                                                }
                                             }
                                         }
                                     }
                                     self.trading_window_data.append(temp_dict)
                         
-                                    if isTradingWindowActive(targetDate: currentFormattedDate, start: convertDate(dateString: temp_dict["start_date"]!), end: dateStringByAddingDays(days: Int(temp_dict["duration"]!)!, dateString: convertDate(dateString: temp_dict["start_date"]!))!)! {
+                                    if isTradingWindowActive(targetDate: currentFormattedDate, start: temp_dict["start_date"]!, end: dateStringByAddingDays(days: Int(temp_dict["duration"]!)!, dateString: temp_dict["start_date"]!)!)! {
                                             trading_window_active = true
                                             current_status = temp_dict["status"]!
                                             trading_window_id = temp_dict["trading-window-id"]!
                                             UserDefaults.standard.set("true", forKey: "trading_window_active")
                                             UserDefaults.standard.set(temp_dict["trading-window-id"], forKey: "trading_window_id")
                                         
-                                    } else if isTradingWindowComplete(targetDate: currentFormattedDate, end: dateStringByAddingDays(days: Int(temp_dict["duration"]!)!, dateString: convertDate(dateString: temp_dict["start_date"]!))!)! {
+                                    } else if isTradingWindowComplete(targetDate: currentFormattedDate, end: dateStringByAddingDays(days: Int(temp_dict["duration"]!)!, dateString: temp_dict["start_date"]!)!)! {
                                             trading_window_completed = true
                                             current_status = temp_dict["status"]!
                                             trading_window_id = temp_dict["trading-window-id"]!
@@ -436,6 +440,7 @@ class ReadDB: ObservableObject {
                                     }
                                     temp_dict = [:]
                                 }
+                                self.trading_window_data = sortArrayByDate(inputArray: self.trading_window_data, field_name: "start_date", date_type: "dd/MM/yyyy")
                                 if trading_window_active && current_status == "Scheduled"  {
                                     UpdateDB().updateTable(primary_key: "trading-window-id", primary_key_value: trading_window_id, table: "trading-windows", updated_key: "status", updated_value: "Ongoing") { response in
                                         

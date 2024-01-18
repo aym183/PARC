@@ -89,7 +89,7 @@ struct AdminTradingClick: View {
                                     Text("£\(formattedNumber(input_number: trading_volume))")
                                 }
                                 else if data_titles[index] == "Scheduled Date" {
-                                    Text(convertDate(dateString: selected_trading_window["start_date"]!))
+                                    Text(selected_trading_window["start_date"]!)
                                 } else if data_titles[index] == "Duration" {
                                     Text("\(String(describing: selected_trading_window["duration"]!)) days")
                                 } else {

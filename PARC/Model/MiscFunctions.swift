@@ -182,7 +182,7 @@ func transformTradingWindowData(listed_shares: [[String: String]]) -> [String: I
     for share in listed_shares {
             var franchise = share["trading_window_id"]!
             var amount = Int(share["price"]!)!
-            if traversed_trading_window.keys.contains(franchise) {
+            if traversed_trading_window.keys.contains("\(franchise)_trades") {
                 let transformed_amount = traversed_trading_window["\(franchise)_volume"]! + amount
                 let transformed_count = traversed_trading_window["\(franchise)_trades"]! + 1
                 traversed_trading_window["\(franchise)_volume"] = transformed_amount
