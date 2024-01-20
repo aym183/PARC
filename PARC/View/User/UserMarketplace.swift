@@ -56,22 +56,55 @@ struct UserMarketplace: View {
                     .padding(.bottom)
                 }
             } else if trading_window_active == "true" && listed_shares.count == 0 {
-                ZStack {
+                ZStack(alignment: .bottomTrailing) {
                     Color(.white).ignoresSafeArea()
                     VStack {
                         Spacer()
-                        Text("☹️")
-                            .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.3))
-                            .padding(.bottom, -20)
                         
-                        Text("No shares currently listed")
-                            .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.065))
+                            
+                            ForEach((0..<2), id: \.self) { index in
+                                HStack {
+                                    Spacer()
+                                    
+                                    if index == 0 {
+                                        Text("☹️")
+                                            .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.3))
+                                            .padding(.bottom, -20)
+                                    } else {
+                                        Text("No shares currently listed")
+                                            .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.065))
+                                    }
+                                
+                                Spacer()
+                            }
+                            }
+                            
                         Spacer()
                     }
                     .multilineTextAlignment(.center)
                     .foregroundColor(.black)
-                    .padding(.bottom)
+                    
+                    Button(action: { marketplace_bottom_sheet_shown.toggle() }) {
+                        ZStack {
+                            Circle()
+                                .fill(Color("Secondary"))
+                                .frame(width: 50, height: 50)
+                            
+                            Image(systemName: "plus")
+                                .font(Font.custom("Nunito-Black", size: min(geometry.size.width, geometry.size.height) * 0.055))
+                                .foregroundColor(.white)
+                        }
+                    }
+                    .padding(.trailing, 15).padding(.bottom)
                 }
+                .navigationDestination(isPresented: $marketplace_list_shares_shown) {
+                    UserListShares(franchise_data: $franchise_data, holding_data: $holding_data, marketplace_shown: $marketplace_shown)
+                }
+                .sheet(isPresented: $marketplace_bottom_sheet_shown) {
+                    UserMarketplaceBottomSheet(marketplace_bottom_sheet_shown: $marketplace_bottom_sheet_shown, marketplace_list_shares_shown: $marketplace_list_shares_shown).presentationDetents([.height(150)])
+                }
+
+                
             } else {
                 ZStack(alignment: .bottomTrailing) {
                     Color(.white).ignoresSafeArea()
