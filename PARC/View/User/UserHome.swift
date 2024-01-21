@@ -201,7 +201,7 @@ struct UserHome: View {
                         }
                         readDB.getUserHoldings(email: email) { response in
                             if response == "Fetched user holdings" {
-                                self.portfolio_data = sortArrayByDate(inputArray: readDB.user_holdings_data, field_name: "transaction_date", date_type: "yyyy-MM-dd")
+                                self.portfolio_data = readDB.user_holdings_data //sortArrayByDate(inputArray: readDB.user_holdings_data, field_name: "transaction_date", date_type: "yyyy-MM-dd HH:mm:ss  ZZZZ") // HH:mm:ss ZZZZ
                                 self.holdings_value = calculateTotalValue(input: self.portfolio_data, field: "amount")
                                 self.chart_values = calculatePortionHoldings(input: portfolio_data, holdings_value: calculateTotalValue(input: self.portfolio_data, field: "amount"))
                             }
@@ -268,7 +268,7 @@ struct UserHomeContent: View {
                                 Spacer()
                             }
                             .frame(width: max(0, geometry.size.width))
-                        } else {
+                        } else if (opportunity_data.count != 0 && franchise_data.count != 0) {
                             ForEach(0..<opportunity_data.count, id: \.self) { index in
                                 Button(action: {
                                     selected_opportunity = opportunity_data[index]

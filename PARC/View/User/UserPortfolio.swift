@@ -147,7 +147,7 @@ struct UserPortfolio: View {
                                             Text("Invalid opportunity_id value")
                                         }
 //                                        Invested - £\(formattedNumber(input_number: Int(portfolio_data[index]["amount"]!)!))
-                                        Text("Date Bought - \(convertDate(dateString: portfolio_data[index]["transaction_date"]!))")
+                                        Text("Date Bought - \(portfolio_data[index]["transaction_date"]!)")
                                           .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.027))
                                           .foregroundColor(Color("Custom_Gray"))
                                     }

@@ -308,8 +308,9 @@ class ReadDB: ObservableObject {
                                             if let nameDictionary = value[data] as? [String: String] {
                                                     if data == "opportunity_id" || data == "user_holdings_id" {
                                                             temp_dict[data] = nameDictionary["N"]
-                                                    }
-                                                    else if let sValue = nameDictionary["S"] {
+                                                    } else if data == "transaction_date" {
+                                                        temp_dict[data] = convertDate(dateString: nameDictionary["S"]!)
+                                                    } else if let sValue = nameDictionary["S"] {
                                                         temp_dict[data] = sValue
                                                     }
                                             }
@@ -326,7 +327,7 @@ class ReadDB: ObservableObject {
                                     }
                                     if temp_dict != [:] {
                                         self.user_holdings_data.append(temp_dict)
-                                        self.user_holdings_data_dropdown.append(DropdownMenuOption(option: "\(temp_dict["user_holdings_id"]!) - \(temp_dict["opportunity_name"]!) - £\(temp_dict["amount"]!) - \(convertDate(dateString: temp_dict["transaction_date"]!))"))
+                                        self.user_holdings_data_dropdown.append(DropdownMenuOption(option: "\(temp_dict["user_holdings_id"]!) - \(temp_dict["opportunity_name"]!) - £\(temp_dict["amount"]!) - \( temp_dict["transaction_date"]!)"))
                                         temp_dict = [:]
                                     } else if listed_temp_dict != [:] {
                                         if self.listed_shares.keys.contains(listed_temp_dict["opportunity_name"]!) {
@@ -338,6 +339,7 @@ class ReadDB: ObservableObject {
                                     }
                                 }
                                 self.secondary_market_data = transformListedShares(listed_shares: self.listed_shares)
+                                self.user_holdings_data = sortArrayByDate(inputArray: self.user_holdings_data, field_name: "transaction_date", date_type: "dd/MM/yyyy")
                                 completion("Fetched user holdings")
                             }
                         }

@@ -171,17 +171,7 @@ struct UserInvestPage: View {
                     }
                     
                     Spacer()
-                    Button(action: { 
-                        showingPaymentAlert.toggle()
-//                        print("Equity offered is: \(equity_offered)")
-//                        print("Asking price is: \(asking_price)")
-//                        print("Investment amount is: \(Int(investment_amount)!)")
-//                        print("Full value of opportunity: \(equity_value)")
-//                        print("% owned by user: \(String(format: "%.2f", (Double(investment_amount)!/equity_value)*100))%")
-                        
-                        // Add user holdings, user transaction opportunities, update opportunity amount
- 
-                    }) {
+                    Button(action: { showingPaymentAlert.toggle() }) {
                         HStack {
                             Text("Confirm Investment")
                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.06))
@@ -192,6 +182,7 @@ struct UserInvestPage: View {
                         .cornerRadius(5)
                         .padding(.bottom)
                     }
+                    .sensoryFeedback(.success, trigger: showingPaymentAlert)
                     .disabled(isInvestmentAmountValid ? false : true)
                     .opacity(isInvestmentAmountValid ? 1 : 0.75)
                 }
