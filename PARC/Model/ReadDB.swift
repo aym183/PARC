@@ -506,6 +506,7 @@ class ReadDB: ObservableObject {
                                     temp_dict = [:]
                                 }
                                 self.transformed_trading_window_transactions_data = transformTradingWindowData(listed_shares: self.trading_window_transactions_data)
+                                print(self.transformed_trading_window_transactions_data)
 //                                completion("Trading window transactions fetched")
                             }
                         }

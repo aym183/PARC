@@ -491,8 +491,8 @@ struct AdminHome: View {
                                                         
                                                         if readDB.transformed_trading_window_transactions_data.count != 0 {
                                                             
-                                                            if readDB.transformed_trading_window_transactions_data.keys.contains("\(String(describing: index))_trades") {
-                                                                Text("\(readDB.transformed_trading_window_transactions_data["\(String(describing: index))_trades"]!) Trades")
+                                                            if readDB.transformed_trading_window_transactions_data.keys.contains("\(String(describing: index-1))_trades") {
+                                                                Text("\(readDB.transformed_trading_window_transactions_data["\(String(describing: index-1))_trades"]!) Trades")
                                                                     .font(Font.custom("Nunito-Bold", size: 25))
                                                             } else {
                                                                 Text("0 Trades")
@@ -502,8 +502,8 @@ struct AdminHome: View {
                                                             Spacer()
                                                             
                                                             HStack {
-                                                                if readDB.transformed_trading_window_transactions_data.keys.contains("\(String(describing: index))_volume") {
-                                                                    Text("Volume - £\(readDB.transformed_trading_window_transactions_data["\(String(describing: index))_volume"]!)")
+                                                                if readDB.transformed_trading_window_transactions_data.keys.contains("\(String(describing: index-1))_volume") {
+                                                                    Text("Volume - £\(readDB.transformed_trading_window_transactions_data["\(String(describing: index-1))_volume"]!)")
                                                                 } else {
                                                                     Text("Volume - £0")
                                                                     
@@ -540,7 +540,6 @@ struct AdminHome: View {
                     .foregroundColor(.black)
                 }
                 .refreshable() {
-                    print(true)
                     withAnimation(.easeOut(duration: 0.25)) {
                         isRefreshing = true
                     }
