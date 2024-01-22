@@ -102,7 +102,9 @@ struct LandingContent: View {
                             .foregroundColor(Color.white)
                             .cornerRadius(5)
                         }
-                        .padding(.bottom, 10)
+                        .padding(.bottom)
+                        
+                        Text("*Your capital is at risk").font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.032)).foregroundColor(Color("Custom_Gray"))
                         
 //                        Button(action: { login_shown.toggle() }) {
 //                            HStack {
