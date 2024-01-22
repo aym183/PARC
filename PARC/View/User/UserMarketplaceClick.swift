@@ -15,6 +15,7 @@ struct UserMarketplaceClick: View {
     @State var home_page_shown = false
     @State var isInvestmentConfirmed = true
     @State var isShownHomePage = false
+    @State var isSharesListed = false
     @AppStorage("trading_window_id") var trading_window_id: String = ""
     @AppStorage("email") var email: String = ""
     @State var selling_email = ""

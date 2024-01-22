@@ -36,12 +36,12 @@ struct AdminHome: View {
     @State var trading_volume = 0
     @State var no_of_trades = 0
     @State var isRefreshing = false
-    @State private var counter = 2
     
     var body: some View {
         GeometryReader { geometry in
             ZStack {
                 Color(.white).ignoresSafeArea()
+                
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(alignment: .leading) {
                         HStack {
@@ -564,17 +564,6 @@ struct AdminHome: View {
                             readDB.getTradingWindowTransactions()
                         }
                     }
-                    
-                    Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
-                                    if self.counter > 0 {
-                                        self.counter -= 1
-                                    } else {
-                                        withAnimation(.easeOut(duration: 0.25)) {
-                                            isRefreshing = false
-                                        }
-                                        timer.invalidate()
-                                    }
-                                }
                 }
                 }
             }
@@ -630,8 +619,4 @@ extension Collection {
     subscript(safe index: Index) -> Element? {
         return indices.contains(index) ? self[index] : nil
     }
-}
-
-#Preview {
-    AdminHome()
 }

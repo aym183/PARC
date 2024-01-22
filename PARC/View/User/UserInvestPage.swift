@@ -16,6 +16,7 @@ struct UserInvestPage: View {
     @State var net_worth_int: Int = 0
     @State var investment_limit = 0
     @State var isInvestmentAmountValid: Bool = false
+    @State var isSharesListed = false
     @State var home_page_shown = false
     @State var isInvestmentConfirmed = true
     @State var user_ready_to_invest = false

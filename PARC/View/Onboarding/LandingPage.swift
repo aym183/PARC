@@ -12,6 +12,7 @@ struct LandingPage: View {
     @State var loggedInUser = true
     @State var loggedInAdmin = false
     @State var isInvestmentConfirmed = false
+    @State var isSharesListed = false
     @State var userProfile = Profile.empty
     @State var isShownHomePage = false
     @AppStorage("logged_in") var logged_in: Bool = false
@@ -53,6 +54,7 @@ struct LandingContent: View {
     @State private var index = 0
     @State var isInvestmentConfirmed = false
     @State var isAuthenticated = false
+    @State var isSharesListed = false
     @State var userProfile = Profile.empty
     @Binding var isShownHomePage: Bool
     var onboarding_assets = ["shop", "Onboarding_2", "Onboarding_3"]

@@ -16,6 +16,7 @@ struct UserListShares: View {
     @State var is_on = false
     @Binding var marketplace_shown: Bool
     @State var isInvestmentConfirmed = false
+    @State var isSharesListed = true
     @State var isShownHomePage = false
     @State private var selectedFranchise: DropdownMenuOption? = nil
     @State private var selectedHolding: DropdownMenuOption? = nil

@@ -11,6 +11,7 @@ import URLImage
 struct UserHome: View {
     @State var selectedTab: Tab = .house
     @State var account_shown = false
+//    @Binding var isSharesListed: Bool
     @Binding var isInvestmentConfirmed: Bool
     @Binding var isShownHomePage: Bool
     @State var isShownOnboarding = false
@@ -41,35 +42,36 @@ struct UserHome: View {
                     if isShownHomePage {
                         VStack(alignment: .center) {
                             Spacer()
-                            
                             LottieView(name: "loading_3.0", speed: 1, loop: false).frame(width: 100, height: 100)
-                            
-                            Text("Welcome \(firstName)").font(Font.custom("Avenir-ExtraBold", size: 30)).multilineTextAlignment(.center).padding(.horizontal).foregroundColor(.black).padding(.top, -5)
-                            Text("Your PARC journey awaits 🥳").font(Font.custom("Avenir-Medium", size: 20)).multilineTextAlignment(.center).padding(.horizontal).foregroundColor(.black)
-                            
+                            Text("Welcome \(firstName)").font(Font.custom("Nunito-ExtraBold", size: 30)).multilineTextAlignment(.center).padding(.horizontal).foregroundColor(.black).padding(.top, -5)
+                            Text("Your PARC journey awaits 🥳").font(Font.custom("Nunito-Medium", size: 20)).multilineTextAlignment(.center).padding(.horizontal).foregroundColor(.black)
                             Spacer()
                         }
                         .foregroundColor(.black).frame(width: max(0, geometry.size.width))
-                        
                     }
                     
+//                    if isSharesListed {
+//                        VStack(alignment: .center) {
+//                            Spacer()
+//                            LottieView(name: "loading_3.0", speed: 1, loop: false).frame(width: 100, height: 100)
+//                            Text("Your shares are being listed...").font(Font.custom("Nunito-Medium", size: 20)).multilineTextAlignment(.center).padding(.horizontal).foregroundColor(.black)
+//                            Spacer()
+//                        }
+//                        .foregroundColor(.black).frame(width: max(0, geometry.size.width))
+//                    }
+//                    
                     if isInvestmentConfirmed {
-                        
                         VStack(alignment: .center) {
                             Spacer()
-                            
                             Text("Congratulations!").font(Font.custom("Nunito-Bold", size: 40))
-                            
                             Text("Your investment has been received. Thank you for trusting PARC!").font(Font.custom("Nunito-Bold", size: 16))
                                 .multilineTextAlignment(.center)
                                 .padding(.top, -25)
                                 .frame(width: 270)
-                            
                             Spacer()
                         }
                         .foregroundColor(.black)
                         .frame(width: max(0, geometry.size.width))
-                        
                         LottieView(name: "confetti", speed: 0.5, loop: false).frame(width: max(0, geometry.size.width))
                     }
                     
@@ -166,6 +168,7 @@ struct UserHome: View {
                             withAnimation(.easeOut(duration: 0.5)) {
 //                                imageURL = URL(string: picture)!
                                 isShownHomePage = false
+//                                isSharesListed = false
                                 if !onboarding_completed {
                                     isShownOnboarding.toggle()
                                 }
@@ -215,16 +218,13 @@ struct UserHome: View {
                             if response == "Fetched all opportunities" {
                                 self.opportunity_data = readDB.user_opportunity_data
                                 self.admin_opportunity_data = readDB.admin_opportunity_data
-//                                ForEach(0..<opportunity_data.count, id: \.self) { index in
-//                                    if opportunity_data
-//                                }
                             }
                         }
                         
                     }
                     .opacity(isInvestmentConfirmed ? 0 : 1)
                     .opacity(isShownHomePage ? 0 : 1)
-                    
+//                    .opacity(isSharesListed ? 0 : 1)
                 }
                 .navigationDestination(isPresented: $account_shown) {
                     UserAccount(payoutsValue: $payouts_value, secondaryTransactionsValue: $readDB.secondary_market_transactions_ind)
@@ -375,8 +375,6 @@ struct UserHomeContent: View {
                                     .foregroundColor(.black)
                                 }
                                 .id(index)
-                                //                            }
-                            
                         }
                         .frame(width: max(0, geometry.size.width))
                         .navigationDestination(isPresented: $opportunity_shown) {

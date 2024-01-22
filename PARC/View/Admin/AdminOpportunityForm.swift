@@ -19,7 +19,6 @@ struct AdminOpportunityForm: View {
     @State var admin_home_shown = false
     @State private var selectedFranchise: DropdownMenuOption? = nil
     @State private var date = Date()
-//    @State private var selectedDate = Date()
     let dateRange: ClosedRange<Date> = {
         let calendar = Calendar.current
         let startComponents = DateComponents(year: 2023, month: 11, day: 1)
@@ -204,6 +203,3 @@ struct AdminOpportunityForm: View {
     }
 }
 
-#Preview {
-    AdminOpportunityForm(franchise_data: .constant([]))
-}
