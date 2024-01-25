@@ -31,33 +31,35 @@ struct AdminOpportunityClick: View {
                                 .font(Font.custom("Nunito-Bold", size: 30))
                         }
                         
-                        HStack(spacing: 20) {
-                            Button(action: {}) {
-                                HStack {
-                                    Text("Edit Opportunity")
-                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.038))
+                        if opportunity_data["status"]! == "Active" {
+                            HStack(spacing: 20) {
+                                Button(action: {}) {
+                                    HStack {
+                                        Text("Edit Opportunity")
+                                            .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.038))
+                                    }
+                                    .frame(width: max(0, geometry.size.width-240), height: 45)
+                                    .background(Color("Secondary"))
+                                    .foregroundColor(Color.white)
+                                    .cornerRadius(5)
+                                    .padding(.bottom)
                                 }
-                                .frame(width: max(0, geometry.size.width-240), height: 45)
-                                .background(Color("Secondary"))
-                                .foregroundColor(Color.white)
-                                .cornerRadius(5)
-                                .padding(.bottom)
-                            }
-//                            .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 4)
-                            
-                            Button(action: { showingDeleteAlert.toggle() }) {
-                                HStack {
-                                    Text("Close Opportunity")
-                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.038))
+                                //                            .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 4)
+                                
+                                Button(action: { showingDeleteAlert.toggle() }) {
+                                    HStack {
+                                        Text("Close Opportunity")
+                                            .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.038))
+                                    }
+                                    .frame(width: max(0, geometry.size.width-240), height: 45)
+                                    .background(Color("Loss"))
+                                    .foregroundColor(Color.white)
+                                    .cornerRadius(5)
+                                    .padding(.bottom)
                                 }
-                                .frame(width: max(0, geometry.size.width-240), height: 45)
-                                .background(Color("Loss"))
-                                .foregroundColor(Color.white)
-                                .cornerRadius(5)
-                                .padding(.bottom)
                             }
+                            .padding(.top)
                         }
-                        .padding(.top)
                         
                         HStack {
                             Text("Opportunity Details")

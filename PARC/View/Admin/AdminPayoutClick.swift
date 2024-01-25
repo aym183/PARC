@@ -15,6 +15,7 @@ struct AdminPayoutClick: View {
     @Binding var opportunity_data: [String:String]
     @Binding var payout_data: [String:String]
     @Binding var admin_payout_click_shown: Bool
+    @State var admin_home_shown = false
     @State var showingDeleteAlert = false
     @State var payout_id = ""
     
@@ -30,36 +31,36 @@ struct AdminPayoutClick: View {
                             .font(Font.custom("Nunito-Bold", size: 50))
                             .foregroundColor(.black)
                         
-                        HStack(spacing: 20) {
-                            Button(action: {}) {
-                                HStack {
-                                    Text("Edit Payout")
-                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.038))
-                                }
-                                .frame(width: max(0, geometry.size.width-240), height: 45)
-                                .background(Color("Secondary"))
-                                .foregroundColor(Color.white)
-                                .cornerRadius(5)
-                                .padding(.bottom)
-                            }
-//                            .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 4)
-                            
-                            Button(action: { 
-                                showingDeleteAlert.toggle()
-                                payout_id = payout_data["payout_id"]!
-                            }) {
-                                HStack {
-                                    Text("Cancel Payout")
-                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.038))
-                                }
-                                .frame(width: max(0, geometry.size.width-240), height: 45)
-                                .background(Color("Loss"))
-                                .foregroundColor(Color.white)
-                                .cornerRadius(5)
-                                .padding(.bottom)
-                            }
-//                            .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 4)
-                        }
+//                        HStack(spacing: 20) {
+//                            Button(action: {}) {
+//                                HStack {
+//                                    Text("Edit Payout")
+//                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.038))
+//                                }
+//                                .frame(width: max(0, geometry.size.width-240), height: 45)
+//                                .background(Color("Secondary"))
+//                                .foregroundColor(Color.white)
+//                                .cornerRadius(5)
+//                                .padding(.bottom)
+//                            }
+////                            .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 4)
+//                            
+//                            Button(action: { 
+//                                showingDeleteAlert.toggle()
+//                                payout_id = payout_data["payout_id"]!
+//                            }) {
+//                                HStack {
+//                                    Text("Cancel Payout")
+//                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.038))
+//                                }
+//                                .frame(width: max(0, geometry.size.width-240), height: 45)
+//                                .background(Color("Loss"))
+//                                .foregroundColor(Color.white)
+//                                .cornerRadius(5)
+//                                .padding(.bottom)
+//                            }
+////                            .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 4)
+//                        }
                         //                    .padding(.top)
                         
                         
@@ -174,23 +175,25 @@ struct AdminPayoutClick: View {
                     .padding(.top)
                 }
             }
-            .alert(isPresented: $showingDeleteAlert) {
-                Alert(
-                    title: Text("Are you sure you want to cancel this payout?"),
-                    primaryButton: .default(Text("Yes")) {
-                        UpdateDB().updateTable(primary_key: "payout_id", primary_key_value: payout_data["payout_id"]!, table: "payouts", updated_key: "status", updated_value: "Cancelled") { response in
-                        if response == "payouts status updated" {
-                            admin_payout_click_shown.toggle()
-                        }
-                    }
-                    },
-                    secondaryButton: .destructive(Text("No")) {
-                        print("No")
-                    }
-                )
+            .navigationDestination(isPresented: $admin_home_shown) {
+                AdminHome().navigationBarBackButtonHidden(true)
             }
-//            .navigationDestination(isPresented: $admin_payout_click_shown) {
-//                AdminHome().navigationBarBackButtonHidden(true)
+//            .alert(isPresented: $showingDeleteAlert) {
+//                Alert(
+//                    title: Text("Are you sure you want to cancel this payout?"),
+//                    primaryButton: .default(Text("Yes")) {
+//                        DispatchQueue.global(qos: .userInteractive).async {
+//                            UpdateDB().updateTable(primary_key: "payout_id", primary_key_value: payout_data["payout_id"]!, table: "payouts", updated_key: "status", updated_value: "Cancelled") { response in
+//                                if response == "payouts status updated" {
+//                                    admin_home_shown.toggle()
+//                                }
+//                            }
+//                        }
+//                    },
+//                    secondaryButton: .destructive(Text("No")) {
+//                        print("No")
+//                    }
+//                )
 //            }
         }
     }

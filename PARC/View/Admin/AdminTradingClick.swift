@@ -13,6 +13,7 @@ struct AdminTradingClick: View {
     @Binding var selected_trading_window: [String: String]
     @Binding var trading_volume: Int
     @Binding var no_of_trades: Int
+    @State var admin_home_shown = false
     @State var showingDeleteAlert = false
     
     var body: some View {
@@ -24,35 +25,34 @@ struct AdminTradingClick: View {
                         Text("\(no_of_trades) Trades")
                             .font(Font.custom("Nunito-Bold", size: 50))
                         
-                        HStack(spacing: 20) {
-                            Button(action: {}) {
-                                HStack {
-                                    Text("Edit Window")
-                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.038))
+                        if selected_trading_window["status"]! == "Ongoing" {
+                            HStack(spacing: 20) {
+                                Button(action: {}) {
+                                    HStack {
+                                        Text("Edit Window")
+                                            .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.038))
+                                    }
+                                    .frame(width: max(0, geometry.size.width-240), height: 45)
+                                    .background(Color("Secondary"))
+                                    .foregroundColor(Color.white)
+                                    .cornerRadius(5)
+                                    .padding(.bottom)
                                 }
-                                .frame(width: max(0, geometry.size.width-240), height: 45)
-                                .background(Color("Secondary"))
-                                .foregroundColor(Color.white)
-                                .cornerRadius(5)
-                                .padding(.bottom)
+                                
+                                Button(action: { showingDeleteAlert.toggle() }) {
+                                    HStack {
+                                        Text("Close Window")
+                                            .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.038))
+                                    }
+                                    .frame(width: max(0, geometry.size.width-240), height: 45)
+                                    .background(Color("Loss"))
+                                    .foregroundColor(Color.white)
+                                    .cornerRadius(5)
+                                    .padding(.bottom)
+                                }
                             }
-//                            .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 4)
                             
-                            Button(action: { showingDeleteAlert.toggle() }) {
-                                HStack {
-                                    Text("Close Window")
-                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.038))
-                                }
-                                .frame(width: max(0, geometry.size.width-240), height: 45)
-                                .background(Color("Loss"))
-                                .foregroundColor(Color.white)
-                                .cornerRadius(5)
-                                .padding(.bottom)
-                            }
-//                            .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 4)
                         }
-                        //                    .padding(.top)
-                        
                         
                         HStack {
                             Text("Trading Window Details")
@@ -117,11 +117,20 @@ struct AdminTradingClick: View {
                     .padding(.top)
                 }
             }
+            .navigationDestination(isPresented: $admin_home_shown) {
+                AdminHome().navigationBarBackButtonHidden(true)
+            }
             .alert(isPresented: $showingDeleteAlert) {
                 Alert(
                     title: Text("Are you sure you want to close this window?"),
                     primaryButton: .default(Text("Yes")) {
-                        print("Yes")
+                        DispatchQueue.global(qos: .userInteractive).async {
+                            UpdateDB().updateTable(primary_key: "trading-window-id", primary_key_value: selected_trading_window["trading-window-id"]!, table: "trading-windows", updated_key: "status", updated_value: "Cancelled") { response in
+                                if response == "payouts status updated" {
+                                    admin_home_shown.toggle()
+                                }
+                            }
+                        }
                     },
                     secondaryButton: .destructive(Text("No")) {
                         print("No")
