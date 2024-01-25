@@ -25,8 +25,7 @@ struct AdminHome: View {
     @State var admin_trading_click_shown = false
     @State var admin_account_click_shown = false
     var logo_images = ["McDonalds", "Starbucks", "Dominos", "Chipotle", "Subway", "McDonalds", "Starbucks", "Dominos", "Chipotle", "Subway"]
-    var titles = ["McDonald's", "Starbucks", "Dominos", "Chipotle", "Subway"]
-    @State var opportunity_title = ""
+    var titles = ["McDonald's", "Starbucks", "Dominos", "Chipotle", "Subway", "McDonald's", "Starbucks", "Dominos", "Chipotle", "Subway"]
     @State var opportunity_logo = ""
     @State var opportunity_data: [String:String] = [:]
     @State var payout_data: [String:String] = [:]
@@ -188,7 +187,6 @@ struct AdminHome: View {
                                             ZStack {
                                                 Button(action: {
                                                     opportunity_logo = logo_images[index-1]
-                                                    opportunity_title = titles[index-1]
                                                     opportunity_data = readDB.admin_opportunity_data[index-1]
                                                     admin_opportunity_click_shown.toggle()
                                                 }) {
@@ -250,36 +248,28 @@ struct AdminHome: View {
                                                         .frame(width: 140)
                                                     
                                                     HStack {
-                                                        if getDaysRemaining(dateString: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))! < 1 {
+                                                        if readDB.admin_opportunity_data[index-1]["status"]! == "Closed"{
+                                                                Text("Closed")
+                                                        } else if getDaysRemaining(dateString: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))! < 1 {
                                                                 Text("Completed")
-                                                                    .font(Font.custom("Nunito-Bold", size: 12))
                                                                     .foregroundColor(Color("Profit"))
-                                                                    .padding(.leading, 10)
                                                         } else if getDaysRemaining(dateString: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))! <= 5 {
                                                             
                                                             Text("\(getDaysRemaining(dateString: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))!) days left")
-                                                                .font(Font.custom("Nunito-SemiBold", size: 12))
                                                                 .foregroundColor(Color("Loss"))
-                                                                .padding(.leading, 10)
                                                             
                                                         } else if getDaysRemaining(dateString: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))! > 5 && getDaysRemaining(dateString: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))! < 15 {
                                                             
                                                             Text("\(getDaysRemaining(dateString: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))!) days left")
-                                                                .font(Font.custom("Nunito-SemiBold", size: 12))
                                                                 .foregroundColor(Color("Amber"))
-                                                                .padding(.leading, 10)
-                                                            
                                                         } else {
-                                                            
                                                             Text("\(getDaysRemaining(dateString: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))!) days left")
-                                                                .font(Font.custom("Nunito-SemiBold", size: 12))
-                                                                .foregroundColor(.black)
-                                                                .padding(.leading, 10)
-                                                            
                                                         }
                                                         
                                                         Spacer()
                                                     }
+                                                    .font(Font.custom("Nunito-Bold", size: 12))
+                                                    .padding(.leading, 10)
                                                 }
                                                 .padding(.bottom, 10)
                                             }
@@ -600,7 +590,7 @@ struct AdminHome: View {
                 AdminTradingForm()
             }
             .navigationDestination(isPresented: $admin_opportunity_click_shown){
-                AdminOpportunityClick(opportunity_logo: $opportunity_logo, opportunity_title: $opportunity_title, opportunity_data: $opportunity_data)
+                AdminOpportunityClick(opportunity_logo: $opportunity_logo, opportunity_data: $opportunity_data)
             }
             .navigationDestination(isPresented: $admin_trading_click_shown){
                 AdminTradingClick(selected_trading_window: $selected_trading_window, trading_volume: $trading_volume, no_of_trades: $no_of_trades)

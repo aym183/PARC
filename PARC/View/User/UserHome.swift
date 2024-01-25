@@ -157,12 +157,6 @@ struct UserHome: View {
 //                            print(false)
 //                        }
 
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
-                            withAnimation(.easeOut(duration: 0.5)) {
-//                                imageURL = URL(string: picture)!
-                                isInvestmentConfirmed = false
-                            }
-                        }
                         
                         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                             withAnimation(.easeOut(duration: 0.5)) {

@@ -163,7 +163,7 @@ class CreateDB: ObservableObject {
                         DispatchQueue.main.async {
                             if let itemsArray = jsonObject["ScannedCount"] as? Int {
                                 let arrayLength = itemsArray+1
-                                let opportunityApiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/opportunities?opportunity_id=\(arrayLength)&franchise_name=\(franchise_name)&location=\(location)&asking_price=\(asking_price)&equity_offered=\(equity_offered)&min_invest_amount=\(min_invest_amount)&close_date=\(convertDate(dateString: close_date))&date_created=\(formattedDate)&amount_raised=0&status=\("active")&investors=0")!
+                                let opportunityApiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/opportunities?opportunity_id=\(arrayLength)&franchise_name=\(franchise_name)&location=\(location)&asking_price=\(asking_price)&equity_offered=\(equity_offered)&min_invest_amount=\(min_invest_amount)&close_date=\(convertDate(dateString: close_date))&date_created=\(formattedDate)&amount_raised=0&status=\("Active")&investors=0")!
                                 
                                 var request = URLRequest(url: opportunityApiUrl)
                                 request.httpMethod = "POST"

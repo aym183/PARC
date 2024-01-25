@@ -11,8 +11,8 @@ struct AdminOpportunityClick: View {
     var data_titles = ["Opportunity ID", "Location", "Type", "Money Raised", "Target Raised", "Investors", "Minimum Investment", "Investment Deadline"]
     var data_values = ["24", "Stratford, London", "Equity", "£400,000", "£1,000,000", "500", "£100", "18/08/2023"]
     @Binding var opportunity_logo: String
-    @Binding var opportunity_title: String
     @Binding var opportunity_data: [String:String]
+    @State var admin_home_shown = false
     @State var showingDeleteAlert = false
     
     var body: some View {
@@ -194,11 +194,20 @@ struct AdminOpportunityClick: View {
                     .padding(.top)
                 }
             }
+            .navigationDestination(isPresented: $admin_home_shown) {
+                AdminHome().navigationBarBackButtonHidden(true)
+            }
             .alert(isPresented: $showingDeleteAlert) {
                 Alert(
                     title: Text("Are you sure you want to close this opportunity?"),
                     primaryButton: .default(Text("Yes")) {
-                        print("Yes")
+                        DispatchQueue.global(qos: .userInteractive).async {
+                            UpdateDB().updateTable(primary_key: "opportunity_id", primary_key_value: opportunity_data["opportunity_id"]!, table: "opportunities", updated_key: "status", updated_value: "Closed") { response in
+                                if response == "opportunities status updated" {
+                                    admin_home_shown.toggle()
+                                }
+                            }
+                        }
                     },
                     secondaryButton: .destructive(Text("No")) {
                         print("No")

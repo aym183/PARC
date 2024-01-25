@@ -89,13 +89,13 @@ class ReadDB: ObservableObject {
                                     for data in keysArray.reversed() {
                                         if let activeCheck = value["status"] as? [String: String],
                                            let dateCheck = value["close_date"] as? [String: String],
-                                           activeCheck["S"] == "active" && getDaysRemaining(dateString: dateCheck["S"]!)! < 1 {
+                                           activeCheck["S"] == "Active" && getDaysRemaining(dateString: dateCheck["S"]!)! < 1 {
                                             
                                             if let nameDictionary = value[data] as? [String: String] {
                                                 if data == "opportunity_id" {
                                                     if let nValue = nameDictionary["N"] {
                                                         DispatchQueue.global(qos: .userInteractive).async {
-                                                            UpdateDB().updateTable(primary_key: "opportunity_id", primary_key_value: nValue, table: "opportunities", updated_key: "status", updated_value: "completed") { response in
+                                                            UpdateDB().updateTable(primary_key: "opportunity_id", primary_key_value: nValue, table: "opportunities", updated_key: "status", updated_value: "Completed") { response in
                                                                 if response == "opportunities status updated" {
                                                                     print("opportunities status updated")
                                                                 }
@@ -105,7 +105,7 @@ class ReadDB: ObservableObject {
                                                 }
                                             }
                                             
-                                        } else if let activeCheck = value["status"] as? [String: String], activeCheck["S"] == "active"  {
+                                        } else if let activeCheck = value["status"] as? [String: String], activeCheck["S"] == "Active"  {
                                             if let nameDictionary = value[data] as? [String: String] {
                                                 if data == "opportunity_id" {
                                                     if let nValue = nameDictionary["N"] {

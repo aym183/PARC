@@ -221,10 +221,13 @@ func transformPayouts(payouts_array: [[String: String]]) -> [String: Any] {
 func sortByDaysRemaining(array: [[String: String]]) -> [[String : String]] {
     // Add the deleted opportunities array here
     var completedArray: [[String : String]] = []
+    var closedArray: [[String : String]] = []
     var outputArray: [[String : String]]  = []
     
     for ind in array {
-        if getDaysRemaining(dateString: ind["close_date"]!)! > 1 {
+        if ind["status"]! == "Closed" {
+            closedArray.append(ind)
+        } else if getDaysRemaining(dateString: ind["close_date"]!)! > 1 {
             outputArray.append(ind)
         } else {
             completedArray.append(ind)
@@ -238,7 +241,7 @@ func sortByDaysRemaining(array: [[String: String]]) -> [[String : String]] {
            return getDaysRemaining(dateString: closeDate1)! < getDaysRemaining(dateString: closeDate2)!
     }
 
-    return outputArray + completedArray
+    return outputArray + completedArray + closedArray
 }
 
 // Reference GPT
