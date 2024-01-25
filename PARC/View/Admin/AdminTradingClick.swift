@@ -92,6 +92,8 @@ struct AdminTradingClick: View {
                                     Text(selected_trading_window["start_date"]!)
                                 } else if data_titles[index] == "Duration" {
                                     Text("\(String(describing: selected_trading_window["duration"]!)) days")
+                                } else if (data_titles[index] == "Most Traded Opportunity" || data_titles[index] == "Biggest Trade") && no_of_trades == 0 {
+                                    Text("None")
                                 } else {
                                     Text(data_values[index])
                                 }

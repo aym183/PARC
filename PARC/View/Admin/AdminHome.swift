@@ -24,7 +24,7 @@ struct AdminHome: View {
     @State var admin_payout_click_shown = false
     @State var admin_trading_click_shown = false
     @State var admin_account_click_shown = false
-    var logo_images = ["McDonalds", "Starbucks", "Dominos", "Chipotle", "Subway"]
+    var logo_images = ["McDonalds", "Starbucks", "Dominos", "Chipotle", "Subway", "McDonalds", "Starbucks", "Dominos", "Chipotle", "Subway"]
     var titles = ["McDonald's", "Starbucks", "Dominos", "Chipotle", "Subway"]
     @State var opportunity_title = ""
     @State var opportunity_logo = ""
@@ -450,8 +450,8 @@ struct AdminHome: View {
                                         } else {
                                             Button(action: {
                                                 selected_trading_window = readDB.trading_window_data[index-1]
-                                                trading_volume = readDB.transformed_trading_window_transactions_data["\(String(describing: index))_volume"]!
-                                                no_of_trades = readDB.transformed_trading_window_transactions_data["\(String(describing: index))_trades"]!
+                                                trading_volume = readDB.transformed_trading_window_transactions_data["\(String(describing: index-1))_volume"] ?? 0
+                                                no_of_trades = readDB.transformed_trading_window_transactions_data["\(String(describing: index-1))_trades"] ?? 0
                                                 admin_trading_click_shown.toggle()
                                             }) {
                                                 ZStack {
