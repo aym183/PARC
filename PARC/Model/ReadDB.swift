@@ -11,6 +11,7 @@ import SwiftUI
 class ReadDB: ObservableObject {
     @Published var franchise_data_dropdown: [DropdownMenuOption] = []
     @Published var franchise_data: [[String: String]] = []
+    @Published var emails: [String] = []
     @Published var admin_opportunity_data: [[String: String]] = []
     @Published var user_opportunity_data: [[String: String]] = []
     @Published var payout_data: [[String: String]] = []
@@ -27,7 +28,7 @@ class ReadDB: ObservableObject {
     @Published var secondary_market_transactions_ind: Int = 0
     @State var currentFormattedDate: String = convertDate(dateString: String(describing: Date()))
     @AppStorage("email") var email: String = ""
-    
+
     func getFranchises() {
         var temp_dict: [String: String] = [:]
         let keysArray = ["description", "avg_revenue_18_months", "name", "logo", "industry", "no_of_franchises", "ebitda_estimate", "avg_franchise_mom_revenues", "avg_startup_capital"]
@@ -144,7 +145,6 @@ class ReadDB: ObservableObject {
     func getAdminOpportunities(completion: @escaping (String?) -> Void) {
         var keysArray = ["min_invest_amount", "location", "date_created", "equity_offered", "amount_raised", "close_date", "status", "franchise", "asking_price", "opportunity_id", "investors"]
         var temp_dict: [String: String] = [:]
-        
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/opportunities")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
@@ -194,7 +194,6 @@ class ReadDB: ObservableObject {
     func getPayouts(completion: @escaping (String?) -> Void) {
         var keysArray = ["franchise", "revenue_generated", "date_scheduled", "status", "opportunity_id", "date_created", "payout_id", "amount_offered"]
         var temp_dict: [String: String] = [:]
-        
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/payouts")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"

@@ -32,29 +32,31 @@ func convertDate(dateString: String) -> String {
 func isTradingWindowActive(targetDate: String, start startDate: String, end endDate: String, status: String) -> Bool? {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "dd/MM/yyyy"
-    if status == "Cancelled" { return false }
-        
-    if let target = dateFormatter.date(from: targetDate),
-       let start = dateFormatter.date(from: startDate),
-       let end = dateFormatter.date(from: endDate) {
+    if status == "Cancelled" || status == "Completed" {
+        return false
+    } else {
+        if let target = dateFormatter.date(from: targetDate),
+           let start = dateFormatter.date(from: startDate),
+           let end = dateFormatter.date(from: endDate) {
 
-        return target >= start && target <= end
+            return target >= start && target <= end
+        }
     }
-
     return nil
 }
 
 func isTradingWindowComplete(targetDate: String, end endDate: String, status: String) -> Bool? {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "dd/MM/yyyy"
-    if status == "Cancelled" { return false }
+    if status == "Cancelled" {
+        return false
+    } else {
+        if let target = dateFormatter.date(from: targetDate),
+           let end = dateFormatter.date(from: endDate) {
 
-    if let target = dateFormatter.date(from: targetDate),
-       let end = dateFormatter.date(from: endDate) {
-
-        return target > end
+            return target > end
+        }
     }
-
     return nil
 }
 

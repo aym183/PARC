@@ -292,7 +292,6 @@ class CreateDB: ObservableObject {
                                     }
                                     
                                     let userPayoutApiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/payouts/user-payouts")!
-                                    
                                     var request = URLRequest(url: userPayoutApiUrl)
                                     request.httpMethod = "POST"
                                     request.httpBody = jsonData

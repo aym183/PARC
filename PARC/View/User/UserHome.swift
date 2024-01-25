@@ -178,11 +178,17 @@ struct UserHome: View {
                         readDB.full_user_holdings_data = []
                         readDB.user_payout_data = []
                         readDB.trading_window_data = []
+                        readDB.emails = []
                         readDB.payout_data = []
                         readDB.secondary_market_transactions_ind = 0
                         readDB.getFranchises()
                         readDB.getAllUserHoldings()
                         readDB.getTradingWindows()
+                        readDB.getUserEmails() { response in
+                            if response == "User emails fetched" {
+                                print("Emails fetched")
+                            }
+                        }
                         readDB.getTradingWindowTransactionsEmail()
                         readDB.getPayouts() { response in
                             if response == "Fetched payouts" {
