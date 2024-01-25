@@ -427,18 +427,20 @@ class ReadDB: ObservableObject {
                                     }
                                     self.trading_window_data.append(temp_dict)
                         
-                                    if isTradingWindowActive(targetDate: currentFormattedDate, start: temp_dict["start_date"]!, end: dateStringByAddingDays(days: Int(temp_dict["duration"]!)!, dateString: temp_dict["start_date"]!)!)! {
+                                    if isTradingWindowActive(targetDate: currentFormattedDate, start: temp_dict["start_date"]!, end: dateStringByAddingDays(days: Int(temp_dict["duration"]!)!, dateString: temp_dict["start_date"]!)!, status: temp_dict["status"]!)! {
                                             trading_window_active = true
                                             current_status = temp_dict["status"]!
                                             trading_window_id = temp_dict["trading-window-id"]!
                                             UserDefaults.standard.set("true", forKey: "trading_window_active")
                                             UserDefaults.standard.set(temp_dict["trading-window-id"], forKey: "trading_window_id")
                                         
-                                    } else if isTradingWindowComplete(targetDate: currentFormattedDate, end: dateStringByAddingDays(days: Int(temp_dict["duration"]!)!, dateString: temp_dict["start_date"]!)!)! {
+                                    } else if isTradingWindowComplete(targetDate: currentFormattedDate, end: dateStringByAddingDays(days: Int(temp_dict["duration"]!)!, dateString: temp_dict["start_date"]!)!, status: temp_dict["status"]!)! {
                                             trading_window_completed = true
                                             current_status = temp_dict["status"]!
                                             trading_window_id = temp_dict["trading-window-id"]!
                                             UserDefaults.standard.set("false", forKey: "trading_window_active")
+                                    } else {
+                                        UserDefaults.standard.set("false", forKey: "trading_window_active")
                                     }
                                     temp_dict = [:]
                                 }
