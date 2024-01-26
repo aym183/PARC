@@ -12,6 +12,9 @@ struct UserAccount: View {
     @Binding var payoutsValue: Int
     @Binding var secondaryTransactionsValue: Int
     @AppStorage("full_name") var fullName: String = ""
+    @AppStorage("email") var email: String = ""
+    @State var showProfileImagePicker = false
+    @State var profile_image: UIImage?
     
     var body: some View {
         GeometryReader { geometry in
@@ -19,10 +22,22 @@ struct UserAccount: View {
                 Color(.white).ignoresSafeArea()
                 VStack(alignment: .center) {
                     HStack {
-                        Button(action: {}) {
+                        Button(action: { showProfileImagePicker.toggle() }) {
+                            if let image = profile_image {
+                                Image(uiImage: profile_image!)
+                                    .resizable()
+                                    .frame(width: 120, height: 120)
+                                    .cornerRadius(100)
+                                    .onAppear() {
+                                        UpdateDB().updateUserTable(primary_key: "email", primary_key_value: email, table: "users", updated_key: "picture", updated_value: CreateDB().upload_logo_image(image: profile_image!, folder: "profile_images")) { response in
+                                            
+                                        }
+                                    }
+                            } else {
                                 Image(systemName: "person.crop.circle")
-                                        .resizable()
-                                        .frame(width: 120, height: 120)
+                                    .resizable()
+                                    .frame(width: 120, height: 120)
+                            }
                         }
                         
                         VStack(alignment: .leading) {
@@ -145,6 +160,9 @@ struct UserAccount: View {
                     
                     Spacer()
                 }
+            }
+            .sheet(isPresented: $showProfileImagePicker) {
+                ImagePicker(image: $profile_image)
             }
             .frame(width: max(0, geometry.size.width-40))
             .multilineTextAlignment(.center)

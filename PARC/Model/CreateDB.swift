@@ -209,43 +209,8 @@ class CreateDB: ObservableObject {
         }
         
         UserDefaults.standard.set(image.jpegData(compressionQuality: 0.8), forKey: path)
-        print(path)
         return path
-//        completion("Path Created")
     }
-    
-//    func upload_display_image() -> String {
-//        
-//    }
-    
-//    func uploadFranchiseLogoImage(image: UIImage) {
-//        
-//        let imageData = image.jpegData(compressionQuality: 0.8)
-//        guard imageData != nil else {
-//            return
-//        }
-//        let randomID = UUID().uuidString
-//        let path = "\(randomID).jpg"
-//        
-//        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/images?image=\(imageData!)&image_title=\(path)")!
-//        
-//        var request = URLRequest(url: apiUrl)
-//        request.httpMethod = "POST"
-//
-//        URLSession.shared.dataTask(with: request) { data, response, error in
-//            if let data = data, let responseText = String(data: data, encoding: .utf8) {
-//                DispatchQueue.main.async {
-//                    print(responseText)
-////                    completion("Franchise Logo Image Created")
-//                }
-//            } else if let error = error {
-//                DispatchQueue.main.async {
-//                    print("Error uploading franchise logo: \(error.localizedDescription)")
-//                }
-//            }
-//        }.resume()
-//        
-//    }
     
     func createPayout(franchise: String, revenue_generated: String, opportunity_id: Int, date_scheduled: String, amount_offered: String, user_holdings: [[String: String]], completion: @escaping (String?) -> Void) {
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/payouts")!
