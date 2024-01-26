@@ -370,7 +370,6 @@ struct AdminFranchiseForm: View {
                         .foregroundColor(.black)
                 }
                 .frame(width: max(0, geometry.size.width-40), height: max(0, geometry.size.height))
-
             }
             .sheet(isPresented: $showLogoImagePicker) {
                 ImagePicker(image: $logo_image)

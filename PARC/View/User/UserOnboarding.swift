@@ -13,6 +13,8 @@ struct UserOnboarding: View {
     @State private var selectedBackground: DropdownMenuOption? = nil
     @State var selectedYes = false
     @State var selectedNo = false
+    @State var showVerificationImagePicker = false
+    @State var verification_image: UIImage?
     @Binding var isShownOnboarding: Bool
     
     var body: some View {
@@ -125,13 +127,19 @@ struct UserOnboarding: View {
                                     Text("Identity Verification")
                                         .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.05))
                                     
-                                    Button(action: {
-                                        withAnimation(.easeOut(duration: 0.5)) { isShowingVerificationHint.toggle() }
-                                    }) {
-                                        Image(systemName: "questionmark")
-                                            .background(Circle().fill(.gray).font(.system(size: 12)).frame(width: 25, height: 25).opacity(0.3))
-                                            .fontWeight(.semibold).padding(.vertical).padding(.leading, 5).padding(.top, -3)
+                                    if let image = self.verification_image {
+                                        Text("✅")
+                                            .padding(.vertical)
+                                    } else {
+                                        Button(action: {
+                                            withAnimation(.easeOut(duration: 0.5)) { isShowingVerificationHint.toggle() }
+                                        }) {
+                                            Image(systemName: "questionmark")
+                                                .background(Circle().fill(.gray).font(.system(size: 12)).frame(width: 25, height: 25).opacity(0.3))
+                                                .fontWeight(.semibold).padding(.vertical).padding(.leading, 5).padding(.top, -3)
+                                        }
                                     }
+                                  
                                     Spacer()
                                 }
                                 if isShowingVerificationHint {
@@ -151,14 +159,12 @@ struct UserOnboarding: View {
                                         )
                                         .frame(width: max(0, geometry.size.width - 80), height: 45)
                                     
-                                    Button(action: {}) {
+                                    Button(action: { showVerificationImagePicker.toggle() }) {
                                         HStack {
                                             Text("Upload")
                                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.05))
                                         }
                                         .frame(width: max(0, geometry.size.width - 80), height: 45)
-                                        .background(Color("Secondary"))
-                                        .foregroundColor(Color.white)
                                         .cornerRadius(5)
                                     }
                                 }
@@ -219,51 +225,16 @@ struct UserOnboarding: View {
                                     .frame(width: 135, height: 45)
                                 }
                                 .padding(.horizontal, 0)
-                                //                            HStack {
-                                //                                Text("Card Details")
-                                //                                    .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.05))
-                                //
-                                //                                Button(action: {
-                                //                                    withAnimation(.easeOut(duration: 0.5)) { isShowingCardHint.toggle() }
-                                //                                    }) {
-                                //                                    Image(systemName: "questionmark")
-                                //                                        .background(Circle().fill(.gray).font(.system(size: 12)).frame(width: 25, height: 25).opacity(0.3))
-                                //                                        .fontWeight(.semibold).padding(.vertical).padding(.leading, 5).padding(.top, -3)
-                                //                                }
-                                //                                Spacer()
-                                //
-                                //                            }
-                                //
-                                //
-                                //                            if isShowingCardHint {
-                                //                                CardView(hint: "This is needed to verify your card details and ensure a smooth investing experience")
-                                //                                    .transition(.scale)
-                                //                                    .padding(.top, -25)
-                                //                                    .padding(.leading, 110)
-                                //                            }
-                                //
-                                //                            Button(action: {  }) {
-                                //                                HStack {
-                                //                                    Text("Upload")
-                                //                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.05))
-                                //                                }
-                                //                                .frame(width: 320, height: 45)
-                                //                                .background(Color("Secondary"))
-                                //                                .foregroundColor(Color.white)
-                                //                                .border(Color.black, width: 1)
-                                //                                .cornerRadius(5)
-                                //                            }
-                                //
                             }
                             .padding(10)
                             .frame(height: max(0, geometry.size.height-300))
                     }
                     .frame(width: max(0, geometry.size.width - 70))
                     }
+                    .sheet(isPresented: $showVerificationImagePicker) {
+                        ImagePicker(image: $verification_image)
+                    }
                     .frame(width: max(0, geometry.size.width - 40), height: max(0, geometry.size.height-280))
-//                    Spacer()
-//                    Text("Hello")
-//                    Spacer()
                 }
                 .foregroundColor(.black)
                 .cornerRadius(10)
@@ -287,6 +258,6 @@ struct CardView: View {
     }
 }
 
-//#Preview {
-//    UserOnboarding()
-//}
+#Preview {
+    UserOnboarding(isShownOnboarding: .constant(true))
+}
