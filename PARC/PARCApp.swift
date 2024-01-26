@@ -14,7 +14,7 @@ struct PARCApp: App {
 
     var body: some Scene {
         WindowGroup {
-            LandingPage().preferredColorScheme(.light)//s
+            LandingPage().preferredColorScheme(.light)
         }
     }
 }
