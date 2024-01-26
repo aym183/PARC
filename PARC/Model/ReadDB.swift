@@ -30,7 +30,7 @@ class ReadDB: ObservableObject {
 
     func getFranchises() {
         var temp_dict: [String: String] = [:]
-        let keysArray = ["description", "avg_revenue_18_months", "name", "logo", "industry", "no_of_franchises", "ebitda_estimate", "avg_franchise_mom_revenues", "avg_startup_capital"]
+        let keysArray = ["description", "avg_revenue_18_months", "name", "logo", "display_image", "industry", "no_of_franchises", "ebitda_estimate", "avg_franchise_mom_revenues", "avg_startup_capital"]
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/franchises")!
 
         var request = URLRequest(url: apiUrl)

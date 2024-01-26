@@ -23,6 +23,8 @@ struct AdminFranchiseForm: View {
     @State var display_image: UIImage?
     @Binding var franchise_form_shown: Bool
     @Binding var franchise_data: [DropdownMenuOption]
+    @State var logo_path = ""
+    @State var display_path = ""
     
     var body: some View {
         
@@ -71,10 +73,9 @@ struct AdminFranchiseForm: View {
                                         
                                         if let image = self.logo_image {
                                             Text("✅")
-//                                                .onAppear {
-//                                                     CreateDB().upload_logo_image(image: image)
-//                                                    print(text)
-//                                                }
+                                                .onAppear {
+                                                    logo_path = CreateDB().upload_logo_image(image: image, folder: "logo_images")
+                                                }
                                         }
                                         Spacer()
                                     }
@@ -108,9 +109,9 @@ struct AdminFranchiseForm: View {
                                         
                                         if let image = self.display_image {
                                             Text("✅")
-//                                                .onAppear {
-//                                                    CreateDB().uploadFranchiseLogoImage(image: image)
-//                                                }
+                                                .onAppear {
+                                                    display_path = CreateDB().upload_logo_image(image: image, folder: "display_images")
+                                                }
                                         }
                                         Spacer()
                                     }
@@ -345,7 +346,7 @@ struct AdminFranchiseForm: View {
                                 DispatchQueue.global(qos: .userInteractive).async {
                                     self.franchise_data.append(DropdownMenuOption(option: self.name))
                                     
-                                    CreateDB().createFranchise(name: self.name, logo: "null for now", description: self.description, no_of_franchises: self.noOfFranchises, avg_franchise_mom_revenues: self.MoMRevenue, avg_startup_capital: self.startupCapital, avg_revenue_18_months: self.monthRev18, ebitda_estimate: self.ebitdaEstimate) { response in
+                                    CreateDB().createFranchise(name: self.name, logo: logo_path, display_image: display_path, description: self.description, no_of_franchises: self.noOfFranchises, avg_franchise_mom_revenues: self.MoMRevenue, avg_startup_capital: self.startupCapital, avg_revenue_18_months: self.monthRev18, ebitda_estimate: self.ebitdaEstimate) { response in
                                         
                                         if response == "Franchise Created" {
                                             franchise_form_shown.toggle()

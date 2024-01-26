@@ -123,10 +123,10 @@ class CreateDB: ObservableObject {
         
     }
     
-    func createFranchise(name: String, logo: String, description: String, no_of_franchises: String, avg_franchise_mom_revenues: String, avg_startup_capital: String, avg_revenue_18_months: String, ebitda_estimate: String, completion: @escaping (String?) -> Void) {
+    func createFranchise(name: String, logo: String, display_image: String, description: String, no_of_franchises: String, avg_franchise_mom_revenues: String, avg_startup_capital: String, avg_revenue_18_months: String, ebitda_estimate: String, completion: @escaping (String?) -> Void) {
         
 
-        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/franchises?name=\(name)&logo=\(logo)&description=\(description)&no_of_franchises=\(no_of_franchises)&avg_franchise_mom_revenues=\(avg_franchise_mom_revenues)&avg_startup_capital=\(avg_startup_capital)&avg_revenue_18_months=\(avg_revenue_18_months)&ebitda_estimate=\(ebitda_estimate)")!
+        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/franchises?name=\(name)&logo=\(logo)&display_image=\(display_image)&description=\(description)&no_of_franchises=\(no_of_franchises)&avg_franchise_mom_revenues=\(avg_franchise_mom_revenues)&avg_startup_capital=\(avg_startup_capital)&avg_revenue_18_months=\(avg_revenue_18_months)&ebitda_estimate=\(ebitda_estimate)")!
         
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "POST"
@@ -191,19 +191,19 @@ class CreateDB: ObservableObject {
         }.resume()
     }
     
-    func upload_logo_image(image: UIImage, completion: @escaping (String?) -> Void) -> String {
+    func upload_logo_image(image: UIImage, folder: String) -> String {
         @AppStorage("email") var email: String = ""
         let imageData = image.jpegData(compressionQuality: 0.8)
         guard imageData != nil else { return ""}
         let randomID = UUID().uuidString
-        let path = "logo_images/\(randomID).jpg"
+        let path = "\(folder)/\(randomID).jpg"
         
         DispatchQueue.global(qos: .background).async {
             let storage = Storage.storage().reference()
-            let fileRef = storage.child("logo_images/\(randomID).jpg")
+            let fileRef = storage.child("\(folder)/\(randomID).jpg")
             let uploadTask = fileRef.putData(imageData!, metadata: nil) { metadata, error in
                 if let error = error {
-                    print("Error uploading logo image \(error.localizedDescription)")
+                    print("Error uploading \(folder) \(error.localizedDescription)")
                 }
             }
         }
