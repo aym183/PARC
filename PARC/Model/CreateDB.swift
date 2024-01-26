@@ -7,6 +7,8 @@
 
 import Foundation
 import SwiftUI
+import FirebaseCore
+import FirebaseStorage
 
 class CreateDB: ObservableObject {
     let currentDate = Date()
@@ -188,6 +190,33 @@ class CreateDB: ObservableObject {
             }
         }.resume()
     }
+    
+    func upload_logo_image(image: UIImage, completion: @escaping (String?) -> Void) -> String {
+        @AppStorage("email") var email: String = ""
+        let imageData = image.jpegData(compressionQuality: 0.8)
+        guard imageData != nil else { return ""}
+        let randomID = UUID().uuidString
+        let path = "logo_images/\(randomID).jpg"
+        
+        DispatchQueue.global(qos: .background).async {
+            let storage = Storage.storage().reference()
+            let fileRef = storage.child("logo_images/\(randomID).jpg")
+            let uploadTask = fileRef.putData(imageData!, metadata: nil) { metadata, error in
+                if let error = error {
+                    print("Error uploading logo image \(error.localizedDescription)")
+                }
+            }
+        }
+        
+        UserDefaults.standard.set(image.jpegData(compressionQuality: 0.8), forKey: path)
+        print(path)
+        return path
+//        completion("Path Created")
+    }
+    
+//    func upload_display_image() -> String {
+//        
+//    }
     
 //    func uploadFranchiseLogoImage(image: UIImage) {
 //        

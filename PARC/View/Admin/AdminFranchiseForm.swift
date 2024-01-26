@@ -72,7 +72,8 @@ struct AdminFranchiseForm: View {
                                         if let image = self.logo_image {
                                             Text("✅")
 //                                                .onAppear {
-//                                                    CreateDB().uploadFranchiseLogoImage(image: image)
+//                                                     CreateDB().upload_logo_image(image: image)
+//                                                    print(text)
 //                                                }
                                         }
                                         Spacer()
