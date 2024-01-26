@@ -11,7 +11,6 @@ import SwiftUI
 class ReadDB: ObservableObject {
     @Published var franchise_data_dropdown: [DropdownMenuOption] = []
     @Published var franchise_data: [[String: String]] = []
-    @Published var emails: [String] = []
     @Published var admin_opportunity_data: [[String: String]] = []
     @Published var user_opportunity_data: [[String: String]] = []
     @Published var payout_data: [[String: String]] = []

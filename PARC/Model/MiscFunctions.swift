@@ -277,3 +277,24 @@ func transformPayoutsArray(entries: [[String:String]]) -> [[String: String]]{
 
         return resultArray
 }
+
+// Reference GPT
+func convertNumberAmount(input_number: Double) -> String {
+    let formatter = NumberFormatter()
+    formatter.numberStyle = .decimal
+    
+    switch input_number {
+    case 1_000_000_000...:
+        formatter.maximumFractionDigits = 1
+        return "\(formatter.string(from: NSNumber(value: input_number / 1_000_000_000)) ?? "")B"
+    case 1_000_000...:
+        formatter.maximumFractionDigits = 1
+        return "\(formatter.string(from: NSNumber(value: input_number / 1_000_000)) ?? "")M"
+    case 1_000...:
+        formatter.maximumFractionDigits = 1
+        return "\(formatter.string(from: NSNumber(value: input_number / 1_000)) ?? "")k"
+    default:
+        formatter.maximumFractionDigits = 0
+        return "\(formatter.string(from: NSNumber(value: input_number)) ?? "")"
+    }
+}

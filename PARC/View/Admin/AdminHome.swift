@@ -565,15 +565,9 @@ struct AdminHome: View {
                 readDB.full_user_holdings_data = []
                 readDB.trading_window_data = []
                 readDB.trading_window_transactions_data = []
-                readDB.emails = []
                 readDB.transformed_trading_window_transactions_data = [:]
                 readDB.getFranchises()
                 readDB.getAllUserHoldings()
-                readDB.getUserEmails() { response in
-                    if response == "User emails fetched" {
-                        print("Emails fetched")
-                    }
-                }
                 readDB.getAdminOpportunities() { response in
                     if response == "Fetched all opportunities" {
                         readDB.getPayouts() { response in

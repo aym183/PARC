@@ -178,17 +178,11 @@ struct UserHome: View {
                         readDB.full_user_holdings_data = []
                         readDB.user_payout_data = []
                         readDB.trading_window_data = []
-                        readDB.emails = []
                         readDB.payout_data = []
                         readDB.secondary_market_transactions_ind = 0
                         readDB.getFranchises()
                         readDB.getAllUserHoldings()
                         readDB.getTradingWindows()
-                        readDB.getUserEmails() { response in
-                            if response == "User emails fetched" {
-                                print("Emails fetched")
-                            }
-                        }
                         readDB.getTradingWindowTransactionsEmail()
                         readDB.getPayouts() { response in
                             if response == "Fetched payouts" {
@@ -241,6 +235,7 @@ struct UserHomeContent: View {
     @State var opportunity_shown = false
     @Binding var opportunity_data: [[String: String]]
     @State var selected_opportunity: [String: String] = [:]
+    @State var selected_franchise: [String: String] = [:]
     @Binding var franchise_data: [[String: String]]
     @Binding var user_holdings_data: [[String: String]]
     @ObservedObject var readDB: ReadDB
@@ -271,6 +266,7 @@ struct UserHomeContent: View {
                         } else if (opportunity_data.count != 0 && franchise_data.count != 0) {
                             ForEach(0..<opportunity_data.count, id: \.self) { index in
                                 Button(action: {
+                                    selected_franchise = franchise_data[franchise_data.firstIndex(where: { $0["name"] == opportunity_data[index]["franchise"]!})!]
                                     selected_opportunity = opportunity_data[index]
                                     opportunity_shown.toggle()
                                 }) {
@@ -378,7 +374,7 @@ struct UserHomeContent: View {
                         }
                         .frame(width: max(0, geometry.size.width))
                         .navigationDestination(isPresented: $opportunity_shown) {
-                            UserOpportunityClick(opportunity_data: $selected_opportunity, franchise_data: $franchise_data)
+                            UserOpportunityClick(opportunity_data: $selected_opportunity, franchise_data: $selected_franchise)
                         }
                         }
                 }
