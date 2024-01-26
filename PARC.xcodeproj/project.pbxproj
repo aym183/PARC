@@ -31,6 +31,12 @@
 		614C0C072AF17CCA00D406A3 /* loading_3.0.json in Resources */ = {isa = PBXBuildFile; fileRef = 614C0C062AF17CCA00D406A3 /* loading_3.0.json */; };
 		614C0C0A2AF24FC300D406A3 /* URLImage in Frameworks */ = {isa = PBXBuildFile; productRef = 614C0C092AF24FC300D406A3 /* URLImage */; };
 		614C0C0C2AF24FC300D406A3 /* URLImageStore in Frameworks */ = {isa = PBXBuildFile; productRef = 614C0C0B2AF24FC300D406A3 /* URLImageStore */; };
+		614F63C62B63DD9C000E6022 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 614F63C52B63DD9C000E6022 /* FirebaseAnalytics */; };
+		614F63C82B63DD9C000E6022 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 614F63C72B63DD9C000E6022 /* FirebaseAnalyticsOnDeviceConversion */; };
+		614F63CA2B63DD9C000E6022 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 614F63C92B63DD9C000E6022 /* FirebaseAnalyticsSwift */; };
+		614F63CC2B63DD9C000E6022 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 614F63CB2B63DD9C000E6022 /* FirebaseAnalyticsWithoutAdIdSupport */; };
+		614F63CE2B63DD9C000E6022 /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 614F63CD2B63DD9C000E6022 /* FirebaseAppCheck */; };
+		614F63D02B63DDF6000E6022 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 614F63CF2B63DDF6000E6022 /* GoogleService-Info.plist */; };
 		615243CE2AE06E4900A18880 /* BottomNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615243CD2AE06E4900A18880 /* BottomNavBar.swift */; };
 		615243D02AE128F500A18880 /* UserPortfolio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615243CF2AE128F500A18880 /* UserPortfolio.swift */; };
 		615243D22AE1290400A18880 /* UserMarketplace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615243D12AE1290400A18880 /* UserMarketplace.swift */; };
@@ -79,6 +85,7 @@
 		614C0BFF2AF171AE00D406A3 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		614C0C042AF1740C00D406A3 /* Auth0.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Auth0.plist; sourceTree = "<group>"; };
 		614C0C062AF17CCA00D406A3 /* loading_3.0.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = loading_3.0.json; path = "../../../../../IOS Dev/Mishki/Kitt/View/Lottie Files/loading_3.0.json"; sourceTree = "<group>"; };
+		614F63CF2B63DDF6000E6022 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		615243CD2AE06E4900A18880 /* BottomNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomNavBar.swift; sourceTree = "<group>"; };
 		615243CF2AE128F500A18880 /* UserPortfolio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPortfolio.swift; sourceTree = "<group>"; };
 		615243D12AE1290400A18880 /* UserMarketplace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMarketplace.swift; sourceTree = "<group>"; };
@@ -116,14 +123,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				614F63CC2B63DD9C000E6022 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
+				614F63CA2B63DD9C000E6022 /* FirebaseAnalyticsSwift in Frameworks */,
 				6136EC1D2AF551DC00A09DDA /* StripeIdentity in Frameworks */,
 				6136EC192AF551DC00A09DDA /* StripeCardScan in Frameworks */,
+				614F63CE2B63DD9C000E6022 /* FirebaseAppCheck in Frameworks */,
+				614F63C82B63DD9C000E6022 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
 				6136EC1B2AF551DC00A09DDA /* StripeFinancialConnections in Frameworks */,
 				6136EC152AF551DC00A09DDA /* Stripe in Frameworks */,
 				614C0C0C2AF24FC300D406A3 /* URLImageStore in Frameworks */,
 				61DBDFE32ADF0A3E00AE41FA /* Lottie in Frameworks */,
 				6136EC172AF551DC00A09DDA /* StripeApplePay in Frameworks */,
 				614C0C0A2AF24FC300D406A3 /* URLImage in Frameworks */,
+				614F63C62B63DD9C000E6022 /* FirebaseAnalytics in Frameworks */,
 				614C0C032AF172F500D406A3 /* Auth0 in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -170,6 +182,7 @@
 		61DBDFC22ADEF83F00AE41FA /* PARC */ = {
 			isa = PBXGroup;
 			children = (
+				614F63CF2B63DDF6000E6022 /* GoogleService-Info.plist */,
 				61DBDFDB2ADF098900AE41FA /* ViewModel */,
 				61DBDFDA2ADF098400AE41FA /* Model */,
 				61DBDFD92ADF097E00AE41FA /* View */,
@@ -313,6 +326,11 @@
 				6136EC182AF551DC00A09DDA /* StripeCardScan */,
 				6136EC1A2AF551DC00A09DDA /* StripeFinancialConnections */,
 				6136EC1C2AF551DC00A09DDA /* StripeIdentity */,
+				614F63C52B63DD9C000E6022 /* FirebaseAnalytics */,
+				614F63C72B63DD9C000E6022 /* FirebaseAnalyticsOnDeviceConversion */,
+				614F63C92B63DD9C000E6022 /* FirebaseAnalyticsSwift */,
+				614F63CB2B63DD9C000E6022 /* FirebaseAnalyticsWithoutAdIdSupport */,
+				614F63CD2B63DD9C000E6022 /* FirebaseAppCheck */,
 			);
 			productName = PARC;
 			productReference = 61DBDFC02ADEF83F00AE41FA /* PARC.app */;
@@ -347,6 +365,7 @@
 				614C0C012AF172F500D406A3 /* XCRemoteSwiftPackageReference "Auth0" */,
 				614C0C082AF24FC300D406A3 /* XCRemoteSwiftPackageReference "url-image" */,
 				6136EC132AF551DC00A09DDA /* XCRemoteSwiftPackageReference "stripe-ios-spm" */,
+				614F63C42B63DD9C000E6022 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 61DBDFC12ADEF83F00AE41FA /* Products */;
 			projectDirPath = "";
@@ -369,6 +388,7 @@
 				614C0C072AF17CCA00D406A3 /* loading_3.0.json in Resources */,
 				61DBDFE52ADFDC8D00AE41FA /* shop.json in Resources */,
 				61DBDFEB2ADFE29C00AE41FA /* LaunchScreen.storyboard in Resources */,
+				614F63D02B63DDF6000E6022 /* GoogleService-Info.plist in Resources */,
 				61DBDFC82ADEF84000AE41FA /* Assets.xcassets in Resources */,
 				614C0C052AF1740C00D406A3 /* Auth0.plist in Resources */,
 			);
@@ -654,6 +674,14 @@
 				minimumVersion = 3.1.1;
 			};
 		};
+		614F63C42B63DD9C000E6022 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.20.0;
+			};
+		};
 		61DBDFE12ADF0A3E00AE41FA /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
@@ -704,6 +732,31 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 614C0C082AF24FC300D406A3 /* XCRemoteSwiftPackageReference "url-image" */;
 			productName = URLImageStore;
+		};
+		614F63C52B63DD9C000E6022 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 614F63C42B63DD9C000E6022 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		614F63C72B63DD9C000E6022 /* FirebaseAnalyticsOnDeviceConversion */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 614F63C42B63DD9C000E6022 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsOnDeviceConversion;
+		};
+		614F63C92B63DD9C000E6022 /* FirebaseAnalyticsSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 614F63C42B63DD9C000E6022 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsSwift;
+		};
+		614F63CB2B63DD9C000E6022 /* FirebaseAnalyticsWithoutAdIdSupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 614F63C42B63DD9C000E6022 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsWithoutAdIdSupport;
+		};
+		614F63CD2B63DD9C000E6022 /* FirebaseAppCheck */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 614F63C42B63DD9C000E6022 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAppCheck;
 		};
 		61DBDFE22ADF0A3E00AE41FA /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -34,152 +34,241 @@ struct UserOpportunityClick: View {
     
     var body: some View {
         GeometryReader { geometry in
-                ZStack(alignment: .bottom) {
-                    Color(.white).ignoresSafeArea()
+            ZStack(alignment: .bottom) {
+                Color(.white).ignoresSafeArea()
+                
+                ScrollView(.vertical, showsIndicators: false) {
+                    Image("store_live")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: max(0, geometry.size.width))
+                        .padding(.top)
                     
-                    ScrollView(.vertical, showsIndicators: false) {
-                        Image("store_live")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: max(0, geometry.size.width))
-                            .padding(.top)
+                    VStack {
                         
-                        VStack {
+                        HStack {
+                            Image("McDonalds")
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 50, height: 50)
                             
-                            HStack {
-                                Image("McDonalds")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: 50, height: 50)
+                            Text(String(describing: opportunity_data["franchise"]!))
+                                .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.055))
+                            
+                            Spacer()
+                        }
+                        
+                        Text(franchise_data["description"]!)
+                            .foregroundColor(Color("Custom_Gray"))
+                            .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.030))
+                            .frame(width: max(0, geometry.size.width-40), height: 50)
+                            .multilineTextAlignment(.leading)
+                        
+                        HStack {
+                            Text("\(String(describing: Int(Double(opportunity_data["ratio"]!)!*100)))% - \(getDaysRemaining(dateString: String(describing: opportunity_data["close_date"]!))!) days left")
+                                .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.024))
+                                .foregroundColor(Color("Custom_Gray"))
+                            Spacer()
+                            
+                            ZStack {
+                                Rectangle()
+                                    .foregroundColor(.clear)
+                                    .frame(width: 45, height: 14)
+                                    .background(Color(red: 0.85, green: 0.85, blue: 0.85).opacity(0.5))
+                                    .cornerRadius(5)
                                 
-                                Text(String(describing: opportunity_data["franchise"]!))
-                                    .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.055))
-                                
-                                Spacer()
+                                HStack {
+                                    Image("gbr").resizable().frame(width: 10, height: 10)
+                                    Text(String(describing: opportunity_data["location"]!))
+                                        .font(Font.custom("Nunito-SemiBold", size: 8))
+                                        .foregroundColor(Color("Custom_Gray"))
+                                        .padding(.leading, -7.5)
+                                }
+                            }
+                        }
+                        .padding(.top, 5)
+                        
+                        ProgressView(value: Double(opportunity_data["ratio"]!))
+                            .tint(Color("Secondary"))
+                            .scaleEffect(x: 1, y: 2, anchor: .center)
+                            .padding(.top, -1)
+                        
+                        //                        ZStack {
+                        //                            Rectangle()
+                        //                                .foregroundColor(.clear)
+                        //                                .frame(width: max(0, geometry.size.width - 40), height: 8)
+                        //                                .background(Color(red: 0.85, green: 0.85, blue: 0.85).opacity(0.6))
+                        //                                .cornerRadius(100)
+                        //
+                        //                            HStack {
+                        //                                Rectangle()
+                        //                                    .foregroundColor(.clear)
+                        //                                    .frame(width: max(0, geometry.size.width - 200), height: 8)
+                        //                                    .background(Color("Secondary"))
+                        //                                    .cornerRadius(100)
+                        //
+                        //                                Spacer()
+                        //                            }
+                        //                            .frame(width: max(0, geometry.size.width - 105))
+                        //                            .padding(.leading, -65)
+                        //
+                        //
+                        //                        }
+                        //                        .padding(.top, -5)
+                        
+                        HStack {
+                            Text("Minimum Investment Amount - £\(opportunity_data["min_invest_amount"]!)")
+                                .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.024))
+                                .foregroundColor(Color("Custom_Gray"))
+                            
+                            Spacer()
+                            
+                            Text("Target - £\(String(describing: formattedNumber(input_number:Int(opportunity_data["asking_price"]!)!)))")
+                                .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.024))
+                                .foregroundColor(Color("Custom_Gray"))
+                            
+                        }
+                        .padding(.top, -3)
+                        
+                        Divider()
+                            .overlay(Color("Custom_Gray"))
+                            .opacity(0.5)
+                            .frame(height: 1)
+                            .padding(.top, 10)
+                            .padding(.bottom, -5)
+                        
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text("£\(String(describing: formattedNumber(input_number:Int(opportunity_data["amount_raised"]!)!)))")
+                                    .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.075))
+                                Text("Invested")
+                                    .foregroundColor(Color("Custom_Gray"))
+                                    .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.035))
+                                    .padding(.top, -25)
                             }
                             
-                            Text(franchise_data["description"]!)
-                                .foregroundColor(Color("Custom_Gray"))
-                                .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.030))
-                                .frame(width: max(0, geometry.size.width-40), height: 50)
-                                .multilineTextAlignment(.leading)
+                            Spacer()
                             
-                            HStack {
-                                Text("\(String(describing: Int(Double(opportunity_data["ratio"]!)!*100)))% - \(getDaysRemaining(dateString: String(describing: opportunity_data["close_date"]!))!) days left")
-                                    .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.024))
+                            VStack(alignment: .leading) {
+                                Text("\(String(describing: opportunity_data["investors"]!))")
+                                    .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.075))
+                                Text("Investors")
                                     .foregroundColor(Color("Custom_Gray"))
-                                Spacer()
+                                    .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.035))
+                                    .padding(.top, -25)
+                            }
+                            .multilineTextAlignment(.leading)
+                            Spacer()
+                        }
+                        
+                        Divider()
+                            .overlay(Color("Custom_Gray"))
+                            .opacity(0.5)
+                            .frame(height: 1)
+                        
+                        HStack {
+                            Text("Why Invest in Franchises?")
+                            Spacer()
+                        }
+                        .padding(.top)
+                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.055))
+                        
+                        
+                        Divider()
+                            .overlay(Color("Custom_Gray"))
+                            .opacity(0.5)
+                            .frame(height: 1)
+                            .padding(.top, -15)
+                        
+                        ForEach(0..<2, id: \.self) { index in
+                            HStack(spacing: 10) {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 5)
+                                        .fill(Color("Custom_Light_Gray"))
+                                        .frame(width: max(0, geometry.size.width - 210))
+                                    
+                                    VStack {
+                                        Text(titles_why_invest_1[index])
+                                            .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.045))
+                                            .padding(.bottom, 10)
+                                        
+                                        Text(titles_why_invest_description[index])
+                                            .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.033))
+                                            .foregroundColor(.gray)
+                                            .multilineTextAlignment(.center)
+                                        
+                                    }
+                                    .padding(.horizontal, 10)
+                                }
                                 
                                 ZStack {
-                                    Rectangle()
-                                        .foregroundColor(.clear)
-                                        .frame(width: 45, height: 14)
-                                        .background(Color(red: 0.85, green: 0.85, blue: 0.85).opacity(0.5))
-                                        .cornerRadius(5)
+                                    RoundedRectangle(cornerRadius: 5)
+                                        .fill(Color("Custom_Light_Gray"))
+                                        .frame(width: max(0, geometry.size.width - 210))
                                     
-                                    HStack {
-                                        Image("gbr").resizable().frame(width: 10, height: 10)
-                                        Text(String(describing: opportunity_data["location"]!))
-                                            .font(Font.custom("Nunito-SemiBold", size: 8))
-                                            .foregroundColor(Color("Custom_Gray"))
-                                            .padding(.leading, -7.5)
+                                    VStack {
+                                        Text(titles_why_invest_2[index])
+                                            .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.045))
+                                            .padding(.bottom, 10)
+                                        
+                                        Text(titles_why_invest_description_2[index])
+                                            .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.033))
+                                            .foregroundColor(.gray)
+                                            .multilineTextAlignment(.center)
+                                        
                                     }
+                                    .padding(.horizontal, 10)
+                                    
+                                }
+                                
+                            }
+                            .frame(height: 120)
+                            .padding(.vertical, 2.5)
+                        }
+                        
+                        
+                        HStack {
+                            Text(analytics_text)
+                            Spacer()
+                            Menu {
+                                Button {
+                                    withAnimation(.easeOut(duration: 0.2)) {
+                                        analytics_text = "Similar Franchises"
+                                    }
+                                } label: {
+                                    Label("Similar Franchises", systemImage: "chart.pie")
+                                }
+                                
+                                Button {
+                                    withAnimation(.easeOut(duration: 0.2)) {
+                                        analytics_text = "Selected Franchise"
+                                    }
+                                } label: {
+                                    Label("Selected Franchise", systemImage: "chart.line.uptrend.xyaxis")
+                                }
+                            } label: {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .fill(Color("Secondary"))
+                                        .frame(width: max(0, geometry.size.width - 325), height: 25)
+                                    
+                                    Text("Select \(Image(systemName: "chevron.down"))")
+                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.025))
+                                        .foregroundColor(.white)
                                 }
                             }
-                            .padding(.top, 5)
-                            
-                            ProgressView(value: Double(opportunity_data["ratio"]!))
-                                .tint(Color("Secondary"))
-                                .scaleEffect(x: 1, y: 2, anchor: .center)
-                                .padding(.top, -1)
-                            
-                            //                        ZStack {
-                            //                            Rectangle()
-                            //                                .foregroundColor(.clear)
-                            //                                .frame(width: max(0, geometry.size.width - 40), height: 8)
-                            //                                .background(Color(red: 0.85, green: 0.85, blue: 0.85).opacity(0.6))
-                            //                                .cornerRadius(100)
-                            //
-                            //                            HStack {
-                            //                                Rectangle()
-                            //                                    .foregroundColor(.clear)
-                            //                                    .frame(width: max(0, geometry.size.width - 200), height: 8)
-                            //                                    .background(Color("Secondary"))
-                            //                                    .cornerRadius(100)
-                            //
-                            //                                Spacer()
-                            //                            }
-                            //                            .frame(width: max(0, geometry.size.width - 105))
-                            //                            .padding(.leading, -65)
-                            //
-                            //
-                            //                        }
-                            //                        .padding(.top, -5)
-                            
-                            HStack {
-                                Text("Minimum Investment Amount - £\(opportunity_data["min_invest_amount"]!)")
-                                    .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.024))
-                                    .foregroundColor(Color("Custom_Gray"))
-                                
-                                Spacer()
-                                
-                                Text("Target - £\(String(describing: formattedNumber(input_number:Int(opportunity_data["asking_price"]!)!)))")
-                                    .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.024))
-                                    .foregroundColor(Color("Custom_Gray"))
-                                
-                            }
-                            .padding(.top, -3)
-                            
-                            Divider()
-                                .overlay(Color("Custom_Gray"))
-                                .opacity(0.5)
-                                .frame(height: 1)
-                                .padding(.top, 10)
-                                .padding(.bottom, -5)
-                            
-                                HStack {
-                                    VStack(alignment: .leading) {
-                                        Text("£\(String(describing: formattedNumber(input_number:Int(opportunity_data["amount_raised"]!)!)))")
-                                            .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.075))
-                                        Text("Invested")
-                                            .foregroundColor(Color("Custom_Gray"))
-                                            .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.035))
-                                            .padding(.top, -25)
-                                    }
-                                    
-                                    Spacer()
-                                    
-                                    VStack(alignment: .leading) {
-                                        Text("\(String(describing: opportunity_data["investors"]!))")
-                                            .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.075))
-                                        Text("Investors")
-                                            .foregroundColor(Color("Custom_Gray"))
-                                            .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.035))
-                                            .padding(.top, -25)
-                                    }
-                                    .multilineTextAlignment(.leading)
-                                    Spacer()
-                                }
-                            
-                            Divider()
-                                .overlay(Color("Custom_Gray"))
-                                .opacity(0.5)
-                                .frame(height: 1)
-                            
-                            HStack {
-                                Text("Why Invest in Franchises?")
-                                Spacer()
-                            }
-                            .padding(.top)
-                            .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.055))
-                            
-                            
-                            Divider()
-                                .overlay(Color("Custom_Gray"))
-                                .opacity(0.5)
-                                .frame(height: 1)
-                                .padding(.top, -15)
-                            
+                        }
+                        .padding(.top)
+                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.055))
+                        
+                        
+                        Divider()
+                            .overlay(Color("Custom_Gray"))
+                            .opacity(0.5)
+                            .frame(height: 1)
+                            .padding(.top, -15)
+                        
+                        if analytics_text == "Similar Franchises" {
                             ForEach(0..<2, id: \.self) { index in
                                 HStack(spacing: 10) {
                                     ZStack {
@@ -188,15 +277,28 @@ struct UserOpportunityClick: View {
                                             .frame(width: max(0, geometry.size.width - 210))
                                         
                                         VStack {
-                                            Text(titles_why_invest_1[index])
-                                                .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.045))
-                                                .padding(.bottom, 10)
                                             
-                                            Text(titles_why_invest_description[index])
-                                                .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.033))
-                                                .foregroundColor(.gray)
-                                                .multilineTextAlignment(.center)
-                                            
+                                            if index == 0 {
+                                                Text(titles_similar_franchise_1[index])
+                                                    .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.045))
+                                                
+                                                Image(titles_similar_franchise_images[index])
+                                                    .resizable()
+                                                    .frame(width: 140, height: 120)
+                                                    .scaledToFit()
+                                                    .padding(.bottom, 15)
+                                                
+                                            } else {
+                                                Text(titles_similar_franchise_1[index])
+                                                    .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.045))
+                                                    .padding(.top, -5)
+                                                
+                                                Image(titles_similar_franchise_images[index])
+                                                    .resizable()
+                                                    .frame(width: 135, height: 135)
+                                                    .scaledToFit()
+                                                    .padding(.top, -5)
+                                            }
                                         }
                                         .padding(.horizontal, 10)
                                     }
@@ -207,14 +309,29 @@ struct UserOpportunityClick: View {
                                             .frame(width: max(0, geometry.size.width - 210))
                                         
                                         VStack {
-                                            Text(titles_why_invest_2[index])
+                                            Text(titles_similar_franchise_2[index])
                                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.045))
-                                                .padding(.bottom, 10)
+                                                .padding(.top, -5)
                                             
-                                            Text(titles_why_invest_description_2[index])
-                                                .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.033))
-                                                .foregroundColor(.gray)
+                                            if index == 0 {
+                                                Image(titles_similar_franchise_images_2[index])
+                                                    .resizable()
+                                                    .frame(width: 135, height: 135)
+                                                    .scaledToFit()
+                                                    .padding(.top, -5)
+                                            } else {
+                                                VStack {
+                                                    Text("96%")
+                                                        .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.15))
+                                                        .padding(.bottom, -20)
+                                                    Text("of fast-food franchises are profitable")
+                                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.025))
+                                                        .padding(.horizontal, 10)
+                                                }
+                                                .foregroundColor(Color("Secondary"))
+                                                .padding(.top, 13).padding(.bottom, 25)
                                                 .multilineTextAlignment(.center)
+                                            }
                                             
                                         }
                                         .padding(.horizontal, 10)
@@ -222,279 +339,162 @@ struct UserOpportunityClick: View {
                                     }
                                     
                                 }
-                                .frame(height: 120)
-                                .padding(.vertical, 2.5)
+                                .frame(height: 190)
+                                .padding(.bottom, 2.5).padding(.top, 5)
                             }
-                            
-                            
-                            HStack {
-                                Text(analytics_text)
-                                Spacer()
-                                Menu {
-                                    Button {
-                                        withAnimation(.easeOut(duration: 0.2)) {
-                                            analytics_text = "Similar Franchises"
+                        } else {
+                            ForEach(0..<2, id: \.self) { index in
+                                HStack(spacing: 10) {
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 5)
+                                            .fill(Color("Custom_Light_Gray"))
+                                            .frame(width: max(0, geometry.size.width - 210))
+                                        
+                                        VStack {
+                                            
+                                            Text(titles_selected_franchise_1[index])
+                                                .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.045))
+                                                .padding(.top, 5)
+                                            
+                                            Text("£\(convertNumberAmount(input_number: Double(franchise_data[selected_franchise_data[index]]!)!))")
+                                                .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.1))
+                                                .foregroundColor(Color("Secondary"))
+                                                .padding(.vertical, 1.5)
                                         }
-                                    } label: {
-                                        Label("Similar Franchises", systemImage: "chart.pie")
+                                        .padding(.horizontal, 10)
                                     }
                                     
-                                    Button {
-                                        withAnimation(.easeOut(duration: 0.2)) {
-                                            analytics_text = "Selected Franchise"
-                                        }
-                                    } label: {
-                                        Label("Selected Franchise", systemImage: "chart.line.uptrend.xyaxis")
-                                    }
-                                } label: {
                                     ZStack {
-                                        RoundedRectangle(cornerRadius: 10)
-                                            .fill(Color("Secondary"))
-                                            .frame(width: max(0, geometry.size.width - 325), height: 25)
+                                        RoundedRectangle(cornerRadius: 5)
+                                            .fill(Color("Custom_Light_Gray"))
+                                            .frame(width: max(0, geometry.size.width - 210))
                                         
-                                        Text("Select \(Image(systemName: "chevron.down"))")
-                                            .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.025))
-                                            .foregroundColor(.white)
-                                    }
-                                }
-                            }
-                            .padding(.top)
-                            .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.055))
-                            
-                            
-                            Divider()
-                                .overlay(Color("Custom_Gray"))
-                                .opacity(0.5)
-                                .frame(height: 1)
-                                .padding(.top, -15)
-                            
-                            if analytics_text == "Similar Franchises" {
-                                ForEach(0..<2, id: \.self) { index in
-                                    HStack(spacing: 10) {
-                                        ZStack {
-                                            RoundedRectangle(cornerRadius: 5)
-                                                .fill(Color("Custom_Light_Gray"))
-                                                .frame(width: max(0, geometry.size.width - 210))
+                                        VStack {
+                                            Text(titles_selected_franchise_2[index])
+                                                .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.045))
+                                                .padding(.top, 5)
                                             
-                                            VStack {
-                                                
-                                                if index == 0 {
-                                                    Text(titles_similar_franchise_1[index])
-                                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.045))
-                                                    
-                                                    Image(titles_similar_franchise_images[index])
-                                                        .resizable()
-                                                        .frame(width: 140, height: 120)
-                                                        .scaledToFit()
-                                                        .padding(.bottom, 15)
-                                                    
-                                                } else {
-                                                    Text(titles_similar_franchise_1[index])
-                                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.045))
-                                                        .padding(.top, -5)
-                                                    
-                                                    Image(titles_similar_franchise_images[index])
-                                                        .resizable()
-                                                        .frame(width: 135, height: 135)
-                                                        .scaledToFit()
-                                                        .padding(.top, -5)
-                                                }
-                                            }
-                                            .padding(.horizontal, 10)
-                                        }
-                                        
-                                        ZStack {
-                                            RoundedRectangle(cornerRadius: 5)
-                                                .fill(Color("Custom_Light_Gray"))
-                                                .frame(width: max(0, geometry.size.width - 210))
-                                            
-                                            VStack {
-                                                Text(titles_similar_franchise_2[index])
-                                                    .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.045))
-                                                    .padding(.top, -5)
-                                                
-                                                if index == 0 {
-                                                    Image(titles_similar_franchise_images_2[index])
-                                                        .resizable()
-                                                        .frame(width: 135, height: 135)
-                                                        .scaledToFit()
-                                                        .padding(.top, -5)
-                                                } else {
-                                                    VStack {
-                                                        Text("96%")
-                                                            .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.15))
-                                                            .padding(.bottom, -20)
-                                                        Text("of fast-food franchises are profitable")
-                                                            .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.025))
-                                                            .padding(.horizontal, 10)
-                                                    }
+                                            if index == 0 {
+                                                Text("\(franchise_data[selected_franchise_data_2[index]]!)%")
+                                                    .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.1))
                                                     .foregroundColor(Color("Secondary"))
-                                                    .padding(.top, 13).padding(.bottom, 25)
-                                                    .multilineTextAlignment(.center)
-                                                }
-                                                
-                                            }
-                                            .padding(.horizontal, 10)
-                                            
-                                        }
-                                        
-                                    }
-                                    .frame(height: 190)
-                                    .padding(.bottom, 2.5).padding(.top, 5)
-                                }
-                            } else {
-                                ForEach(0..<2, id: \.self) { index in
-                                    HStack(spacing: 10) {
-                                        ZStack {
-                                            RoundedRectangle(cornerRadius: 5)
-                                                .fill(Color("Custom_Light_Gray"))
-                                                .frame(width: max(0, geometry.size.width - 210))
-                                            
-                                            VStack {
-                                                
-                                                Text(titles_selected_franchise_1[index])
-                                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.045))
-                                                        .padding(.top, 5)
-                                                
-                                                Text("£\(convertNumberAmount(input_number: Double(franchise_data[selected_franchise_data[index]]!)!))")
+                                                    .padding(.vertical, 1.5)
+                                            } else {
+                                                Text("\(franchise_data[selected_franchise_data_2[index]]!)")
                                                     .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.1))
                                                     .foregroundColor(Color("Secondary"))
                                                     .padding(.vertical, 1.5)
                                             }
-                                            .padding(.horizontal, 10)
+                                            
                                         }
+                                        .padding(.horizontal, 10)
                                         
-                                        ZStack {
-                                            RoundedRectangle(cornerRadius: 5)
-                                                .fill(Color("Custom_Light_Gray"))
-                                                .frame(width: max(0, geometry.size.width - 210))
-                                            
-                                            VStack {
-                                                Text(titles_selected_franchise_2[index])
-                                                    .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.045))
-                                                    .padding(.top, 5)
-                                                
-                                                if index == 0 {
-                                                    Text("\(franchise_data[selected_franchise_data_2[index]]!)%")
-                                                        .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.1))
-                                                        .foregroundColor(Color("Secondary"))
-                                                        .padding(.vertical, 1.5)
-                                                } else {
-                                                    Text("\(franchise_data[selected_franchise_data_2[index]]!)")
-                                                        .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.1))
-                                                        .foregroundColor(Color("Secondary"))
-                                                        .padding(.vertical, 1.5)
-                                                }
-                                                
-                                            }
-                                            .padding(.horizontal, 10)
-                                            
-                                        }
                                     }
-                                    .frame(height: 120)
-                                    .padding(.bottom, 2.5).padding(.top, 5)
                                 }
+                                .frame(height: 120)
+                                .padding(.bottom, 2.5).padding(.top, 5)
                             }
-                                                  
-                            HStack {
-                                Text("Investment Overview")
-                                Spacer()
-                            }
-                            .padding(.top)
-                            .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.055))
-                            
-                            
-                            Divider()
-                                .overlay(Color("Custom_Gray"))
-                                .opacity(0.5)
-                                .frame(height: 1)
-                                .padding(.top, -15)
-                            
-                            
-                            HStack {
-                                Text("Location")
-                                    .foregroundColor(Color("Custom_Gray"))
-                                Spacer()
-                                Text(opportunity_data["location"]!)
-                            }
-                            .font(Font.custom("Nunito-SemiBold", size: 14))
-                            .padding(.bottom, 5)
-                            
-                            Divider()
-                                .overlay(Color("Custom_Gray"))
-                                .opacity(0.5)
-                                .frame(height: 1)
-                                .padding(.vertical, 5)
-                            
-                            HStack {
-                                Text("Type")
-                                    .foregroundColor(Color("Custom_Gray"))
-                                Spacer()
-                                Text("Equity")
-                            }
-                            .font(Font.custom("Nunito-SemiBold", size: 14))
-                            .padding(.vertical, 5)
-                            
-                            Divider()
-                                .overlay(Color("Custom_Gray"))
-                                .opacity(0.5)
-                                .frame(height: 1)
-                                .padding(.vertical, 5)
-                            
-                            HStack {
-                                Text("Equity Offered")
-                                    .foregroundColor(Color("Custom_Gray"))
-                                Spacer()
-                                Text("\(opportunity_data["equity_offered"]!)%")
-                            }
-                            .font(Font.custom("Nunito-SemiBold", size: 14))
-                            .padding(.vertical, 5)
-                            
-                            Divider()
-                                .overlay(Color("Custom_Gray"))
-                                .opacity(0.5)
-                                .frame(height: 1)
-                                .padding(.vertical, 5)
-                            
                         }
-                        .frame(width: max(0, geometry.size.width - 40))
-                    }
-                    .foregroundColor(.black)
-                    
-                    HStack {
-                        VStack {
-                            Spacer()
-                            Button(action: {
-                                asking_price = Double(opportunity_data["asking_price"]!)!
-                                equity_offered = Double(opportunity_data["equity_offered"]!)!
-                                opportunity_id = opportunity_data["opportunity_id"]!
-                                amount_offered = opportunity_data["amount_raised"]!
-                                investors = String(describing: Int(opportunity_data["investors"]!)! + 1)
-                                opportunity_name = opportunity_data["franchise"]!
-                                min_investment_amount = opportunity_data["min_invest_amount"]!
-                                user_invest_shown.toggle()
-                            }) {
-                                HStack {
-                                    Text("Invest")
-                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.06))
-                                }
-                                .frame(width: max(0, geometry.size.width-40), height: 55)
-                                .background(Color("Secondary"))
-                                .foregroundColor(Color.white)
-                                .cornerRadius(5)
-                                .padding(.bottom)
-                            }
+                        
+                        HStack {
+                            Text("Investment Overview")
                             Spacer()
                         }
-                        .frame(height: 50)
-                        .padding(.top, 40)
+                        .padding(.top)
+                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.055))
+                        
+                        
+                        Divider()
+                            .overlay(Color("Custom_Gray"))
+                            .opacity(0.5)
+                            .frame(height: 1)
+                            .padding(.top, -15)
+                        
+                        
+                        HStack {
+                            Text("Location")
+                                .foregroundColor(Color("Custom_Gray"))
+                            Spacer()
+                            Text(opportunity_data["location"]!)
+                        }
+                        .font(Font.custom("Nunito-SemiBold", size: 14))
+                        .padding(.bottom, 5)
+                        
+                        Divider()
+                            .overlay(Color("Custom_Gray"))
+                            .opacity(0.5)
+                            .frame(height: 1)
+                            .padding(.vertical, 5)
+                        
+                        HStack {
+                            Text("Type")
+                                .foregroundColor(Color("Custom_Gray"))
+                            Spacer()
+                            Text("Equity")
+                        }
+                        .font(Font.custom("Nunito-SemiBold", size: 14))
+                        .padding(.vertical, 5)
+                        
+                        Divider()
+                            .overlay(Color("Custom_Gray"))
+                            .opacity(0.5)
+                            .frame(height: 1)
+                            .padding(.vertical, 5)
+                        
+                        HStack {
+                            Text("Equity Offered")
+                                .foregroundColor(Color("Custom_Gray"))
+                            Spacer()
+                            Text("\(opportunity_data["equity_offered"]!)%")
+                        }
+                        .font(Font.custom("Nunito-SemiBold", size: 14))
+                        .padding(.vertical, 5)
+                        
+                        Divider()
+                            .overlay(Color("Custom_Gray"))
+                            .opacity(0.5)
+                            .frame(height: 1)
+                            .padding(.vertical, 5)
+                        
                     }
-                    .frame(width: max(0, geometry.size.width))
-                    .background(.white)
-                    .navigationDestination(isPresented: $user_invest_shown) {
-                        UserInvestPage(user_invest_shown: $user_invest_shown, asking_price: $asking_price, equity_offered: $equity_offered, opportunity_id: $opportunity_id, opportunity_name: $opportunity_name, amount_offered: $amount_offered, investors: $investors, min_investment: $min_investment_amount)
-                    }
+                    .frame(width: max(0, geometry.size.width - 40))
                 }
+                .foregroundColor(.black)
+                
+                HStack {
+                    VStack {
+                        Spacer()
+                        Button(action: {
+                            asking_price = Double(opportunity_data["asking_price"]!)!
+                            equity_offered = Double(opportunity_data["equity_offered"]!)!
+                            opportunity_id = opportunity_data["opportunity_id"]!
+                            amount_offered = opportunity_data["amount_raised"]!
+                            investors = String(describing: Int(opportunity_data["investors"]!)! + 1)
+                            opportunity_name = opportunity_data["franchise"]!
+                            min_investment_amount = opportunity_data["min_invest_amount"]!
+                            user_invest_shown.toggle()
+                        }) {
+                            HStack {
+                                Text("Invest")
+                                    .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.06))
+                            }
+                            .frame(width: max(0, geometry.size.width-40), height: 55)
+                            .background(Color("Secondary"))
+                            .foregroundColor(Color.white)
+                            .cornerRadius(5)
+                            .padding(.bottom)
+                        }
+                        Spacer()
+                    }
+                    .frame(height: 50)
+                    .padding(.top, 40)
+                }
+                .frame(width: max(0, geometry.size.width))
+                .background(.white)
+                .navigationDestination(isPresented: $user_invest_shown) {
+                    UserInvestPage(user_invest_shown: $user_invest_shown, asking_price: $asking_price, equity_offered: $equity_offered, opportunity_id: $opportunity_id, opportunity_name: $opportunity_name, amount_offered: $amount_offered, investors: $investors, min_investment: $min_investment_amount)
+                }
+            }
         }
     }
 }
