@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyB9p3seOeFr490br4bcREeCNZZOPnzc8O4</string>
+	<key>GCM_SENDER_ID</key>
+	<string>348299558254</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.axie.noti.PARC</string>
+	<key>PROJECT_ID</key>
+	<string>parc-51ef8</string>
+	<key>STORAGE_BUCKET</key>
+	<string>parc-51ef8.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:348299558254:ios:a5f1f0c96cbeb6bc52557f</string>
+</dict>
+</plist>
