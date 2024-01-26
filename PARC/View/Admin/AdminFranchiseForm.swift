@@ -17,8 +17,10 @@ struct AdminFranchiseForm: View {
     @State var monthRev18 = ""
     @State var ebitdaEstimate = ""
     @State var isDescriptionValid = false
-    @State var showImagePicker = false
-    @State var image: UIImage?
+    @State var showLogoImagePicker = false
+    @State var showDisplayImagePicker = false
+    @State var logo_image: UIImage?
+    @State var display_image: UIImage?
     @Binding var franchise_form_shown: Bool
     @Binding var franchise_data: [DropdownMenuOption]
     
@@ -62,62 +64,79 @@ struct AdminFranchiseForm: View {
                                         .cornerRadius(5)
                                         .font(Font.custom("Nunito-SemiBold", size: 16))
                                 }
-                            
                             HStack {
-                                Text("Logo")
-                                
-                                if let image = self.image {
-                                    Text("✅")
-                                        .onAppear {
-                                            CreateDB().uploadFranchiseLogoImage(image: image)
-//                                            let imageData = image.jpegData(compressionQuality: 0.8)
-//
-//                                            guard imageData != nil else {
-//                                                return
-//                                            }
-//                                            print(String(describing: imageData!))
-                                            
-//                                            let randomID = UUID().uuidString
-//                                            let path = "profile_images/\(randomID).jpg"
-//                                            
-                                            
-//                                            DispatchQueue.global(qos: .background).async {
-//                                                let fileRef = storage.child("profile_images/\(randomID).jpg")
-//                                                let uploadTask = fileRef.putData(imageData!, metadata: nil) { metadata, error in
-//                                                    if let error = error {
-//                                                        print("Error uploading profile image \(error.localizedDescription)")
-//                                                    }
-//                                                }
-//                                                print("File added to profile image")
-//                                            }
-                                        }
-                                }
-                                Spacer()
-                            }
-                            .padding(.top, 5).padding(.bottom, -5).padding(.leading,2.5)
-                            .font(Font.custom("Nunito-Bold", size: 18))
-                            
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 5)
-                                    .fill(Color.white)
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 5)
-                                            .stroke(Color.black, lineWidth: 1.25)
-                                    )
-                                    .frame(width: max(0, geometry.size.width - 45), height: 50)
-                                
-                                Button(action: { showImagePicker.toggle() }) {
+                                VStack(alignment: .leading) {
                                     HStack {
-                                        Text("Upload")
-                                            .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.05))
+                                        Text("Logo")
+                                        
+                                        if let image = self.logo_image {
+                                            Text("✅")
+//                                                .onAppear {
+//                                                    CreateDB().uploadFranchiseLogoImage(image: image)
+//                                                }
+                                        }
+                                        Spacer()
                                     }
-                                    .frame(width: max(0, geometry.size.width - 45), height: 50)
-                                    .background(Color("Secondary"))
-                                    .foregroundColor(Color.white)
-                                    .cornerRadius(5)
+                                    .padding(.top, 5).padding(.bottom, -5).padding(.leading,2.5)
+                                    .font(Font.custom("Nunito-Bold", size: 18))
+                                    
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 5)
+                                            .fill(Color.white)
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 5)
+                                                    .stroke(Color.black, lineWidth: 1.25)
+                                            )
+                                            .frame(width: max(0, geometry.size.width - 250), height: 50)
+                                        
+                                        Button(action: { showLogoImagePicker.toggle() }) {
+                                            HStack {
+                                                Text("Upload")
+                                                    .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.05))
+                                            }
+                                            .frame(width: max(0, geometry.size.width - 250), height: 50)
+                                            .cornerRadius(5)
+                                        }
+                                    }
+                                    .padding(.leading, 2.5)
                                 }
+                                
+                                VStack(alignment: .leading) {
+                                    HStack {
+                                        Text("Display Image")
+                                        
+                                        if let image = self.display_image {
+                                            Text("✅")
+//                                                .onAppear {
+//                                                    CreateDB().uploadFranchiseLogoImage(image: image)
+//                                                }
+                                        }
+                                        Spacer()
+                                    }
+                                    .padding(.top, 5).padding(.bottom, -5).padding(.leading,2.5)
+                                    .font(Font.custom("Nunito-Bold", size: 18))
+                                    
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 5)
+                                            .fill(Color.white)
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 5)
+                                                    .stroke(Color.black, lineWidth: 1.25)
+                                            )
+                                            .frame(width: max(0, geometry.size.width - 250), height: 50)
+                                        
+                                        Button(action: { showDisplayImagePicker.toggle() }) {
+                                            HStack {
+                                                Text("Upload")
+                                                    .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.05))
+                                            }
+                                            .frame(width: max(0, geometry.size.width - 250), height: 50)
+                                            .cornerRadius(5)
+                                        }
+                                    }
+                                }
+                                
                             }
-                            
                             HStack {
                                 Text("Description").font(Font.custom("Nunito-Bold", size: 18))
                                     .padding(.top, 5).padding(.bottom, -5).padding(.leading,2.5)
@@ -351,8 +370,11 @@ struct AdminFranchiseForm: View {
                 .frame(width: max(0, geometry.size.width-40), height: max(0, geometry.size.height))
 
             }
-            .sheet(isPresented: $showImagePicker) {
-                ImagePicker(image: $image)
+            .sheet(isPresented: $showLogoImagePicker) {
+                ImagePicker(image: $logo_image)
+            }
+            .sheet(isPresented: $showDisplayImagePicker) {
+                ImagePicker(image: $display_image)
             }
             .padding(.top, 30)
         }
