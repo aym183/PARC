@@ -298,3 +298,9 @@ func convertNumberAmount(input_number: Double) -> String {
         return "\(formatter.string(from: NSNumber(value: input_number)) ?? "")"
     }
 }
+
+func loadFranchiseLogo(key: String) -> UIImage {
+    let imageData = UserDefaults.standard.data(forKey: key)
+    let cachedImage = UIImage(data: imageData!)
+    return cachedImage!
+}

@@ -292,11 +292,18 @@ struct UserHomeContent: View {
                                                 
                                                 VStack(alignment: .leading) {
                                                     HStack {
-                                                        Image(logo_images[0])
+                                                        Image(uiImage: loadFranchiseLogo(key: franchise_data[franchise_data.firstIndex(where: { $0["name"] == opportunity_data[index]["franchise"]!})!]["logo"]!))
                                                             .resizable()
                                                             .aspectRatio(contentMode: .fit)
                                                             .frame(width: 40, height: 30)
-                                                            .padding(.top, 10).padding(.leading, 5)
+                                                            .padding(.top, 10)
+                                                            .padding(.leading, 5)
+                                                        
+//                                                        Image(logo_images[0])
+//                                                            .resizable()
+//                                                            .aspectRatio(contentMode: .fit)
+//                                                            .frame(width: 40, height: 30)
+//                                                            .padding(.top, 10).padding(.leading, 5)
                                                         
                                                         Text(String(describing: opportunity_data[index]["franchise"]!))
                                                             .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.045))

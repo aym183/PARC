@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import FirebaseStorage
 
 class ReadDB: ObservableObject {
     @Published var franchise_data_dropdown: [DropdownMenuOption] = []
@@ -25,6 +26,7 @@ class ReadDB: ObservableObject {
     @Published var full_user_holdings_data: [[String: String]] = []
     @Published var opportunity_data_dropdown: [DropdownMenuOption] = []
     @Published var secondary_market_transactions_ind: Int = 0
+    @Published var franchise_images: [[String: UIImage]] = []
     @State var currentFormattedDate: String = convertDate(dateString: String(describing: Date()))
     @AppStorage("email") var email: String = ""
 
@@ -56,6 +58,10 @@ class ReadDB: ObservableObject {
                                         }
                                     }
                                     self.franchise_data.append(temp_dict)
+                                    self.getImage(path: temp_dict["logo"]!) { response in
+                                        if let image = response {
+                                        }
+                                    }
                                     self.franchise_data_dropdown.append(DropdownMenuOption(option: temp_dict["name"]!))
                                     temp_dict = [:]
                                 }
@@ -552,6 +558,29 @@ class ReadDB: ObservableObject {
                 }
             }
         }.resume()
+        
+    }
+    
+    func getImage(path: String, completion: @escaping (UIImage?) -> Void) {
+        let storage = Storage.storage()
+        let storageRef = storage.reference()
+        let imageRef = storageRef.child(path)
+        
+        imageRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
+                if let error = error {
+                    print("Error fetching image: \(error.localizedDescription)")
+                    completion(nil)
+                }
+                
+                if let data = data, let image = UIImage(data: data) {
+                    if UserDefaults.standard.object(forKey: path) == nil {
+                        UserDefaults.standard.set(image.jpegData(compressionQuality: 0.8), forKey: path)
+                    }
+                    completion(image)
+                } else {
+                    completion(nil)
+                }
+            }
         
     }
 }
