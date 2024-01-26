@@ -183,12 +183,7 @@ struct UserOnboarding: View {
                                             )
                                         
                                         Button(action: { 
-                                            print(selectedBackground?.option)
-                                            if selectedNo {
-                                                print("Not Invested")
-                                            } else {
-                                                print("Has Invested")
-                                            }
+                                            UserDefaults.standard.set(true, forKey: "onboarding_completed")
                                             isShownOnboarding.toggle()
                                         }) {
                                                 Text("Submit")
@@ -212,7 +207,7 @@ struct UserOnboarding: View {
                                             )
                                             
                                         Button(action: { 
-                                            UserDefaults.standard.set(true, forKey: "onboarding_completed")
+//                                            UserDefaults.standard.set(true, forKey: "onboarding_completed")
                                             isShownOnboarding.toggle()
                                         }) {
                                             Text("Skip")
