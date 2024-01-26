@@ -155,7 +155,7 @@ struct UserOpportunityClick: View {
                                         Text("Investors")
                                             .foregroundColor(Color("Custom_Gray"))
                                             .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.035))
-                                            .padding(.leading, 2).padding(.top, -25)
+                                            .padding(.top, -25)
                                     }
                                     .multilineTextAlignment(.leading)
                                     Spacer()
@@ -165,24 +165,6 @@ struct UserOpportunityClick: View {
                                 .overlay(Color("Custom_Gray"))
                                 .opacity(0.5)
                                 .frame(height: 1)
-                            //                            .padding(.top, 1.5)
-                            
-                            //                        Button(action: {}) {
-                            //                            HStack {
-                            //                                Image("Presentation")
-                            //                                    .resizable()
-                            //                                    .aspectRatio(contentMode: .fit)
-                            //                                    .frame(width: 25, height: 25)
-                            //
-                            //                                Text("Pitch Deck")
-                            //                                    .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.042))
-                            //
-                            //                                Spacer()
-                            //
-                            //                                Image(systemName: "arrowshape.forward.fill")
-                            //                            }
-                            //                        }
-                            //                        .padding(.vertical, 10)
                             
                             HStack {
                                 Text("Why Invest in Franchises?")
@@ -268,7 +250,7 @@ struct UserOpportunityClick: View {
                                     ZStack {
                                         RoundedRectangle(cornerRadius: 10)
                                             .fill(Color("Secondary"))
-                                            .frame(width: max(0, geometry.size.width - 330), height: 25)
+                                            .frame(width: max(0, geometry.size.width - 325), height: 25)
                                         
                                         Text("Select \(Image(systemName: "chevron.down"))")
                                             .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.025))
@@ -286,7 +268,7 @@ struct UserOpportunityClick: View {
                                 .frame(height: 1)
                                 .padding(.top, -15)
                             
-                            if analytics_text == "Similar Franchises" || analytics_text == "Performance Analysis" {
+                            if analytics_text == "Similar Franchises" {
                                 ForEach(0..<2, id: \.self) { index in
                                     HStack(spacing: 10) {
                                         ZStack {
