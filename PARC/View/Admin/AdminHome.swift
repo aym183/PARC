@@ -110,89 +110,7 @@ struct AdminHome: View {
                                                 }
                                                 .frame(width: 135, height: 140)
                                             }
-                                        }
-    //                                    else if getDaysRemaining(dateString: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))! < 1 {
-    //                                        ZStack {
-    //                                            Button(action: {
-    //                                                opportunity_logo = logo_images[index-1]
-    //                                                opportunity_title = titles[index-1]
-    //                                                opportunity_data = readDB.admin_opportunity_data[index-1]
-    //                                                admin_opportunity_click_shown.toggle()
-    //                                            }) {
-    //                                                RoundedRectangle(cornerRadius: 5)
-    //                                                    .fill(Color.white)
-    //                                                    .overlay(
-    //                                                        RoundedRectangle(cornerRadius: 5)
-    //                                                            .stroke(Color.gray, lineWidth: 1.25)
-    //                                                    )
-    //                                                    .frame(width: 160, height: 140)
-    //                                            }
-    //
-    //                                            VStack {
-    //                                                HStack {
-    //                                                    Image(logo_images[index-1])
-    //                                                        .resizable()
-    //                                                        .aspectRatio(contentMode: .fill)
-    //                                                        .frame(width: 40, height: 40)
-    //                                                        .padding([.leading, .top], 10)
-    //
-    //                                                    Text(String(describing: readDB.admin_opportunity_data[index-1]["franchise"]!))
-    //                                                        .font(Font.custom("Nunito-Bold", size: 16))
-    //                                                        .padding(.top, 10)
-    //                                                    Spacer()
-    //                                                }
-    //                                                Spacer()
-    //
-    //                                                HStack {
-    //
-    //                                                    ZStack {
-    //                                                        Rectangle()
-    //                                                            .foregroundColor(.clear)
-    //                                                            .frame(width: 50, height: 14)
-    //                                                            .background(Color(red: 0.85, green: 0.85, blue: 0.85).opacity(0.5))
-    //                                                            .cornerRadius(5)
-    //
-    //                                                        HStack(spacing: 10) {
-    //                                                            Image("gbr").resizable().frame(width: 10, height: 10)
-    //                                                            Text(String(describing: readDB.admin_opportunity_data[index-1]["location"]!))
-    //                                                                .font(Font.custom("Nunito-SemiBold", size: 8))
-    //                                                                .foregroundColor(Color("Custom_Gray"))
-    //                                                                .padding(.leading, -7.5)
-    //                                                        }
-    ////                                                        .padding(.trailing, 15)
-    //                                                    }
-    //
-    //                                                    Spacer()
-    //
-    //                                                    Text("Created - \(convertDate(dateString: String(describing: readDB.admin_opportunity_data[index-1]["date_created"]!)))")
-    //                                                        .font(Font.custom("Nunito-SemiBold", size: 7))
-    //                                                        .foregroundColor(Color("Custom_Gray"))
-    //                                                }
-    //                                                .padding(.horizontal, 10)
-    //
-    //                                                ProgressView(value: Double(readDB.admin_opportunity_data[index-1]["ratio"]!))
-    //                                                    .tint(Color("Secondary"))
-    //                                                    .scaleEffect(x: 1, y: 2, anchor: .center)
-    //                                                    .padding(.top,3)
-    //                                                    .frame(width: 140)
-    //
-    //                                                HStack {
-    //
-    //                                                    Text("Completed")
-    //                                                        .font(Font.custom("Nunito-Bold", size: 12))
-    //                                                        .foregroundColor(Color("Profit"))
-    //                                                    Spacer()
-    //                                                }
-    //                                                .padding(.horizontal, 10)
-    //
-    //
-    //
-    //                                            }
-    //                                            .padding(.bottom, 10)
-    //                                        }
-    //                                        .frame(width: 160, height: 140)
-    //                                    }
-                                        else {
+                                        } else {
                                             ZStack {
                                                 Button(action: {
                                                     opportunity_logo = logo_images[index-1]
@@ -229,7 +147,7 @@ struct AdminHome: View {
                                                         
                                                         Text(String(describing: readDB.admin_opportunity_data[index-1]["franchise"]!))
                                                             .font(Font.custom("Nunito-Bold", size: 16))
-                                                            .padding(.top, 10).padding(.leading, 5)
+                                                            .padding(.top, 10)
                                                         
                                                         Spacer()
                                                     }
@@ -358,7 +276,7 @@ struct AdminHome: View {
                                                             if readDB.payout_data[index-1]["status"] == "Scheduled" {
                                                                 RoundedRectangle(cornerRadius: 5)
                                                                     .fill(Color("Amber"))
-                                                                    .frame(width: max(0, geometry.size.width-300), height: 25)
+                                                                    .frame(width: geometry.size.width*0.2, height: 25)
                                                                 
                                                                 Text(String(describing: readDB.payout_data[index-1]["status"]!))
                                                                     .font(Font.custom("Nunito-ExtraBold", size: 12))
@@ -366,7 +284,7 @@ struct AdminHome: View {
                                                             } else if readDB.payout_data[index-1]["status"] == "Completed" {
                                                                 RoundedRectangle(cornerRadius: 5)
                                                                     .fill(Color("Profit"))
-                                                                    .frame(width: max(0, geometry.size.width-300), height: 25)
+                                                                    .frame(width: geometry.size.width*0.2, height: 25)
                                                                 
                                                                 Text(String(describing: readDB.payout_data[index-1]["status"]!))
                                                                     .font(Font.custom("Nunito-ExtraBold", size: 12))
@@ -374,7 +292,7 @@ struct AdminHome: View {
                                                             } else if readDB.payout_data[index-1]["status"] == "Cancelled" {
                                                                 RoundedRectangle(cornerRadius: 5)
                                                                     .fill(Color("Loss"))
-                                                                    .frame(width: max(0, geometry.size.width-300), height: 25)
+                                                                    .frame(width: geometry.size.width*0.2, height: 25)
                                                                 
                                                                 Text(String(describing: readDB.payout_data[index-1]["status"]!))
                                                                     .font(Font.custom("Nunito-ExtraBold", size: 12))
@@ -478,19 +396,19 @@ struct AdminHome: View {
                                                             if readDB.trading_window_data[index-1]["status"] == "Scheduled" {
                                                                 RoundedRectangle(cornerRadius: 5)
                                                                     .fill(.blue)
-                                                                    .frame(width: max(0, geometry.size.width-300), height: 25)
+                                                                    .frame(width: geometry.size.width*0.2, height: 25)
                                                             } else if readDB.trading_window_data[index-1]["status"] == "Ongoing"  {
                                                                 RoundedRectangle(cornerRadius: 5)
                                                                     .fill(Color("Amber"))
-                                                                    .frame(width: max(0, geometry.size.width-300), height: 25)
+                                                                    .frame(width: geometry.size.width*0.2, height: 25)
                                                             } else if readDB.trading_window_data[index-1]["status"] == "Completed"  {
                                                                 RoundedRectangle(cornerRadius: 5)
                                                                     .fill(Color("Profit"))
-                                                                    .frame(width: max(0, geometry.size.width-300), height: 25)
+                                                                    .frame(width: geometry.size.width*0.2, height: 25)
                                                             } else if readDB.trading_window_data[index-1]["status"] == "Cancelled"  {
                                                                 RoundedRectangle(cornerRadius: 5)
                                                                     .fill(Color("Loss"))
-                                                                    .frame(width: max(0, geometry.size.width-300), height: 25)
+                                                                    .frame(width: geometry.size.width*0.2, height: 25)
                                                             }
                                                             
                                                             Text(String(describing: readDB.trading_window_data[index-1]["status"]!))

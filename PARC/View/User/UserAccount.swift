@@ -136,7 +136,7 @@ struct UserAccount: View {
                                         )
                                         .frame(width: 100, height: 35)
                                     
-                                    Text("Set Pin")
+                                    Text("Set")
                                         .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.04))
                                 }
                             }

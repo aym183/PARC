@@ -82,14 +82,18 @@ struct AdminAccount: View {
                             Spacer()
                             
                             Button(action: {}) {
-                                HStack {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 5)
+                                        .fill(Color.white)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 5)
+                                                .stroke(Color.black, lineWidth: 1.25)
+                                        )
+                                        .frame(width: 100, height: 35)
+                                    
                                     Text("Set")
-                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.038))
+                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.04))
                                 }
-                                .frame(width: max(0, geometry.size.width-300), height: 35)
-                                .background(Color("Secondary"))
-                                .foregroundColor(Color.white)
-                                .cornerRadius(5)
                             }
                             
                         }
@@ -108,7 +112,7 @@ struct AdminAccount: View {
                                         .font(Font.custom("Nunito", size: min(geometry.size.width, geometry.size.height) * 0.055))
                                         .fontWeight(.bold)
                                 }
-                                .frame(width: max(0, geometry.size.width-233), height: 45)
+                                .frame(width: geometry.size.width*0.44, height: 45)
                                 .background(Color("Secondary"))
                                 .foregroundColor(Color.white)
 //                                .border(Color.black, width: 1)

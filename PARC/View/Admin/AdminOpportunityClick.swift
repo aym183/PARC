@@ -38,7 +38,7 @@ struct AdminOpportunityClick: View {
                                         Text("Edit Opportunity")
                                             .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.038))
                                     }
-                                    .frame(width: max(0, geometry.size.width-240), height: 45)
+                                    .frame(width: geometry.size.width*0.44, height: 45)
                                     .background(Color("Secondary"))
                                     .foregroundColor(Color.white)
                                     .cornerRadius(5)
@@ -51,7 +51,7 @@ struct AdminOpportunityClick: View {
                                         Text("Close Opportunity")
                                             .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.038))
                                     }
-                                    .frame(width: max(0, geometry.size.width-240), height: 45)
+                                    .frame(width: geometry.size.width*0.4, height: 45)
                                     .background(Color("Loss"))
                                     .foregroundColor(Color.white)
                                     .cornerRadius(5)
