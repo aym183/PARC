@@ -263,8 +263,8 @@ struct UserHomeContent: View {
                                 Button(action: {
                                     selected_franchise = franchise_data[franchise_data.firstIndex(where: { $0["name"] == opportunity_data[index]["franchise"]!})!]
                                     selected_opportunity = opportunity_data[index]
-//                                    franchise_logo =
-//                                    display_image =
+                                    franchise_logo = loadDisplayImage(key: franchise_data[franchise_data.firstIndex(where: { $0["name"] == opportunity_data[index]["franchise"]!})!]["logo"]!)
+                                    display_image = loadDisplayImage(key: franchise_data[franchise_data.firstIndex(where: { $0["name"] == opportunity_data[index]["franchise"]!})!]["display_image"]!)
                                     opportunity_shown.toggle()
                                 }) {
                                     ZStack{
@@ -432,7 +432,7 @@ struct UserHomeContent: View {
                         }
                         .frame(width: max(0, geometry.size.width))
                         .navigationDestination(isPresented: $opportunity_shown) {
-                            UserOpportunityClick(opportunity_data: $selected_opportunity, franchise_data: $selected_franchise)
+                            UserOpportunityClick(opportunity_data: $selected_opportunity, franchise_data: $selected_franchise, franchise_logo: $franchise_logo, display_image: $display_image)
                         }
                         }
                 }

@@ -10,6 +10,8 @@ import SwiftUI
 struct UserOpportunityClick: View {
     @Binding var opportunity_data: [String: String]
     @Binding var franchise_data: [String: String]
+    @Binding var franchise_logo: UIImage?
+    @Binding var display_image: UIImage?
     @State var analytics_text = "Performance Analysis"
     @State var user_invest_shown = false
     @State var asking_price = 0.0
@@ -38,7 +40,7 @@ struct UserOpportunityClick: View {
                 Color(.white).ignoresSafeArea()
                 
                 ScrollView(.vertical, showsIndicators: false) {
-                    Image("store_live")
+                    Image(uiImage: display_image!)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: max(0, geometry.size.width))
@@ -47,7 +49,7 @@ struct UserOpportunityClick: View {
                     VStack {
                         
                         HStack {
-                            Image("McDonalds")
+                            Image(uiImage: franchise_logo!)
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .frame(width: 50, height: 50)
