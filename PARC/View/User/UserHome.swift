@@ -229,6 +229,8 @@ struct UserHomeContent: View {
     @Binding var opportunity_data: [[String: String]]
     @State var selected_opportunity: [String: String] = [:]
     @State var selected_franchise: [String: String] = [:]
+    @State var franchise_logo: UIImage?
+    @State var display_image: UIImage?
     @Binding var franchise_data: [[String: String]]
     @Binding var user_holdings_data: [[String: String]]
     @ObservedObject var readDB: ReadDB
@@ -261,6 +263,8 @@ struct UserHomeContent: View {
                                 Button(action: {
                                     selected_franchise = franchise_data[franchise_data.firstIndex(where: { $0["name"] == opportunity_data[index]["franchise"]!})!]
                                     selected_opportunity = opportunity_data[index]
+//                                    franchise_logo =
+//                                    display_image =
                                     opportunity_shown.toggle()
                                 }) {
                                     ZStack{
@@ -268,10 +272,18 @@ struct UserHomeContent: View {
                                             if let franchiseIndex = franchise_data.firstIndex(where: { $0["name"] == franchiseName }) {
                                                 let matchedFranchise = readDB.franchise_data[franchiseIndex]["display_image"]!
                                                 
-                                                Image(uiImage: loadDisplayImage(key: String(describing: matchedFranchise)))
-                                                    .resizable()
-                                                    .frame(height: 250)
-                                                    .cornerRadius(5)
+                                                if UserDefaults.standard.object(forKey: String(describing: matchedFranchise)) != nil {
+                                                    Image(uiImage: loadDisplayImage(key: String(describing: matchedFranchise)))
+                                                        .resizable()
+                                                        .frame(height: 250)
+                                                        .cornerRadius(5)
+                                                } else {
+                                                    Image(systemName: bg_images[0])
+                                                        .resizable()
+                                                        .frame(height: 250)
+                                                        .cornerRadius(5)
+                                                }
+
                                             } else {
                                                 Image(systemName: bg_images[0])
                                                     .resizable()
@@ -300,12 +312,43 @@ struct UserHomeContent: View {
                                                 
                                                 VStack(alignment: .leading) {
                                                     HStack {
-                                                        Image(uiImage: loadFranchiseLogo(key: franchise_data[franchise_data.firstIndex(where: { $0["name"] == opportunity_data[index]["franchise"]!})!]["logo"]!))
-                                                            .resizable()
-                                                            .aspectRatio(contentMode: .fit)
-                                                            .frame(width: 40, height: 30)
-                                                            .padding(.top, 10)
-                                                            .padding(.leading, 5)
+                                                        
+                                                        if let franchiseName = opportunity_data[index]["franchise"] {
+                                                            if let franchiseIndex = franchise_data.firstIndex(where: { $0["name"] == franchiseName }) {
+                                                                let matchedFranchise = readDB.franchise_data[franchiseIndex]["logo"]!
+                                                                
+                                                                if UserDefaults.standard.object(forKey: String(describing: matchedFranchise)) != nil {
+                                                                    Image(uiImage: loadDisplayImage(key: String(describing: matchedFranchise)))
+                                                                        .resizable()
+                                                                        .aspectRatio(contentMode: .fit)
+                                                                        .frame(width: 40, height: 30)
+                                                                        .padding(.top, 10)
+                                                                        .padding(.leading, 5)
+                                                                } else {
+                                                                    Image(systemName: "McDonalds")
+                                                                        .resizable()
+                                                                        .aspectRatio(contentMode: .fit)
+                                                                        .frame(width: 40, height: 30)
+                                                                        .padding(.top, 10)
+                                                                        .padding(.leading, 5)
+                                                                }
+
+                                                            } else {
+                                                                Image(systemName: "McDonalds")
+                                                                    .resizable()
+                                                                    .aspectRatio(contentMode: .fit)
+                                                                    .frame(width: 40, height: 30)
+                                                                    .padding(.top, 10)
+                                                                    .padding(.leading, 5)
+                                                            }
+                                                        }
+                                                        
+//                                                        Image(uiImage: loadFranchiseLogo(key: franchise_data[franchise_data.firstIndex(where: { $0["name"] == opportunity_data[index]["franchise"]!})!]["logo"]!))
+//                                                            .resizable()
+//                                                            .aspectRatio(contentMode: .fit)
+//                                                            .frame(width: 40, height: 30)
+//                                                            .padding(.top, 10)
+//                                                            .padding(.leading, 5)
                                                         
 //                                                        Image(logo_images[0])
 //                                                            .resizable()
