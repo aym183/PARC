@@ -8,22 +8,64 @@
 import SwiftUI
 
 struct AdminAccount: View {
+    @AppStorage("full_name") var fullName: String = ""
+    @AppStorage("email") var email: String = ""
+    @State var showProfileImagePicker = false
+    @Binding var profile_image: UIImage?
+    @Binding var init_profile_image: UIImage?
+    
     var body: some View {
         GeometryReader { geometry in
             ZStack {
                 Color(.white).ignoresSafeArea()
                 VStack(alignment: .center) {
                     HStack {
-                        Button(action: {}) {
-                            Image(systemName: "person.crop.circle")
-                                .resizable()
-                                .frame(width: 120, height: 120)
+                        VStack {
+                            Button(action: { showProfileImagePicker.toggle() }) {
+                                if let image = profile_image {
+                                    Image(uiImage: profile_image!)
+                                        .resizable()
+                                        .frame(width: 100, height: 100)
+                                        .cornerRadius(100)
+                                } else {
+                                    Image(systemName: "person.crop.circle")
+                                        .resizable()
+                                        .frame(width: 100, height: 100)
+                                }
+                            }
+                            
+                            if init_profile_image != profile_image {
+                                Button(action: {
+                                    UserDefaults.standard.removeObject(forKey: "profile_image")
+                                    UpdateDB().updateUserTable(primary_key: "email", primary_key_value: email, table: "users", updated_key: "picture", updated_value: CreateDB().upload_logo_image(image: profile_image!, folder: "profile_images")) { response in
+                                    }
+                                    withAnimation(.easeOut(duration: 0.25)) {
+                                        self.init_profile_image = profile_image
+                                    }
+                                }) {
+                                    ZStack {
+                                        ZStack {
+                                            RoundedRectangle(cornerRadius: 5)
+                                                .fill(Color.white)
+                                                .overlay(
+                                                    RoundedRectangle(cornerRadius: 5)
+                                                        .stroke(Color.black, lineWidth: 1.25)
+                                                )
+                                                .frame(width: 80, height: 25)
+                                            
+                                            Text("Confirm Changes")
+                                                .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.022))
+                                        }
+                                    }
+                                    .padding(.top, 5)
+                                }
+                            }
                         }
                         
                         VStack(alignment: .leading) {
-                            Text("Ayman Ali")
+                            Text(fullName)
                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.08))
-                            
+
                             Text("Member since November 2023")
                                 .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.03))
                                 .foregroundColor(Color("Custom_Gray"))
@@ -94,6 +136,9 @@ struct AdminAccount: View {
                     }
                 }
                 }
+                .sheet(isPresented: $showProfileImagePicker) {
+                    ImagePicker(image: $profile_image)
+                }
                 .frame(width: max(0, geometry.size.width-40))
                 .multilineTextAlignment(.center)
                 .padding(.leading).padding(.top)
@@ -102,6 +147,6 @@ struct AdminAccount: View {
         }
 }
 
-#Preview {
-    AdminAccount()
-}
+//#Preview {
+//    AdminAccount()
+//}

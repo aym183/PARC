@@ -35,6 +35,8 @@ struct AdminHome: View {
     @State var trading_volume = 0
     @State var no_of_trades = 0
     @State var isRefreshing = false
+    @State var profile_image: UIImage?
+    @State var init_profile_image: UIImage?
     
     var body: some View {
         GeometryReader { geometry in
@@ -47,9 +49,16 @@ struct AdminHome: View {
                             Text("PARC").font(Font.custom("Nunito-Black", size: 60)).foregroundColor(Color("Secondary"))
                             Spacer()
                             Button(action: { admin_account_click_shown.toggle() }) {
-                                Image(systemName: "person.crop.circle")
-                                    .resizable()
-                                    .frame(width: 50, height: 50)
+                                if profile_image != nil {
+                                    Image(uiImage: profile_image!)
+                                            .resizable()
+                                            .frame(width: 50, height: 50)
+                                            .cornerRadius(100)
+                                } else {
+                                    Image(systemName: "person.crop.circle")
+                                        .resizable()
+                                        .frame(width: 50, height: 50)
+                                }
                             }
                         }
                         
@@ -571,6 +580,12 @@ struct AdminHome: View {
                 }
             }
             .onAppear {
+                loadProfileImage() { response in
+                    if response != nil {
+                        profile_image = response!
+                        init_profile_image = response!
+                    }
+                }
                 readDB.franchise_data = []
                 readDB.franchise_data_dropdown = []
                 readDB.admin_opportunity_data = []
@@ -613,7 +628,7 @@ struct AdminHome: View {
                 AdminPayoutClick(opportunity_data: $opportunity_data, payout_data: $payout_data, admin_payout_click_shown: $admin_payout_click_shown)
             }
             .navigationDestination(isPresented: $admin_account_click_shown){
-                AdminAccount()
+                AdminAccount(profile_image: $profile_image, init_profile_image: $init_profile_image)
             }
         }
     
