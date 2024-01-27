@@ -58,10 +58,13 @@ class ReadDB: ObservableObject {
                                         }
                                     }
                                     self.franchise_data.append(temp_dict)
+                                    let dispatchGroup = DispatchGroup()
+                                    
                                     self.getImage(path: temp_dict["logo"]!) { response in
                                         if let image = response {
                                         }
                                     }
+                                    
                                     self.getImage(path: temp_dict["display_image"]!) { response in
                                         if let image = response {
                                         }
@@ -579,8 +582,8 @@ class ReadDB: ObservableObject {
                 if let data = data, let image = UIImage(data: data) {
                     if UserDefaults.standard.object(forKey: path) == nil {
                         UserDefaults.standard.set(image.jpegData(compressionQuality: 0.8), forKey: path)
+                        completion(image)
                     }
-                    completion(image)
                 } else {
                     completion(nil)
                 }

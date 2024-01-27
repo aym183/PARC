@@ -36,7 +36,7 @@ struct UserMarketplaceClick: View {
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(alignment: .leading) {
                         HStack {
-                            Image(logo)
+                            Image(uiImage: loadFranchiseLogo(key: franchise_selected["logo"]!))
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .frame(width: 55, height: 55)

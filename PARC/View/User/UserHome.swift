@@ -264,10 +264,26 @@ struct UserHomeContent: View {
                                     opportunity_shown.toggle()
                                 }) {
                                     ZStack{
-                                        Image(uiImage: loadDisplayImage(key: franchise_data[franchise_data.firstIndex(where: { $0["name"] == opportunity_data[index]["franchise"]!})!]["display_image"]!))
-                                            .resizable()
-                                            .frame(height: 250)
-                                            .cornerRadius(5)
+                                        if let franchiseName = opportunity_data[index]["franchise"] {
+                                            if let franchiseIndex = franchise_data.firstIndex(where: { $0["name"] == franchiseName }) {
+                                                let matchedFranchise = readDB.franchise_data[franchiseIndex]["display_image"]!
+                                                
+                                                Image(uiImage: loadDisplayImage(key: String(describing: matchedFranchise)))
+                                                    .resizable()
+                                                    .frame(height: 250)
+                                                    .cornerRadius(5)
+                                            } else {
+                                                Image(systemName: bg_images[0])
+                                                    .resizable()
+                                                    .frame(height: 250)
+                                                    .cornerRadius(5)
+                                            }
+                                        }
+                                        
+//                                        Image(uiImage: loadDisplayImage(key: franchise_data[franchise_data.firstIndex(where: { $0["name"] == opportunity_data[index]["franchise"]!})!]["display_image"]!))
+//                                            .resizable()
+//                                            .frame(height: 250)
+//                                            .cornerRadius(5)
                                         Rectangle()
                                             .opacity(0)
                                             .frame(height: 250)

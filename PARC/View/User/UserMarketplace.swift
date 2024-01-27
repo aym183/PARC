@@ -158,60 +158,61 @@ struct UserMarketplace: View {
                                 .frame(height: 1)
                                 .padding(.top, -5)
                             
-                            ForEach((0..<listed_shares.count), id: \.self) { index in
-                                Button(action: {
-                                    title = String(describing: Array(listed_shares.keys)[index])
-                                    logo = logo_images[index]
-                                    transformed_secondary_shares = secondary_shares[title]!
-                                    franchise_selected = franchises[franchises.firstIndex(where: { $0["name"] == String(describing: Array(listed_shares.keys)[index])})!]
-                                    marketplace_click_shown.toggle()
-                                }) {
-                                    HStack {
-
-                                        Image("McDonalds")
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fill)
-                                            .frame(width: 50, height: 50)
+                            if listed_shares.count != 0 && franchises.count != 0 {
+                                ForEach((0..<listed_shares.count), id: \.self) { index in
+                                    Button(action: {
+                                        title = String(describing: Array(listed_shares.keys)[index])
+                                        logo = logo_images[index]
+                                        transformed_secondary_shares = secondary_shares[title]!
+                                        franchise_selected = franchises[franchises.firstIndex(where: { $0["name"] == String(describing: Array(listed_shares.keys)[index])})!]
+                                        marketplace_click_shown.toggle()
+                                    }) {
+                                        HStack {
+                                            Image(uiImage: loadFranchiseLogo(key: franchises[franchises.firstIndex(where: { $0["name"] == Array(listed_shares.keys)[index]})!]["logo"]!))
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fill)
+                                                .frame(width: 50, height: 50)
+                                            Spacer()
                                             
-                                        Spacer()
-                                        
-                                        HStack {
-                                            Text(String(describing: Array(listed_shares.keys)[index]))
+                                            HStack {
+                                                Text(String(describing: Array(listed_shares.keys)[index]))
+                                                Spacer()
+                                            }
+                                            .frame(width: 75)
+                                            .padding(.trailing, -25)
+                                            
                                             Spacer()
-                                        }
-                                        .frame(width: 75)
-                                        .padding(.trailing, -25)
                                         
-                                        Spacer()
-                                    
-                                        HStack {
-                                            Text("£\(formattedNumber(input_number: Int(String(describing: transformed_payouts_data[String(describing: Array(listed_shares.keys)[index])]!))!))")
+                                            HStack {
+                                                Text("£\(formattedNumber(input_number: Int(String(describing: transformed_payouts_data[String(describing: Array(listed_shares.keys)[index])]!))!))")
+                                                Spacer()
+                                            }
+                                            .frame(width: 75)
+                                            .padding(.trailing, -30)
+                                            
                                             Spacer()
+                                            
+                                            HStack {
+                                                Text("£\(formattedNumber(input_number: Int(String(describing: Array(listed_shares.values)[index]))!))")
+                                                Spacer()
+                                            }
+                                            .frame(width: 75)
+                                            .padding(.trailing, -20)
                                         }
-                                        .frame(width: 75)
-                                        .padding(.trailing, -30)
-                                        
-                                        Spacer()
-                                        
-                                        HStack {
-                                            Text("£\(formattedNumber(input_number: Int(String(describing: Array(listed_shares.values)[index]))!))")
-                                            Spacer()
-                                        }
-                                        .frame(width: 75)
-                                        .padding(.trailing, -20)
+                                        .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.03))
+                                        .multilineTextAlignment(.leading)
                                     }
-                                    .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.03))
-                                    .multilineTextAlignment(.leading)
+                                    
+    //                                if index != 5 {
+                                        Divider()
+                                            .overlay(Color("Custom_Gray"))
+                                            .opacity(0.5)
+                                            .frame(height: 1)
+                                            .padding(.vertical, 5)
+    //                                }
                                 }
-                                
-//                                if index != 5 {
-                                    Divider()
-                                        .overlay(Color("Custom_Gray"))
-                                        .opacity(0.5)
-                                        .frame(height: 1)
-                                        .padding(.vertical, 5)
-//                                }
                             }
+                            
                             
                             // Add condition to remove Show more if only limite businesses have shares
 //                            Button(action: {}) { 
