@@ -117,7 +117,7 @@ struct UserHome: View {
                                 .frame(height: 1)
                                 .overlay(.black)
                             
-                            UserPortfolio(portfolio_data: $portfolio_data, user_payouts_data: $user_payouts_data, payouts_chart_values: $payouts_chart_values, payouts_value: $payouts_value, holdings_value: $holdings_value, chart_values: $chart_values, opportunity_data: $readDB.admin_opportunity_data)
+                            UserPortfolio(portfolio_data: $portfolio_data, franchise_data: $readDB.franchise_data, user_payouts_data: $user_payouts_data, payouts_chart_values: $payouts_chart_values, payouts_value: $payouts_value, holdings_value: $holdings_value, chart_values: $chart_values, opportunity_data: $readDB.admin_opportunity_data)
                         } else {
                             Text("Secondary Market")
                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.065))

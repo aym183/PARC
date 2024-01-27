@@ -32,6 +32,7 @@ struct UserPortfolio: View {
     var logo_images = ["McDonalds", "Starbucks", "Chipotle"]
     @State private var index = 0
     @Binding var portfolio_data: [[String: String]]
+    @Binding var franchise_data: [[String: String]]
     @Binding var user_payouts_data: [[String: String]]
     @Binding var payouts_chart_values: [Float]
     @Binding var payouts_value: Int
@@ -124,7 +125,7 @@ struct UserPortfolio: View {
 //                                    Text("\(index+1).")
 //                                        .font(Font.custom("Nunito-Bold", size: 15))
                                     
-                                    Image(logo_images.randomElement()!)
+                                    Image(uiImage: loadFranchiseLogo(key: franchise_data[franchise_data.firstIndex(where: { $0["name"] == portfolio_data[index]["opportunity_name"]!})!]["logo"]!))
                                         .resizable()
                                         .aspectRatio(contentMode: .fill)
                                         .frame(width: 50, height: 50)
