@@ -39,6 +39,8 @@ struct UserAccount: View {
                             
                             if init_profile_image != profile_image {
                                 Button(action: {
+                                    UserDefaults.standard.removeObject(forKey: "profile_image")
+                                    
                                     UpdateDB().updateUserTable(primary_key: "email", primary_key_value: email, table: "users", updated_key: "picture", updated_value: CreateDB().upload_logo_image(image: profile_image!, folder: "profile_images")) { response in
                                     }
                                     withAnimation(.easeOut(duration: 0.25)) {

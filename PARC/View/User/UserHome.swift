@@ -264,11 +264,10 @@ struct UserHomeContent: View {
                                     opportunity_shown.toggle()
                                 }) {
                                     ZStack{
-                                        Image(bg_images[0])
+                                        Image(uiImage: loadDisplayImage(key: franchise_data[franchise_data.firstIndex(where: { $0["name"] == opportunity_data[index]["franchise"]!})!]["display_image"]!))
                                             .resizable()
                                             .frame(height: 250)
                                             .cornerRadius(5)
-                                        
                                         Rectangle()
                                             .opacity(0)
                                             .frame(height: 250)

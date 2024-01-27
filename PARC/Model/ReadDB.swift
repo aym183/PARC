@@ -62,6 +62,10 @@ class ReadDB: ObservableObject {
                                         if let image = response {
                                         }
                                     }
+                                    self.getImage(path: temp_dict["display_image"]!) { response in
+                                        if let image = response {
+                                        }
+                                    }
                                     self.franchise_data_dropdown.append(DropdownMenuOption(option: temp_dict["name"]!))
                                     temp_dict = [:]
                                 }

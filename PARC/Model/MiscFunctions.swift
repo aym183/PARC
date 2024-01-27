@@ -305,6 +305,13 @@ func loadFranchiseLogo(key: String) -> UIImage {
     return cachedImage!
 }
 
+func loadDisplayImage(key: String) -> UIImage {
+    let imageData = UserDefaults.standard.data(forKey: key)
+    let cachedImage = UIImage(data: imageData!)
+    return cachedImage!
+}
+
+
 func loadProfileImage(completion: @escaping (UIImage?) -> Void) {
     if let imageData = UserDefaults.standard.data(forKey: "profile_image"), let cachedImage = UIImage(data: imageData)  {
             completion(cachedImage)
