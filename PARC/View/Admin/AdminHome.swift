@@ -201,15 +201,27 @@ struct AdminHome: View {
                                                 
                                                 VStack {
                                                     HStack {
-                                                        Image(logo_images[index-1])
-                                                            .resizable()
-                                                            .aspectRatio(contentMode: .fill)
-                                                            .frame(width: 40, height: 40)
-                                                            .padding([.leading, .top], 10)
+                                                        if let franchiseName = readDB.admin_opportunity_data[index-1]["franchise"] {
+                                                            if let franchiseIndex = readDB.franchise_data.firstIndex(where: { $0["name"] == franchiseName }) {
+                                                                let matchedFranchise = readDB.franchise_data[franchiseIndex]["logo"]!
+                                                                Image(uiImage: loadFranchiseLogo(key: String(describing: matchedFranchise)))
+                                                                    .resizable()
+                                                                    .aspectRatio(contentMode: .fill)
+                                                                    .frame(width: 30, height: 30)
+                                                                    .padding([.leading, .top], 10).padding(.leading, 5)
+                                                            } else {
+                                                                Image(systemName: "house")
+                                                                    .resizable()
+                                                                    .aspectRatio(contentMode: .fill)
+                                                                    .frame(width: 30, height: 30)
+                                                                    .padding([.leading, .top], 10).padding(.leading, 5)
+                                                            }
+                                                        }
                                                         
                                                         Text(String(describing: readDB.admin_opportunity_data[index-1]["franchise"]!))
                                                             .font(Font.custom("Nunito-Bold", size: 16))
-                                                            .padding(.top, 10)
+                                                            .padding(.top, 10).padding(.leading, 5)
+                                                        
                                                         Spacer()
                                                     }
                                                     Spacer()
@@ -533,6 +545,7 @@ struct AdminHome: View {
                     withAnimation(.easeOut(duration: 0.25)) {
                         isRefreshing = true
                     }
+                    readDB.franchise_data = []
                     readDB.franchise_data_dropdown = []
                     readDB.admin_opportunity_data = []
                     readDB.payout_data = []
@@ -558,6 +571,7 @@ struct AdminHome: View {
                 }
             }
             .onAppear {
+                readDB.franchise_data = []
                 readDB.franchise_data_dropdown = []
                 readDB.admin_opportunity_data = []
                 readDB.payout_data = []
