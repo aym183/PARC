@@ -16,7 +16,7 @@ struct UserAccount: View {
     @State var showProfileImagePicker = false
     @Binding var profile_image: UIImage?
     @Binding var init_profile_image: UIImage?
-    
+
     var body: some View {
         GeometryReader { geometry in
             ZStack {
@@ -37,7 +37,7 @@ struct UserAccount: View {
                                 }
                             }
                             
-                            if init_profile_image! != profile_image {
+                            if init_profile_image != profile_image {
                                 Button(action: {
                                     UpdateDB().updateUserTable(primary_key: "email", primary_key_value: email, table: "users", updated_key: "picture", updated_value: CreateDB().upload_logo_image(image: profile_image!, folder: "profile_images")) { response in
                                     }
