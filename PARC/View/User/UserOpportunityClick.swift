@@ -95,29 +95,6 @@ struct UserOpportunityClick: View {
                             .scaleEffect(x: 1, y: 2, anchor: .center)
                             .padding(.top, -1)
                         
-                        //                        ZStack {
-                        //                            Rectangle()
-                        //                                .foregroundColor(.clear)
-                        //                                .frame(width: max(0, geometry.size.width - 40), height: 8)
-                        //                                .background(Color(red: 0.85, green: 0.85, blue: 0.85).opacity(0.6))
-                        //                                .cornerRadius(100)
-                        //
-                        //                            HStack {
-                        //                                Rectangle()
-                        //                                    .foregroundColor(.clear)
-                        //                                    .frame(width: max(0, geometry.size.width - 200), height: 8)
-                        //                                    .background(Color("Secondary"))
-                        //                                    .cornerRadius(100)
-                        //
-                        //                                Spacer()
-                        //                            }
-                        //                            .frame(width: max(0, geometry.size.width - 105))
-                        //                            .padding(.leading, -65)
-                        //
-                        //
-                        //                        }
-                        //                        .padding(.top, -5)
-                        
                         HStack {
                             Text("Minimum Investment Amount - £\(opportunity_data["min_invest_amount"]!)")
                                 .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.024))
@@ -187,7 +164,7 @@ struct UserOpportunityClick: View {
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 5)
                                         .fill(Color("Custom_Light_Gray"))
-                                        .frame(width: max(0, geometry.size.width - 210))
+                                        .frame(width: geometry.size.width*0.45)
                                     
                                     VStack {
                                         Text(titles_why_invest_1[index])
@@ -206,7 +183,7 @@ struct UserOpportunityClick: View {
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 5)
                                         .fill(Color("Custom_Light_Gray"))
-                                        .frame(width: max(0, geometry.size.width - 210))
+                                        .frame(width: geometry.size.width*0.45)
                                     
                                     VStack {
                                         Text(titles_why_invest_2[index])
@@ -252,7 +229,7 @@ struct UserOpportunityClick: View {
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 10)
                                         .fill(Color("Secondary"))
-                                        .frame(width: max(0, geometry.size.width - 325), height: 25)
+                                        .frame(width: geometry.size.width*0.15, height: 25)
                                     
                                     Text("Select \(Image(systemName: "chevron.down"))")
                                         .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.025))
@@ -276,7 +253,7 @@ struct UserOpportunityClick: View {
                                     ZStack {
                                         RoundedRectangle(cornerRadius: 5)
                                             .fill(Color("Custom_Light_Gray"))
-                                            .frame(width: max(0, geometry.size.width - 210))
+                                            .frame(width: geometry.size.width*0.45)
                                         
                                         VStack {
                                             
@@ -308,7 +285,7 @@ struct UserOpportunityClick: View {
                                     ZStack {
                                         RoundedRectangle(cornerRadius: 5)
                                             .fill(Color("Custom_Light_Gray"))
-                                            .frame(width: max(0, geometry.size.width - 210))
+                                            .frame(width: geometry.size.width*0.45)
                                         
                                         VStack {
                                             Text(titles_similar_franchise_2[index])
@@ -331,7 +308,7 @@ struct UserOpportunityClick: View {
                                                         .padding(.horizontal, 10)
                                                 }
                                                 .foregroundColor(Color("Secondary"))
-                                                .padding(.top, 13).padding(.bottom, 25)
+                                                .padding(.top, 5).padding(.bottom, 18)
                                                 .multilineTextAlignment(.center)
                                             }
                                             
@@ -350,7 +327,7 @@ struct UserOpportunityClick: View {
                                     ZStack {
                                         RoundedRectangle(cornerRadius: 5)
                                             .fill(Color("Custom_Light_Gray"))
-                                            .frame(width: max(0, geometry.size.width - 210))
+                                            .frame(width: geometry.size.width*0.45)
                                         
                                         VStack {
                                             
@@ -369,7 +346,7 @@ struct UserOpportunityClick: View {
                                     ZStack {
                                         RoundedRectangle(cornerRadius: 5)
                                             .fill(Color("Custom_Light_Gray"))
-                                            .frame(width: max(0, geometry.size.width - 210))
+                                            .frame(width: geometry.size.width*0.45)
                                         
                                         VStack {
                                             Text(titles_selected_franchise_2[index])

@@ -170,7 +170,7 @@ struct UserAccount: View {
                                     .font(Font.custom("Nunito", size: min(geometry.size.width, geometry.size.height) * 0.055))
                                     .fontWeight(.bold)
                             }
-                            .frame(width: max(0, geometry.size.width-260), height: 45)
+                            .frame(width: geometry.size.width*0.4, height: 45)
                             .background(Color("Secondary"))
                             .foregroundColor(Color.white)
                             .cornerRadius(5)
@@ -182,7 +182,7 @@ struct UserAccount: View {
                                     .font(Font.custom("Nunito", size: min(geometry.size.width, geometry.size.height) * 0.055))
                                     .fontWeight(.bold)
                             }
-                            .frame(width: max(0, geometry.size.width-260), height: 45)
+                            .frame(width: geometry.size.width*0.4, height: 45)
                             .background(Color("Secondary"))
                             .foregroundColor(Color.white)
                             .cornerRadius(5)
