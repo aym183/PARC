@@ -208,7 +208,11 @@ class CreateDB: ObservableObject {
             }
         }
         
-        UserDefaults.standard.set(image.jpegData(compressionQuality: 0.8), forKey: path)
+        if folder == "profile_images" {
+            UserDefaults.standard.set(image.jpegData(compressionQuality: 0.8), forKey: "profile_image")
+        } else {
+            UserDefaults.standard.set(image.jpegData(compressionQuality: 0.8), forKey: path)
+        }
         return path
     }
     

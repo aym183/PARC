@@ -156,7 +156,6 @@ extension LandingContent {
                     UserDefaults.standard.set(self.userProfile.family_name, forKey: "family_name")
                     UserDefaults.standard.set(self.userProfile.name, forKey: "full_name")
                     UserDefaults.standard.set(self.userProfile.email, forKey: "email")
-                    UserDefaults.standard.set(self.userProfile.picture, forKey: "picture")
                     UserDefaults.standard.set(true, forKey: "logged_in")
                     UserDefaults.standard.set(false, forKey: "onboarding_completed")
                     DispatchQueue.global(qos: .userInteractive).async {

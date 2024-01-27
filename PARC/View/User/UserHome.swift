@@ -16,7 +16,6 @@ struct UserHome: View {
     @Binding var isShownHomePage: Bool
     @State var isShownOnboarding = false
     @AppStorage("first_name") var firstName: String = ""
-    @AppStorage("picture") var picture: String = ""
     @AppStorage("email") var email: String = ""
     @AppStorage("onboarding_completed") var onboarding_completed: Bool = false
     @State var imageURL = URL(string: "")
@@ -30,6 +29,8 @@ struct UserHome: View {
     @State var opportunity_data: [[String: String]] = []
     @State var admin_opportunity_data: [[String: String]] = []
     @State var transformed_payouts_data: [String: Any] = [:]
+    @State var profile_image: UIImage?
+    @State var init_profile_image: UIImage?
     
     var body: some View {
         GeometryReader { geometry in
@@ -80,32 +81,18 @@ struct UserHome: View {
                             Text("PARC").font(Font.custom("Nunito-Black", size: 60)).foregroundColor(Color("Secondary"))
                             Spacer()
                             
-                            Button(action: {
-//                                CreateDB().createUserPayout(opportunity_id: 2, user_holdings: readDB.full_user_holdings_data, amount_offered: "2000000", payout_id: 2)
-                                account_shown.toggle()
-                                 }) {
-                                if imageURL != nil {
-                                    URLImage(imageURL!) { image in
-                                        image
+                            Button(action: { account_shown.toggle() }) {
+                                if profile_image != nil {
+                                    Image(uiImage: profile_image!)
                                             .resizable()
-                                            .aspectRatio(contentMode: .fit)
                                             .frame(width: 50, height: 50)
-                                            .clipShape(RoundedRectangle(cornerRadius: 50))
-                                    }
+                                            .cornerRadius(100)
                                 } else {
                                     Image(systemName: "person.crop.circle")
                                         .resizable()
                                         .frame(width: 50, height: 50)
                                 }
                             }
-                            //                            }
-                            //                        else {
-                            //                                Button(action: { account_shown.toggle() }) {
-                            //                                    Image(systemName: "person.crop.circle")
-                            //                                        .resizable()
-                            //                                        .frame(width: 50, height: 50)
-                            //                                }
-                            //                            }
                         }
                         
                         if selectedTab == .house {
@@ -168,6 +155,12 @@ struct UserHome: View {
                                 }
                             }
                         }
+                        loadProfileImage() { response in
+                            if response != nil {
+                                profile_image = response!
+                                init_profile_image = response!
+                            }
+                        }
                         readDB.user_holdings_data_dropdown = []
                         readDB.listed_shares = [:]
                         readDB.franchise_data_dropdown = []
@@ -221,7 +214,7 @@ struct UserHome: View {
 //                    .opacity(isSharesListed ? 0 : 1)
                 }
                 .navigationDestination(isPresented: $account_shown) {
-                    UserAccount(payoutsValue: $payouts_value, secondaryTransactionsValue: $readDB.secondary_market_transactions_ind)
+                    UserAccount(payoutsValue: $payouts_value, secondaryTransactionsValue: $readDB.secondary_market_transactions_ind, profile_image: $profile_image, init_profile_image: $init_profile_image)
                 }
             }
             

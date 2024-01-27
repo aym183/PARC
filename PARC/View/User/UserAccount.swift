@@ -14,7 +14,8 @@ struct UserAccount: View {
     @AppStorage("full_name") var fullName: String = ""
     @AppStorage("email") var email: String = ""
     @State var showProfileImagePicker = false
-    @State var profile_image: UIImage?
+    @Binding var profile_image: UIImage?
+    @Binding var init_profile_image: UIImage?
     
     var body: some View {
         GeometryReader { geometry in
@@ -22,21 +23,44 @@ struct UserAccount: View {
                 Color(.white).ignoresSafeArea()
                 VStack(alignment: .center) {
                     HStack {
-                        Button(action: { showProfileImagePicker.toggle() }) {
-                            if let image = profile_image {
-                                Image(uiImage: profile_image!)
-                                    .resizable()
-                                    .frame(width: 120, height: 120)
-                                    .cornerRadius(100)
-                                    .onAppear() {
-                                        UpdateDB().updateUserTable(primary_key: "email", primary_key_value: email, table: "users", updated_key: "picture", updated_value: CreateDB().upload_logo_image(image: profile_image!, folder: "profile_images")) { response in
+                        VStack {
+                            Button(action: { showProfileImagePicker.toggle() }) {
+                                if let image = profile_image {
+                                    Image(uiImage: profile_image!)
+                                        .resizable()
+                                        .frame(width: 100, height: 100)
+                                        .cornerRadius(100)
+                                } else {
+                                    Image(systemName: "person.crop.circle")
+                                        .resizable()
+                                        .frame(width: 100, height: 100)
+                                }
+                            }
+                            
+                            if init_profile_image! != profile_image {
+                                Button(action: {
+                                    UpdateDB().updateUserTable(primary_key: "email", primary_key_value: email, table: "users", updated_key: "picture", updated_value: CreateDB().upload_logo_image(image: profile_image!, folder: "profile_images")) { response in
+                                    }
+                                    withAnimation(.easeOut(duration: 0.25)) {
+                                        self.init_profile_image = profile_image
+                                    }
+                                }) {
+                                    ZStack {
+                                        ZStack {
+                                            RoundedRectangle(cornerRadius: 5)
+                                                .fill(Color.white)
+                                                .overlay(
+                                                    RoundedRectangle(cornerRadius: 5)
+                                                        .stroke(Color.black, lineWidth: 1.25)
+                                                )
+                                                .frame(width: 80, height: 25)
                                             
+                                            Text("Confirm Changes")
+                                                .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.022))
                                         }
                                     }
-                            } else {
-                                Image(systemName: "person.crop.circle")
-                                    .resizable()
-                                    .frame(width: 120, height: 120)
+                                    .padding(.top, 5)
+                                }
                             }
                         }
                         
@@ -74,14 +98,18 @@ struct UserAccount: View {
                                 .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.052))
                             Spacer()
                             Button(action: {}) {
-                                HStack {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 5)
+                                        .fill(Color.white)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 5)
+                                                .stroke(Color.black, lineWidth: 1.25)
+                                        )
+                                        .frame(width: 100, height: 35)
+                                    
                                     Text("Check")
                                         .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.04))
                                 }
-                                .frame(width: 100, height: 35)
-                                .background(Color("Secondary"))
-                                .foregroundColor(Color.white)
-                                .cornerRadius(5)
                             }
                         }
                         .padding(.horizontal).padding(.top, 10)
@@ -97,14 +125,18 @@ struct UserAccount: View {
                                 .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.052))
                             Spacer()
                             Button(action: {}) {
-                                HStack {
-                                    Text("Set")
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 5)
+                                        .fill(Color.white)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 5)
+                                                .stroke(Color.black, lineWidth: 1.25)
+                                        )
+                                        .frame(width: 100, height: 35)
+                                    
+                                    Text("Set Pin")
                                         .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.04))
                                 }
-                                .frame(width: 100, height: 35)
-                                .background(Color("Secondary"))
-                                .foregroundColor(Color.white)
-                                .cornerRadius(5)
                             }
                         }
                         .padding(.horizontal).padding(.top, 10)
