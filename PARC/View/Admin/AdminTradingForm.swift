@@ -20,6 +20,9 @@ struct AdminTradingForm: View {
             ...
             calendar.date(from:endComponents)!
     }()
+    var validFormInputs: Bool {
+        duration.count>0
+    }
     
     var body: some View {
         GeometryReader { geometry in
@@ -42,13 +45,6 @@ struct AdminTradingForm: View {
                         
                         DatePicker("Select a Date", selection: $start_date, in: dateRange, displayedComponents: [.date])
                         .padding([.horizontal, .top], 2)
-                        
-//                        Text("End Date").font(Font.custom("Nunito-Bold", size: 18))
-//                            .padding(.top, 10).padding(.bottom, -5).padding(.leading,2.5)
-//                        
-//                        DatePicker("", selection: $end_date, in: dateRange, displayedComponents: [.date])
-//                        .padding([.horizontal, .top], 2)
-//                        Spacer()
                         
                         HStack(spacing: 5) {
                             Text("Duration").font(Font.custom("Nunito-Bold", size: 18))
@@ -89,6 +85,8 @@ struct AdminTradingForm: View {
                             .cornerRadius(5)
                             .padding(.bottom)
                         }
+                        .disabled(validFormInputs ? false : true)
+                        .opacity(validFormInputs ? 1 : 0.75)
                     }
                     .frame(width: max(0, geometry.size.width-40), height: max(0, geometry.size.height))
                     .foregroundColor(.black)

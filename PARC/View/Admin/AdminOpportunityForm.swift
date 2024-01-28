@@ -27,6 +27,9 @@ struct AdminOpportunityForm: View {
             ...
             calendar.date(from:endComponents)!
     }()
+    var validFormInputs: Bool {
+        selectedFranchise != nil && location.count>0 && asking_price.count>0 && equity_offered.count>0 && min_investment_amount.count>0
+    }
     
     var body: some View {
         GeometryReader { geometry in
@@ -186,7 +189,8 @@ struct AdminOpportunityForm: View {
                             .cornerRadius(5)
                             .padding(.bottom)
                         }
-                        
+                        .disabled(validFormInputs ? false : true)
+                        .opacity(validFormInputs ? 1 : 0.75)
                         
                     }
                     .frame(width: max(0, geometry.size.width-40), height: max(0, geometry.size.height))

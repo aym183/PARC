@@ -26,7 +26,9 @@ struct AdminPayoutForm: View {
             calendar.date(from:endComponents)!
     }()
     @State var admin_home_shown = false
-    
+    var validFormInputs: Bool {
+        selectedOpportunity != nil && amount_offered.count>0 && revenue_generated.count>0
+    }
     
     var body: some View {
         GeometryReader { geometry in
@@ -43,33 +45,12 @@ struct AdminPayoutForm: View {
                             .overlay(.black)
                             .padding(.bottom, 5)
                         
-                        // Change to dropdown
                         Text("Opportunity").font(Font.custom("Nunito-Bold", size: 18))
                             .padding(.bottom, -5).padding(.leading,2.5)
                         
                         DropdownMenu(selectedOption: self.$selectedOpportunity, placeholder: "Select", options: opportunity_data)
                             .frame(width: max(0, geometry.size.width - 45))
                             .padding(.leading,2.5)
-                        
-//                        ZStack {
-//                            RoundedRectangle(cornerRadius: 5)
-//                                .fill(Color.white)
-//                                .overlay(
-//                                    RoundedRectangle(cornerRadius: 5)
-//                                        .stroke(Color.black, lineWidth: 1.25)
-//                                )
-//                                .frame(width: max(0, geometry.size.width - 45), height: 50)
-//                            
-//                            TextField("", text: $opportunity).padding().frame(width: max(0, geometry.size.width-40), height: 50)
-//                                .foregroundColor(.black)
-//                                .autocorrectionDisabled(true)
-//                                .autocapitalization(.none)
-//                            //                            .border(Color.black, width: 1)
-//                                .cornerRadius(5)
-//                                .font(Font.custom("Nunito-Bold", size: 16))
-//                            
-//                            
-//                        }
                         
                         Text("Amount Offered (£)").font(Font.custom("Nunito-Bold", size: 18))
                             .padding(.top, 10).padding(.bottom, -5).padding(.leading,2.5)
@@ -144,7 +125,8 @@ struct AdminPayoutForm: View {
                             .cornerRadius(5)
                             .padding(.bottom)
                         }
-                        
+                        .disabled(validFormInputs ? false : true)
+                        .opacity(validFormInputs ? 1 : 0.75)
                         
                     }
                     .frame(width: max(0, geometry.size.width-40), height: max(0, geometry.size.height))

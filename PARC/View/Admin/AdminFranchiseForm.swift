@@ -25,6 +25,9 @@ struct AdminFranchiseForm: View {
     @Binding var franchise_data: [DropdownMenuOption]
     @State var logo_path = ""
     @State var display_path = ""
+    var validFormInputs: Bool {
+        name.count>0 && description.count>0 && noOfFranchises.count>0 && MoMRevenue.count>0 && startupCapital.count>0 && monthRev18.count>0 && ebitdaEstimate.count>0 && logo_image != nil && display_image != nil
+    }
     
     var body: some View {
         
@@ -364,8 +367,8 @@ struct AdminFranchiseForm: View {
                                 .cornerRadius(5)
                                 .padding(.bottom)
                             }
-                            
-                            
+                            .disabled(validFormInputs ? false : true)
+                            .opacity(validFormInputs ? 1 : 0.75)
                         }
                         .foregroundColor(.black)
                 }

@@ -19,8 +19,6 @@ struct AdminPayoutClick: View {
     @State var showingDeleteAlert = false
     @State var payout_id = ""
     
-    //Why state Binding or var?
-    
     var body: some View {
         GeometryReader { geometry in
             ZStack {
@@ -30,39 +28,6 @@ struct AdminPayoutClick: View {
                         Text("+£\(String(describing: formattedNumber(input_number: Int(payout_data["amount_offered"]!)!)))")
                             .font(Font.custom("Nunito-Bold", size: 50))
                             .foregroundColor(.black)
-                        
-//                        HStack(spacing: 20) {
-//                            Button(action: {}) {
-//                                HStack {
-//                                    Text("Edit Payout")
-//                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.038))
-//                                }
-//                                .frame(width: max(0, geometry.size.width-240), height: 45)
-//                                .background(Color("Secondary"))
-//                                .foregroundColor(Color.white)
-//                                .cornerRadius(5)
-//                                .padding(.bottom)
-//                            }
-////                            .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 4)
-//                            
-//                            Button(action: { 
-//                                showingDeleteAlert.toggle()
-//                                payout_id = payout_data["payout_id"]!
-//                            }) {
-//                                HStack {
-//                                    Text("Cancel Payout")
-//                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.038))
-//                                }
-//                                .frame(width: max(0, geometry.size.width-240), height: 45)
-//                                .background(Color("Loss"))
-//                                .foregroundColor(Color.white)
-//                                .cornerRadius(5)
-//                                .padding(.bottom)
-//                            }
-////                            .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 4)
-//                        }
-                        //                    .padding(.top)
-                        
                         
                         HStack {
                             Text("Payout Details")
@@ -115,7 +80,12 @@ struct AdminPayoutClick: View {
                                 .foregroundColor(.gray)
                             Spacer()
                             
-                            Text("\(payout_data["percentage_of_revenue"]!)")
+                            if let percentageString = payout_data["percentage_of_revenue"], let percentageValue = Double(percentageString) {
+                                let roundedPercentage = String(format: "%.2f", percentageValue)
+                                Text(roundedPercentage)
+                            } else {
+                                Text("0%")
+                            }
                            
                         }
                         .font(Font.custom("Nunito-Medium", size: 14))
@@ -178,27 +148,6 @@ struct AdminPayoutClick: View {
             .navigationDestination(isPresented: $admin_home_shown) {
                 AdminHome().navigationBarBackButtonHidden(true)
             }
-//            .alert(isPresented: $showingDeleteAlert) {
-//                Alert(
-//                    title: Text("Are you sure you want to cancel this payout?"),
-//                    primaryButton: .default(Text("Yes")) {
-//                        DispatchQueue.global(qos: .userInteractive).async {
-//                            UpdateDB().updateTable(primary_key: "payout_id", primary_key_value: payout_data["payout_id"]!, table: "payouts", updated_key: "status", updated_value: "Cancelled") { response in
-//                                if response == "payouts status updated" {
-//                                    admin_home_shown.toggle()
-//                                }
-//                            }
-//                        }
-//                    },
-//                    secondaryButton: .destructive(Text("No")) {
-//                        print("No")
-//                    }
-//                )
-//            }
         }
     }
 }
-//
-//#Preview {
-//    AdminPayoutClick()
-//}
