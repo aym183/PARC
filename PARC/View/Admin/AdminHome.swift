@@ -8,11 +8,6 @@
 import SwiftUI
 import Foundation
 
-//class TradingWindowTransactions {
-//    var id: String = ""
-//    var amount: Int = 0
-//    var no_of_trades: Int = 0
-//}
 struct AdminHome: View {
     var rows: [GridItem] = [
         GridItem(.flexible() , spacing: nil, alignment: nil),
@@ -37,6 +32,7 @@ struct AdminHome: View {
     @State var isRefreshing = false
     @State var profile_image: UIImage?
     @State var init_profile_image: UIImage?
+    @State private var counter = 2
     
     var body: some View {
         GeometryReader { geometry in
@@ -487,13 +483,24 @@ struct AdminHome: View {
                         if response == "Fetched all opportunities" {
                             readDB.getPayouts() { response in
                                 if response == "Fetched payouts data" {
-                                    print("payouts fetched")
+                                    readDB.payout_data = sortArrayByDate(inputArray: readDB.payout_data, field_name: "date_created", date_type: "dd/MM/yyyy")
                                 }
                             }
                             readDB.getTradingWindows()
                             readDB.getTradingWindowTransactions()
                         }
                     }
+                    
+                    Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
+                                    if self.counter > 0 {
+                                        self.counter -= 1
+                                    } else {
+                                        withAnimation(.easeOut(duration: 0.25)) {
+                                            isRefreshing = false
+                                        }
+                                        timer.invalidate()
+                                    }
+                                }
                 }
                 }
             }
