@@ -47,9 +47,9 @@ struct AdminHome: View {
                             Button(action: { admin_account_click_shown.toggle() }) {
                                 if profile_image != nil {
                                     Image(uiImage: profile_image!)
-                                            .resizable()
-                                            .frame(width: 50, height: 50)
-                                            .cornerRadius(100)
+                                        .resizable()
+                                        .frame(width: 50, height: 50)
+                                        .cornerRadius(100)
                                 } else {
                                     Image(systemName: "person.crop.circle")
                                         .resizable()
@@ -109,12 +109,7 @@ struct AdminHome: View {
                                         } else {
                                             ZStack {
                                                 Button(action: {
-                                                    if let franchiseName = readDB.admin_opportunity_data[index-1]["franchise"] {
-                                                        if let franchiseIndex = readDB.franchise_data.firstIndex(where: { $0["name"] == franchiseName }) {
-                                                            let matchedFranchise = readDB.franchise_data[franchiseIndex]["logo"]!
-                                                            opportunity_logo = loadFranchiseLogo(key: String(describing: matchedFranchise))
-                                                        }
-                                                    }
+                                                    opportunity_logo = loadDisplayImage(key: readDB.franchise_data[readDB.franchise_data.firstIndex(where: { $0["name"] ==  readDB.admin_opportunity_data[index-1]["franchise"]})!]["logo"]!)
                                                     opportunity_data = readDB.admin_opportunity_data[index-1]
                                                     admin_opportunity_click_shown.toggle()
                                                 }) {
@@ -132,11 +127,21 @@ struct AdminHome: View {
                                                         if let franchiseName = readDB.admin_opportunity_data[index-1]["franchise"] {
                                                             if let franchiseIndex = readDB.franchise_data.firstIndex(where: { $0["name"] == franchiseName }) {
                                                                 let matchedFranchise = readDB.franchise_data[franchiseIndex]["logo"]!
-                                                                Image(uiImage: loadFranchiseLogo(key: String(describing: matchedFranchise)))
-                                                                    .resizable()
-                                                                    .aspectRatio(contentMode: .fill)
-                                                                    .frame(width: 30, height: 30)
-                                                                    .padding([.leading, .top], 10).padding(.leading, 5)
+                                                                
+                                                                if UserDefaults.standard.object(forKey: String(describing: matchedFranchise)) != nil {
+                                                                    Image(uiImage: loadDisplayImage(key: String(describing: matchedFranchise)))
+                                                                        .resizable()
+                                                                        .aspectRatio(contentMode: .fill)
+                                                                        .frame(width: 30, height: 30)
+                                                                        .padding([.leading, .top], 10).padding(.leading, 5)
+                                                                } else {
+                                                                    Image(systemName: "house")
+                                                                        .resizable()
+                                                                        .aspectRatio(contentMode: .fit)
+                                                                        .frame(width: 40, height: 30)
+                                                                        .padding(.top, 10)
+                                                                        .padding(.leading, 5)
+                                                                }
                                                             } else {
                                                                 Image(systemName: "house")
                                                                     .resizable()
@@ -170,7 +175,6 @@ struct AdminHome: View {
                                                                     .foregroundColor(Color("Custom_Gray"))
                                                                     .padding(.leading, -7.5)
                                                             }
-    //                                                        .padding(.trailing, 15)
                                                         }
                                                         
                                                         Spacer()
@@ -189,10 +193,10 @@ struct AdminHome: View {
                                                     
                                                     HStack {
                                                         if readDB.admin_opportunity_data[index-1]["status"]! == "Closed"{
-                                                                Text("Closed")
+                                                            Text("Closed")
                                                         } else if getDaysRemaining(dateString: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))! < 1 {
-                                                                Text("Completed")
-                                                                    .foregroundColor(Color("Profit"))
+                                                            Text("Completed")
+                                                                .foregroundColor(Color("Profit"))
                                                         } else if getDaysRemaining(dateString: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))! <= 5 {
                                                             
                                                             Text("\(getDaysRemaining(dateString: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))!) days left")
@@ -302,10 +306,10 @@ struct AdminHome: View {
                                                         }
                                                         
                                                         Spacer()
-
+                                                        
                                                         Text("+£\(String(describing:   formattedNumber(input_number: Int(readDB.payout_data[index-1]["amount_offered"]!)!)))")
                                                             .font(Font.custom("Nunito-Bold", size: 25))
-    //                                                        .foregroundColor(Color("Profit"))
+                                                        //                                                        .foregroundColor(Color("Profit"))
                                                         
                                                         Spacer()
                                                         
@@ -428,7 +432,7 @@ struct AdminHome: View {
                                                                 Text("0 Trades")
                                                                     .font(Font.custom("Nunito-Bold", size: 25))
                                                             }
-                                                 
+                                                            
                                                             Spacer()
                                                             
                                                             HStack {
@@ -497,70 +501,70 @@ struct AdminHome: View {
                     }
                     
                     Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
-                                    if self.counter > 0 {
-                                        self.counter -= 1
-                                    } else {
-                                        withAnimation(.easeOut(duration: 0.25)) {
-                                            isRefreshing = false
-                                        }
-                                        timer.invalidate()
-                                    }
-                                }
-                }
-                }
-            }
-            .onAppear {
-                loadProfileImage() { response in
-                    if response != nil {
-                        profile_image = response!
-                        init_profile_image = response!
-                    }
-                }
-                readDB.franchise_data = []
-                readDB.franchise_data_dropdown = []
-                readDB.admin_opportunity_data = []
-                readDB.payout_data = []
-                readDB.opportunity_data_dropdown = []
-                readDB.full_user_holdings_data = []
-                readDB.trading_window_data = []
-                readDB.trading_window_transactions_data = []
-                readDB.transformed_trading_window_transactions_data = [:]
-                readDB.getFranchises()
-                readDB.getAllUserHoldings()
-                readDB.getAdminOpportunities() { response in
-                    if response == "Fetched all opportunities" {
-                        readDB.getPayouts() { response in
-                            if response == "Fetched payouts" {
-                                readDB.payout_data = sortArrayByDate(inputArray: readDB.payout_data, field_name: "date_created", date_type: "dd/MM/yyyy")
+                        if self.counter > 0 {
+                            self.counter -= 1
+                        } else {
+                            withAnimation(.easeOut(duration: 0.25)) {
+                                isRefreshing = false
                             }
+                            timer.invalidate()
                         }
-                        readDB.getTradingWindows()
-                        readDB.getTradingWindowTransactions()
                     }
                 }
-            }
-            .navigationDestination(isPresented: $admin_payout_form_shown){
-                AdminPayoutForm(opportunity_data: $readDB.opportunity_data_dropdown, user_holdings_data: $readDB.full_user_holdings_data)
-            }
-            .navigationDestination(isPresented: $admin_opportunity_form_shown){
-                AdminOpportunityForm(franchise_data: $readDB.franchise_data_dropdown)
-            }
-            .navigationDestination(isPresented: $admin_trading_form_shown){
-                AdminTradingForm()
-            }
-            .navigationDestination(isPresented: $admin_opportunity_click_shown){
-                AdminOpportunityClick(opportunity_logo: $opportunity_logo, opportunity_data: $opportunity_data)
-            }
-            .navigationDestination(isPresented: $admin_trading_click_shown){
-                AdminTradingClick(selected_trading_window: $selected_trading_window, trading_volume: $trading_volume, no_of_trades: $no_of_trades)
-            }
-            .navigationDestination(isPresented: $admin_payout_click_shown){
-                AdminPayoutClick(opportunity_data: $opportunity_data, payout_data: $payout_data, admin_payout_click_shown: $admin_payout_click_shown)
-            }
-            .navigationDestination(isPresented: $admin_account_click_shown){
-                AdminAccount(profile_image: $profile_image, init_profile_image: $init_profile_image)
             }
         }
+        .onAppear {
+            loadProfileImage() { response in
+                if response != nil {
+                    profile_image = response!
+                    init_profile_image = response!
+                }
+            }
+            readDB.franchise_data = []
+            readDB.franchise_data_dropdown = []
+            readDB.admin_opportunity_data = []
+            readDB.payout_data = []
+            readDB.opportunity_data_dropdown = []
+            readDB.full_user_holdings_data = []
+            readDB.trading_window_data = []
+            readDB.trading_window_transactions_data = []
+            readDB.transformed_trading_window_transactions_data = [:]
+            readDB.getFranchises()
+            readDB.getAllUserHoldings()
+            readDB.getAdminOpportunities() { response in
+                if response == "Fetched all opportunities" {
+                    readDB.getPayouts() { response in
+                        if response == "Fetched payouts" {
+                            readDB.payout_data = sortArrayByDate(inputArray: readDB.payout_data, field_name: "date_created", date_type: "dd/MM/yyyy")
+                        }
+                    }
+                    readDB.getTradingWindows()
+                    readDB.getTradingWindowTransactions()
+                }
+            }
+        }
+        .navigationDestination(isPresented: $admin_payout_form_shown){
+            AdminPayoutForm(opportunity_data: $readDB.opportunity_data_dropdown, user_holdings_data: $readDB.full_user_holdings_data)
+        }
+        .navigationDestination(isPresented: $admin_opportunity_form_shown){
+            AdminOpportunityForm(franchise_data: $readDB.franchise_data_dropdown)
+        }
+        .navigationDestination(isPresented: $admin_trading_form_shown){
+            AdminTradingForm()
+        }
+        .navigationDestination(isPresented: $admin_opportunity_click_shown){
+            AdminOpportunityClick(opportunity_logo: $opportunity_logo, opportunity_data: $opportunity_data)
+        }
+        .navigationDestination(isPresented: $admin_trading_click_shown){
+            AdminTradingClick(selected_trading_window: $selected_trading_window, trading_volume: $trading_volume, no_of_trades: $no_of_trades)
+        }
+        .navigationDestination(isPresented: $admin_payout_click_shown){
+            AdminPayoutClick(opportunity_data: $opportunity_data, payout_data: $payout_data, admin_payout_click_shown: $admin_payout_click_shown)
+        }
+        .navigationDestination(isPresented: $admin_account_click_shown){
+            AdminAccount(profile_image: $profile_image, init_profile_image: $init_profile_image)
+        }
+    }
     
 }
 

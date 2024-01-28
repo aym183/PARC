@@ -100,6 +100,7 @@ struct AdminOpportunityForm: View {
                             TextField("", text: $asking_price, prompt: Text("1500000").foregroundColor(.gray).font(Font.custom("Nunito-Medium", size: 16))).padding().frame(width: max(0, geometry.size.width-40), height: 50)
                                 .foregroundColor(.black)
                                 .font(Font.custom("Nunito-SemiBold", size: 16))
+                                .keyboardType(.numberPad)
                         }
                         
                         Text("Equity Offered (%)").font(Font.custom("Nunito-Bold", size: 18))

@@ -60,8 +60,8 @@ class ReadDB: ObservableObject {
                                         }
                                     }
                                     self.franchise_data.append(temp_dict)
-//                                    self.getImage(path: temp_dict["logo"]!)
-//                                    self.getImage(path: temp_dict["display_image"]!)
+                                    self.getImage(path: temp_dict["logo"]!)
+                                    self.getImage(path: temp_dict["display_image"]!)
                                     
                                     self.franchise_data_dropdown.append(DropdownMenuOption(option: temp_dict["name"]!))
                                     temp_dict = [:]
@@ -579,6 +579,7 @@ class ReadDB: ObservableObject {
                     }
             }
     }
+    
     
     func getDisImage(path: String, completion: @escaping (UIImage?) -> Void) {
             let storage = Storage.storage()
