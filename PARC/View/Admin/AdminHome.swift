@@ -21,7 +21,7 @@ struct AdminHome: View {
     @State var admin_account_click_shown = false
     var logo_images = ["McDonalds", "Starbucks", "Dominos", "Chipotle", "Subway", "McDonalds", "Starbucks", "Dominos", "Chipotle", "Subway"]
     var titles = ["McDonald's", "Starbucks", "Dominos", "Chipotle", "Subway", "McDonald's", "Starbucks", "Dominos", "Chipotle", "Subway"]
-    @State var opportunity_logo = ""
+    @State var opportunity_logo: UIImage?
     @State var opportunity_data: [String:String] = [:]
     @State var payout_data: [String:String] = [:]
     @State var selected_trading_window: [String: String] = [:]
@@ -109,7 +109,12 @@ struct AdminHome: View {
                                         } else {
                                             ZStack {
                                                 Button(action: {
-                                                    opportunity_logo = logo_images[index-1]
+                                                    if let franchiseName = readDB.admin_opportunity_data[index-1]["franchise"] {
+                                                        if let franchiseIndex = readDB.franchise_data.firstIndex(where: { $0["name"] == franchiseName }) {
+                                                            let matchedFranchise = readDB.franchise_data[franchiseIndex]["logo"]!
+                                                            opportunity_logo = loadFranchiseLogo(key: String(describing: matchedFranchise))
+                                                        }
+                                                    }
                                                     opportunity_data = readDB.admin_opportunity_data[index-1]
                                                     admin_opportunity_click_shown.toggle()
                                                 }) {

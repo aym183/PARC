@@ -10,7 +10,7 @@ import SwiftUI
 struct AdminOpportunityClick: View {
     var data_titles = ["Opportunity ID", "Location", "Type", "Money Raised", "Target Raised", "Investors", "Minimum Investment", "Investment Deadline"]
     var data_values = ["24", "Stratford, London", "Equity", "£400,000", "£1,000,000", "500", "£100", "18/08/2023"]
-    @Binding var opportunity_logo: String
+    @Binding var opportunity_logo: UIImage?
     @Binding var opportunity_data: [String:String]
     @State var admin_home_shown = false
     @State var showingDeleteAlert = false
@@ -22,7 +22,7 @@ struct AdminOpportunityClick: View {
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack {
                         HStack(spacing: 20) {
-                            Image(opportunity_logo)
+                            Image(uiImage: opportunity_logo!)
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .frame(width: 80, height: 80)
