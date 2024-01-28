@@ -184,7 +184,8 @@ struct UserMarketplaceClick: View {
                                     }
                                 }
                             }
-                            CreateDB().createInvestmentConfirmation(email: email, amount: amount, opportunity_name: opportunity_name)
+                            CreateDB().createInvestmentConfirmation(email: email, amount: amount, opportunity_name: opportunity_name, type: "buyer")
+                            CreateDB().createInvestmentConfirmation(email: email, amount: amount, opportunity_name: opportunity_name, type: "seller")
                         }
                     },
                     secondaryButton: .destructive(Text("No")) {

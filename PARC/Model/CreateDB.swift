@@ -102,24 +102,40 @@ class CreateDB: ObservableObject {
         }.resume()
     }
     
-    func createInvestmentConfirmation(email: String, amount: String, opportunity_name: String) {
-        
-        let apiUrl = URL(string: "https://brdh472ip2.execute-api.us-east-1.amazonaws.com/development/emails/investment-confirmed?email=\(email)&amount=\(amount)&opportunity_name=\(opportunity_name)")!
+    func createInvestmentConfirmation(email: String, amount: String, opportunity_name: String, type: String) {
+        if type == "buyer" {
+            let apiUrl = URL(string: "https://brdh472ip2.execute-api.us-east-1.amazonaws.com/development/emails/investment-confirmed?email=\(email)&amount=\(amount)&opportunity_name=\(opportunity_name)")
+            var request = URLRequest(url: apiUrl!)
+            request.httpMethod = "POST"
 
-        var request = URLRequest(url: apiUrl)
-        request.httpMethod = "POST"
+            URLSession.shared.dataTask(with: request) { data, response, error in
+                if let data = data, let responseText = String(data: data, encoding: .utf8) {
+                    DispatchQueue.main.async {
+                        print("Investment confirmation created \(responseText)")
+                    }
+                } else if let error = error {
+                    DispatchQueue.main.async {
+                        print("Error creating investment confirmation: \(error.localizedDescription)")
+                    }
+                }
+            }.resume()
+        } else {
+            let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/transactions-secondary-market/seller-investment-confirmed?email=\(email)&amount=\(amount)&opportunity_name=\(opportunity_name)")
+            var request = URLRequest(url: apiUrl!)
+            request.httpMethod = "POST"
 
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            if let data = data, let responseText = String(data: data, encoding: .utf8) {
-                DispatchQueue.main.async {
-                    print("Investment confirmation created \(responseText)")
+            URLSession.shared.dataTask(with: request) { data, response, error in
+                if let data = data, let responseText = String(data: data, encoding: .utf8) {
+                    DispatchQueue.main.async {
+                        print("Investment confirmation created \(responseText)")
+                    }
+                } else if let error = error {
+                    DispatchQueue.main.async {
+                        print("Error creating investment confirmation: \(error.localizedDescription)")
+                    }
                 }
-            } else if let error = error {
-                DispatchQueue.main.async {
-                    print("Error creating investment confirmation: \(error.localizedDescription)")
-                }
-            }
-        }.resume()
+            }.resume()
+        }
         
     }
     

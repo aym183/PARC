@@ -149,6 +149,7 @@ struct UserHome: View {
                             withAnimation(.easeOut(duration: 0.5)) {
 //                                imageURL = URL(string: picture)!
                                 isShownHomePage = false
+                                isInvestmentConfirmed = false
 //                                isSharesListed = false
                                 if !onboarding_completed {
                                     isShownOnboarding.toggle()

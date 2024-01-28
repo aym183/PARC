@@ -219,7 +219,7 @@ struct UserInvestPage: View {
                                             
                                             CreateDB().createOpportunityTransaction(opportunity_id: opportunity_id, email: email, amount: investment_amount)
                                             
-                                            CreateDB().createInvestmentConfirmation(email: email, amount: investment_amount, opportunity_name: opportunity_name)
+                                            CreateDB().createInvestmentConfirmation(email: email, amount: investment_amount, opportunity_name: opportunity_name, type: "buyer")
                                         }
                                     }
                                 }
