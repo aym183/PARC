@@ -20,6 +20,9 @@ struct UserListShares: View {
     @State var isShownHomePage = false
     @State private var selectedFranchise: DropdownMenuOption? = nil
     @State private var selectedHolding: DropdownMenuOption? = nil
+    var validFormInputs: Bool {
+        selectedHolding != nil && asking_price.count>0 && is_on
+    }
     
     //Refactor this view to show for loop components as compared to replicating
     var body: some View {
@@ -37,28 +40,6 @@ struct UserListShares: View {
                             .frame(height: 1)
                             .overlay(.black)
                         
-                        
-//                        Text("Franchise").font(Font.custom("Nunito-Bold", size: 18))
-//                            .padding(.top).padding(.bottom, -5)
-//                        
-                        // Replace with dropdown of all added franchise
-                        
-                        //                    ZStack {
-                        //                        RoundedRectangle(cornerRadius: 5)
-                        //                            .fill(Color.white)
-                        //                            .overlay(
-                        //                                RoundedRectangle(cornerRadius: 5)
-                        //                                    .stroke(Color.black, lineWidth: 1.25)
-                        //                            )
-                        //                            .frame(width: max(0, geometry.size.width - 40), height: 50)
-                        
-//                        DropdownMenu(selectedOption: self.$selectedFranchise, placeholder: "Select", options: franchise_data)
-//                            .frame(width: max(0, geometry.size.width - 40), height: 50)
-//                            .padding(.top, 0.5)
-//                        
-                        
-                        //                    }
-                        
                         Text("Holding").font(Font.custom("Nunito-Bold", size: 18))
                             .padding(.top).padding(.bottom, -5)
                         
@@ -67,26 +48,6 @@ struct UserListShares: View {
                         DropdownMenu(selectedOption: self.$selectedHolding, placeholder: "Select", options: holding_data)
                             .frame(width: max(0, geometry.size.width - 40), height: 50)
                             .padding(.top, 0.5)
-//                        
-//                        Text("Shares").font(Font.custom("Nunito-Bold", size: 18))
-//                            .padding(.top, 10).padding(.bottom, -5)
-//                        
-//                        ZStack {
-//                            RoundedRectangle(cornerRadius: 5)
-//                                .fill(Color.white)
-//                                .overlay(
-//                                    RoundedRectangle(cornerRadius: 5)
-//                                        .stroke(Color.black, lineWidth: 1.25)
-//                                )
-//                                .frame(width: max(0, geometry.size.width - 40), height: 50)
-//                            // Have some limit where user cant put more than the no of shares available
-//                            TextField("", text: $no_of_shares, prompt: Text("500").foregroundColor(.gray).font(Font.custom("Nunito-Medium", size: 16))).padding().frame(width: max(0, geometry.size.width-40), height: 50)
-//                                .foregroundColor(.black)
-//                                .autocorrectionDisabled(true)
-//                                .autocapitalization(.none)
-//                                .font(Font.custom("Nunito-Bold", size: 16))
-//                                .keyboardType(.numberPad)
-//                        }
                         
                         Text("Asking Price (£)").font(Font.custom("Nunito-Bold", size: 18))
                             .padding(.top, 10).padding(.bottom, -5)
@@ -125,24 +86,24 @@ struct UserListShares: View {
                         Spacer()
                         
                         Button(action: {
-                            let components = selectedHolding!.option.components(separatedBy: "-")
-                            if let userHoldingID = Int((components.first?.trimmingCharacters(in: .whitespaces))!) {
-                                DispatchQueue.global(qos: .userInteractive).async {
-                                    UpdateDB().updateTable(primary_key: "user_holdings_id", primary_key_value: String(describing: userHoldingID), table: "user-holdings", updated_key: "status", updated_value: "Listed") { response in
-                                        if response == "user-holdings status updated" {
-                                            
-                                            UpdateDB().updateTable(primary_key: "user_holdings_id", primary_key_value: String(describing: userHoldingID), table: "user-holdings", updated_key: "amount", updated_value: asking_price) { response in
-                                                if response == "user-holdings amount updated" {
-                                                    marketplace_shown.toggle()
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            } else {
-                                print("Unable to opportunity sub-data")
-                            }
-                            
+//                            let components = selectedHolding!.option.components(separatedBy: "-")
+//                            if let userHoldingID = Int((components.first?.trimmingCharacters(in: .whitespaces))!) {
+//                                DispatchQueue.global(qos: .userInteractive).async {
+//                                    UpdateDB().updateTable(primary_key: "user_holdings_id", primary_key_value: String(describing: userHoldingID), table: "user-holdings", updated_key: "status", updated_value: "Listed") { response in
+//                                        if response == "user-holdings status updated" {
+//                                            
+//                                            UpdateDB().updateTable(primary_key: "user_holdings_id", primary_key_value: String(describing: userHoldingID), table: "user-holdings", updated_key: "amount", updated_value: asking_price) { response in
+//                                                if response == "user-holdings amount updated" {
+//                                                    marketplace_shown.toggle()
+//                                                }
+//                                            }
+//                                        }
+//                                    }
+//                                }
+//                            } else {
+//                                print("Unable to opportunity sub-data")
+//                            }
+//
                         }) {
                             HStack {
                                 Text("Submit Listing")
@@ -154,6 +115,8 @@ struct UserListShares: View {
                             .cornerRadius(5)
                             .padding(.bottom)
                         }
+                        .disabled(validFormInputs ? false : true)
+                        .opacity(validFormInputs ? 1 : 0.75)
                     }
                     .frame(width: max(0, geometry.size.width - 40), height: max(0, geometry.size.height))
                     .padding(10)

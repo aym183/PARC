@@ -125,8 +125,7 @@ struct UserInvestPage: View {
                         .overlay(Color("Custom_Gray"))
                         .opacity(0.5)
                         .frame(height: 1)
-                        .padding(.top, 7.5)
-                        .padding(.bottom, -7.5)
+                        .padding(.top, 2.5)
                     
                     if investment_limit > 0 {
                         Text("Investment Amount (£)").font(Font.custom("Nunito-Bold", size: 18))
