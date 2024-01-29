@@ -23,6 +23,7 @@ struct AdminTradingForm: View {
     var validFormInputs: Bool {
         duration.count>0
     }
+    @State var isValidInput = true
     
     var body: some View {
         GeometryReader { geometry in
@@ -65,6 +66,21 @@ struct AdminTradingForm: View {
                                 .foregroundColor(.black)
                                 .font(Font.custom("Nunito-SemiBold", size: 16))
                                 .keyboardType(.numberPad)
+                                .onChange(of: self.duration, perform: { value in
+                                    withAnimation(.easeOut(duration: 0.2)) {
+                                        if self.duration.count > 0 {
+                                            if Int(self.duration)! == 0 { isValidInput = false }
+                                            else if Int(self.duration)! > 60 { isValidInput = false }
+                                        } else { isValidInput = true }
+                                    }
+                                })
+                        }
+                        
+                        if !isValidInput {
+                                HStack {
+                                    Spacer()
+                                    Text("Amount should be between 0 and 60").foregroundColor(.red).font(Font.custom("Nunito-Medium", size: min(geometry.size.width, geometry.size.height) * 0.035)).fontWeight(.bold)
+                                }
                         }
                         
                         Spacer()
