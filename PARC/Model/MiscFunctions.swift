@@ -318,3 +318,7 @@ func loadProfileImage(completion: @escaping (UIImage?) -> Void) {
             return
     }
 }
+
+//func validateNumberInput(input: Int) {
+//    if input
+//}
