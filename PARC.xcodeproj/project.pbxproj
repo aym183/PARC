@@ -347,8 +347,8 @@
 				615243D32AE1290B00A18880 /* UserAccount.swift */,
 				613877A52AE26B77000C959A /* UserOpportunityClick.swift */,
 				61346E1C2AE51CE900E1941B /* UserMarketplaceClick.swift */,
-				61346E1E2AE66E0F00E1941B /* UserMarketplaceBottomSheet.swift */,
 				617E98812AECD4980085C4EE /* UserListShares.swift */,
+				61346E1E2AE66E0F00E1941B /* UserMarketplaceBottomSheet.swift */,
 				6136EC112AF5375500A09DDA /* UserOnboarding.swift */,
 			);
 			path = User;

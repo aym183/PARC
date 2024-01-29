@@ -165,6 +165,9 @@ struct UserMarketplaceClick: View {
                 .frame(width: max(0, geometry.size.width - 40))
                 .padding(.top,10)
             }
+            .onAppear() {
+                print(shares_data)
+            }
             .navigationDestination(isPresented: $home_page_shown) {
                 UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isShownHomePage: $isShownHomePage).navigationBarBackButtonHidden(true)
             }
@@ -185,7 +188,7 @@ struct UserMarketplaceClick: View {
                                 }
                             }
                             CreateDB().createInvestmentConfirmation(email: email, amount: amount, opportunity_name: opportunity_name, type: "buyer")
-                            CreateDB().createInvestmentConfirmation(email: email, amount: amount, opportunity_name: opportunity_name, type: "seller")
+                            CreateDB().createInvestmentConfirmation(email: selling_email, amount: amount, opportunity_name: opportunity_name, type: "seller")
                         }
                     },
                     secondaryButton: .destructive(Text("No")) {

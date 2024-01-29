@@ -231,7 +231,7 @@ func sortByDaysRemaining(array: [[String: String]]) -> [[String : String]] {
     for ind in array {
         if ind["status"]! == "Closed" {
             closedArray.append(ind)
-        } else if getDaysRemaining(dateString: ind["close_date"]!)! > 1 {
+        } else if getDaysRemaining(dateString: ind["close_date"]!)! >= 1 {
             outputArray.append(ind)
         } else {
             completedArray.append(ind)

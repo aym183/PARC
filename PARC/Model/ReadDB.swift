@@ -60,8 +60,13 @@ class ReadDB: ObservableObject {
                                         }
                                     }
                                     self.franchise_data.append(temp_dict)
-                                    self.getImage(path: temp_dict["logo"]!)
-                                    self.getImage(path: temp_dict["display_image"]!)
+                                    if UserDefaults.standard.object(forKey: temp_dict["logo"]!) == nil {
+                                        self.getImage(path: temp_dict["logo"]!)
+                                    }
+                                    
+                                    if UserDefaults.standard.object(forKey: temp_dict["display_image"]!) == nil {
+                                        self.getImage(path: temp_dict["display_image"]!)
+                                    }
                                     
                                     self.franchise_data_dropdown.append(DropdownMenuOption(option: temp_dict["name"]!))
                                     temp_dict = [:]
@@ -137,6 +142,7 @@ class ReadDB: ObservableObject {
                                     }
                                     temp_dict = [:]
                                 }
+                                self.user_opportunity_data = sortByDaysRemaining(array: self.user_opportunity_data)
                                 completion("Fetched all opportunities")
                             }
                         }
@@ -573,9 +579,7 @@ class ReadDB: ObservableObject {
                     }
                     
                     if let data = data, let image = UIImage(data: data) {
-                        if UserDefaults.standard.object(forKey: path) == nil {
-                            UserDefaults.standard.set(image.jpegData(compressionQuality: 0.8), forKey: path)
-                        }
+                        UserDefaults.standard.set(image.jpegData(compressionQuality: 0.8), forKey: path)
                     }
             }
     }
