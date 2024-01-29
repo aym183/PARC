@@ -29,6 +29,8 @@ struct AdminPayoutForm: View {
     var validFormInputs: Bool {
         selectedOpportunity != nil && amount_offered.count>0 && revenue_generated.count>0
     }
+    @State var isValidInput = true
+    @State var isRevenueValid = true
     
     var body: some View {
         GeometryReader { geometry in
@@ -70,6 +72,20 @@ struct AdminPayoutForm: View {
                                 .autocapitalization(.none)
                                 .font(Font.custom("Nunito-SemiBold", size: 16))
                                 .keyboardType(.numberPad)
+                                .onChange(of: self.amount_offered, perform: { value in
+                                    withAnimation(.easeOut(duration: 0.2)) {
+                                        if self.amount_offered.count > 0 {
+                                            if Int(self.amount_offered)! == 0 { isValidInput = false }
+                                        } else { isValidInput = true }
+                                    }
+                                })
+                        }
+                        
+                        if !isValidInput {
+                                HStack {
+                                    Spacer()
+                                    Text("Amount should be greater than 0").foregroundColor(.red).font(Font.custom("Nunito-Medium", size: min(geometry.size.width, geometry.size.height) * 0.035)).fontWeight(.bold)
+                                }
                         }
                         
                         Text("Revenue Generated (past month)").font(Font.custom("Nunito-Bold", size: 18))
@@ -90,6 +106,20 @@ struct AdminPayoutForm: View {
                                 .autocapitalization(.none)
                                 .font(Font.custom("Nunito-SemiBold", size: 16))
                                 .keyboardType(.numberPad)
+                                .onChange(of: self.revenue_generated, perform: { value in
+                                    withAnimation(.easeOut(duration: 0.2)) {
+                                        if self.revenue_generated.count > 0 {
+                                            if Int(self.revenue_generated)! == 0 { isRevenueValid = false }
+                                        } else { isRevenueValid = true }
+                                    }
+                                })
+                        }
+                        
+                        if !isRevenueValid {
+                                HStack {
+                                    Spacer()
+                                    Text("Amount should be greater than 0").foregroundColor(.red).font(Font.custom("Nunito-Medium", size: min(geometry.size.width, geometry.size.height) * 0.035)).fontWeight(.bold)
+                                }
                         }
                         
                         Text("Payout Date").font(Font.custom("Nunito-Bold", size: 18))
