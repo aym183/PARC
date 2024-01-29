@@ -162,7 +162,7 @@ func sortArrayByDate(inputArray: [[String: String]], field_name: String, date_ty
     return sortedArray
 }
 
-func transformListedShares(listed_shares: [String: [[String: String]]]) -> [String: Any] {
+func transformListedShares(listed_shares: [String: [[String: String]]]) -> [(key: String, value: Any)] {
     var traversed_franchises: [String:Any] = [:]
     
     for (_, subArray) in listed_shares {
@@ -177,7 +177,7 @@ func transformListedShares(listed_shares: [String: [[String: String]]]) -> [Stri
             }
         }
     }
-    return traversed_franchises
+    return traversed_franchises.sorted { $0.value as! Int > $1.value as! Int }
 }
 
 func transformTradingWindowData(listed_shares: [[String: String]]) -> [String: Int] {

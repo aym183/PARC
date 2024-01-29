@@ -22,7 +22,7 @@ struct UserMarketplace: View {
     @State var logo = ""
     @Binding var franchise_data: [DropdownMenuOption]
     @Binding var holding_data: [DropdownMenuOption]
-    @Binding var listed_shares: [String: Any]
+    @Binding var listed_shares: [(key: String, value: Any)]
     @Binding var secondary_shares: [String: [[String: String]]]
     @State var transformed_secondary_shares: [[String: String]] = []
     @Binding var transformed_payouts_data: [String: Any]
@@ -30,7 +30,6 @@ struct UserMarketplace: View {
     @State var franchise_selected: [String: String] = [:]
     
     var body: some View {
-        let allKeys = Array(listed_shares.keys)
         GeometryReader { geometry in
             
             if trading_window_active == "false" {
@@ -161,21 +160,21 @@ struct UserMarketplace: View {
                             if listed_shares.count != 0 && franchises.count != 0 {
                                 ForEach((0..<listed_shares.count), id: \.self) { index in
                                     Button(action: {
-                                        title = String(describing: Array(listed_shares.keys)[index])
+                                        title = String(describing: listed_shares[index].key)
                                         logo = logo_images[index]
                                         transformed_secondary_shares = secondary_shares[title]!
-                                        franchise_selected = franchises[franchises.firstIndex(where: { $0["name"] == String(describing: Array(listed_shares.keys)[index])})!]
+                                        franchise_selected = franchises[franchises.firstIndex(where: { $0["name"] == String(describing: listed_shares[index].key)})!]
                                         marketplace_click_shown.toggle()
                                     }) {
                                         HStack {
-                                            Image(uiImage: loadFranchiseLogo(key: franchises[franchises.firstIndex(where: { $0["name"] == Array(listed_shares.keys)[index]})!]["logo"]!))
+                                            Image(uiImage: loadFranchiseLogo(key: franchises[franchises.firstIndex(where: { $0["name"] == listed_shares[index].key})!]["logo"]!))
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fill)
                                                 .frame(width: 50, height: 50)
                                             Spacer()
                                             
                                             HStack {
-                                                Text(String(describing: Array(listed_shares.keys)[index]))
+                                                Text(String(describing: listed_shares[index].key))
                                                 Spacer()
                                             }
                                             .frame(width: 75)
@@ -184,7 +183,7 @@ struct UserMarketplace: View {
                                             Spacer()
                                         
                                             HStack {
-                                                Text("£\(formattedNumber(input_number: Int(String(describing: transformed_payouts_data[String(describing: Array(listed_shares.keys)[index])]!))!))")
+                                                Text("£\(formattedNumber(input_number: Int(String(describing: transformed_payouts_data[String(describing: listed_shares[index].key)]!))!))")
                                                 Spacer()
                                             }
                                             .frame(width: 75)
@@ -193,7 +192,7 @@ struct UserMarketplace: View {
                                             Spacer()
                                             
                                             HStack {
-                                                Text("£\(formattedNumber(input_number: Int(String(describing: Array(listed_shares.values)[index]))!))")
+                                                Text("£\(formattedNumber(input_number: Int(String(describing: listed_shares[index].value))!))")
                                                 Spacer()
                                             }
                                             .frame(width: 75)

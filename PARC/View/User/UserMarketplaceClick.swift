@@ -165,9 +165,6 @@ struct UserMarketplaceClick: View {
                 .frame(width: max(0, geometry.size.width - 40))
                 .padding(.top,10)
             }
-            .onAppear() {
-                print(shares_data)
-            }
             .navigationDestination(isPresented: $home_page_shown) {
                 UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isShownHomePage: $isShownHomePage).navigationBarBackButtonHidden(true)
             }
