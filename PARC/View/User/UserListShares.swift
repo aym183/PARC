@@ -72,12 +72,8 @@ struct UserListShares: View {
                                 .onChange(of: self.asking_price, perform: { value in
                                     withAnimation(.easeOut(duration: 0.2)) {
                                         if self.asking_price.count > 0 {
-                                            if Int(self.asking_price)! == 0 {
-                                                isValidInput = false
-                                            }
-                                        } else {
-                                            isValidInput = true
-                                        }
+                                            if Int(self.asking_price)! == 0 { isValidInput = false }
+                                        } else { isValidInput = true }
                                     }
                                 })
                         }

@@ -30,6 +30,9 @@ struct AdminOpportunityForm: View {
     var validFormInputs: Bool {
         selectedFranchise != nil && location.count>0 && asking_price.count>0 && equity_offered.count>0 && min_investment_amount.count>0
     }
+    @State var isValidInput = true
+    @State var isEquityValid = true
+    @State var isMinInvestValid = true
     
     var body: some View {
         GeometryReader { geometry in
@@ -101,7 +104,22 @@ struct AdminOpportunityForm: View {
                                 .foregroundColor(.black)
                                 .font(Font.custom("Nunito-SemiBold", size: 16))
                                 .keyboardType(.numberPad)
+                                .onChange(of: self.asking_price, perform: { value in
+                                    withAnimation(.easeOut(duration: 0.2)) {
+                                        if self.asking_price.count > 0 {
+                                            if Int(self.asking_price)! == 0 { isValidInput = false }
+                                        } else { isValidInput = true }
+                                    }
+                                })
                         }
+                        
+                        if !isValidInput {
+                                HStack {
+                                    Spacer()
+                                    Text("Amount should be greater than 0").foregroundColor(.red).font(Font.custom("Nunito-Medium", size: min(geometry.size.width, geometry.size.height) * 0.035)).fontWeight(.bold)
+                                }
+                        }
+                        
                         
                         Text("Equity Offered (%)").font(Font.custom("Nunito-Bold", size: 18))
                             .padding(.top, 10).padding(.bottom, -5).padding(.leading,2.5)
@@ -121,6 +139,21 @@ struct AdminOpportunityForm: View {
                                 .autocapitalization(.none)
                                 .font(Font.custom("Nunito-SemiBold", size: 16))
                                 .keyboardType(.numberPad)
+                                .onChange(of: self.equity_offered, perform: { value in
+                                    withAnimation(.easeOut(duration: 0.2)) {
+                                        if self.equity_offered.count > 0 {
+                                            if Int(self.equity_offered)! == 0 { isEquityValid = false }
+                                            else if Int(self.equity_offered)! > 100 { isEquityValid = false }
+                                        } else { isEquityValid = true }
+                                    }
+                                })
+                        }
+                        
+                        if !isEquityValid {
+                                HStack {
+                                    Spacer()
+                                    Text("Amount should be between 0 and 100").foregroundColor(.red).font(Font.custom("Nunito-Medium", size: min(geometry.size.width, geometry.size.height) * 0.035)).fontWeight(.bold)
+                                }
                         }
                         
                         Text("Minimum Investment Amount (£)").font(Font.custom("Nunito-Bold", size: 18))
@@ -141,32 +174,27 @@ struct AdminOpportunityForm: View {
                                 .autocapitalization(.none)
                                 .font(Font.custom("Nunito-SemiBold", size: 16))
                                 .keyboardType(.numberPad)
+                                .onChange(of: self.min_investment_amount, perform: { value in
+                                    withAnimation(.easeOut(duration: 0.2)) {
+                                        if self.min_investment_amount.count > 0 {
+                                            if Int(self.min_investment_amount)! == 0 { isMinInvestValid = false }
+                                        } else { isMinInvestValid = true }
+                                    }
+                                })
+                        }
+                        
+                        if !isMinInvestValid {
+                                HStack {
+                                    Spacer()
+                                    Text("Amount should be greater than 0").foregroundColor(.red).font(Font.custom("Nunito-Medium", size: min(geometry.size.width, geometry.size.height) * 0.035)).fontWeight(.bold)
+                                }
                         }
                         
                         Text("Opportunity Close Date").font(Font.custom("Nunito-Bold", size: 18))
                             .padding(.top, 10).padding(.bottom, -5).padding(.leading,2.5)
-                        
-//                        ZStack {
-//                            RoundedRectangle(cornerRadius: 5)
-//                                .fill(Color.white)
-//                                .overlay(
-//                                    RoundedRectangle(cornerRadius: 5)
-//                                        .stroke(Color.black, lineWidth: 1.25)
-//                                )
-//                                .frame(width: max(0, geometry.size.width - 45), height: 50)
-                            
-//                            TextField("", text: $opportunity_close_date, prompt: Text("25/11/2023").foregroundColor(.gray).font(Font.custom("Nunito-Medium", size: 16))).padding().frame(width: max(0, geometry.size.width-40), height: 50)
-//                                .foregroundColor(.black)
-//                                .autocorrectionDisabled(true)
-//                                .autocapitalization(.none)
-//                                .font(Font.custom("Nunito-Bold", size: 16))
                             
                             DatePicker("Select a Date", selection: $date, in: dateRange, displayedComponents: [.date])
                             .padding([.horizontal, .top], 2)
-//                                            .datePickerStyle(GraphicalDatePickerStyle())
-//                                            .labelsHidden()
-                            
-//                        }
                         
                         Spacer()
                         
@@ -177,8 +205,6 @@ struct AdminOpportunityForm: View {
                                         admin_home_shown.toggle()
                                     }
                                 }
-                                
-                                // Add opportunity email creation sent to users
                             }
                             
                         }) {
