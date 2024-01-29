@@ -137,20 +137,11 @@ struct UserHome: View {
                     .frame(width: max(0, geometry.size.width-40), height: max(0, geometry.size.height - 20))
                     .foregroundColor(.black)
                     .onAppear {
-//                        print(convertDate(dateString: String(describing: Date())))
-//                        if "20/12/2023" >= convertDate(dateString: String(describing: Date())) {
-//                            print(dateStringByAddingDays(days: 30, dateString: "20/12/2023"))
-//                        } else {
-//                            print(false)
-//                        }
-
                         
                         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                             withAnimation(.easeOut(duration: 0.5)) {
-//                                imageURL = URL(string: picture)!
                                 isShownHomePage = false
                                 isInvestmentConfirmed = false
-//                                isSharesListed = false
                                 if !onboarding_completed {
                                     isShownOnboarding.toggle()
                                 }

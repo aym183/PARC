@@ -120,6 +120,7 @@ struct AdminOpportunityForm: View {
                                 .autocorrectionDisabled(true)
                                 .autocapitalization(.none)
                                 .font(Font.custom("Nunito-SemiBold", size: 16))
+                                .keyboardType(.numberPad)
                         }
                         
                         Text("Minimum Investment Amount (£)").font(Font.custom("Nunito-Bold", size: 18))
@@ -139,6 +140,7 @@ struct AdminOpportunityForm: View {
                                 .autocorrectionDisabled(true)
                                 .autocapitalization(.none)
                                 .font(Font.custom("Nunito-SemiBold", size: 16))
+                                .keyboardType(.numberPad)
                         }
                         
                         Text("Opportunity Close Date").font(Font.custom("Nunito-Bold", size: 18))
@@ -197,6 +199,9 @@ struct AdminOpportunityForm: View {
                     .frame(width: max(0, geometry.size.width-40), height: max(0, geometry.size.height))
                     .foregroundColor(.black)
                 }
+            }
+            .onTapGesture {
+                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
             }
             .sheet(isPresented: $franchise_form_shown) {
                 AdminFranchiseForm(franchise_form_shown: $franchise_form_shown, franchise_data: $franchise_data).presentationDetents([.height(750)])

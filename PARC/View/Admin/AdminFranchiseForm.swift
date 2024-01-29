@@ -118,7 +118,7 @@ struct AdminFranchiseForm: View {
                                         }
                                         Spacer()
                                     }
-                                    .padding(.top, 5).padding(.bottom, -5).padding(.leading,2.5)
+                                    .padding(.top, 5).padding(.bottom, -5)
                                     .font(Font.custom("Nunito-Bold", size: 18))
                                     
                                     ZStack {
@@ -200,37 +200,7 @@ struct AdminFranchiseForm: View {
                                         }
                                         .frame(width: max(0, geometry.size.width-45), height: 130)
                                 }
-                             
                             }
-                            
-                            // Insert Dropdown
-//                            HStack {
-//                                Text("Industry").font(Font.custom("Nunito-Bold", size: 18))
-//                                    .padding(.top, 5).padding(.bottom, -5).padding(.leading,2.5)
-//                                Spacer()
-//                            }
-//                            
-//                            ZStack {
-//                                RoundedRectangle(cornerRadius: 5)
-//                                    .fill(Color.white)
-//                                    .overlay(
-//                                        RoundedRectangle(cornerRadius: 5)
-//                                            .stroke(Color.black, lineWidth: 1.25)
-//                                    )
-//                                    .frame(width: max(0, geometry.size.width - 45), height: 50)
-//                                
-//                                HStack {
-//                                    Text("Restaurant").padding()
-//                                        .foregroundColor(.black)
-//                                        .autocorrectionDisabled(true)
-//                                        .autocapitalization(.none)
-//                                        .font(Font.custom("Nunito-Bold", size: 16))
-//                                    
-//                                    Spacer()
-//                                }
-//                                .cornerRadius(5)
-//                                .opacity(0.5)
-//                            }
                             
                             HStack {
                                 Text("Total No of Franchises").font(Font.custom("Nunito-Bold", size: 18))
@@ -252,6 +222,7 @@ struct AdminFranchiseForm: View {
                                     .autocorrectionDisabled(true)
                                     .autocapitalization(.none)
                                     .font(Font.custom("Nunito-SemiBold", size: 16))
+                                    .keyboardType(.numberPad)
                             }
                             
                             // All these stats are per location
@@ -275,6 +246,7 @@ struct AdminFranchiseForm: View {
                                     .autocorrectionDisabled(true)
                                     .autocapitalization(.none)
                                     .font(Font.custom("Nunito-SemiBold", size: 16))
+                                    .keyboardType(.numberPad)
                             }
                             
                             HStack {
@@ -297,6 +269,7 @@ struct AdminFranchiseForm: View {
                                     .autocorrectionDisabled(true)
                                     .autocapitalization(.none)
                                     .font(Font.custom("Nunito-SemiBold", size: 16))
+                                    .keyboardType(.numberPad)
                             }
                             
                             HStack {
@@ -319,6 +292,7 @@ struct AdminFranchiseForm: View {
                                     .autocorrectionDisabled(true)
                                     .autocapitalization(.none)
                                     .font(Font.custom("Nunito-SemiBold", size: 16))
+                                    .keyboardType(.numberPad)
                             }
                             
                             HStack {
@@ -341,6 +315,7 @@ struct AdminFranchiseForm: View {
                                     .autocorrectionDisabled(true)
                                     .autocapitalization(.none)
                                     .font(Font.custom("Nunito-SemiBold", size: 16))
+                                    .keyboardType(.numberPad)
                             }
                             
                             Spacer()
@@ -373,6 +348,9 @@ struct AdminFranchiseForm: View {
                         .foregroundColor(.black)
                 }
                 .frame(width: max(0, geometry.size.width-40), height: max(0, geometry.size.height))
+            }
+            .onTapGesture {
+                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
             }
             .sheet(isPresented: $showLogoImagePicker) {
                 ImagePicker(image: $logo_image)

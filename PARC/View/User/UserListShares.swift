@@ -122,6 +122,9 @@ struct UserListShares: View {
                     .padding(10)
                 }
             }
+            .onTapGesture {
+                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+            }
             .foregroundColor(.black)
             .navigationDestination(isPresented: $marketplace_shown) {
                 UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isShownHomePage: $isShownHomePage).navigationBarBackButtonHidden(true)
