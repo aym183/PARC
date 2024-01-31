@@ -161,7 +161,6 @@ extension LandingContent {
                     
                 case .success:
                     UserDefaults.standard.set(false, forKey: "logged_in")
-                    //                        self.isAuthenticated = false
                 }
             }
     }

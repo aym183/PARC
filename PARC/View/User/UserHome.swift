@@ -94,6 +94,7 @@ struct UserHome: View {
                                 .overlay(.black)
                             
                             UserHomeContent(opportunity_data: $readDB.user_opportunity_data, franchise_data: $readDB.franchise_data, user_holdings_data: $readDB.user_holdings_data, readDB: readDB, email: $email, portfolio_data: $portfolio_data, transformed_payouts_data: $transformed_payouts_data, user_payouts_data: $user_payouts_data, payouts_value: $payouts_value, payouts_chart_values: $payouts_chart_values, admin_opportunity_data: $admin_opportunity_data, holdings_value: $holdings_value, chart_values: $chart_values)
+                            
                         } else if selectedTab == .chartPie {
                             Text("Portfolio")
                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.065))
@@ -122,7 +123,6 @@ struct UserHome: View {
                     .frame(width: max(0, geometry.size.width-40), height: max(0, geometry.size.height - 20))
                     .foregroundColor(.black)
                     .onAppear {
-                        
                         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                             withAnimation(.easeOut(duration: 0.5)) {
                                 isShownHomePage = false

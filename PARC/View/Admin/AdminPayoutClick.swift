@@ -80,7 +80,12 @@ struct AdminPayoutClick: View {
                                 .foregroundColor(.gray)
                             Spacer()
                             
-                            Text("\(payout_data["percentage_of_revenue"]!)")
+                            if let floatValue = Float(payout_data["percentage_of_revenue"]!.dropLast().replacingOccurrences(of: "%", with: "")) {
+                                let formattedValue = String(format: "%.2f%%", floatValue)
+                                Text(formattedValue)
+                            } else {
+                                Text("0%")
+                            }
                             
                         }
                         .font(Font.custom("Nunito-Medium", size: 14))

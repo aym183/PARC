@@ -55,7 +55,7 @@ struct UserMarketplace: View {
                     .padding(.bottom)
                 }
             } else if trading_window_active == "true" && listed_shares.count == 0 {
-                ZStack(alignment: .center) {
+                ZStack {
                     Color(.white).ignoresSafeArea()
                     VStack {
                         Spacer()
