@@ -16,7 +16,7 @@ struct LandingPage: View {
     @State var userProfile = Profile.empty
     @State var isShownHomePage = false
     @AppStorage("logged_in") var logged_in: Bool = false
-    
+    @AppStorage("email") var email: String = ""
     var body: some View {
         NavigationStack {
             //            if email
@@ -28,11 +28,13 @@ struct LandingPage: View {
             //            if loggedInAdmin {
             //            } else {
             
-            if isShownHomePage && logged_in {
+//            if isShownHomePage && logged_in {
+//                UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isShownHomePage: $isShownHomePage)
+//            } else 
+            if logged_in && !isShownHomePage && email == "ayman.ali1302@gmail.com" {
                 UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isShownHomePage: $isShownHomePage)
-            } else if logged_in && !isShownHomePage {
-                UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isShownHomePage: $isShownHomePage)
-//                AdminHome()
+            } else if logged_in && !isShownHomePage && email != "ayman.ali1302@gmail.com" {
+                AdminHome()
             } else {
                 LandingContent(isShownHomePage: $isShownHomePage)
             }
@@ -49,6 +51,7 @@ struct LandingContent: View {
     @State var isSharesListed = false
     @State var userProfile = Profile.empty
     @Binding var isShownHomePage: Bool
+    @State var email = ""
     var onboarding_assets = ["shop", "Onboarding_2", "Onboarding_3"]
     @AppStorage("logged_in") var logged_in: Bool = false
     var body: some View {
@@ -102,7 +105,11 @@ struct LandingContent: View {
                 .padding(.bottom)
             }
             .navigationDestination(isPresented: $logged_in) {
-                UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isShownHomePage: $isShownHomePage).navigationBarHidden(true)
+                if email == "ayman.ali1302@gmail.com" {
+                    UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isShownHomePage: $isShownHomePage).navigationBarHidden(true)
+                } else {
+                    AdminHome().navigationBarBackButtonHidden(true)
+                }
             }
         }
     }
@@ -126,6 +133,7 @@ extension LandingContent {
                     UserDefaults.standard.set(self.userProfile.family_name, forKey: "family_name")
                     UserDefaults.standard.set(self.userProfile.name, forKey: "full_name")
                     UserDefaults.standard.set(self.userProfile.email, forKey: "email")
+                    self.email = self.userProfile.email
                     UserDefaults.standard.set(true, forKey: "logged_in")
                     UserDefaults.standard.set(false, forKey: "onboarding_completed")
                     DispatchQueue.global(qos: .userInteractive).async {
