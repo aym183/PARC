@@ -52,7 +52,6 @@ struct BottomNavBar: View {
                                 .padding(.top, 2)
                         }
                     }
-                    
                     Spacer()
                 }
             }
@@ -61,7 +60,6 @@ struct BottomNavBar: View {
         .background(.thinMaterial)
         .cornerRadius(10)
         .padding(.horizontal)
-//        .padding(.top, 10)
     }
 }
 

@@ -14,6 +14,7 @@ struct UserAccount: View {
     @AppStorage("full_name") var fullName: String = ""
     @AppStorage("email") var email: String = ""
     @State var showProfileImagePicker = false
+    @State var logged_out = false
     @Binding var profile_image: UIImage?
     @Binding var init_profile_image: UIImage?
     
@@ -164,7 +165,10 @@ struct UserAccount: View {
                     
                     HStack {
                         
-                        Button(action: {}) {
+                        Button(action: {
+                            UserDefaults.standard.set(false, forKey: "logged_in")
+                            logged_out.toggle()
+                        }) {
                             HStack {
                                 Text("Log out")
                                     .font(Font.custom("Nunito", size: min(geometry.size.width, geometry.size.height) * 0.055))
@@ -194,6 +198,9 @@ struct UserAccount: View {
                     
                     Spacer()
                 }
+            }
+            .navigationDestination(isPresented: $logged_out) {
+                LandingPage().navigationBarBackButtonHidden()
             }
             .sheet(isPresented: $showProfileImagePicker) {
                 ImagePicker(image: $profile_image)
