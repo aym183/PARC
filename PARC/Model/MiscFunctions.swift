@@ -308,3 +308,10 @@ func loadProfileImage(completion: @escaping (UIImage?) -> Void) {
             return
     }
 }
+
+func deleteAllUserDefaultsData() {
+    if let bundleIdentifier = Bundle.main.bundleIdentifier {
+            UserDefaults.standard.removePersistentDomain(forName: bundleIdentifier)
+            UserDefaults.standard.synchronize()
+        }
+    }

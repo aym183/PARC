@@ -133,7 +133,7 @@ struct UserPortfolio: View {
                                                 .frame(width: 50, height: 50)
                                                 .padding(.leading, 10)
                                         } else {
-                                            Image(systemName: "home")
+                                            Image(systemName: "house")
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fill)
                                                 .frame(width: 50, height: 50)
@@ -141,7 +141,7 @@ struct UserPortfolio: View {
                                         }
                                         
                                     } else {
-                                        Image(systemName: "home")
+                                        Image(systemName: "house")
                                             .resizable()
                                             .aspectRatio(contentMode: .fill)
                                             .frame(width: 50, height: 50)

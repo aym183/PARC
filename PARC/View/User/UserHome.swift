@@ -297,7 +297,7 @@ struct UserHomeContent: View {
                                                                 .padding(.top, 10)
                                                                 .padding(.leading, 5)
                                                         } else {
-                                                            Image(systemName: "home")
+                                                            Image(systemName: "house")
                                                                 .resizable()
                                                                 .aspectRatio(contentMode: .fit)
                                                                 .frame(width: 40, height: 30)
@@ -306,7 +306,7 @@ struct UserHomeContent: View {
                                                         }
                                                         
                                                     } else {
-                                                        Image(systemName: "home")
+                                                        Image(systemName: "house")
                                                             .resizable()
                                                             .aspectRatio(contentMode: .fit)
                                                             .frame(width: 40, height: 30)

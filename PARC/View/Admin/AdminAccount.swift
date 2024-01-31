@@ -12,6 +12,8 @@ struct AdminAccount: View {
     @AppStorage("email") var email: String = ""
     @State var showProfileImagePicker = false
     @State var logged_out = false
+    @State var showing_log_out = false
+    @State var isShownHomePage = false
     @Binding var profile_image: UIImage?
     @Binding var init_profile_image: UIImage?
     
@@ -107,10 +109,7 @@ struct AdminAccount: View {
                         
                         HStack {
                             
-                            Button(action: {
-                                UserDefaults.standard.set(false, forKey: "logged_in")
-                                logged_out.toggle()
-                            }) {
+                            Button(action: { showing_log_out.toggle() }) {
                                 HStack {
                                     Text("Log out")
                                         .font(Font.custom("Nunito", size: min(geometry.size.width, geometry.size.height) * 0.055))
@@ -130,8 +129,18 @@ struct AdminAccount: View {
                     }
                 }
             }
+            .alert(isPresented: $showing_log_out) {
+                Alert(
+                    title: Text("Are you sure you want to log out?"),
+                    primaryButton: .default(Text("Yes")) {
+                        deleteAllUserDefaultsData()
+                        logged_out.toggle()
+                    },
+                    secondaryButton: .destructive(Text("No")) {}
+                )
+            }
             .navigationDestination(isPresented: $logged_out) {
-                LandingPage().navigationBarBackButtonHidden()
+                LandingContent(isShownHomePage: $isShownHomePage).navigationBarBackButtonHidden()
             }
             .sheet(isPresented: $showProfileImagePicker) {
                 ImagePicker(image: $profile_image)
