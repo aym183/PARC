@@ -13,45 +13,48 @@ import FirebaseStorage
 class CreateDB: ObservableObject {
     let currentDate = Date()
     let apiKey = AppConfig.apiKey
-    
+
     func createUser(email: String, first_name: String, last_name: String, full_name: String, picture: String, completion: @escaping (String?) -> Void) {
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/users")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
         request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
+        let keysArray = ["email"]
+        var email_found = false
 
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data {
                 do {
                     if let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
                         if let itemsArray = jsonObject["Items"] as? [[String: Any]] {
-                            let userExists = itemsArray.contains { item in
-                                if let itemEmail = item["email"] as? String {
-                                    return itemEmail == email
-                                }
-                                return false
-                            }
-                            if userExists {
-                                DispatchQueue.main.async {
-                                    completion("User already exists")
-                                }
-                            } else {
-                                let userApiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/users?email=\(email)&first_name=\(first_name)&last_name=\(last_name)&full_name=\(full_name)&picture=\(picture)&date_joined=\(Date.now)&balance=0")!
-
-                                var postRequest = URLRequest(url: userApiUrl)
-                                postRequest.httpMethod = "POST"
-
-                                URLSession.shared.dataTask(with: postRequest) { postData, postResponse, postError in
-                                    if let postData = postData, let postResponseText = String(data: postData, encoding: .utf8) {
-                                        DispatchQueue.main.async {
-                                            completion("User Created")
-                                        }
-                                    } else if let postError = postError {
-                                        DispatchQueue.main.async {
-                                            print("Error creating User: \(postError.localizedDescription)")
+                            for value in itemsArray.reversed() {
+                                for data in keysArray.reversed() {
+                                    if let nameDictionary = value[data] as? [String: String] {
+                                        if let sValue = nameDictionary["S"], sValue == email {
+                                            email_found = true
+                                            completion("User already exists")
                                         }
                                     }
-                                }.resume()
+                                }
+                            }
+                            if !email_found {
+                                    let userApiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/users?email=\(email)&first_name=\(first_name)&last_name=\(last_name)&full_name=\(full_name)&picture=\(picture)&date_joined=\(Date.now)&balance=0")!
+
+                                    var postRequest = URLRequest(url: userApiUrl)
+                                    postRequest.httpMethod = "POST"
+                                    postRequest.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
+
+                                    URLSession.shared.dataTask(with: postRequest) { postData, postResponse, postError in
+                                        if let postData = postData, let postResponseText = String(data: postData, encoding: .utf8) {
+                                            DispatchQueue.main.async {
+                                                completion("User Created")
+                                            }
+                                        } else if let postError = postError {
+                                            DispatchQueue.main.async {
+                                                print("Error creating User: \(postError.localizedDescription)")
+                                            }
+                                        }
+                                    }.resume()
                             }
                         }
                     }
