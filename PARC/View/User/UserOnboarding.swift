@@ -22,7 +22,6 @@ struct UserOnboarding: View {
             ZStack {
                 Color(.white)
                     .ignoresSafeArea()
-//                    .blur(radius: 10)
                 
                 VStack {
                     ZStack {
@@ -55,8 +54,6 @@ struct UserOnboarding: View {
                                 DropdownMenu(selectedOption: self.$selectedBackground, placeholder: "Select", options: DropdownMenuOption.testAllValues)
                                     .padding(.bottom, 15).padding(.top, -10)
                                     .frame(width: max(0, geometry.size.width - 80))
-                                
-                                // print(selectedBackground?.option) to get the option selected by user
                                
                                 HStack {
                                     Text("Have you ever invested before?")
@@ -65,7 +62,6 @@ struct UserOnboarding: View {
                                     Spacer()
                                 }
                                 .padding(.bottom, 10)
-                                
                                 
                                 HStack{
                                     ZStack {
@@ -87,7 +83,6 @@ struct UserOnboarding: View {
                                                 .frame(width: 135, height: 45)
                                                 .background(selectedYes ? Color("Secondary") : .white)
                                                 .foregroundColor(selectedYes ? .white : .black)
-    //                                        .background(Color("Secondary"))
                                         }
                                         .cornerRadius(5)
                                     }
@@ -114,7 +109,6 @@ struct UserOnboarding: View {
                                                 .frame(width: 135, height: 45)
                                                 .background(selectedNo ? Color("Secondary") : .white)
                                                 .foregroundColor(selectedNo ? .white : .black)
-    //                                        .background(Color("Secondary"))
                                         }
                                         .cornerRadius(5)
                                     }
@@ -206,10 +200,7 @@ struct UserOnboarding: View {
                                                     .stroke(Color.black, lineWidth: 1.25)
                                             )
                                             
-                                        Button(action: { 
-//                                            UserDefaults.standard.set(true, forKey: "onboarding_completed")
-                                            isShownOnboarding.toggle()
-                                        }) {
+                                        Button(action: { isShownOnboarding.toggle() }) {
                                             Text("Skip")
                                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.05))
                                                 .frame(width: 135, height: 45)

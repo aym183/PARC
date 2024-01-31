@@ -65,7 +65,7 @@ struct AdminAccount: View {
                         VStack(alignment: .leading) {
                             Text(fullName)
                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.08))
-
+                            
                             Text("Member since November 2023")
                                 .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.03))
                                 .foregroundColor(Color("Custom_Gray"))
@@ -115,22 +115,8 @@ struct AdminAccount: View {
                                 .frame(width: geometry.size.width*0.44, height: 45)
                                 .background(Color("Secondary"))
                                 .foregroundColor(Color.white)
-//                                .border(Color.black, width: 1)
                                 .cornerRadius(5)
                             }
-                            
-//                            Button(action: {}) {
-//                                HStack {
-//                                    Text("Withdraw")
-//                                        .font(Font.custom("Nunito", size: min(geometry.size.width, geometry.size.height) * 0.055))
-//                                        .fontWeight(.bold)
-//                                }
-//                                .frame(width: max(0, geometry.size.width-233), height: 45)
-//                                .background(Color("Loss"))
-//                                .foregroundColor(Color.white)
-////                                .border(Color.black, width: 1)
-//                                .cornerRadius(5)
-//                            }
                             .padding(.leading, 15)
                             
                         }
@@ -139,18 +125,14 @@ struct AdminAccount: View {
                         Spacer()
                     }
                 }
-                }
-                .sheet(isPresented: $showProfileImagePicker) {
-                    ImagePicker(image: $profile_image)
-                }
-                .frame(width: max(0, geometry.size.width-40))
-                .multilineTextAlignment(.center)
-                .padding(.leading).padding(.top)
-                .foregroundColor(.black)
             }
+            .sheet(isPresented: $showProfileImagePicker) {
+                ImagePicker(image: $profile_image)
+            }
+            .frame(width: max(0, geometry.size.width-40))
+            .multilineTextAlignment(.center)
+            .padding(.leading).padding(.top)
+            .foregroundColor(.black)
         }
+    }
 }
-
-//#Preview {
-//    AdminAccount()
-//}

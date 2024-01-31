@@ -19,8 +19,6 @@ struct AdminPayoutClick: View {
     @State var showingDeleteAlert = false
     @State var payout_id = ""
     
-    //Why state Binding or var?
-    
     var body: some View {
         GeometryReader { geometry in
             ZStack {
@@ -51,7 +49,7 @@ struct AdminPayoutClick: View {
                             Spacer()
                             
                             Text(opportunity_data["investors"]!)
-                           
+                            
                         }
                         .font(Font.custom("Nunito-Medium", size: 14))
                         .padding(.vertical, 6)
@@ -67,7 +65,7 @@ struct AdminPayoutClick: View {
                             Spacer()
                             
                             Text("£\(formattedNumber(input_number: Int(payout_data["revenue_generated"]!)!))")
-                           
+                            
                         }
                         .font(Font.custom("Nunito-Medium", size: 14))
                         .padding(.vertical, 6)
@@ -83,7 +81,7 @@ struct AdminPayoutClick: View {
                             Spacer()
                             
                             Text("\(payout_data["percentage_of_revenue"]!)")
-                           
+                            
                         }
                         .font(Font.custom("Nunito-Medium", size: 14))
                         .padding(.vertical, 6)
@@ -98,7 +96,7 @@ struct AdminPayoutClick: View {
                                 .foregroundColor(.gray)
                             Spacer()
                             Text(String(describing: payout_data["date_scheduled"]!))
-                           
+                            
                         }
                         .font(Font.custom("Nunito-Medium", size: 14))
                         .padding(.vertical, 6)
@@ -145,27 +143,6 @@ struct AdminPayoutClick: View {
             .navigationDestination(isPresented: $admin_home_shown) {
                 AdminHome().navigationBarBackButtonHidden(true)
             }
-//            .alert(isPresented: $showingDeleteAlert) {
-//                Alert(
-//                    title: Text("Are you sure you want to cancel this payout?"),
-//                    primaryButton: .default(Text("Yes")) {
-//                        DispatchQueue.global(qos: .userInteractive).async {
-//                            UpdateDB().updateTable(primary_key: "payout_id", primary_key_value: payout_data["payout_id"]!, table: "payouts", updated_key: "status", updated_value: "Cancelled") { response in
-//                                if response == "payouts status updated" {
-//                                    admin_home_shown.toggle()
-//                                }
-//                            }
-//                        }
-//                    },
-//                    secondaryButton: .destructive(Text("No")) {
-//                        print("No")
-//                    }
-//                )
-//            }
         }
     }
 }
-//
-//#Preview {
-//    AdminPayoutClick()
-//}

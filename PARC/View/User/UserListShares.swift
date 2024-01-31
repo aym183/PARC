@@ -20,9 +20,7 @@ struct UserListShares: View {
     @State var isShownHomePage = false
     @State private var selectedFranchise: DropdownMenuOption? = nil
     @State private var selectedHolding: DropdownMenuOption? = nil
-    var validFormInputs: Bool {
-        selectedHolding != nil && asking_price.count>0 && is_on
-    }
+    var validFormInputs: Bool { selectedHolding != nil && asking_price.count>0 && is_on }
     @State var isValidInput = true
     
     //Refactor this view to show for loop components as compared to replicating
@@ -43,8 +41,6 @@ struct UserListShares: View {
                         
                         Text("Holding").font(Font.custom("Nunito-Bold", size: 18))
                             .padding(.top).padding(.bottom, -5)
-                        
-                        // Replace with dropdown of all added franchise
                         
                         DropdownMenu(selectedOption: self.$selectedHolding, placeholder: "Select", options: holding_data)
                             .frame(width: max(0, geometry.size.width - 40), height: 50)
@@ -79,10 +75,10 @@ struct UserListShares: View {
                         }
                         
                         if !isValidInput {
-                                HStack {
-                                    Spacer()
-                                    Text("Amount should be greater than 0").foregroundColor(.red).font(Font.custom("Nunito-Medium", size: min(geometry.size.width, geometry.size.height) * 0.035)).fontWeight(.bold)
-                                }
+                            HStack {
+                                Spacer()
+                                Text("Amount should be greater than 0").foregroundColor(.red).font(Font.custom("Nunito-Medium", size: min(geometry.size.width, geometry.size.height) * 0.035)).fontWeight(.bold)
+                            }
                         }
                         
                         
@@ -116,10 +112,7 @@ struct UserListShares: View {
                                         }
                                     }
                                 }
-                            } else {
-                                print("Unable to opportunity sub-data")
                             }
-
                         }) {
                             HStack {
                                 Text("Submit Listing")
@@ -148,7 +141,3 @@ struct UserListShares: View {
         }
     }
 }
-
-//#Preview {
-//    UserListShares(marketplace_shown: .constant(false))
-//}

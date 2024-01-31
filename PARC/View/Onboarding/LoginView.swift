@@ -17,98 +17,89 @@ struct LoginView: View {
     
     var body: some View {
         GeometryReader { geometry in
-                ZStack {
-                    Color("Primary").ignoresSafeArea()
-                    VStack(alignment: .leading) {
-                        HStack {
-                            Text("Login").font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.1))
-
-                            Spacer()
-                            Button(action: { login_shown.toggle() }) {
-                                Image(systemName: "xmark.circle.fill")
-                                    .resizable()
-                                    .frame(width: 25, height: 25)
-                            }
-                        }
-                        .foregroundColor(Color("Secondary"))
-                        
-                        TextField("", text: $email, prompt: Text("Email").foregroundColor(.gray).font(Font.custom("Nunito-Medium", size: 16))).padding().frame(width: max(0, geometry.size.width-40), height: 70).background(.white)
-                            .cornerRadius(5)
-                            .foregroundColor(.black)
-                            .autocorrectionDisabled(true)
-                            .autocapitalization(.none)
-                            .font(Font.custom("Nunito-Bold", size: 16))
-                            .onChange(of: email) { newValue in
-                                withAnimation(.easeOut(duration: 0.2)) {
-                                    validateEmail()
-                                }
-                            }
-                        
-                        if !isEmailValid {
-                            HStack {
-                                Spacer()
-                                Text("Invalid Email").foregroundColor(.red).font(Font.custom("Nunito-Medium", size: min(geometry.size.width, geometry.size.height) * 0.035)).fontWeight(.bold)
-                            }
-                        }
-                        
-                        SecureField("", text: $password, prompt: Text("Password").foregroundColor(.gray).font(Font.custom("Nunito-Medium", size: 16)))
-                            .padding()
-                            .frame(width: max(0, geometry.size.width-40), height: 70)
-                            .background(.white)
-                            .foregroundColor(.black)
-                            .cornerRadius(5)
-                            .font(Font.custom("Nunito-Bold", size: 16))
-                            .autocorrectionDisabled(true)
-                            .autocapitalization(.none)
-                            .padding(.top,10)
-                        
-                        Text("By continuing you agree to PARC's Terms of Service")
-                            .font(Font.custom("Nunito-Medium", size: min(geometry.size.width, geometry.size.height) * 0.035))
-                            .padding(.top, 5)
-                            .padding(.leading, 0.5)
-                            .foregroundColor(Color("Secondary"))
+            ZStack {
+                Color("Primary").ignoresSafeArea()
+                VStack(alignment: .leading) {
+                    HStack {
+                        Text("Login").font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.1))
                         
                         Spacer()
-                        
-                        Button(action: {
-                            print("Logged in")
-                            login_shown.toggle()
-                            if email == "ayman.ali1302@gmail.com" {
-                                user_home_shown.toggle()
-                            } else if email == "aali@databar.ai" {
-                                admin_home_shown.toggle()
-                            } else {
-                                print("Invalid Email")
-                            }
-                        }) {
-                            HStack {
-                                Text("Log in")
-                                    .font(Font.custom("Nunito", size: min(geometry.size.width, geometry.size.height) * 0.07))
-                                    .fontWeight(.bold)
-                            }
-                            .frame(width: max(0, geometry.size.width-40), height: 55)
-                            .background(Color("Secondary"))
-                            .foregroundColor(Color.white)
-                            .border(Color.black, width: 1)
-                            .cornerRadius(5)
+                        Button(action: { login_shown.toggle() }) {
+                            Image(systemName: "xmark.circle.fill")
+                                .resizable()
+                                .frame(width: 25, height: 25)
                         }
-                        .padding(.bottom)
-                        
                     }
-                    .frame(width: max(0, geometry.size.width-40), height: max(0, geometry.size.height - 20))
+                    .foregroundColor(Color("Secondary"))
+                    
+                    TextField("", text: $email, prompt: Text("Email").foregroundColor(.gray).font(Font.custom("Nunito-Medium", size: 16))).padding().frame(width: max(0, geometry.size.width-40), height: 70).background(.white)
+                        .cornerRadius(5)
+                        .foregroundColor(.black)
+                        .autocorrectionDisabled(true)
+                        .autocapitalization(.none)
+                        .font(Font.custom("Nunito-Bold", size: 16))
+                        .onChange(of: email) { newValue in
+                            withAnimation(.easeOut(duration: 0.2)) {
+                                validateEmail()
+                            }
+                        }
+                    
+                    if !isEmailValid {
+                        HStack {
+                            Spacer()
+                            Text("Invalid Email").foregroundColor(.red).font(Font.custom("Nunito-Medium", size: min(geometry.size.width, geometry.size.height) * 0.035)).fontWeight(.bold)
+                        }
+                    }
+                    
+                    SecureField("", text: $password, prompt: Text("Password").foregroundColor(.gray).font(Font.custom("Nunito-Medium", size: 16)))
+                        .padding()
+                        .frame(width: max(0, geometry.size.width-40), height: 70)
+                        .background(.white)
+                        .foregroundColor(.black)
+                        .cornerRadius(5)
+                        .font(Font.custom("Nunito-Bold", size: 16))
+                        .autocorrectionDisabled(true)
+                        .autocapitalization(.none)
+                        .padding(.top,10)
+                    
+                    Text("By continuing you agree to PARC's Terms of Service")
+                        .font(Font.custom("Nunito-Medium", size: min(geometry.size.width, geometry.size.height) * 0.035))
+                        .padding(.top, 5)
+                        .padding(.leading, 0.5)
+                        .foregroundColor(Color("Secondary"))
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                        login_shown.toggle()
+                        if email == "ayman.ali1302@gmail.com" {
+                            user_home_shown.toggle()
+                        } else if email == "aali@databar.ai" {
+                            admin_home_shown.toggle()
+                        }
+                    }) {
+                        HStack {
+                            Text("Log in")
+                                .font(Font.custom("Nunito", size: min(geometry.size.width, geometry.size.height) * 0.07))
+                                .fontWeight(.bold)
+                        }
+                        .frame(width: max(0, geometry.size.width-40), height: 55)
+                        .background(Color("Secondary"))
+                        .foregroundColor(Color.white)
+                        .border(Color.black, width: 1)
+                        .cornerRadius(5)
+                    }
+                    .padding(.bottom)
+                    
                 }
+                .frame(width: max(0, geometry.size.width-40), height: max(0, geometry.size.height - 20))
+            }
         }
     }
     
     private func validateEmail() {
-            let emailRegex = "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
-            let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
-            isEmailValid = emailPredicate.evaluate(with: email)
+        let emailRegex = "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+        let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
+        isEmailValid = emailPredicate.evaluate(with: email)
     }
 }
-
-//struct LoginView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        LoginView()
-//    }
-//}

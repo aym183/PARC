@@ -24,8 +24,8 @@ struct AdminOpportunityForm: View {
         let startComponents = DateComponents(year: 2023, month: 11, day: 1)
         let endComponents = DateComponents(year: 2050, month: 12, day: 31)
         return calendar.date(from:startComponents)!
-            ...
-            calendar.date(from:endComponents)!
+        ...
+        calendar.date(from:endComponents)!
     }()
     var validFormInputs: Bool {
         selectedFranchise != nil && location.count>0 && asking_price.count>0 && equity_offered.count>0 && min_investment_amount.count>0
@@ -70,7 +70,7 @@ struct AdminOpportunityForm: View {
                             }
                         }
                         .padding(.top, 0.5).padding(.leading, 2.5)
-                    
+                        
                         Text("Location").font(Font.custom("Nunito-Bold", size: 18))
                             .padding(.top, 10).padding(.bottom, -5).padding(.leading,2.5)
                         
@@ -114,10 +114,10 @@ struct AdminOpportunityForm: View {
                         }
                         
                         if !isValidInput {
-                                HStack {
-                                    Spacer()
-                                    Text("Amount should be greater than 0").foregroundColor(.red).font(Font.custom("Nunito-Medium", size: min(geometry.size.width, geometry.size.height) * 0.035)).fontWeight(.bold)
-                                }
+                            HStack {
+                                Spacer()
+                                Text("Amount should be greater than 0").foregroundColor(.red).font(Font.custom("Nunito-Medium", size: min(geometry.size.width, geometry.size.height) * 0.035)).fontWeight(.bold)
+                            }
                         }
                         
                         
@@ -150,10 +150,10 @@ struct AdminOpportunityForm: View {
                         }
                         
                         if !isEquityValid {
-                                HStack {
-                                    Spacer()
-                                    Text("Amount should be between 0 and 100").foregroundColor(.red).font(Font.custom("Nunito-Medium", size: min(geometry.size.width, geometry.size.height) * 0.035)).fontWeight(.bold)
-                                }
+                            HStack {
+                                Spacer()
+                                Text("Amount should be between 0 and 100").foregroundColor(.red).font(Font.custom("Nunito-Medium", size: min(geometry.size.width, geometry.size.height) * 0.035)).fontWeight(.bold)
+                            }
                         }
                         
                         Text("Minimum Investment Amount (£)").font(Font.custom("Nunito-Bold", size: 18))
@@ -184,16 +184,16 @@ struct AdminOpportunityForm: View {
                         }
                         
                         if !isMinInvestValid {
-                                HStack {
-                                    Spacer()
-                                    Text("Amount should be greater than 0").foregroundColor(.red).font(Font.custom("Nunito-Medium", size: min(geometry.size.width, geometry.size.height) * 0.035)).fontWeight(.bold)
-                                }
+                            HStack {
+                                Spacer()
+                                Text("Amount should be greater than 0").foregroundColor(.red).font(Font.custom("Nunito-Medium", size: min(geometry.size.width, geometry.size.height) * 0.035)).fontWeight(.bold)
+                            }
                         }
                         
                         Text("Opportunity Close Date").font(Font.custom("Nunito-Bold", size: 18))
                             .padding(.top, 10).padding(.bottom, -5).padding(.leading,2.5)
-                            
-                            DatePicker("Select a Date", selection: $date, in: dateRange, displayedComponents: [.date])
+                        
+                        DatePicker("Select a Date", selection: $date, in: dateRange, displayedComponents: [.date])
                             .padding([.horizontal, .top], 2)
                         
                         Spacer()

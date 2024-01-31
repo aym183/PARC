@@ -309,15 +309,12 @@ struct AdminHome: View {
                                                         
                                                         Text("+£\(String(describing:   formattedNumber(input_number: Int(readDB.payout_data[index-1]["amount_offered"]!)!)))")
                                                             .font(Font.custom("Nunito-Bold", size: 25))
-                                                        //                                                        .foregroundColor(Color("Profit"))
                                                         
                                                         Spacer()
                                                         
                                                         HStack {
                                                             
                                                             Text("Investors: \(String(describing: readDB.admin_opportunity_data[Int(readDB.payout_data[index-1]["opportunity_id"]!)!-1]["investors"]!))")
-                                                            
-                                                            //    readDB.opportunity_data[Int(readDB.payout_data[index-1]["oportunity_id"])-1]["investors"]
                                                             Divider()
                                                                 .frame(height: 15)
                                                             

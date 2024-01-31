@@ -16,19 +16,16 @@ struct AdminPayoutForm: View {
     @Binding var opportunity_data : [DropdownMenuOption]
     @Binding var user_holdings_data : [[String: String]]
     @State private var date = Date()
-//    @State private var selectedDate = Date()
     var dateRange: ClosedRange<Date> = {
         var calendar = Calendar.current
         var startComponents = DateComponents(year: 2023, month: 11, day: 20)
         var endComponents = DateComponents(year: 2050, month: 12, day: 31)
         return calendar.date(from:startComponents)!
-            ...
-            calendar.date(from:endComponents)!
+        ...
+        calendar.date(from:endComponents)!
     }()
     @State var admin_home_shown = false
-    var validFormInputs: Bool {
-        selectedOpportunity != nil && amount_offered.count>0 && revenue_generated.count>0
-    }
+    var validFormInputs: Bool { selectedOpportunity != nil && amount_offered.count>0 && revenue_generated.count>0 }
     @State var isValidInput = true
     @State var isRevenueValid = true
     
@@ -82,10 +79,10 @@ struct AdminPayoutForm: View {
                         }
                         
                         if !isValidInput {
-                                HStack {
-                                    Spacer()
-                                    Text("Amount should be greater than 0").foregroundColor(.red).font(Font.custom("Nunito-Medium", size: min(geometry.size.width, geometry.size.height) * 0.035)).fontWeight(.bold)
-                                }
+                            HStack {
+                                Spacer()
+                                Text("Amount should be greater than 0").foregroundColor(.red).font(Font.custom("Nunito-Medium", size: min(geometry.size.width, geometry.size.height) * 0.035)).fontWeight(.bold)
+                            }
                         }
                         
                         Text("Revenue Generated (past month)").font(Font.custom("Nunito-Bold", size: 18))
@@ -116,10 +113,10 @@ struct AdminPayoutForm: View {
                         }
                         
                         if !isRevenueValid {
-                                HStack {
-                                    Spacer()
-                                    Text("Amount should be greater than 0").foregroundColor(.red).font(Font.custom("Nunito-Medium", size: min(geometry.size.width, geometry.size.height) * 0.035)).fontWeight(.bold)
-                                }
+                            HStack {
+                                Spacer()
+                                Text("Amount should be greater than 0").foregroundColor(.red).font(Font.custom("Nunito-Medium", size: min(geometry.size.width, geometry.size.height) * 0.035)).fontWeight(.bold)
+                            }
                         }
                         
                         Text("Payout Date").font(Font.custom("Nunito-Bold", size: 18))
@@ -141,8 +138,6 @@ struct AdminPayoutForm: View {
                                         }
                                     }
                                 }
-                            } else {
-                                print("Unable to opportunity sub-data")
                             }
                         }) {
                             HStack {
@@ -169,10 +164,6 @@ struct AdminPayoutForm: View {
             .navigationDestination(isPresented: $admin_home_shown) {
                 AdminHome().navigationBarBackButtonHidden(true)
             }
-    }
+        }
     }
 }
-
-//#Preview {
-//    AdminPayoutForm(opportunity_data: .constant([]))
-//}

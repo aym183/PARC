@@ -49,7 +49,7 @@ struct DropdownMenu: View {
                             .foregroundColor(.black)
                         
                     } else {
-                        Spacer(minLength: dropdownListHeight) // Set the height
+                        Spacer(minLength: dropdownListHeight)
                         DropdownMenuList(options: self.options) { option in
                             self.isOptionsPresented = false
                             self.selectedOption = option

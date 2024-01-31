@@ -60,24 +60,24 @@ struct UserMarketplace: View {
                     VStack {
                         Spacer()
                         
-                            
-                            ForEach((0..<2), id: \.self) { index in
-                                HStack {
-                                    Spacer()
-                                    
-                                    if index == 0 {
-                                        Text("☹️")
-                                            .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.3))
-                                            .padding(.bottom, -20)
-                                    } else {
-                                        Text("No shares currently listed")
-                                            .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.065))
-                                    }
+                        
+                        ForEach((0..<2), id: \.self) { index in
+                            HStack {
+                                Spacer()
+                                
+                                if index == 0 {
+                                    Text("☹️")
+                                        .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.3))
+                                        .padding(.bottom, -20)
+                                } else {
+                                    Text("No shares currently listed")
+                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.065))
+                                }
                                 
                                 Spacer()
                             }
-                            }
-                            
+                        }
+                        
                         Spacer()
                     }
                     .multilineTextAlignment(.center)
@@ -102,43 +102,13 @@ struct UserMarketplace: View {
                 .sheet(isPresented: $marketplace_bottom_sheet_shown) {
                     UserMarketplaceBottomSheet(marketplace_bottom_sheet_shown: $marketplace_bottom_sheet_shown, marketplace_list_shares_shown: $marketplace_list_shares_shown).presentationDetents([.height(150)])
                 }
-
+                
                 
             } else {
                 ZStack(alignment: .bottomTrailing) {
                     Color(.white).ignoresSafeArea()
                     ScrollView(.vertical, showsIndicators: false) {
                         VStack {
-//                            HStack {
-//                                VStack {
-//                                    Text("Volume Traded")
-//                                    Text("£10B+")
-//                                        .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.065))
-//                                        .padding(.top, 3)
-//                                }
-//                                
-//                                Spacer()
-//                                
-//                                VStack {
-//                                    Text("Deals Completed")
-//                                    Text("15")
-//                                        .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.065))
-//                                        .padding(.top, 3)
-//                                }
-//                                
-//                                Spacer()
-//                                
-//                                VStack {
-//                                    Text("Average Returns")
-//                                    Text("£10,000")
-//                                        .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.065))
-//                                        .padding(.top, 3)
-//                                }
-//                            }
-//                            .multilineTextAlignment(.center)
-//                            .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.030))
-//                            .padding(.top, 10)
-//                            (spacing: 40)
                             HStack {
                                 Text("Businesses")
                                 Spacer()
@@ -181,7 +151,7 @@ struct UserMarketplace: View {
                                             .padding(.trailing, -25)
                                             
                                             Spacer()
-                                        
+                                            
                                             HStack {
                                                 Text("£\(formattedNumber(input_number: Int(String(describing: transformed_payouts_data[String(describing: listed_shares[index].key)]!))!))")
                                                 Spacer()
@@ -202,34 +172,18 @@ struct UserMarketplace: View {
                                         .multilineTextAlignment(.leading)
                                     }
                                     
-    //                                if index != 5 {
-                                        Divider()
-                                            .overlay(Color("Custom_Gray"))
-                                            .opacity(0.5)
-                                            .frame(height: 1)
-                                            .padding(.vertical, 5)
-    //                                }
+                                    Divider()
+                                        .overlay(Color("Custom_Gray"))
+                                        .opacity(0.5)
+                                        .frame(height: 1)
+                                        .padding(.vertical, 5)
                                 }
                             }
-                            
-                            
-                            // Add condition to remove Show more if only limite businesses have shares
-//                            Button(action: {}) { 
-//                                ZStack {
-//                                    RoundedRectangle(cornerRadius: 10)
-//                                        .fill(Color("Secondary"))
-//                                    Text("Show more")
-//                                        .foregroundColor(.white)
-//                                        .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.035))
-//                                }
-//                                .frame(width: 100, height: 40)
-//                            }
-//                            .padding(.top)
                         }
                         .foregroundColor(.black)
                         
                     }
-                                   
+                    
                     Button(action: { marketplace_bottom_sheet_shown.toggle() }) {
                         ZStack {
                             Circle()
@@ -256,9 +210,3 @@ struct UserMarketplace: View {
         }
     }
 }
-
-//struct UserMarketplace_Previews: PreviewProvider {
-//    static var previews: some View {
-//        UserMarketplace()
-//    }
-//}

@@ -75,7 +75,7 @@ struct UserMarketplaceClick: View {
                                     Text("\(franchise_selected["ebitda_estimate"]!)%")
                                         .font(Font.custom("Nunito-SemiBold", size: 14))
                                 }
-                                 
+                                
                             }
                             .font(Font.custom("Nunito-SemiBold", size: 14))
                             
@@ -149,7 +149,7 @@ struct UserMarketplaceClick: View {
                                     .foregroundColor(Color.white)
                                     .cornerRadius(5)
                                 }
-
+                                
                             }
                             .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.035))
                             .padding(.vertical, 5)
@@ -189,7 +189,6 @@ struct UserMarketplaceClick: View {
                         }
                     },
                     secondaryButton: .destructive(Text("No")) {
-                        print("Delete")
                     }
                 )
             }

@@ -133,14 +133,9 @@ struct AdminTradingClick: View {
                         }
                     },
                     secondaryButton: .destructive(Text("No")) {
-                        print("No")
                     }
                 )
             }
         }
     }
 }
-
-//#Preview {
-//    AdminTradingClick()
-//}

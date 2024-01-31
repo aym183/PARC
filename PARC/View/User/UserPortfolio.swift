@@ -65,7 +65,7 @@ struct UserPortfolio: View {
     
     var body: some View {
         GeometryReader { geometry in
-                
+            
             VStack {
                 Spacer()
                 
@@ -88,25 +88,25 @@ struct UserPortfolio: View {
                                                 .foregroundStyle(item.color)
                                         }
                                     }
-
-                                VStack(alignment: .center) {
-                                    if index == 0 {
-                                        Text("£\(formattedNumber(input_number: holdings_value))")
-                                          .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.1))
-                                          .foregroundColor(.black)
-                                    } else {
-                                        Text("£\(formattedNumber(input_number: payouts_value))")
-                                          .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.1))
-                                          .foregroundColor(.black)
+                                    
+                                    VStack(alignment: .center) {
+                                        if index == 0 {
+                                            Text("£\(formattedNumber(input_number: holdings_value))")
+                                                .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.1))
+                                                .foregroundColor(.black)
+                                        } else {
+                                            Text("£\(formattedNumber(input_number: payouts_value))")
+                                                .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.1))
+                                                .foregroundColor(.black)
+                                        }
+                                        
+                                        Text(metric_description[index])
+                                            .foregroundStyle(Color("Custom_Gray"))
+                                            .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.04))
+                                            .padding(.top, -36)
+                                        
                                     }
-                                    
-                                    Text(metric_description[index])
-                                        .foregroundStyle(Color("Custom_Gray"))
-                                        .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.04))
-                                        .padding(.top, -36)
-                                    
                                 }
-                            }
                             }
                         }
                         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
@@ -120,58 +120,54 @@ struct UserPortfolio: View {
                             .padding(.bottom, 10)
                         
                         ForEach(0..<portfolio_data.count, id: \.self) { index in
-//                            Button(action: {}) {
-                                HStack {
-//                                    Text("\(index+1).")
-//                                        .font(Font.custom("Nunito-Bold", size: 15))
+                            HStack {
+                                
+                                Image(uiImage: loadFranchiseLogo(key: franchise_data[franchise_data.firstIndex(where: { $0["name"] == portfolio_data[index]["opportunity_name"]!})!]["logo"]!))
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 50, height: 50)
+                                    .padding(.leading, 10)
+                                
+                                VStack(alignment: .leading) {
                                     
-                                    Image(uiImage: loadFranchiseLogo(key: franchise_data[franchise_data.firstIndex(where: { $0["name"] == portfolio_data[index]["opportunity_name"]!})!]["logo"]!))
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fill)
-                                        .frame(width: 50, height: 50)
-                                        .padding(.leading, 10)
-                                    
-                                    VStack(alignment: .leading) {
-                                        
-                                        if let opportunityID = Int(portfolio_data[index]["opportunity_id"]!) {
-                                            if let opportunity = opportunity_data.first(where: { $0["opportunity_id"] == String(opportunityID) }) {
-                                                if let franchise = opportunity["franchise"] {
-                                                    Text("\(franchise)")
-                                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.045))
-                                                } else {
-                                                    Text("Franchise key not found")
-                                                }
+                                    if let opportunityID = Int(portfolio_data[index]["opportunity_id"]!) {
+                                        if let opportunity = opportunity_data.first(where: { $0["opportunity_id"] == String(opportunityID) }) {
+                                            if let franchise = opportunity["franchise"] {
+                                                Text("\(franchise)")
+                                                    .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.045))
                                             } else {
-                                                Text("Opportunity not found")
+                                                Text("Franchise key not found")
                                             }
                                         } else {
-                                            Text("Invalid opportunity_id value")
+                                            Text("Opportunity not found")
                                         }
-//                                        Invested - £\(formattedNumber(input_number: Int(portfolio_data[index]["amount"]!)!))
-                                        Text("Date Bought - \(portfolio_data[index]["transaction_date"]!)")
-                                          .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.027))
-                                          .foregroundColor(Color("Custom_Gray"))
+                                    } else {
+                                        Text("Invalid opportunity_id value")
                                     }
-                                    .padding(.leading, 10)
-                                    
-                                    Spacer()
-                                      
-                                        // Reference GPT
-                                        if let opportunityID = portfolio_data[index]["opportunity_id"],
-                                           let equity = portfolio_data[index]["equity"],
-                                           let userIndex = user_payouts_data.firstIndex(where: {
-                                               $0["opportunity_id"] == opportunityID && $0["equity"] == equity
-                                           }) {
-                                            let foundElement = user_payouts_data[userIndex]["amount_received"]!
-                                            Text("+£\(foundElement)")
-                                                .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.055))
-                                                .foregroundColor(Color("Profit"))
-                                        } else {
-                                            Text("£0")
-                                                .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.055))
-                                        }
-
+                                    Text("Date Bought - \(portfolio_data[index]["transaction_date"]!)")
+                                        .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.027))
+                                        .foregroundColor(Color("Custom_Gray"))
                                 }
+                                .padding(.leading, 10)
+                                
+                                Spacer()
+                                
+                                // Reference GPT
+                                if let opportunityID = portfolio_data[index]["opportunity_id"],
+                                   let equity = portfolio_data[index]["equity"],
+                                   let userIndex = user_payouts_data.firstIndex(where: {
+                                       $0["opportunity_id"] == opportunityID && $0["equity"] == equity
+                                   }) {
+                                    let foundElement = user_payouts_data[userIndex]["amount_received"]!
+                                    Text("+£\(foundElement)")
+                                        .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.055))
+                                        .foregroundColor(Color("Profit"))
+                                } else {
+                                    Text("£0")
+                                        .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.055))
+                                }
+                                
+                            }
                             Divider()
                                 .overlay(Color("Custom_Gray"))
                                 .frame(height: 0.5)
@@ -196,20 +192,20 @@ struct UserPortfolio: View {
                 holdings_data = []
                 payouts_data = []
                 holdings_data.append(contentsOf: chart_values.compactMap { value in
-                        return ChartData(primitivePlottable: value) ?? ChartData(primitivePlottable: 0)
+                    return ChartData(primitivePlottable: value) ?? ChartData(primitivePlottable: 0)
                 })
                 
                 payouts_data.append(contentsOf: payouts_chart_values.compactMap { value in
-                        return ChartData(primitivePlottable: value) ?? ChartData(primitivePlottable: 0)
+                    return ChartData(primitivePlottable: value) ?? ChartData(primitivePlottable: 0)
                 })
-
+                
                 for (index, color) in random_colors.enumerated() {
                     if index < holdings_data.count {
                         holdings_data[index].color = color
                     } else {
                         
                     }
-                }                
+                }
                 
                 for (index, color) in random_colors.enumerated() {
                     if index < payouts_data.count {
@@ -222,27 +218,3 @@ struct UserPortfolio: View {
         }
     }
 }
-
-//struct UserPortfolio_Previews: PreviewProvider {
-//    static var previews: some View {
-//        UserPortfolio(portfolio_data: .constant([[:]]), user_payouts_data: .constant([[:]]), payouts_chart_values: .constant([5.0, 5.0, 10.0]), payouts_value: .constant(20000), holdings_value: .constant(200000), chart_values: .constant([5.0, 5.0, 10.0]), opportunity_data: .constant([[:]]))
-//    }
-//}
-
-
-// Payouts data for each holding
-
-//                                    Text("+£\(user_payouts_data[user_payouts_data.firstIndex(where: { $0["opportunity_id"] == portfolio_data[index]["opportunity_id"]! && })!]["amount_received"]!)")
-//                                      .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.055))
-//                                      .foregroundColor(Color("Profit"))
-                                    
-//                                    if Int(portfolio_data[index]["amount"]!)! >= 500 {
-//                                        Text("+£\(formattedNumber(input_number: Int(portfolio_data[index]["amount"]!)!))")
-//                                          .font(Font.custom("Nunito-Black", size: min(geometry.size.width, geometry.size.height) * 0.055))
-//                                          .foregroundColor(Color("Profit"))
-//                                    } else {
-//                                        Text("-£\(formattedNumber(input_number: Int(portfolio_data[index]["amount"]!)!))")
-//                                          .font(Font.custom("Nunito-Black", size: min(geometry.size.width, geometry.size.height) * 0.055))
-//                                          .foregroundColor(Color("Loss"))
-//                                    }
-                                    

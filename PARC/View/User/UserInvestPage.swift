@@ -9,8 +9,6 @@ import SwiftUI
 
 struct UserInvestPage: View {
     
-    // Slider code chatGPT and YT
-    
     @State var investment_amount = ""
     @State var net_worth: Double = 0
     @State var net_worth_int: Int = 0
@@ -133,8 +131,6 @@ struct UserInvestPage: View {
                                         }
                                     }
                                     .keyboardType(.numberPad)
-                                
-                                // Add disable check for investment amount
                             }
                         }
                         
@@ -208,7 +204,6 @@ struct UserInvestPage: View {
                         }
                     },
                     secondaryButton: .destructive(Text("No")) {
-                        print("Delete")
                     }
                 )
             }
@@ -227,7 +222,3 @@ struct UserInvestPage: View {
         investment_limit = 10*(net_worth_int/100)
     }
 }
-
-//#Preview {
-//    UserInvestPage(user_invest_shown: .constant(false), asking_price: .constant(1000000.0), equity_offered: .constant(80.0))
-//}

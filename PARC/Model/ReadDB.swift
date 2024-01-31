@@ -31,12 +31,11 @@ class ReadDB: ObservableObject {
     @State var currentFormattedDate: String = convertDate(dateString: String(describing: Date()))
     @AppStorage("email") var email: String = ""
     let dispatchGroup = DispatchGroup()
-
+    
     func getFranchises() {
         var temp_dict: [String: String] = [:]
         let keysArray = ["description", "avg_revenue_18_months", "name", "logo", "display_image", "industry", "no_of_franchises", "ebitda_estimate", "avg_franchise_mom_revenues", "avg_startup_capital"]
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/franchises")!
-
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
         
@@ -71,7 +70,6 @@ class ReadDB: ObservableObject {
                                     self.franchise_data_dropdown.append(DropdownMenuOption(option: temp_dict["name"]!))
                                     temp_dict = [:]
                                 }
-//                                completion("Fetched all franchises")
                             }
                         }
                     }
@@ -86,7 +84,6 @@ class ReadDB: ObservableObject {
     func getUserOpportunities(completion: @escaping (String?) -> Void) {
         var keysArray = ["min_invest_amount", "location", "date_created", "equity_offered", "amount_raised", "close_date", "status", "franchise", "asking_price", "opportunity_id", "investors"]
         var temp_dict: [String: String] = [:]
-        
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/opportunities")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
@@ -111,7 +108,7 @@ class ReadDB: ObservableObject {
                                                                 if response == "opportunities status updated" {
                                                                     print("opportunities status updated")
                                                                 }
-                                                        }
+                                                            }
                                                         }
                                                     }
                                                 }
@@ -169,18 +166,15 @@ class ReadDB: ObservableObject {
                             if let itemsArray = jsonObject["Items"] as? [[String : Any]] {
                                 for value in itemsArray.reversed() {
                                     for data in keysArray.reversed() {
-                                            if let nameDictionary = value[data] as? [String: String] {
-                                                if data == "opportunity_id" {
-                                                    if let nValue = nameDictionary["N"] {
-                                                        temp_dict[data] = nValue
-                                                    }
-                                                } else if let sValue = nameDictionary["S"] {
-                                                    temp_dict[data] = sValue
+                                        if let nameDictionary = value[data] as? [String: String] {
+                                            if data == "opportunity_id" {
+                                                if let nValue = nameDictionary["N"] {
+                                                    temp_dict[data] = nValue
                                                 }
+                                            } else if let sValue = nameDictionary["S"] {
+                                                temp_dict[data] = sValue
                                             }
-//                                        if let nameDictionary = value[data] as? [String: String], let sValue = nameDictionary["S"] {
-//                                            temp_dict[data] = sValue
-//                                        }
+                                        }
                                     }
                                     let amountRaised = Int(temp_dict["amount_raised"] ?? "0") ?? 0
                                     let askingPrice = Int(temp_dict["asking_price"] ?? "1") ?? 1
@@ -189,7 +183,6 @@ class ReadDB: ObservableObject {
                                     self.admin_opportunity_data.append(temp_dict)
                                     self.opportunity_data_dropdown.append(DropdownMenuOption(option: "\(temp_dict["opportunity_id"]!) - \(temp_dict["franchise"]!) - \(temp_dict["location"]!) - \(temp_dict["date_created"]!)"))
                                     temp_dict = [:]
-//                                    self.opportunity_data.append(value)
                                 }
                                 self.admin_opportunity_data = sortByDaysRemaining(array: self.admin_opportunity_data)
                                 completion("Fetched all opportunities")
@@ -231,9 +224,6 @@ class ReadDB: ObservableObject {
                                                 }
                                             }
                                         }
-//                                        if let nameDictionary = value[data] as? [String: String], let sValue = nameDictionary["S"] {
-//                                            temp_dict[data] = sValue
-//                                        }
                                     }
                                     let revenue_generated = Int(temp_dict["revenue_generated"] ?? "0") ?? 0
                                     let amount_offered = Int(temp_dict["amount_offered"] ?? "1") ?? 1
@@ -241,7 +231,6 @@ class ReadDB: ObservableObject {
                                     temp_dict["percentage_of_revenue"] = "\(String(describing: percentage_of_revenue))%"
                                     self.payout_data.append(temp_dict)
                                     temp_dict = [:]
-//                                    self.opportunity_data.append(value)
                                 }
                                 completion("Fetched payouts")
                             }
@@ -257,7 +246,6 @@ class ReadDB: ObservableObject {
     func getUserPayouts(email: String, completion: @escaping (String?) -> Void) {
         let keysArray = ["user_payout_id", "equity", "opportunity_id", "amount_received", "user_email", "payout_date"]
         var temp_dict: [String: String] = [:]
-        
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/payouts/user-payouts")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
@@ -273,9 +261,7 @@ class ReadDB: ObservableObject {
                                         if let emailCheck = value["user_email"] as? [String: String], emailCheck["S"] == email {
                                             if let nameDictionary = value[data] as? [String: String] {
                                                 if data == "user_payout_id" {
-//                                                    if let nValue = nameDictionary["N"] {
                                                     temp_dict[data] = nameDictionary["N"]
-//                                                    }
                                                 } else if let sValue = nameDictionary["S"] {
                                                     temp_dict[data] = sValue
                                                 }
@@ -299,7 +285,6 @@ class ReadDB: ObservableObject {
     }
     
     func getUserHoldings(email: String, completion: @escaping (String?) -> Void) {
-        
         var keysArray = ["opportunity_name", "user_holdings_id", "user_email", "status", "opportunity_id", "equity", "amount", "transaction_date"]
         var temp_dict: [String: String] = [:]
         var listed_temp_dict: [String: String] = [:]
@@ -317,22 +302,22 @@ class ReadDB: ObservableObject {
                                     for data in keysArray.reversed() {
                                         if let ownedCheck = value["status"] as? [String: String], let emailCheck = value["user_email"] as? [String: String], emailCheck["S"] == email && ownedCheck["S"] == "Owned" {
                                             if let nameDictionary = value[data] as? [String: String] {
-                                                    if data == "opportunity_id" || data == "user_holdings_id" {
-                                                            temp_dict[data] = nameDictionary["N"]
-                                                    } else if data == "transaction_date" {
-                                                        temp_dict[data] = convertDate(dateString: nameDictionary["S"]!)
-                                                    } else if let sValue = nameDictionary["S"] {
-                                                        temp_dict[data] = sValue
-                                                    }
+                                                if data == "opportunity_id" || data == "user_holdings_id" {
+                                                    temp_dict[data] = nameDictionary["N"]
+                                                } else if data == "transaction_date" {
+                                                    temp_dict[data] = convertDate(dateString: nameDictionary["S"]!)
+                                                } else if let sValue = nameDictionary["S"] {
+                                                    temp_dict[data] = sValue
+                                                }
                                             }
                                         } else if let listedCheck = value["status"] as? [String: String], let emailCheck = value["user_email"] as? [String: String], listedCheck["S"] == "Listed" && emailCheck["S"] != email {
                                             if let nameDictionary = value[data] as? [String: String] {
-                                                    if data == "opportunity_id" || data == "user_holdings_id" {
-                                                            listed_temp_dict[data] = nameDictionary["N"]
-                                                    }
-                                                    else if let sValue = nameDictionary["S"] {
-                                                        listed_temp_dict[data] = sValue
-                                                    }
+                                                if data == "opportunity_id" || data == "user_holdings_id" {
+                                                    listed_temp_dict[data] = nameDictionary["N"]
+                                                }
+                                                else if let sValue = nameDictionary["S"] {
+                                                    listed_temp_dict[data] = sValue
+                                                }
                                             }
                                         }
                                     }
@@ -365,7 +350,6 @@ class ReadDB: ObservableObject {
     func getAllUserHoldings() {
         var keysArray = ["opportunity_name", "user_holdings_id", "user_email", "status", "opportunity_id", "equity", "amount", "transaction_date"]
         var temp_dict: [String: String] = [:]
-        
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/user-holdings")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
@@ -378,14 +362,14 @@ class ReadDB: ObservableObject {
                             if let itemsArray = jsonObject["Items"] as? [[String : Any]] {
                                 for value in itemsArray.reversed() {
                                     for data in keysArray.reversed() {
-                                            if let nameDictionary = value[data] as? [String: String] {
-                                                    if data == "opportunity_id" || data == "user_holdings_id" {
-                                                            temp_dict[data] = nameDictionary["N"]
-                                                    }
-                                                    else if let sValue = nameDictionary["S"] {
-                                                        temp_dict[data] = sValue
-                                                    }
+                                        if let nameDictionary = value[data] as? [String: String] {
+                                            if data == "opportunity_id" || data == "user_holdings_id" {
+                                                temp_dict[data] = nameDictionary["N"]
                                             }
+                                            else if let sValue = nameDictionary["S"] {
+                                                temp_dict[data] = sValue
+                                            }
+                                        }
                                     }
                                     if temp_dict != [:] {
                                         self.full_user_holdings_data.append(temp_dict)
@@ -409,7 +393,6 @@ class ReadDB: ObservableObject {
         var trading_window_id = ""
         var trading_window_active = false
         var trading_window_completed = false
-        
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/trading-windows")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
@@ -437,19 +420,19 @@ class ReadDB: ObservableObject {
                                         }
                                     }
                                     self.trading_window_data.append(temp_dict)
-                        
+                                    
                                     if isTradingWindowActive(targetDate: currentFormattedDate, start: temp_dict["start_date"]!, end: dateStringByAddingDays(days: Int(temp_dict["duration"]!)!, dateString: temp_dict["start_date"]!)!, status: temp_dict["status"]!)! {
-                                            trading_window_active = true
-                                            current_status = temp_dict["status"]!
-                                            trading_window_id = temp_dict["trading-window-id"]!
-                                            UserDefaults.standard.set("true", forKey: "trading_window_active")
-                                            UserDefaults.standard.set(temp_dict["trading-window-id"], forKey: "trading_window_id")
+                                        trading_window_active = true
+                                        current_status = temp_dict["status"]!
+                                        trading_window_id = temp_dict["trading-window-id"]!
+                                        UserDefaults.standard.set("true", forKey: "trading_window_active")
+                                        UserDefaults.standard.set(temp_dict["trading-window-id"], forKey: "trading_window_id")
                                         
                                     } else if isTradingWindowComplete(targetDate: currentFormattedDate, end: dateStringByAddingDays(days: Int(temp_dict["duration"]!)!, dateString: temp_dict["start_date"]!)!, status: temp_dict["status"]!)! {
-                                            trading_window_completed = true
-                                            current_status = temp_dict["status"]!
-                                            trading_window_id = temp_dict["trading-window-id"]!
-                                            UserDefaults.standard.set("false", forKey: "trading_window_active")
+                                        trading_window_completed = true
+                                        current_status = temp_dict["status"]!
+                                        trading_window_id = temp_dict["trading-window-id"]!
+                                        UserDefaults.standard.set("false", forKey: "trading_window_active")
                                     } else {
                                         UserDefaults.standard.set("false", forKey: "trading_window_active")
                                     }
@@ -464,7 +447,7 @@ class ReadDB: ObservableObject {
                                         }
                                         
                                     }
-                                } 
+                                }
                                 
                                 else if trading_window_completed && current_status == "Ongoing" {
                                     UpdateDB().updateTable(primary_key: "trading-window-id", primary_key_value: trading_window_id, table: "trading-windows", updated_key: "status", updated_value: "Completed") { response in
@@ -475,8 +458,6 @@ class ReadDB: ObservableObject {
                                         
                                     }
                                 }
-                                
-                                //Add converting of Ongoing to Completed
                             }
                         }
                     }
@@ -488,11 +469,9 @@ class ReadDB: ObservableObject {
     }
     
     func getTradingWindowTransactions() {
-//        self.transformed_trading_window_data = transformTradingWindowData(listed_shares: self.full_user_holdings_data)
         var temp_dict: [String: String] = [:]
         let keysArray = ["user_selling", "user_buying", "trading_window_id", "opportunity_id", "equity", "transaction_date", "transaction_id", "price"]
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/transactions-secondary-market")!
-
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
         
@@ -519,7 +498,6 @@ class ReadDB: ObservableObject {
                                     temp_dict = [:]
                                 }
                                 self.transformed_trading_window_transactions_data = transformTradingWindowData(listed_shares: self.trading_window_transactions_data)
-//                                completion("Trading window transactions fetched")
                             }
                         }
                     }
@@ -531,10 +509,8 @@ class ReadDB: ObservableObject {
     }
     
     func getTradingWindowTransactionsEmail() {
-        
         let keysArray = ["user_selling", "user_buying", "trading_window_id", "opportunity_id", "equity", "transaction_date", "transaction_id", "price"]
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/transactions-secondary-market")!
-
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
         
@@ -569,38 +545,37 @@ class ReadDB: ObservableObject {
     }
     
     func getImage(path: String) {
-            let storage = Storage.storage()
-            let storageRef = storage.reference()
-            let imageRef = storageRef.child(path)
-            
-            imageRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
-                    if let error = error {
-                        print("Error fetching image: \(error.localizedDescription)")
-                    }
-                    
-                    if let data = data, let image = UIImage(data: data) {
-                        UserDefaults.standard.set(image.jpegData(compressionQuality: 0.8), forKey: path)
-                    }
+        let storage = Storage.storage()
+        let storageRef = storage.reference()
+        let imageRef = storageRef.child(path)
+        
+        imageRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
+            if let error = error {
+                print("Error fetching image: \(error.localizedDescription)")
             }
+            
+            if let data = data, let image = UIImage(data: data) {
+                UserDefaults.standard.set(image.jpegData(compressionQuality: 0.8), forKey: path)
+            }
+        }
     }
     
     
     func getDisImage(path: String, completion: @escaping (UIImage?) -> Void) {
-            let storage = Storage.storage()
-            let storageRef = storage.reference()
-            let imageRef = storageRef.child(path)
-            
-            imageRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
-                    if let error = error {
-                        print("Error fetching image: \(error.localizedDescription)")
-                    }
-                    
-                    if let data = data, let image = UIImage(data: data) {
-                        if UserDefaults.standard.object(forKey: path) == nil {
-//                            UserDefaults.standard.set(image.jpegData(compressionQuality: 0.8), forKey: path)
-                            completion(image)
-                        }
-                    }
+        let storage = Storage.storage()
+        let storageRef = storage.reference()
+        let imageRef = storageRef.child(path)
+        
+        imageRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
+            if let error = error {
+                print("Error fetching image: \(error.localizedDescription)")
             }
+            
+            if let data = data, let image = UIImage(data: data) {
+                if UserDefaults.standard.object(forKey: path) == nil {
+                    completion(image)
+                }
+            }
+        }
     }
 }

@@ -11,8 +11,6 @@ import SwiftUI
 func convertDate(dateString: String) -> String {
 
     let components = dateString.components(separatedBy: " ")
-
-    // The first component should contain the date part
     if let datePart = components.first {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
@@ -20,11 +18,7 @@ func convertDate(dateString: String) -> String {
         dateFormatter.dateFormat = "dd/MM/yyyy"
         let formattedDate = dateFormatter.string(from: date!)
         return formattedDate
-    } else {
-        print("Failed to extract the date.")
     }
-      
-//    return(formattedDate)
     return("nil")
 }
 
@@ -62,7 +56,7 @@ func isTradingWindowComplete(targetDate: String, end endDate: String, status: St
 
 func getDaysRemaining(dateString: String) -> Int? {
     let formatter = DateFormatter()
-    formatter.dateFormat = "dd/MM/yyyy" // Set the date format to match "DD/MM/YYYY"
+    formatter.dateFormat = "dd/MM/yyyy"
 
     if let futureDate = formatter.date(from: dateString) {
         let today = Date()
@@ -71,8 +65,7 @@ func getDaysRemaining(dateString: String) -> Int? {
         let components = calendar.dateComponents([.day], from: today, to: futureDate)
         return components.day
     }
-
-    return nil // Return nil in case of any errors
+    return nil
 }
 
 // GPT - REFERENCE
@@ -127,7 +120,6 @@ func calculatePortionHoldings(input: [[String: String]], holdings_value: Int) ->
 
 // GPT - REFERENCE
 func calculatePayoutOpportunities(input: [[String: String]]) -> [Float] {
-//    print(input)
     var outputArray: [Float] = []
     var indexMap: [String: Int] = [:]
 
@@ -148,7 +140,6 @@ func calculatePayoutOpportunities(input: [[String: String]]) -> [Float] {
 func sortArrayByDate(inputArray: [[String: String]], field_name: String, date_type: String) -> [[String: String]] {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = date_type
-//yyyy-MM-dd
     let sortedArray = inputArray.sorted { dict1, dict2 in
         guard let dateString1 = dict1[field_name],
               let dateString2 = dict2[field_name],
@@ -223,7 +214,6 @@ func transformPayouts(payouts_array: [[String: String]]) -> [String: Any] {
 }
 
 func sortByDaysRemaining(array: [[String: String]]) -> [[String : String]] {
-    // Add the deleted opportunities array here
     var completedArray: [[String : String]] = []
     var closedArray: [[String : String]] = []
     var outputArray: [[String : String]]  = []
@@ -318,7 +308,3 @@ func loadProfileImage(completion: @escaping (UIImage?) -> Void) {
             return
     }
 }
-
-//func validateNumberInput(input: Int) {
-//    if input
-//}

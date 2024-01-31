@@ -382,13 +382,11 @@ struct UserOpportunityClick: View {
                         .padding(.top)
                         .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.055))
                         
-                        
                         Divider()
                             .overlay(Color("Custom_Gray"))
                             .opacity(0.5)
                             .frame(height: 1)
                             .padding(.top, -15)
-                        
                         
                         HStack {
                             Text("Location")

@@ -16,20 +16,6 @@ struct UserMarketplaceBottomSheet: View {
             ZStack {
                 Color(.white).ignoresSafeArea()
                 VStack {
-                    
-//                    Button(action: {}) {
-//                        HStack {
-//                            Text("Your Offers")
-//                                .font(Font.custom("Nunito-Bold", size: 22))
-//                        }
-//                        .frame(width: max(0, geometry.size.width-40), height: 55)
-//                        .background(Color("Secondary"))
-//                        .foregroundColor(Color.white)
-//                        .border(Color.black, width: 1)
-//                        .cornerRadius(5)
-//                        .padding(.top, 10)
-//                    }
-
                     Button(action: {}) {
                         HStack {
                             Text("Your Listed Shares")
@@ -56,18 +42,6 @@ struct UserMarketplaceBottomSheet: View {
                         .cornerRadius(5)
                         .padding(.top, 10)
                     }
-                    
-//                    Button(action: {}) {
-//                        HStack {
-//                            Text("Filter")
-//                                .font(Font.custom("Nunito-Bold", size: 22))
-//                        }
-//                        .frame(width: max(0, geometry.size.width-40), height: 55)
-//                        .background(Color("Secondary"))
-//                        .foregroundColor(Color.white)
-//                        .cornerRadius(5)
-//                        .padding(.top, 10)
-//                    }
                 }
                 .padding(.top,10)
                 .frame(width: max(0, geometry.size.width - 40))
@@ -75,8 +49,4 @@ struct UserMarketplaceBottomSheet: View {
             .foregroundColor(.black)
         }
     }
-}
-//
-#Preview {
-    UserMarketplaceBottomSheet(marketplace_bottom_sheet_shown: .constant(true), marketplace_list_shares_shown: .constant(false))
 }

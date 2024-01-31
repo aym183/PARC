@@ -17,8 +17,8 @@ struct AdminTradingForm: View {
         let startComponents = DateComponents(year: 2023, month: 11, day: 1)
         let endComponents = DateComponents(year: 2050, month: 12, day: 31)
         return calendar.date(from:startComponents)!
-            ...
-            calendar.date(from:endComponents)!
+        ...
+        calendar.date(from:endComponents)!
     }()
     var validFormInputs: Bool {
         duration.count>0
@@ -40,19 +40,18 @@ struct AdminTradingForm: View {
                             .overlay(.black)
                             .padding(.bottom, 5)
                         
-                        // Change to dropdown
                         Text("Start Date").font(Font.custom("Nunito-Bold", size: 18))
-                             .padding(.bottom, -5).padding(.leading,2.5)
+                            .padding(.bottom, -5).padding(.leading,2.5)
                         
                         DatePicker("Select a Date", selection: $start_date, in: dateRange, displayedComponents: [.date])
-                        .padding([.horizontal, .top], 2)
+                            .padding([.horizontal, .top], 2)
                         
                         HStack(spacing: 5) {
                             Text("Duration").font(Font.custom("Nunito-Bold", size: 18))
                             Text("(in days)").font(Font.custom("Nunito-SemiBold", size: 15))
                         }
                         .padding(.top, 10).padding(.bottom, -5).padding(.leading,2.5)
-
+                        
                         ZStack {
                             RoundedRectangle(cornerRadius: 5)
                                 .fill(Color.white)
@@ -77,10 +76,10 @@ struct AdminTradingForm: View {
                         }
                         
                         if !isValidInput {
-                                HStack {
-                                    Spacer()
-                                    Text("Amount should be between 0 and 60").foregroundColor(.red).font(Font.custom("Nunito-Medium", size: min(geometry.size.width, geometry.size.height) * 0.035)).fontWeight(.bold)
-                                }
+                            HStack {
+                                Spacer()
+                                Text("Amount should be between 0 and 60").foregroundColor(.red).font(Font.custom("Nunito-Medium", size: min(geometry.size.width, geometry.size.height) * 0.035)).fontWeight(.bold)
+                            }
                         }
                         
                         Spacer()
@@ -115,7 +114,7 @@ struct AdminTradingForm: View {
             .navigationDestination(isPresented: $admin_home_shown) {
                 AdminHome().navigationBarBackButtonHidden(true)
             }
-    }
+        }
     }
     
 }

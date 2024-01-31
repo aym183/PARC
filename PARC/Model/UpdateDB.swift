@@ -18,9 +18,7 @@ class UpdateDB: ObservableObject {
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data, let responseText = String(data: data, encoding: .utf8) {
                 DispatchQueue.main.async {
-                    print(responseText)
                     completion("\(table) \(updated_key) updated")
-                    //                    if responseText["statusCode"]
                 }
             } else if let error = error {
                 DispatchQueue.main.async {
@@ -39,7 +37,6 @@ class UpdateDB: ObservableObject {
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data, let responseText = String(data: data, encoding: .utf8) {
                 DispatchQueue.main.async {
-                    print(responseText)
                     completion("\(table) \(updated_key) updated")
                 }
             } else if let error = error {

@@ -44,7 +44,6 @@ struct AdminOpportunityClick: View {
                                     .cornerRadius(5)
                                     .padding(.bottom)
                                 }
-                                //                            .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 4)
                                 
                                 Button(action: { showingDeleteAlert.toggle() }) {
                                     HStack {
@@ -88,7 +87,7 @@ struct AdminOpportunityClick: View {
                             .overlay(.gray)
                             .frame(height: 1)
                             .opacity(0.5)
-
+                        
                         HStack {
                             Text("Location")
                                 .foregroundColor(.gray)
@@ -131,7 +130,6 @@ struct AdminOpportunityClick: View {
                             .frame(height: 1)
                             .opacity(0.5)
                         
-                        // change to comma for large no.s
                         HStack {
                             Text("Target Raised")
                                 .foregroundColor(.gray)
@@ -212,14 +210,9 @@ struct AdminOpportunityClick: View {
                         }
                     },
                     secondaryButton: .destructive(Text("No")) {
-                        print("No")
                     }
                 )
             }
         }
     }
 }
-
-//#Preview {
-//    AdminOpportunityClick(opportunity_logo: .constant("McDonalds"), opportunity_title: .constant("McDonalds"))
-//}

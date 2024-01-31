@@ -16,7 +16,7 @@ struct UserAccount: View {
     @State var showProfileImagePicker = false
     @Binding var profile_image: UIImage?
     @Binding var init_profile_image: UIImage?
-
+    
     var body: some View {
         GeometryReader { geometry in
             ZStack {
@@ -69,7 +69,7 @@ struct UserAccount: View {
                         VStack(alignment: .leading) {
                             Text(fullName)
                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.08))
-
+                            
                             Text("Member since November 2023")
                                 .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.03))
                                 .foregroundColor(Color("Custom_Gray"))
@@ -120,7 +120,7 @@ struct UserAccount: View {
                             .overlay(Color("Custom_Gray"))
                             .opacity(0.75)
                             .frame(height: 1)
-                            
+                        
                         
                         HStack {
                             Text("Set Pin")
@@ -161,7 +161,7 @@ struct UserAccount: View {
                     }
                     .padding(.top)
                     .foregroundColor(Color("Custom_Gray"))
-                
+                    
                     HStack {
                         
                         Button(action: {}) {
@@ -205,9 +205,3 @@ struct UserAccount: View {
         }
     }
 }
-
-//struct UserAccount_Previews: PreviewProvider {
-//    static var previews: some View {
-//        UserAccount(payoutsValue: .constant(100))
-//    }
-//}

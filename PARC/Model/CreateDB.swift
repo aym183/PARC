@@ -42,7 +42,6 @@ class CreateDB: ObservableObject {
                                 URLSession.shared.dataTask(with: postRequest) { postData, postResponse, postError in
                                     if let postData = postData, let postResponseText = String(data: postData, encoding: .utf8) {
                                         DispatchQueue.main.async {
-                                            print(postResponseText)
                                             completion("User Created")
                                         }
                                     } else if let postError = postError {
@@ -62,26 +61,6 @@ class CreateDB: ObservableObject {
             }
         }.resume()
     }
-        
-//        
-//        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/users?email=\(email)&first_name=\(first_name)&last_name=\(last_name)&full_name=\(full_name)&picture=\(picture)&date_joined=\(currentDate)&balance=0")!
-//
-//        var request = URLRequest(url: apiUrl)
-//        request.httpMethod = "POST"
-//
-//        URLSession.shared.dataTask(with: request) { data, response, error in
-//            if let data = data, let responseText = String(data: data, encoding: .utf8) {
-//                DispatchQueue.main.async {
-//                    print(responseText)
-//                    completion("User Created")
-//                }
-//            } else if let error = error {
-//                DispatchQueue.main.async {
-//                    print("Error creating user: \(error.localizedDescription)")
-//                }
-//            }
-//        }.resume()
-//    }
     
     func create_onboarding_email(name: String, email: String) {
         let apiUrl = URL(string: "https://brdh472ip2.execute-api.us-east-1.amazonaws.com/development/emails/send-intro-email?email=\(email)&name=\(name)")!
@@ -146,12 +125,10 @@ class CreateDB: ObservableObject {
         
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "POST"
-//        request.addValue("VA3fCa55Hp3URYRtyziZu4XzSJZDe7sE39cXxlEc", forHTTPHeaderField: "x-api-key")
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data, let responseText = String(data: data, encoding: .utf8) {
                 DispatchQueue.main.async {
-                    print(responseText)
                     completion("Franchise Created")
                 }
             } else if let error = error {
@@ -318,14 +295,12 @@ class CreateDB: ObservableObject {
                                             }
                                         } else if let httpResponse = response as? HTTPURLResponse {
                                             if (200..<300).contains(httpResponse.statusCode), let data = data {
-                                                // Success: HTTP status code is in the range [200, 300) and data is present
                                                 if let responseText = String(data: data, encoding: .utf8) {
                                                     DispatchQueue.main.async {
                                                         print("Response: \(responseText)")
                                                     }
                                                 }
                                             } else {
-                                                // Error: HTTP status code is outside the range [200, 300)
                                                 DispatchQueue.main.async {
                                                     print("Error creating user payout. Status code: \(httpResponse.statusCode)")
                                                 }
