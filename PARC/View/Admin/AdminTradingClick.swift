@@ -117,9 +117,6 @@ struct AdminTradingClick: View {
                     .padding(.top)
                 }
             }
-            .onAppear() {
-                print(selected_trading_window)
-            }
             .navigationDestination(isPresented: $admin_home_shown) {
                 AdminHome().navigationBarBackButtonHidden(true)
             }
