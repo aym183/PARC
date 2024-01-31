@@ -122,11 +122,32 @@ struct UserPortfolio: View {
                         ForEach(0..<portfolio_data.count, id: \.self) { index in
                             HStack {
                                 
-                                Image(uiImage: loadFranchiseLogo(key: franchise_data[franchise_data.firstIndex(where: { $0["name"] == portfolio_data[index]["opportunity_name"]!})!]["logo"]!))
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: 50, height: 50)
-                                    .padding(.leading, 10)
+                                if let franchiseName = portfolio_data[index]["opportunity_name"] {
+                                    if let franchiseIndex = franchise_data.firstIndex(where: { $0["name"] == franchiseName }) {
+                                        let matchedFranchise = franchise_data[franchiseIndex]["logo"]!
+                                        
+                                        if UserDefaults.standard.object(forKey: String(describing: matchedFranchise)) != nil {
+                                            Image(uiImage: loadDisplayImage(key: String(describing: matchedFranchise)))
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fill)
+                                                .frame(width: 50, height: 50)
+                                                .padding(.leading, 10)
+                                        } else {
+                                            Image(systemName: "home")
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fill)
+                                                .frame(width: 50, height: 50)
+                                                .padding(.leading, 10)
+                                        }
+                                        
+                                    } else {
+                                        Image(systemName: "home")
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fill)
+                                            .frame(width: 50, height: 50)
+                                            .padding(.leading, 10)
+                                    }
+                                }
                                 
                                 VStack(alignment: .leading) {
                                     

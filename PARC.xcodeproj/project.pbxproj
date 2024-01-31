@@ -80,6 +80,7 @@
 		6180FAE32AED4BA400A99D6D /* AdminOpportunityForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6180FAE22AED4BA400A99D6D /* AdminOpportunityForm.swift */; };
 		6180FAE52AED506900A99D6D /* AdminPayoutForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6180FAE42AED506900A99D6D /* AdminPayoutForm.swift */; };
 		6180FAE72AED550900A99D6D /* AdminTradingForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6180FAE62AED550900A99D6D /* AdminTradingForm.swift */; };
+		6193721E2B6A55D5000966A9 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6193721D2B6A55D5000966A9 /* AppConfig.swift */; };
 		61956B292AF969510038378E /* AdminFranchiseForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61956B282AF969510038378E /* AdminFranchiseForm.swift */; };
 		61956B2B2AFA3E4A0038378E /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61956B2A2AFA3E4A0038378E /* ImagePicker.swift */; };
 		619F4C0F2AE00F7100D7A861 /* UserHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619F4C0E2AE00F7100D7A861 /* UserHome.swift */; };
@@ -129,6 +130,7 @@
 		6180FAE22AED4BA400A99D6D /* AdminOpportunityForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminOpportunityForm.swift; sourceTree = "<group>"; };
 		6180FAE42AED506900A99D6D /* AdminPayoutForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminPayoutForm.swift; sourceTree = "<group>"; };
 		6180FAE62AED550900A99D6D /* AdminTradingForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminTradingForm.swift; sourceTree = "<group>"; };
+		6193721D2B6A55D5000966A9 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
 		61956B282AF969510038378E /* AdminFranchiseForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminFranchiseForm.swift; sourceTree = "<group>"; };
 		61956B2A2AFA3E4A0038378E /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		619F4C0E2AE00F7100D7A861 /* UserHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserHome.swift; sourceTree = "<group>"; };
@@ -237,11 +239,11 @@
 			isa = PBXGroup;
 			children = (
 				614F63CF2B63DDF6000E6022 /* GoogleService-Info.plist */,
+				61DBDFD82ADEFED400AE41FA /* Info.plist */,
+				614C0C042AF1740C00D406A3 /* Auth0.plist */,
 				61DBDFDB2ADF098900AE41FA /* ViewModel */,
 				61DBDFDA2ADF098400AE41FA /* Model */,
 				61DBDFD92ADF097E00AE41FA /* View */,
-				61DBDFD82ADEFED400AE41FA /* Info.plist */,
-				614C0C042AF1740C00D406A3 /* Auth0.plist */,
 				61DBDFC32ADEF83F00AE41FA /* PARCApp.swift */,
 				61DBDFC72ADEF84000AE41FA /* Assets.xcassets */,
 				61DBDFC92ADEF84000AE41FA /* Preview Content */,
@@ -289,6 +291,7 @@
 		61DBDFDB2ADF098900AE41FA /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				6193721D2B6A55D5000966A9 /* AppConfig.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -503,6 +506,7 @@
 				6180FAE12AED2D6F00A99D6D /* AdminHome.swift in Sources */,
 				61DBDFF02ADFF78700AE41FA /* LoginView.swift in Sources */,
 				6180FAE52AED506900A99D6D /* AdminPayoutForm.swift in Sources */,
+				6193721E2B6A55D5000966A9 /* AppConfig.swift in Sources */,
 				6136EC0E2AF4F35C00A09DDA /* ReadDB.swift in Sources */,
 				613877A62AE26B77000C959A /* UserOpportunityClick.swift in Sources */,
 				6179DC362AEE31FB00A83F9A /* AdminTradingClick.swift in Sources */,

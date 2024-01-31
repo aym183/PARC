@@ -12,13 +12,15 @@ import FirebaseStorage
 
 class CreateDB: ObservableObject {
     let currentDate = Date()
+    let apiKey = AppConfig.apiKey
     
     func createUser(email: String, first_name: String, last_name: String, full_name: String, picture: String, completion: @escaping (String?) -> Void) {
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/users")!
-        var getRequest = URLRequest(url: apiUrl)
-        getRequest.httpMethod = "GET"
+        var request = URLRequest(url: apiUrl)
+        request.httpMethod = "GET"
+        request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
 
-        URLSession.shared.dataTask(with: getRequest) { data, response, error in
+        URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data {
                 do {
                     if let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
@@ -64,10 +66,10 @@ class CreateDB: ObservableObject {
     
     func create_onboarding_email(name: String, email: String) {
         let apiUrl = URL(string: "https://brdh472ip2.execute-api.us-east-1.amazonaws.com/development/emails/send-intro-email?email=\(email)&name=\(name)")!
-
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "POST"
-
+        request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
+        
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data, let responseText = String(data: data, encoding: .utf8) {
                 DispatchQueue.main.async {
@@ -86,7 +88,7 @@ class CreateDB: ObservableObject {
             let apiUrl = URL(string: "https://brdh472ip2.execute-api.us-east-1.amazonaws.com/development/emails/investment-confirmed?email=\(email)&amount=\(amount)&opportunity_name=\(opportunity_name)")
             var request = URLRequest(url: apiUrl!)
             request.httpMethod = "POST"
-
+            request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
             URLSession.shared.dataTask(with: request) { data, response, error in
                 if let data = data, let responseText = String(data: data, encoding: .utf8) {
                     DispatchQueue.main.async {
@@ -119,12 +121,10 @@ class CreateDB: ObservableObject {
     }
     
     func createFranchise(name: String, logo: String, display_image: String, description: String, no_of_franchises: String, avg_franchise_mom_revenues: String, avg_startup_capital: String, avg_revenue_18_months: String, ebitda_estimate: String, completion: @escaping (String?) -> Void) {
-        
-
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/franchises?name=\(name)&logo=\(logo)&display_image=\(display_image)&description=\(description)&no_of_franchises=\(no_of_franchises)&avg_franchise_mom_revenues=\(avg_franchise_mom_revenues)&avg_startup_capital=\(avg_startup_capital)&avg_revenue_18_months=\(avg_revenue_18_months)&ebitda_estimate=\(ebitda_estimate)")!
-        
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "POST"
+        request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data, let responseText = String(data: data, encoding: .utf8) {
@@ -140,11 +140,10 @@ class CreateDB: ObservableObject {
     }
     
     func create_opportunity(franchise_name: String, location: String, asking_price: String, equity_offered: String, min_invest_amount: String, close_date: String, completion: @escaping (String?) -> Void) {
-
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/opportunities")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
-        
+        request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let currentDate = Date()
@@ -213,6 +212,7 @@ class CreateDB: ObservableObject {
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/payouts")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
+        request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data, let responseText = String(data: data, encoding: .utf8) {
@@ -255,7 +255,7 @@ class CreateDB: ObservableObject {
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/payouts/user-payouts")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
-        
+        request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
         var request_data: [[String: String]] = []
         
         URLSession.shared.dataTask(with: request) { data, response, error in
@@ -281,7 +281,6 @@ class CreateDB: ObservableObject {
                                         print("Error encoding data to JSON: \(error)")
                                         return
                                     }
-                                    
                                     let userPayoutApiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/payouts/user-payouts")!
                                     var request = URLRequest(url: userPayoutApiUrl)
                                     request.httpMethod = "POST"
@@ -324,10 +323,10 @@ class CreateDB: ObservableObject {
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/transactions")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
+        request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data, let responseText = String(data: data, encoding: .utf8) {
-                
                 do {
                     if let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
                         DispatchQueue.main.async {
@@ -360,10 +359,10 @@ class CreateDB: ObservableObject {
     }
     
     func createUserInvestmentHolding(opportunity_name: String, opportunity_id: String, email: String, equity: String, amount: String) {
-
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/user-holdings")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
+        request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data, let responseText = String(data: data, encoding: .utf8) {
@@ -404,6 +403,7 @@ class CreateDB: ObservableObject {
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/trading-windows")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
+        request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data, let responseText = String(data: data, encoding: .utf8) {
@@ -438,14 +438,13 @@ class CreateDB: ObservableObject {
                 }
             }
         }.resume()
-        
     }
     
     func createSecondaryMarketTransaction(opportunity_id: String, trading_window_id: String, price: String, equity: String, user_buying: String, user_selling: String, completion: @escaping (String?) -> Void) {
-        
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/transactions-secondary-market")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
+        request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data, let responseText = String(data: data, encoding: .utf8) {

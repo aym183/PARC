@@ -55,28 +55,20 @@ struct UserMarketplace: View {
                     .padding(.bottom)
                 }
             } else if trading_window_active == "true" && listed_shares.count == 0 {
-                ZStack(alignment: .bottomTrailing) {
+                ZStack(alignment: .center) {
                     Color(.white).ignoresSafeArea()
                     VStack {
                         Spacer()
-                        
-                        
-                        ForEach((0..<2), id: \.self) { index in
                             HStack {
                                 Spacer()
-                                
-                                if index == 0 {
                                     Text("☹️")
                                         .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.3))
                                         .padding(.bottom, -20)
-                                } else {
                                     Text("No shares currently listed")
                                         .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.065))
-                                }
                                 
                                 Spacer()
                             }
-                        }
                         
                         Spacer()
                     }
@@ -137,10 +129,28 @@ struct UserMarketplace: View {
                                         marketplace_click_shown.toggle()
                                     }) {
                                         HStack {
-                                            Image(uiImage: loadFranchiseLogo(key: franchises[franchises.firstIndex(where: { $0["name"] == listed_shares[index].key})!]["logo"]!))
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fill)
-                                                .frame(width: 50, height: 50)
+                                                if let franchiseIndex = franchises.firstIndex(where: { $0["name"] == listed_shares[index].key }) {
+                                                    let matchedFranchise = franchises[franchiseIndex]["logo"]!
+                                                    
+                                                    if UserDefaults.standard.object(forKey: String(describing: matchedFranchise)) != nil {
+                                                        Image(uiImage: loadDisplayImage(key: String(describing: matchedFranchise)))
+                                                            .resizable()
+                                                            .aspectRatio(contentMode: .fill)
+                                                            .frame(width: 50, height: 50)
+                                                    } else {
+                                                        Image(systemName: "home")
+                                                            .resizable()
+                                                            .aspectRatio(contentMode: .fill)
+                                                            .frame(width: 50, height: 50)
+                                                    }
+                                                    
+                                                } else {
+                                                    Image(systemName: "home")
+                                                        .resizable()
+                                                        .aspectRatio(contentMode: .fill)
+                                                        .frame(width: 50, height: 50)
+                                                }
+                                
                                             Spacer()
                                             
                                             HStack {

@@ -31,6 +31,7 @@ class ReadDB: ObservableObject {
     @State var currentFormattedDate: String = convertDate(dateString: String(describing: Date()))
     @AppStorage("email") var email: String = ""
     let dispatchGroup = DispatchGroup()
+    let apiKey = AppConfig.apiKey
     
     func getFranchises() {
         var temp_dict: [String: String] = [:]
@@ -38,6 +39,7 @@ class ReadDB: ObservableObject {
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/franchises")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
+        request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data {
@@ -87,6 +89,7 @@ class ReadDB: ObservableObject {
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/opportunities")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
+        request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data {
@@ -157,6 +160,7 @@ class ReadDB: ObservableObject {
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/opportunities")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
+        request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data {
@@ -202,6 +206,7 @@ class ReadDB: ObservableObject {
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/payouts")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
+        request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data, let responseText = String(data: data, encoding: .utf8) {
@@ -249,6 +254,7 @@ class ReadDB: ObservableObject {
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/payouts/user-payouts")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
+        request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data {
@@ -291,6 +297,7 @@ class ReadDB: ObservableObject {
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/user-holdings")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
+        request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data, let responseText = String(data: data, encoding: .utf8) {
@@ -353,6 +360,7 @@ class ReadDB: ObservableObject {
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/user-holdings")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
+        request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data, let responseText = String(data: data, encoding: .utf8) {
@@ -396,6 +404,7 @@ class ReadDB: ObservableObject {
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/trading-windows")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
+        request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data {
@@ -474,6 +483,7 @@ class ReadDB: ObservableObject {
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/transactions-secondary-market")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
+        request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data {
@@ -513,6 +523,7 @@ class ReadDB: ObservableObject {
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/transactions-secondary-market")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
+        request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data {

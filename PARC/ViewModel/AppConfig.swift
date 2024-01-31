@@ -6,3 +6,14 @@
 //
 
 import Foundation
+
+struct AppConfig {
+    static var apiKey: String {
+        guard let path = Bundle.main.path(forResource: "Info", ofType: "plist"),
+              let config = NSDictionary(contentsOfFile: path),
+              let apiKey = config["API_KEY"] as? String else {
+            fatalError("Info.plist or API_KEY not found")
+        }
+        return apiKey
+    }
+}
