@@ -381,8 +381,8 @@ struct AdminHome: View {
                                         } else {
                                             Button(action: {
                                                 selected_trading_window = readDB.trading_window_data[index-1]
-                                                trading_volume = readDB.transformed_trading_window_transactions_data["\(String(describing: index-1))_volume"] ?? 0
-                                                no_of_trades = readDB.transformed_trading_window_transactions_data["\(String(describing: index-1))_trades"] ?? 0
+                                                trading_volume = readDB.transformed_trading_window_transactions_data["\(String(describing: readDB.trading_window_data[index-1]["trading-window-id"]!))_volume"] ?? 0
+                                                no_of_trades = readDB.transformed_trading_window_transactions_data["\(String(describing: readDB.trading_window_data[index-1]["trading-window-id"]!))_trades"] ?? 0
                                                 admin_trading_click_shown.toggle()
                                             }) {
                                                 ZStack {
@@ -421,9 +421,8 @@ struct AdminHome: View {
                                                         Spacer()
                                                         
                                                         if readDB.transformed_trading_window_transactions_data.count != 0 {
-                                                            
-                                                            if readDB.transformed_trading_window_transactions_data.keys.contains("\(String(describing: index-1))_trades") {
-                                                                Text("\(readDB.transformed_trading_window_transactions_data["\(String(describing: index-1))_trades"]!) Trades")
+                                                            if readDB.transformed_trading_window_transactions_data.keys.contains("\(String(describing: readDB.trading_window_data[index-1]["trading-window-id"]!))_trades") {
+                                                                Text("\(readDB.transformed_trading_window_transactions_data["\(String(describing: readDB.trading_window_data[index-1]["trading-window-id"]!))_trades"]!) Trades")
                                                                     .font(Font.custom("Nunito-Bold", size: 25))
                                                             } else {
                                                                 Text("0 Trades")
@@ -433,8 +432,9 @@ struct AdminHome: View {
                                                             Spacer()
                                                             
                                                             HStack {
-                                                                if readDB.transformed_trading_window_transactions_data.keys.contains("\(String(describing: index-1))_volume") {
-                                                                    Text("Volume - £\(readDB.transformed_trading_window_transactions_data["\(String(describing: index-1))_volume"]!)")
+                                                                if readDB.transformed_trading_window_transactions_data.keys.contains("\(String(describing: readDB.trading_window_data[index-1]["trading-window-id"]!))_volume") {
+                                                                    
+                                                                    Text("Volume - £\(convertNumberAmount(input_number: Double(readDB.transformed_trading_window_transactions_data["\(String(describing: readDB.trading_window_data[index-1]["trading-window-id"]!))_volume"]!)))")
                                                                 } else {
                                                                     Text("Volume - £0")
                                                                     

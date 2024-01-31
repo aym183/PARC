@@ -80,7 +80,7 @@ struct AdminTradingClick: View {
                                             Text("Check")
                                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.038))
                                         }
-                                        .frame(width: max(0, geometry.size.width-300), height: 35)
+                                        .frame(width: geometry.size.width*0.2, height: 35)
                                         .background(Color("Secondary"))
                                         .foregroundColor(Color.white)
                                         .cornerRadius(5)
@@ -116,6 +116,9 @@ struct AdminTradingClick: View {
                     .foregroundColor(.black)
                     .padding(.top)
                 }
+            }
+            .onAppear() {
+                print(selected_trading_window)
             }
             .navigationDestination(isPresented: $admin_home_shown) {
                 AdminHome().navigationBarBackButtonHidden(true)
