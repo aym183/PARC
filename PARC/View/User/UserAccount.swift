@@ -15,8 +15,12 @@ struct UserAccount: View {
     @AppStorage("email") var email: String = ""
     @State var showProfileImagePicker = false
     @State var logged_out = false
+    @State var withdraw_request = false
+    @State var withdraw_request_confirmed = false
     @State var showing_log_out = false
     @State var isShownHomePage = false
+    @State var isInvestmentConfirmed = false
+    @State var isWithdrawalConfirmed = false
     @Binding var profile_image: UIImage?
     @Binding var init_profile_image: UIImage?
     
@@ -125,31 +129,31 @@ struct UserAccount: View {
                             .frame(height: 1)
                         
                         
-                        HStack {
-                            Text("Set Pin")
-                                .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.052))
-                            Spacer()
-                            Button(action: {}) {
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 5)
-                                        .fill(Color.white)
-                                        .overlay(
-                                            RoundedRectangle(cornerRadius: 5)
-                                                .stroke(Color.black, lineWidth: 1.25)
-                                        )
-                                        .frame(width: 100, height: 35)
-                                    
-                                    Text("Set")
-                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.04))
-                                }
-                            }
-                        }
-                        .padding(.horizontal).padding(.top, 10)
-                        
-                        Divider()
-                            .overlay(Color("Custom_Gray"))
-                            .opacity(0.75)
-                            .frame(height: 1)
+//                        HStack {
+//                            Text("Set Pin")
+//                                .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.052))
+//                            Spacer()
+//                            Button(action: {}) {
+//                                ZStack {
+//                                    RoundedRectangle(cornerRadius: 5)
+//                                        .fill(Color.white)
+//                                        .overlay(
+//                                            RoundedRectangle(cornerRadius: 5)
+//                                                .stroke(Color.black, lineWidth: 1.25)
+//                                        )
+//                                        .frame(width: 100, height: 35)
+//                                    
+//                                    Text("Set")
+//                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.04))
+//                                }
+//                            }
+//                        }
+//                        .padding(.horizontal).padding(.top, 10)
+//                        
+//                        Divider()
+//                            .overlay(Color("Custom_Gray"))
+//                            .opacity(0.75)
+//                            .frame(height: 1)
                         
                         HStack {
                             Text("Balance")
@@ -160,7 +164,7 @@ struct UserAccount: View {
                                 .foregroundColor(.black)
                                 .padding(.trailing, 13)
                         }
-                        .padding(.leading).padding(.trailing).padding(.top, 10)
+                        .padding(.horizontal).padding(.top, 10)
                     }
                     .padding(.top)
                     .foregroundColor(Color("Custom_Gray"))
@@ -179,7 +183,7 @@ struct UserAccount: View {
                             .cornerRadius(5)
                         }
                         
-                        Button(action: {}) {
+                        Button(action: { withdraw_request.toggle() }) {
                             HStack {
                                 Text("Withdraw")
                                     .font(Font.custom("Nunito", size: min(geometry.size.width, geometry.size.height) * 0.055))
@@ -208,8 +212,23 @@ struct UserAccount: View {
                     secondaryButton: .destructive(Text("No")) {}
                 )
             }
+            .alert(isPresented: $withdraw_request) {
+                Alert(
+                    title: Text("Are you sure you want to withdraw?"),
+                    primaryButton: .default(Text("Yes")) {
+                        DispatchQueue.global(qos: .userInteractive).async {
+                            CreateDB().createWithdrawalConfirmation(email: email, amount: formattedNumber(input_number: payoutsValue+secondaryTransactionsValue))
+                        }
+                        withdraw_request_confirmed.toggle()
+                    },
+                    secondaryButton: .destructive(Text("No")) {}
+                )
+            }
             .navigationDestination(isPresented: $logged_out) {
-                LandingContent(isShownHomePage: $isShownHomePage).navigationBarBackButtonHidden()
+                LandingContent(isShownHomePage: $isShownHomePage).navigationBarBackButtonHidden(true)
+            }
+            .navigationDestination(isPresented: $withdraw_request_confirmed) {
+                UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isWithdrawalConfirmed: $isWithdrawalConfirmed, isShownHomePage: $isShownHomePage).navigationBarBackButtonHidden(true)
             }
             .sheet(isPresented: $showProfileImagePicker) {
                 ImagePicker(image: $profile_image)

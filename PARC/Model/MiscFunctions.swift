@@ -310,8 +310,9 @@ func loadProfileImage(completion: @escaping (UIImage?) -> Void) {
 }
 
 func deleteAllUserDefaultsData() {
-    if let bundleIdentifier = Bundle.main.bundleIdentifier {
-            UserDefaults.standard.removePersistentDomain(forName: bundleIdentifier)
-            UserDefaults.standard.synchronize()
+    let keysToRemove = UserDefaults.standard.dictionaryRepresentation().keys.filter { $0 != "profile_image" }
+        for key in keysToRemove {
+            UserDefaults.standard.removeObject(forKey: key)
         }
-    }
+        UserDefaults.standard.synchronize()
+}

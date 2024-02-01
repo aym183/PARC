@@ -12,6 +12,7 @@ struct UserHome: View {
     @State var selectedTab: Tab = .house
     @State var account_shown = false
     @Binding var isInvestmentConfirmed: Bool
+    @Binding var isWithdrawalConfirmed: Bool
     @Binding var isShownHomePage: Bool
     @State var isShownOnboarding = false
     @AppStorage("first_name") var firstName: String = ""
@@ -55,6 +56,21 @@ struct UserHome: View {
                             Spacer()
                             Text("Congratulations!").font(Font.custom("Nunito-Bold", size: 40))
                             Text("Your investment has been received. Thank you for trusting PARC!").font(Font.custom("Nunito-Bold", size: 16))
+                                .multilineTextAlignment(.center)
+                                .padding(.top, -25)
+                                .frame(width: 270)
+                            Spacer()
+                        }
+                        .foregroundColor(.black)
+                        .frame(width: max(0, geometry.size.width))
+                        LottieView(name: "confetti", speed: 0.5, loop: false).frame(width: max(0, geometry.size.width))
+                    }
+                    
+                    if isWithdrawalConfirmed {
+                        VStack(alignment: .center) {
+                            Spacer()
+                            Text("Confirmed!").font(Font.custom("Nunito-Bold", size: 40))
+                            Text("Your withdrawal request has been received. It should be in your inbox shortly!").font(Font.custom("Nunito-Bold", size: 16))
                                 .multilineTextAlignment(.center)
                                 .padding(.top, -25)
                                 .frame(width: 270)
@@ -123,6 +139,11 @@ struct UserHome: View {
                     .frame(width: max(0, geometry.size.width-40), height: max(0, geometry.size.height - 20))
                     .foregroundColor(.black)
                     .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                            withAnimation(.easeOut(duration: 0.5)) {
+                                isWithdrawalConfirmed = false
+                            }
+                        }
                         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                             withAnimation(.easeOut(duration: 0.5)) {
                                 isShownHomePage = false
@@ -184,10 +205,11 @@ struct UserHome: View {
                                 self.admin_opportunity_data = readDB.admin_opportunity_data
                             }
                         }
-                        
+
                     }
                     .opacity(isInvestmentConfirmed ? 0 : 1)
                     .opacity(isShownHomePage ? 0 : 1)
+                    .opacity(isWithdrawalConfirmed ? 0 : 1)
                 }
                 .navigationDestination(isPresented: $account_shown) {
                     UserAccount(payoutsValue: $payouts_value, secondaryTransactionsValue: $readDB.secondary_market_transactions_ind, profile_image: $profile_image, init_profile_image: $init_profile_image)

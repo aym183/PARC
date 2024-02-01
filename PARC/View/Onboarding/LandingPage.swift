@@ -12,6 +12,7 @@ struct LandingPage: View {
     @State var loggedInUser = true
     @State var loggedInAdmin = false
     @State var isInvestmentConfirmed = false
+    @State var isWithdrawalConfirmed = false
     @State var isSharesListed = false
     @State var userProfile = Profile.empty
     @State var isShownHomePage = false
@@ -32,7 +33,7 @@ struct LandingPage: View {
 //                UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isShownHomePage: $isShownHomePage)
 //            } else 
             if logged_in && !isShownHomePage && email == "ayman.ali1302@gmail.com" {
-                UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isShownHomePage: $isShownHomePage)
+                UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isWithdrawalConfirmed: $isWithdrawalConfirmed, isShownHomePage: $isShownHomePage)
             } else if logged_in && !isShownHomePage && email != "ayman.ali1302@gmail.com" {
                 AdminHome()
             } else {
@@ -47,6 +48,7 @@ struct LandingPage: View {
 struct LandingContent: View {
     @State private var index = 0
     @State var isInvestmentConfirmed = false
+    @State var isWithdrawalConfirmed = false
     @State var isAuthenticated = false
     @State var isSharesListed = false
     @State var userProfile = Profile.empty
@@ -106,7 +108,7 @@ struct LandingContent: View {
             }
             .navigationDestination(isPresented: $logged_in) {
                 if email == "ayman.ali1302@gmail.com" {
-                    UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isShownHomePage: $isShownHomePage).navigationBarHidden(true)
+                    UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isWithdrawalConfirmed: $isWithdrawalConfirmed, isShownHomePage: $isShownHomePage).navigationBarHidden(true)
                 } else {
                     AdminHome().navigationBarBackButtonHidden(true)
                 }

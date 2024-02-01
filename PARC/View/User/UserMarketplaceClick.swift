@@ -14,6 +14,7 @@ struct UserMarketplaceClick: View {
     @State var showingPaymentAlert = false
     @State var home_page_shown = false
     @State var isInvestmentConfirmed = true
+    @State var isWithdrawalConfirmed = false
     @State var isShownHomePage = false
     @State var isSharesListed = false
     @AppStorage("trading_window_id") var trading_window_id: String = ""
@@ -166,7 +167,7 @@ struct UserMarketplaceClick: View {
                 .padding(.top,10)
             }
             .navigationDestination(isPresented: $home_page_shown) {
-                UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isShownHomePage: $isShownHomePage).navigationBarBackButtonHidden(true)
+                UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isWithdrawalConfirmed: $isWithdrawalConfirmed, isShownHomePage: $isShownHomePage).navigationBarBackButtonHidden(true)
             }
             .alert(isPresented: $showingPaymentAlert) {
                 Alert(

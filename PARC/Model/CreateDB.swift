@@ -107,6 +107,7 @@ class CreateDB: ObservableObject {
             let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/transactions-secondary-market/seller-investment-confirmed?email=\(email)&amount=\(amount)&opportunity_name=\(opportunity_name)")
             var request = URLRequest(url: apiUrl!)
             request.httpMethod = "POST"
+            request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
 
             URLSession.shared.dataTask(with: request) { data, response, error in
                 if let data = data, let responseText = String(data: data, encoding: .utf8) {
@@ -164,6 +165,7 @@ class CreateDB: ObservableObject {
                                 
                                 var request = URLRequest(url: opportunityApiUrl)
                                 request.httpMethod = "POST"
+                                request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
 
                                 URLSession.shared.dataTask(with: request) { data, response, error in
                                     if let data = data, let responseText = String(data: data, encoding: .utf8) {
@@ -229,6 +231,7 @@ class CreateDB: ObservableObject {
                                 
                                 var request = URLRequest(url: opportunityApiUrl)
                                 request.httpMethod = "POST"
+                                request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
 
                                 URLSession.shared.dataTask(with: request) { data, response, error in
                                     if let data = data, let responseText = String(data: data, encoding: .utf8) {
@@ -289,6 +292,7 @@ class CreateDB: ObservableObject {
                                     request.httpMethod = "POST"
                                     request.httpBody = jsonData
                                     request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                                    request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
                                     
                                     URLSession.shared.dataTask(with: request) { data, response, error in
                                         if let error = error {
@@ -339,6 +343,7 @@ class CreateDB: ObservableObject {
                                 
                                 var request = URLRequest(url: opportunityApiUrl)
                                 request.httpMethod = "POST"
+                                request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
 
                                 URLSession.shared.dataTask(with: request) { data, response, error in
                                     if let data = data, let responseText = String(data: data, encoding: .utf8) {
@@ -379,6 +384,7 @@ class CreateDB: ObservableObject {
                                 
                                 var request = URLRequest(url: opportunityApiUrl)
                                 request.httpMethod = "POST"
+                                request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
 
                                 URLSession.shared.dataTask(with: request) { data, response, error in
                                     if let data = data, let responseText = String(data: data, encoding: .utf8) {
@@ -420,6 +426,7 @@ class CreateDB: ObservableObject {
                                 
                                 var request = URLRequest(url: opportunityApiUrl)
                                 request.httpMethod = "POST"
+                                request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
 
                                 URLSession.shared.dataTask(with: request) { data, response, error in
                                     if let data = data, let responseText = String(data: data, encoding: .utf8) {
@@ -461,7 +468,8 @@ class CreateDB: ObservableObject {
                                 
                                 var request = URLRequest(url: opportunityApiUrl)
                                 request.httpMethod = "POST"
-
+                                request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
+                                
                                 URLSession.shared.dataTask(with: request) { data, response, error in
                                     if let data = data, let responseText = String(data: data, encoding: .utf8) {
                                         DispatchQueue.main.async {
@@ -479,6 +487,25 @@ class CreateDB: ObservableObject {
                     }
                 } catch {
                     print("Error")
+                }
+            }
+        }.resume()
+    }
+    
+    func createWithdrawalConfirmation(email: String, amount: String) {
+        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/users/withdrawals?email=\(email)&amount=\(amount)")
+        var request = URLRequest(url: apiUrl!)
+        request.httpMethod = "POST"
+        request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
+
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let data = data, let responseText = String(data: data, encoding: .utf8) {
+                DispatchQueue.main.async {
+                    print("Withdrawal confirmation created \(responseText)")
+                }
+            } else if let error = error {
+                DispatchQueue.main.async {
+                    print("Error creating withdrawal confirmation: \(error.localizedDescription)")
                 }
             }
         }.resume()

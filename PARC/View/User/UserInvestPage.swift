@@ -19,6 +19,7 @@ struct UserInvestPage: View {
     @State var isInvestmentConfirmed = true
     @State var user_ready_to_invest = false
     @State var isShownHomePage = false
+    @State var isWithdrawalConfirmed = false
     @Binding var user_invest_shown: Bool
     @Binding var asking_price: Double
     @Binding var equity_offered: Double
@@ -171,7 +172,7 @@ struct UserInvestPage: View {
                 .frame(width: max(0, geometry.size.width - 40))
             }
             .navigationDestination(isPresented: $home_page_shown) {
-                UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isShownHomePage: $isShownHomePage).navigationBarBackButtonHidden(true)
+                UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isWithdrawalConfirmed: $isWithdrawalConfirmed, isShownHomePage: $isShownHomePage).navigationBarBackButtonHidden(true)
             }
             .onAppear {
                 equity_value = (asking_price*100)/(equity_offered)

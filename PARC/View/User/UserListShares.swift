@@ -18,6 +18,7 @@ struct UserListShares: View {
     @State var isInvestmentConfirmed = false
     @State var isSharesListed = true
     @State var isShownHomePage = false
+    @State var isWithdrawalConfirmed = false
     @State private var selectedFranchise: DropdownMenuOption? = nil
     @State private var selectedHolding: DropdownMenuOption? = nil
     var validFormInputs: Bool { selectedHolding != nil && asking_price.count>0 && is_on }
@@ -136,7 +137,7 @@ struct UserListShares: View {
             }
             .foregroundColor(.black)
             .navigationDestination(isPresented: $marketplace_shown) {
-                UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isShownHomePage: $isShownHomePage).navigationBarBackButtonHidden(true)
+                UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isWithdrawalConfirmed: $isWithdrawalConfirmed, isShownHomePage: $isShownHomePage).navigationBarBackButtonHidden(true)
             }
         }
     }
