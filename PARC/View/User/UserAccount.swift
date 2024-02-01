@@ -21,6 +21,7 @@ struct UserAccount: View {
     @State var isShownHomePage = false
     @State var isInvestmentConfirmed = false
     @State var isWithdrawalConfirmed = false
+    @State var transaction_history_shown = false
     @Binding var profile_image: UIImage?
     @Binding var init_profile_image: UIImage?
     
@@ -106,7 +107,7 @@ struct UserAccount: View {
                             Text("Transaction History")
                                 .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.052))
                             Spacer()
-                            Button(action: {}) {
+                            Button(action: { transaction_history_shown.toggle() }) {
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 5)
                                         .fill(Color.white)
@@ -201,6 +202,9 @@ struct UserAccount: View {
                     
                     Spacer()
                 }
+            }
+            .sheet(isPresented: $transaction_history_shown) {
+                
             }
             .alert(isPresented: $showing_log_out) {
                 Alert(

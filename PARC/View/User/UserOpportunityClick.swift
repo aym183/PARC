@@ -388,6 +388,7 @@ struct UserOpportunityClick: View {
                             .frame(height: 1)
                             .padding(.top, -15)
                         
+                        
                         HStack {
                             Text("Location")
                                 .foregroundColor(Color("Custom_Gray"))
@@ -468,9 +469,9 @@ struct UserOpportunityClick: View {
                 }
                 .frame(width: max(0, geometry.size.width))
                 .background(.white)
-                .navigationDestination(isPresented: $user_invest_shown) {
-                    UserInvestPage(user_invest_shown: $user_invest_shown, asking_price: $asking_price, equity_offered: $equity_offered, opportunity_id: $opportunity_id, opportunity_name: $opportunity_name, amount_offered: $amount_offered, investors: $investors, min_investment: $min_investment_amount)
-                }
+            }
+            .navigationDestination(isPresented: $user_invest_shown) {
+                UserInvestPage(user_invest_shown: $user_invest_shown, asking_price: $asking_price, equity_offered: $equity_offered, opportunity_id: $opportunity_id, opportunity_name: $opportunity_name, amount_offered: $amount_offered, investors: $investors, min_investment: $min_investment_amount)
             }
         }
     }

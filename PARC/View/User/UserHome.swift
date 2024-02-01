@@ -139,15 +139,11 @@ struct UserHome: View {
                     .frame(width: max(0, geometry.size.width-40), height: max(0, geometry.size.height - 20))
                     .foregroundColor(.black)
                     .onAppear {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                            withAnimation(.easeOut(duration: 0.5)) {
-                                isWithdrawalConfirmed = false
-                            }
-                        }
                         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                             withAnimation(.easeOut(duration: 0.5)) {
                                 isShownHomePage = false
                                 isInvestmentConfirmed = false
+                                isWithdrawalConfirmed = false
                                 if !onboarding_completed {
                                     isShownOnboarding.toggle()
                                 }
