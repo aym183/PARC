@@ -127,7 +127,6 @@ class ReadDB: ObservableObject {
                                                 } else if let sValue = nameDictionary["S"] {
                                                     temp_dict[data] = sValue
                                                 }
-                                                
                                             }
                                         }
                                     }

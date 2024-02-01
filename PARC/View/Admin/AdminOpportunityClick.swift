@@ -32,18 +32,18 @@ struct AdminOpportunityClick: View {
                         }
                         
                         if opportunity_data["status"]! == "Active" {
-                            HStack(spacing: 20) {
-                                Button(action: {}) {
-                                    HStack {
-                                        Text("Edit Opportunity")
-                                            .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.038))
-                                    }
-                                    .frame(width: geometry.size.width*0.44, height: 45)
-                                    .background(Color("Secondary"))
-                                    .foregroundColor(Color.white)
-                                    .cornerRadius(5)
-                                    .padding(.bottom)
-                                }
+//                            HStack(spacing: 20) {
+//                                Button(action: {}) {
+//                                    HStack {
+//                                        Text("Edit Opportunity")
+//                                            .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.038))
+//                                    }
+//                                    .frame(width: geometry.size.width*0.44, height: 45)
+//                                    .background(Color("Secondary"))
+//                                    .foregroundColor(Color.white)
+//                                    .cornerRadius(5)
+//                                    .padding(.bottom)
+//                                }
                                 
                                 Button(action: { showingDeleteAlert.toggle() }) {
                                     HStack {
@@ -51,12 +51,12 @@ struct AdminOpportunityClick: View {
                                             .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.038))
                                     }
                                     .frame(width: geometry.size.width*0.4, height: 45)
-                                    .background(Color("Loss"))
+                                    .background(Color("Secondary"))
                                     .foregroundColor(Color.white)
                                     .cornerRadius(5)
                                     .padding(.bottom)
                                 }
-                            }
+//                            }
                             .padding(.top)
                         }
                         
@@ -202,7 +202,7 @@ struct AdminOpportunityClick: View {
                     title: Text("Are you sure you want to close this opportunity?"),
                     primaryButton: .default(Text("Yes")) {
                         DispatchQueue.global(qos: .userInteractive).async {
-                            UpdateDB().updateTable(primary_key: "opportunity_id", primary_key_value: opportunity_data["opportunity_id"]!, table: "opportunities", updated_key: "status", updated_value: "Closed") { response in
+                            UpdateDB().updateTable(primary_key: "opportunity_id", primary_key_value: opportunity_data["opportunity_id"]!, table: "opportunities", updated_key: "status", updated_value: "Completed") { response in
                                 if response == "opportunities status updated" {
                                     admin_home_shown.toggle()
                                 }
