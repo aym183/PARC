@@ -16,10 +16,16 @@ struct UserTransactionHistory: View {
                 Color(.white).ignoresSafeArea()
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack {
-                        
-                        // Add case when there are no transactions
                         if user_holdings.count == 0 {
+                            Spacer()
+                            Text("☹️")
+                                .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.3))
+                                .padding(.bottom, -20)
+                                .padding(.top, 50)
+                            Text("No transactions")
+                                .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.065))
                             
+                            Spacer()
                         } else {
                             ForEach(0..<user_holdings.count, id: \.self) { index in
                                 HStack {

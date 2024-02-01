@@ -59,16 +59,16 @@ struct UserMarketplace: View {
                     Color(.white).ignoresSafeArea()
                     VStack {
                         Spacer()
-                            HStack {
-                                Spacer()
+//                            HStack {
+//                                Spacer()
                                     Text("☹️")
                                         .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.3))
                                         .padding(.bottom, -20)
                                     Text("No shares currently listed")
                                         .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.065))
                                 
-                                Spacer()
-                            }
+//                                Spacer()
+//                            }
                         
                         Spacer()
                     }
