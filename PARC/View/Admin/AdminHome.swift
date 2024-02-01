@@ -33,6 +33,7 @@ struct AdminHome: View {
     @State var profile_image: UIImage?
     @State var init_profile_image: UIImage?
     @State private var counter = 2
+    @State var trading_window_ongoing = false
     
     var body: some View {
         GeometryReader { geometry in
@@ -354,6 +355,7 @@ struct AdminHome: View {
                                         
                                         if index == 0 {
                                             Button(action: { admin_trading_form_shown.toggle() }) {
+                                                
                                                 ZStack {
                                                     RoundedRectangle(cornerRadius: 5)
                                                         .fill(Color.white)
@@ -378,6 +380,8 @@ struct AdminHome: View {
                                                 }
                                                 .frame(width: 135, height: 140)
                                             }
+                                            .opacity(trading_window_ongoing ? 0.5 : 1)
+                                            .disabled(trading_window_ongoing ? true : false)
                                         } else {
                                             Button(action: {
                                                 selected_trading_window = readDB.trading_window_data[index-1]
@@ -385,6 +389,7 @@ struct AdminHome: View {
                                                 no_of_trades = readDB.transformed_trading_window_transactions_data["\(String(describing: readDB.trading_window_data[index-1]["trading-window-id"]!))_trades"] ?? 0
                                                 admin_trading_click_shown.toggle()
                                             }) {
+                                                
                                                 ZStack {
                                                     RoundedRectangle(cornerRadius: 5)
                                                         .fill(Color.white)
@@ -403,6 +408,9 @@ struct AdminHome: View {
                                                                 RoundedRectangle(cornerRadius: 5)
                                                                     .fill(Color("Amber"))
                                                                     .frame(width: geometry.size.width*0.2, height: 25)
+                                                                    .onAppear() {
+                                                                        self.trading_window_ongoing = true
+                                                                    }
                                                             } else if readDB.trading_window_data[index-1]["status"] == "Completed"  {
                                                                 RoundedRectangle(cornerRadius: 5)
                                                                     .fill(Color("Profit"))
