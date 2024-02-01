@@ -186,7 +186,9 @@ class ReadDB: ObservableObject {
                                     let ratio = Double(amountRaised) / Double(askingPrice)
                                     temp_dict["ratio"] = String(describing: ratio)
                                     self.admin_opportunity_data.append(temp_dict)
-                                    self.opportunity_data_dropdown.append(DropdownMenuOption(option: "\(temp_dict["opportunity_id"]!) - \(temp_dict["franchise"]!) - \(temp_dict["location"]!) - \(temp_dict["date_created"]!)"))
+                                    if temp_dict["status"] == "Completed" {
+                                        self.opportunity_data_dropdown.append(DropdownMenuOption(option: "\(temp_dict["opportunity_id"]!) - \(temp_dict["franchise"]!) - \(temp_dict["location"]!) - \(temp_dict["date_created"]!)"))
+                                    }
                                     temp_dict = [:]
                                 }
                                 self.admin_opportunity_data = sortByDaysRemaining(array: self.admin_opportunity_data)
