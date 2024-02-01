@@ -164,6 +164,7 @@ struct UserHome: View {
                         readDB.user_holdings_data = []
                         readDB.full_user_holdings_data = []
                         readDB.user_payout_data = []
+                        readDB.sold_shares = []
                         readDB.trading_window_data = []
                         readDB.payout_data = []
                         readDB.secondary_market_transactions_ind = 0
@@ -208,7 +209,7 @@ struct UserHome: View {
                     .opacity(isWithdrawalConfirmed ? 0 : 1)
                 }
                 .navigationDestination(isPresented: $account_shown) {
-                    UserAccount(payoutsValue: $payouts_value, secondaryTransactionsValue: $readDB.secondary_market_transactions_ind, profile_image: $profile_image, init_profile_image: $init_profile_image)
+                    UserAccount(payoutsValue: $payouts_value, secondaryTransactionsValue: $readDB.secondary_market_transactions_ind, profile_image: $profile_image, init_profile_image: $init_profile_image, user_holdings: $readDB.user_holdings_data, user_holdings_sold: $readDB.sold_shares)
                 }
             }
             
@@ -423,6 +424,7 @@ struct UserHomeContent: View {
                 readDB.franchise_data = []
                 readDB.user_opportunity_data = []
                 readDB.admin_opportunity_data = []
+                readDB.sold_shares = []
                 readDB.user_holdings_data = []
                 readDB.full_user_holdings_data = []
                 readDB.user_payout_data = []

@@ -20,6 +20,7 @@ class ReadDB: ObservableObject {
     @Published var listed_shares: [String: [[String: String]]] = [:]
     @Published var secondary_market_data: [(key: String, value: Any)] = []
     @Published var user_holdings_data: [[String: String]] = []
+    @Published var sold_shares: [[String: String]] = []
     @Published var user_holdings_data_dropdown: [DropdownMenuOption] = []
     @Published var trading_window_data: [[String: String]] = []
     @Published var transformed_trading_window_transactions_data: [String: Int] = [:]
@@ -294,6 +295,7 @@ class ReadDB: ObservableObject {
         var keysArray = ["opportunity_name", "user_holdings_id", "user_email", "status", "opportunity_id", "equity", "amount", "transaction_date"]
         var temp_dict: [String: String] = [:]
         var listed_temp_dict: [String: String] = [:]
+        var sold_temp_dict: [String: String] = [:]
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/user-holdings")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
@@ -326,6 +328,16 @@ class ReadDB: ObservableObject {
                                                     listed_temp_dict[data] = sValue
                                                 }
                                             }
+                                        } else if let ownedCheck = value["status"] as? [String: String], let emailCheck = value["user_email"] as? [String: String], emailCheck["S"] == email && ownedCheck["S"] == "Sold" {
+                                            if let nameDictionary = value[data] as? [String: String] {
+                                                if data == "opportunity_id" || data == "user_holdings_id" {
+                                                    sold_temp_dict[data] = nameDictionary["N"]
+                                                } else if data == "transaction_date" {
+                                                    sold_temp_dict[data] = convertDate(dateString: nameDictionary["S"]!)
+                                                } else if let sValue = nameDictionary["S"] {
+                                                    sold_temp_dict[data] = sValue
+                                                }
+                                            }
                                         }
                                     }
                                     if temp_dict != [:] {
@@ -339,10 +351,14 @@ class ReadDB: ObservableObject {
                                             self.listed_shares[listed_temp_dict["opportunity_name"]!] = [listed_temp_dict]
                                         }
                                         listed_temp_dict = [:]
+                                    } else if sold_temp_dict != [:] {
+                                        self.sold_shares.append(sold_temp_dict)
+                                        sold_temp_dict = [:]
                                     }
                                 }
                                 self.secondary_market_data = transformListedShares(listed_shares: self.listed_shares)
                                 self.user_holdings_data = sortArrayByDate(inputArray: self.user_holdings_data, field_name: "transaction_date", date_type: "dd/MM/yyyy")
+                                self.sold_shares = sortArrayByDate(inputArray: self.sold_shares, field_name: "transaction_date", date_type: "dd/MM/yyyy")
                                 completion("Fetched user holdings")
                             }
                         }

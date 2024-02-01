@@ -8,11 +8,63 @@
 import SwiftUI
 
 struct UserTransactionHistory: View {
+    @Binding var user_holdings: [[String: String]]
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        GeometryReader { geometry in
+            ZStack {
+                Color(.white).ignoresSafeArea()
+                ScrollView(.vertical, showsIndicators: false) {
+                    VStack {
+                        
+                        // Add case when there are no transactions
+                        if user_holdings.count == 0 {
+                            
+                        } else {
+                            ForEach(0..<user_holdings.count, id: \.self) { index in
+                                HStack {
+                                    VStack(alignment: .leading) {
+                                        HStack {
+                                            
+                                            if user_holdings[index]["status"]! == "Owned" {
+                                                Text("Bought \(user_holdings[index]["opportunity_name"]!)")
+                                                    .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.045))
+                                            } else {
+                                                Text("Sold \(user_holdings[index]["opportunity_name"]!)")
+                                                    .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.045))
+                                            }
+                                            
+                                        }
+                                        Text("Date Bought - \(user_holdings[index]["transaction_date"]!)")
+                                            .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.027))
+                                            .foregroundColor(Color("Custom_Gray"))
+                                    }
+                                    Spacer()
+                                    
+                                    if user_holdings[index]["status"]! == "Owned" {
+                                        Text("+£\(formattedNumber(input_number: Int(user_holdings[index]["amount"]!)!))")
+                                            .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.04))
+                                            .foregroundColor(Color("Profit"))
+                                    } else {
+                                        Text("-£\(formattedNumber(input_number: Int(user_holdings[index]["amount"]!)!))")
+                                            .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.04))
+                                        .foregroundColor(Color("Loss"))
+                                    }
+                                }
+                                .padding(.vertical, 10)
+                                .frame(width: max(0, geometry.size.width-40))
+                                
+                                Divider()
+                                    .overlay(Color("Custom_Gray"))
+                                    .frame(height: 0.5)
+                                
+                            }
+                        }
+                    }
+                    .foregroundColor(.black)
+                    .padding(.top, 10)
+                }
+            }
+        }
     }
-}
-
-#Preview {
-    UserTransactionHistory()
 }

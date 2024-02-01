@@ -478,6 +478,7 @@ struct AdminHome: View {
                     readDB.franchise_data_dropdown = []
                     readDB.admin_opportunity_data = []
                     readDB.payout_data = []
+                    readDB.sold_shares = []
                     readDB.opportunity_data_dropdown = []
                     readDB.full_user_holdings_data = []
                     readDB.trading_window_data = []
@@ -524,6 +525,7 @@ struct AdminHome: View {
             readDB.opportunity_data_dropdown = []
             readDB.full_user_holdings_data = []
             readDB.trading_window_data = []
+            readDB.sold_shares = []
             readDB.trading_window_transactions_data = []
             readDB.transformed_trading_window_transactions_data = [:]
             readDB.getFranchises()

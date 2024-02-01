@@ -24,6 +24,9 @@ struct UserAccount: View {
     @State var transaction_history_shown = false
     @Binding var profile_image: UIImage?
     @Binding var init_profile_image: UIImage?
+    @Binding var user_holdings: [[String: String]]
+    @Binding var user_holdings_sold: [[String: String]]
+    @State var sorted_user_holdings: [[String: String]] = []
     
     var body: some View {
         GeometryReader { geometry in
@@ -107,7 +110,10 @@ struct UserAccount: View {
                             Text("Transaction History")
                                 .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.052))
                             Spacer()
-                            Button(action: { transaction_history_shown.toggle() }) {
+                            Button(action: {
+                                self.sorted_user_holdings = sortArrayByDate(inputArray: user_holdings + user_holdings_sold, field_name: "transaction_date", date_type: "dd/MM/yyyy")
+                                transaction_history_shown.toggle()
+                            }) {
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 5)
                                         .fill(Color.white)
@@ -204,7 +210,7 @@ struct UserAccount: View {
                 }
             }
             .sheet(isPresented: $transaction_history_shown) {
-                
+                UserTransactionHistory(user_holdings: $sorted_user_holdings)
             }
             .alert(isPresented: $showing_log_out) {
                 Alert(
