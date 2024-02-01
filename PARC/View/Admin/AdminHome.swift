@@ -145,7 +145,7 @@ struct AdminHome: View {
                                                             } else {
                                                                 Image(systemName: "house")
                                                                     .resizable()
-                                                                    .aspectRatio(contentMode: .fill)
+                                                                    .aspectRatio(contentMode: .fit)
                                                                     .frame(width: 30, height: 30)
                                                                     .padding([.leading, .top], 10).padding(.leading, 5)
                                                             }
@@ -194,7 +194,7 @@ struct AdminHome: View {
                                                     HStack {
                                                         if readDB.admin_opportunity_data[index-1]["status"]! == "Closed"{
                                                             Text("Closed")
-                                                        } else if getDaysRemaining(dateString: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))! < 1 {
+                                                        } else if readDB.admin_opportunity_data[index-1]["status"]! == "Completed" {
                                                             Text("Completed")
                                                                 .foregroundColor(Color("Profit"))
                                                         } else if getDaysRemaining(dateString: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))! <= 5 {

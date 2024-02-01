@@ -213,6 +213,7 @@ func transformPayouts(payouts_array: [[String: String]]) -> [String: Any] {
     return traversed_payouts
 }
 
+// Not the
 func sortByDaysRemaining(array: [[String: String]]) -> [[String : String]] {
     var completedArray: [[String : String]] = []
     var closedArray: [[String : String]] = []
@@ -221,10 +222,10 @@ func sortByDaysRemaining(array: [[String: String]]) -> [[String : String]] {
     for ind in array {
         if ind["status"]! == "Closed" {
             closedArray.append(ind)
-        } else if getDaysRemaining(dateString: ind["close_date"]!)! >= 1 {
-            outputArray.append(ind)
-        } else {
+        } else if ind["status"]! == "Completed" {
             completedArray.append(ind)
+        } else if getDaysRemaining(dateString: ind["close_date"]!)! >= 1  {
+            outputArray.append(ind)
         }
     }
     

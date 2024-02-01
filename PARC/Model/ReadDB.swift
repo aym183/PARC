@@ -190,6 +190,7 @@ class ReadDB: ObservableObject {
                                     }
                                     temp_dict = [:]
                                 }
+                                // Sort in such a way that active shows first sorted then completed shows one
                                 self.admin_opportunity_data = sortByDaysRemaining(array: self.admin_opportunity_data)
                                 completion("Fetched all opportunities")
                             }

@@ -63,7 +63,6 @@ struct UserTransactionHistory: View {
                                 Divider()
                                     .overlay(Color("Custom_Gray"))
                                     .frame(height: 0.5)
-                                
                             }
                         }
                     }
