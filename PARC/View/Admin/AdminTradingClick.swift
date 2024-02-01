@@ -125,7 +125,7 @@ struct AdminTradingClick: View {
                     title: Text("Are you sure you want to close this window?"),
                     primaryButton: .default(Text("Yes")) {
                         DispatchQueue.global(qos: .userInteractive).async {
-                            UpdateDB().updateTable(primary_key: "trading-window-id", primary_key_value: selected_trading_window["trading-window-id"]!, table: "trading-windows", updated_key: "status", updated_value: "Cancelled") { response in
+                            UpdateDB().updateTable(primary_key: "trading-window-id", primary_key_value: selected_trading_window["trading-window-id"]!, table: "trading-windows", updated_key: "status", updated_value: "Completed") { response in
                                 if response == "trading-windows status updated" {
                                     admin_home_shown.toggle()
                                 }
