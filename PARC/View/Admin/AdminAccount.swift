@@ -24,18 +24,51 @@ struct AdminAccount: View {
                 VStack(alignment: .center) {
                     HStack {
                         VStack {
-                            Button(action: { showProfileImagePicker.toggle() }) {
-                                if let image = profile_image {
-                                    Image(uiImage: profile_image!)
-                                        .resizable()
-                                        .frame(width: 100, height: 100)
-                                        .cornerRadius(100)
-                                } else {
-                                    Image(systemName: "person.crop.circle")
-                                        .resizable()
-                                        .frame(width: 100, height: 100)
+                                Button(action: { showProfileImagePicker.toggle() }) {
+                                    if let image = profile_image {
+                                        ZStack {
+                                            Image(uiImage: profile_image!)
+                                                .resizable()
+                                                .frame(width: 100, height: 100)
+                                                .cornerRadius(100)
+                                            
+                                            VStack {
+                                                HStack {
+                                                    Spacer()
+                                                    Image(systemName: "pencil.circle.fill")
+                                                        .resizable()
+                                                        .foregroundColor(.gray)
+                                                        .opacity(0.8)
+                                                        .frame(width: 25, height: 25)
+                                                }
+                                                Spacer()
+                                            }
+                                            .frame(width: 110, height: 80)
+                                        }
+                                        
+                                    } else {
+                                        ZStack {
+                                            Image(systemName: "person.crop.circle")
+                                                .resizable()
+                                                .frame(width: 100, height: 100)
+                                            
+                                            VStack {
+                                                HStack {
+                                                    Spacer()
+                                                    Button(action: {}) {
+                                                        Image(systemName: "pencil.circle.fill")
+                                                            .resizable()
+                                                            .foregroundColor(.gray)
+                                                            .opacity(0.8)
+                                                    }
+                                                    .frame(width: 25, height: 25)
+                                                }
+                                                Spacer()
+                                            }
+                                            .frame(width: 110, height: 80)
+                                        }
+                                    }
                                 }
-                            }
                             
                             if init_profile_image != profile_image {
                                 Button(action: {
