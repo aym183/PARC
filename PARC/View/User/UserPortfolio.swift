@@ -165,11 +165,13 @@ struct UserPortfolio: View {
                                     } else {
                                         Text("Invalid opportunity_id value")
                                     }
-                                    Text("Date Bought - \(portfolio_data[index]["transaction_date"]!)")
-                                        .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.027))
-                                        .foregroundColor(Color("Custom_Gray"))
+                                    HStack {
+                                        Text("Bought - \(portfolio_data[index]["transaction_date"]!) | \(opportunity_data[opportunity_data.firstIndex(where: { $0["opportunity_id"] == portfolio_data[index]["opportunity_id"]!})!]["location"]!)")
+                                    }
+                                    .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.027))
+                                    .foregroundColor(Color("Custom_Gray"))
                                 }
-                                .padding(.leading, 10)
+                                .padding(.leading, 5)
                                 
                                 Spacer()
                                 
