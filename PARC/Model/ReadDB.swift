@@ -240,7 +240,9 @@ class ReadDB: ObservableObject {
                                     self.payout_data.append(temp_dict)
                                     temp_dict = [:]
                                 }
+                                self.payout_data = sortArrayByDate(inputArray: self.payout_data, field_name: "date_created", date_type: "dd/MM/yyyy")
                                 completion("Fetched payouts")
+                                
                             }
                         }
                     }
@@ -254,7 +256,7 @@ class ReadDB: ObservableObject {
     func getUserPayouts(email: String, completion: @escaping (String?) -> Void) {
         let keysArray = ["user_payout_id", "equity", "opportunity_id", "amount_received", "user_email", "payout_date"]
         var temp_dict: [String: String] = [:]
-        let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/user-payouts")!
+        let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/payouts/user-payouts")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
         request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
@@ -282,6 +284,7 @@ class ReadDB: ObservableObject {
                                         temp_dict = [:]
                                     }
                                 }
+                                self.user_payout_data = sortArrayByDate(inputArray: self.user_payout_data, field_name: "date_created", date_type: "dd/MM/yyyy")
                                 completion("Fetched user payouts")
                             }
                         }
