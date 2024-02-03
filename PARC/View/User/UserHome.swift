@@ -339,6 +339,23 @@ struct UserHomeContent: View {
                                                     .padding(.top, 10).padding(.leading, -7.5)
                                                 
                                                 Spacer()
+                                                
+                                                ZStack {
+                                                    Rectangle()
+                                                        .foregroundColor(.clear)
+                                                        .frame(width: 70, height: 20)
+                                                        .background(Color(red: 0.85, green: 0.85, blue: 0.85).opacity(0.5))
+                                                        .cornerRadius(5)
+                                                    
+                                                    HStack(spacing: 10) {
+                                                        Image("gbr").resizable().frame(width: 15, height: 15)
+                                                        Text(String(describing: opportunity_data[index]["location"]!))
+                                                            .font(Font.custom("Nunito-Bold", size: 12))
+                                                            .foregroundColor(Color("Custom_Gray"))
+                                                            .padding(.leading, -7.5)
+                                                    }
+                                                }
+                                                .padding([.trailing, .top], 10)
                                             }
                                             .padding(.leading, -2.5)
                                             
@@ -356,21 +373,21 @@ struct UserHomeContent: View {
                                                     .frame(alignment: .leading)
                                                 Spacer()
                                                 
-                                                ZStack {
-                                                    Rectangle()
-                                                        .foregroundColor(.clear)
-                                                        .frame(width: 45, height: 14)
-                                                        .background(Color(red: 0.85, green: 0.85, blue: 0.85).opacity(0.5))
-                                                        .cornerRadius(5)
-                                                    
-                                                    HStack {
-                                                        Image("gbr").resizable().frame(width: 10, height: 10)
-                                                        Text(String(describing: opportunity_data[index]["location"]!))
-                                                            .font(Font.custom("Nunito-SemiBold", size: 8))
-                                                            .foregroundColor(Color("Custom_Gray"))
-                                                            .padding(.leading, -7.5)
-                                                    }
-                                                }
+//                                                ZStack {
+//                                                    Rectangle()
+//                                                        .foregroundColor(.clear)
+//                                                        .frame(width: 45, height: 14)
+//                                                        .background(Color(red: 0.85, green: 0.85, blue: 0.85).opacity(0.5))
+//                                                        .cornerRadius(5)
+//                                                    
+//                                                    HStack {
+//                                                        Image("gbr").resizable().frame(width: 10, height: 10)
+//                                                        Text(String(describing: opportunity_data[index]["location"]!))
+//                                                            .font(Font.custom("Nunito-SemiBold", size: 8))
+//                                                            .foregroundColor(Color("Custom_Gray"))
+//                                                            .padding(.leading, -7.5)
+//                                                    }
+//                                                }
                                             }
                                             .padding(.horizontal,12)
                                             .padding(.top, -3)
