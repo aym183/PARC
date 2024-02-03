@@ -270,26 +270,26 @@ struct UserHomeContent: View {
                                         if UserDefaults.standard.object(forKey: String(describing: matchedFranchise)) != nil {
                                             Image(uiImage: loadDisplayImage(key: String(describing: matchedFranchise)))
                                                 .resizable()
-                                                .frame(height: 250)
+                                                .frame(height: 225)
                                                 .cornerRadius(5)
                                         } else {
                                             Image(systemName: bg_images[0])
                                                 .resizable()
-                                                .frame(height: 250)
+                                                .frame(height: 225)
                                                 .cornerRadius(5)
                                         }
                                         
                                     } else {
                                         Image(systemName: bg_images[0])
                                             .resizable()
-                                            .frame(height: 250)
+                                            .frame(height: 225)
                                             .cornerRadius(5)
                                     }
                                 }
                                 
                                 Rectangle()
                                     .opacity(0)
-                                    .frame(height: 250)
+                                    .frame(height: 225)
                                     .cornerRadius(2.5)
                                     .border(.gray, width: 1)
                                 
@@ -298,7 +298,7 @@ struct UserHomeContent: View {
                                     ZStack{
                                         RoundedRectangle(cornerRadius: 5)
                                             .fill(.white)
-                                            .frame(height: 150)
+                                            .frame(height: 155)
                                             .border(.gray, width: 1)
                                         
                                         VStack(alignment: .leading) {
@@ -361,14 +361,15 @@ struct UserHomeContent: View {
                                             
                                             Text(franchise_data[franchise_data.firstIndex(where: { $0["name"] == opportunity_data[index]["franchise"]!})!]["description"]!)
                                                 .foregroundColor(Color("Custom_Gray"))
-                                                .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.030))
-                                                .frame(height: 50)
+                                                .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.033))
+                                                .frame(height: 80)
                                                 .multilineTextAlignment(.leading)
-                                                .padding(.horizontal, 12).padding(.top, -12)
+                                                .padding(.horizontal, 12).padding(.top, -18).padding(.bottom, -15)
+//                                                .background(.red)
                                             
                                             HStack {
                                                 Text("\(String(describing: Int(Double(opportunity_data[index]["ratio"]!)!*100)))% - \(getDaysRemaining(dateString: String(describing: opportunity_data[index]["close_date"]!))!) days left")
-                                                    .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.024))
+                                                    .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.0255))
                                                     .foregroundColor(Color("Custom_Gray"))
                                                     .frame(alignment: .leading)
                                                 Spacer()
@@ -390,21 +391,21 @@ struct UserHomeContent: View {
 //                                                }
                                             }
                                             .padding(.horizontal,12)
-                                            .padding(.top, -3)
+                                            .padding(.top, 5).padding(.bottom, -2)
                                             
                                             ProgressView(value: Double(opportunity_data[index]["ratio"]!))
                                                 .tint(Color("Secondary"))
                                                 .scaleEffect(x: 1, y: 2, anchor: .center)
-                                                .padding(.horizontal, 11).padding(.top, -1)
+                                                .padding(.horizontal, 11)
                                             
                                             HStack {
-                                                Text("Minimum Investment Amount - £\(opportunity_data[index]["min_invest_amount"]!)")
-                                                    .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.024))
+                                                Text("Min Investment - £\(opportunity_data[index]["min_invest_amount"]!)")
+                                                    .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.0255))
                                                     .foregroundColor(Color("Custom_Gray"))
                                                     .frame(alignment: .leading)
                                                 Spacer()
                                                 Text("Target - £\(String(describing: formattedNumber(input_number:Int(opportunity_data[index]["asking_price"]!)!)))")
-                                                    .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.024))
+                                                    .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.0255))
                                                     .foregroundColor(Color("Custom_Gray"))
                                                     .frame(alignment: .leading)
                                                 
