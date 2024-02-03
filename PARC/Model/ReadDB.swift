@@ -37,7 +37,7 @@ class ReadDB: ObservableObject {
     func getFranchises() {
         var temp_dict: [String: String] = [:]
         let keysArray = ["description", "avg_revenue_18_months", "name", "logo", "display_image", "industry", "no_of_franchises", "ebitda_estimate", "avg_franchise_mom_revenues", "avg_startup_capital"]
-        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/franchises")!
+        let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/franchises")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
         request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
@@ -87,7 +87,7 @@ class ReadDB: ObservableObject {
     func getUserOpportunities(completion: @escaping (String?) -> Void) {
         var keysArray = ["min_invest_amount", "location", "date_created", "equity_offered", "amount_raised", "close_date", "status", "franchise", "asking_price", "opportunity_id", "investors"]
         var temp_dict: [String: String] = [:]
-        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/opportunities")!
+        let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/opportunities")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
         request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
@@ -157,7 +157,7 @@ class ReadDB: ObservableObject {
     func getAdminOpportunities(completion: @escaping (String?) -> Void) {
         var keysArray = ["min_invest_amount", "location", "date_created", "equity_offered", "amount_raised", "close_date", "status", "franchise", "asking_price", "opportunity_id", "investors"]
         var temp_dict: [String: String] = [:]
-        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/opportunities")!
+        let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/opportunities")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
         request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
@@ -206,7 +206,7 @@ class ReadDB: ObservableObject {
     func getPayouts(completion: @escaping (String?) -> Void) {
         var keysArray = ["franchise", "revenue_generated", "date_scheduled", "status", "opportunity_id", "date_created", "payout_id", "amount_offered"]
         var temp_dict: [String: String] = [:]
-        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/payouts")!
+        let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/payouts")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
         request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
@@ -254,7 +254,7 @@ class ReadDB: ObservableObject {
     func getUserPayouts(email: String, completion: @escaping (String?) -> Void) {
         let keysArray = ["user_payout_id", "equity", "opportunity_id", "amount_received", "user_email", "payout_date"]
         var temp_dict: [String: String] = [:]
-        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/payouts/user-payouts")!
+        let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/user-payouts")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
         request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
@@ -298,7 +298,7 @@ class ReadDB: ObservableObject {
         var temp_dict: [String: String] = [:]
         var listed_temp_dict: [String: String] = [:]
         var sold_temp_dict: [String: String] = [:]
-        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/user-holdings")!
+        let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/user-holdings")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
         request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
@@ -375,7 +375,7 @@ class ReadDB: ObservableObject {
     func getAllUserHoldings() {
         var keysArray = ["opportunity_name", "user_holdings_id", "user_email", "status", "opportunity_id", "equity", "amount", "transaction_date"]
         var temp_dict: [String: String] = [:]
-        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/user-holdings")!
+        let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/user-holdings")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
         request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
@@ -419,7 +419,7 @@ class ReadDB: ObservableObject {
         var trading_window_id = ""
         var trading_window_active = false
         var trading_window_completed = false
-        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/trading-windows")!
+        let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/trading-windows")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
         request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
@@ -498,7 +498,7 @@ class ReadDB: ObservableObject {
     func getTradingWindowTransactions() {
         var temp_dict: [String: String] = [:]
         let keysArray = ["user_selling", "user_buying", "trading_window_id", "opportunity_id", "equity", "transaction_date", "transaction_id", "price"]
-        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/transactions-secondary-market")!
+        let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/transactions-secondary-market")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
         request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
@@ -538,7 +538,7 @@ class ReadDB: ObservableObject {
     
     func getTradingWindowTransactionsEmail() {
         let keysArray = ["user_selling", "user_buying", "trading_window_id", "opportunity_id", "equity", "transaction_date", "transaction_id", "price"]
-        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/transactions-secondary-market")!
+        let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/transactions-secondary-market")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
         request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")

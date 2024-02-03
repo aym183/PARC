@@ -15,7 +15,7 @@ class CreateDB: ObservableObject {
     let apiKey = AppConfig.apiKey
 
     func createUser(email: String, first_name: String, last_name: String, full_name: String, picture: String, completion: @escaping (String?) -> Void) {
-        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/users")!
+        let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/users")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
         request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
@@ -38,7 +38,7 @@ class CreateDB: ObservableObject {
                                 }
                             }
                             if !email_found {
-                                    let userApiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/users?email=\(email)&first_name=\(first_name)&last_name=\(last_name)&full_name=\(full_name)&picture=\(picture)&date_joined=\(Date.now)&balance=0")!
+                                    let userApiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/users?email=\(email)&first_name=\(first_name)&last_name=\(last_name)&full_name=\(full_name)&picture=\(picture)&date_joined=\(Date.now)&balance=0")!
 
                                     var postRequest = URLRequest(url: userApiUrl)
                                     postRequest.httpMethod = "POST"
@@ -68,7 +68,7 @@ class CreateDB: ObservableObject {
     }
     
     func create_onboarding_email(name: String, email: String) {
-        let apiUrl = URL(string: "https://brdh472ip2.execute-api.us-east-1.amazonaws.com/development/emails/send-intro-email?email=\(email)&name=\(name)")!
+        let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/emails/send-intro-email?email=\(email)&name=\(name)")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "POST"
         request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
@@ -88,7 +88,7 @@ class CreateDB: ObservableObject {
     
     func createInvestmentConfirmation(email: String, amount: String, opportunity_name: String, type: String) {
         if type == "buyer" {
-            let apiUrl = URL(string: "https://brdh472ip2.execute-api.us-east-1.amazonaws.com/development/emails/investment-confirmed?email=\(email)&amount=\(amount)&opportunity_name=\(opportunity_name)")
+            let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/emails/investment-confirmed?email=\(email)&amount=\(amount)&opportunity_name=\(opportunity_name)")
             var request = URLRequest(url: apiUrl!)
             request.httpMethod = "POST"
             request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
@@ -104,7 +104,7 @@ class CreateDB: ObservableObject {
                 }
             }.resume()
         } else {
-            let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/transactions-secondary-market/seller-investment-confirmed?email=\(email)&amount=\(amount)&opportunity_name=\(opportunity_name)")
+            let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/transactions-secondary-market/seller-investment-confirmed?email=\(email)&amount=\(amount)&opportunity_name=\(opportunity_name)")
             var request = URLRequest(url: apiUrl!)
             request.httpMethod = "POST"
             request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
@@ -125,7 +125,7 @@ class CreateDB: ObservableObject {
     }
     
     func createFranchise(name: String, logo: String, display_image: String, description: String, no_of_franchises: String, avg_franchise_mom_revenues: String, avg_startup_capital: String, avg_revenue_18_months: String, ebitda_estimate: String, completion: @escaping (String?) -> Void) {
-        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/franchises?name=\(name)&logo=\(logo)&display_image=\(display_image)&description=\(description)&no_of_franchises=\(no_of_franchises)&avg_franchise_mom_revenues=\(avg_franchise_mom_revenues)&avg_startup_capital=\(avg_startup_capital)&avg_revenue_18_months=\(avg_revenue_18_months)&ebitda_estimate=\(ebitda_estimate)")!
+        let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/franchises?name=\(name)&logo=\(logo)&display_image=\(display_image)&description=\(description)&no_of_franchises=\(no_of_franchises)&avg_franchise_mom_revenues=\(avg_franchise_mom_revenues)&avg_startup_capital=\(avg_startup_capital)&avg_revenue_18_months=\(avg_revenue_18_months)&ebitda_estimate=\(ebitda_estimate)")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "POST"
         request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
@@ -144,7 +144,7 @@ class CreateDB: ObservableObject {
     }
     
     func create_opportunity(franchise_name: String, location: String, asking_price: String, equity_offered: String, min_invest_amount: String, close_date: String, completion: @escaping (String?) -> Void) {
-        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/opportunities")!
+        let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/opportunities")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
         request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
@@ -161,7 +161,7 @@ class CreateDB: ObservableObject {
                         DispatchQueue.main.async {
                             if let itemsArray = jsonObject["ScannedCount"] as? Int {
                                 let arrayLength = itemsArray+1
-                                let opportunityApiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/opportunities?opportunity_id=\(arrayLength)&franchise_name=\(franchise_name)&location=\(location)&asking_price=\(asking_price)&equity_offered=\(equity_offered)&min_invest_amount=\(min_invest_amount)&close_date=\(convertDate(dateString: close_date))&date_created=\(formattedDate)&amount_raised=0&status=\("Active")&investors=0")!
+                                let opportunityApiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/opportunities?opportunity_id=\(arrayLength)&franchise_name=\(franchise_name)&location=\(location)&asking_price=\(asking_price)&equity_offered=\(equity_offered)&min_invest_amount=\(min_invest_amount)&close_date=\(convertDate(dateString: close_date))&date_created=\(formattedDate)&amount_raised=0&status=\("Active")&investors=0")!
                                 
                                 var request = URLRequest(url: opportunityApiUrl)
                                 request.httpMethod = "POST"
@@ -214,7 +214,7 @@ class CreateDB: ObservableObject {
     }
     
     func createPayout(franchise: String, revenue_generated: String, opportunity_id: Int, date_scheduled: String, amount_offered: String, user_holdings: [[String: String]], completion: @escaping (String?) -> Void) {
-        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/payouts")!
+        let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/payouts")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
         request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
@@ -227,7 +227,7 @@ class CreateDB: ObservableObject {
                         DispatchQueue.main.async {
                             if let itemsArray = jsonObject["ScannedCount"] as? Int {
                                 let arrayLength = itemsArray+1
-                                let opportunityApiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/payouts?status=Completed&revenue_generated=\(revenue_generated)&franchise=\(franchise)&payout_id=\(arrayLength)&opportunity_id=\(opportunity_id)&date_scheduled=\(date_scheduled)&date_created=\(Date.now)&amount_offered=\(amount_offered)")!
+                                let opportunityApiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/payouts?status=Completed&revenue_generated=\(revenue_generated)&franchise=\(franchise)&payout_id=\(arrayLength)&opportunity_id=\(opportunity_id)&date_scheduled=\(date_scheduled)&date_created=\(Date.now)&amount_offered=\(amount_offered)")!
                                 
                                 var request = URLRequest(url: opportunityApiUrl)
                                 request.httpMethod = "POST"
@@ -258,7 +258,7 @@ class CreateDB: ObservableObject {
     // Reference GPT
     
     func createUserPayout(opportunity_id: Int, user_holdings: [[String: String]], amount_offered: String, payout_id: Int) {
-        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/payouts/user-payouts")!
+        let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/payouts/user-payouts")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
         request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
@@ -287,7 +287,7 @@ class CreateDB: ObservableObject {
                                         print("Error encoding data to JSON: \(error)")
                                         return
                                     }
-                                    let userPayoutApiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/payouts/user-payouts")!
+                                    let userPayoutApiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/payouts/user-payouts")!
                                     var request = URLRequest(url: userPayoutApiUrl)
                                     request.httpMethod = "POST"
                                     request.httpBody = jsonData
@@ -327,7 +327,7 @@ class CreateDB: ObservableObject {
     
     func createOpportunityTransaction(opportunity_id: String, email: String, amount: String) {
         
-        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/transactions")!
+        let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/transactions")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
         request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
@@ -339,7 +339,7 @@ class CreateDB: ObservableObject {
                         DispatchQueue.main.async {
                             if let itemsArray = jsonObject["ScannedCount"] as? Int {
                                 let arrayLength = itemsArray+1
-                                let opportunityApiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/transactions?transaction_id=\(arrayLength)&opportunity_id=\(Int(opportunity_id)!)&status=Confirmed&user_email=\(email)&transaction_date=\(Date.now)&amount_paid=\(amount)")!
+                                let opportunityApiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/transactions?transaction_id=\(arrayLength)&opportunity_id=\(Int(opportunity_id)!)&status=Confirmed&user_email=\(email)&transaction_date=\(Date.now)&amount_paid=\(amount)")!
                                 
                                 var request = URLRequest(url: opportunityApiUrl)
                                 request.httpMethod = "POST"
@@ -367,7 +367,7 @@ class CreateDB: ObservableObject {
     }
     
     func createUserInvestmentHolding(opportunity_name: String, opportunity_id: String, email: String, equity: String, amount: String) {
-        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/user-holdings")!
+        let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/user-holdings")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
         request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
@@ -380,7 +380,7 @@ class CreateDB: ObservableObject {
                         DispatchQueue.main.async {
                             if let itemsArray = jsonObject["ScannedCount"] as? Int {
                                 let arrayLength = itemsArray+1
-                                let opportunityApiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/user-holdings?user_holdings_id=\(arrayLength)&opportunity_name=\(opportunity_name)&opportunity_id=\(Int(opportunity_id)!)&status=Owned&user_email=\(email)&equity=\(equity)&amount=\(amount)&transaction_date=\(Date.now)")!
+                                let opportunityApiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/user-holdings?user_holdings_id=\(arrayLength)&opportunity_name=\(opportunity_name)&opportunity_id=\(Int(opportunity_id)!)&status=Owned&user_email=\(email)&equity=\(equity)&amount=\(amount)&transaction_date=\(Date.now)")!
                                 
                                 var request = URLRequest(url: opportunityApiUrl)
                                 request.httpMethod = "POST"
@@ -409,7 +409,7 @@ class CreateDB: ObservableObject {
     }
     
     func createTradingWindow(start_date: String, duration: String, status: String, completion: @escaping (String?) -> Void) {
-        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/trading-windows")!
+        let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/trading-windows")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
         request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
@@ -422,7 +422,7 @@ class CreateDB: ObservableObject {
                         DispatchQueue.main.async {
                             if let itemsArray = jsonObject["ScannedCount"] as? Int {
                                 let arrayLength = itemsArray+1
-                                let opportunityApiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/trading-windows?trading_window_id=\(arrayLength)&status=\(status)&start_date=\(start_date)&duration=\(duration)")!
+                                let opportunityApiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/trading-windows?trading_window_id=\(arrayLength)&status=\(status)&start_date=\(start_date)&duration=\(duration)")!
                                 
                                 var request = URLRequest(url: opportunityApiUrl)
                                 request.httpMethod = "POST"
@@ -451,7 +451,7 @@ class CreateDB: ObservableObject {
     }
     
     func createSecondaryMarketTransaction(opportunity_id: String, trading_window_id: String, price: String, equity: String, user_buying: String, user_selling: String, completion: @escaping (String?) -> Void) {
-        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/transactions-secondary-market")!
+        let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/transactions-secondary-market")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
         request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
@@ -464,7 +464,7 @@ class CreateDB: ObservableObject {
                         DispatchQueue.main.async {
                             if let itemsArray = jsonObject["ScannedCount"] as? Int {
                                 let arrayLength = itemsArray+1
-                                let opportunityApiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/transactions-secondary-market?transaction_id=\(arrayLength)&opportunity_id=\(Int(opportunity_id)!)&trading_window_id=\(Int(trading_window_id)!)&price=\(price)&equity=\(equity)&user_buying=\(user_buying)&user_selling=\(user_selling)&transaction_date=\(Date.now)")!
+                                let opportunityApiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/transactions-secondary-market?transaction_id=\(arrayLength)&opportunity_id=\(Int(opportunity_id)!)&trading_window_id=\(Int(trading_window_id)!)&price=\(price)&equity=\(equity)&user_buying=\(user_buying)&user_selling=\(user_selling)&transaction_date=\(Date.now)")!
                                 
                                 var request = URLRequest(url: opportunityApiUrl)
                                 request.httpMethod = "POST"
@@ -493,7 +493,7 @@ class CreateDB: ObservableObject {
     }
     
     func createWithdrawalConfirmation(email: String, amount: String) {
-        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/users/withdrawals?email=\(email)&amount=\(amount)")
+        let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/users/withdrawals?email=\(email)&amount=\(amount)")
         var request = URLRequest(url: apiUrl!)
         request.httpMethod = "POST"
         request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
