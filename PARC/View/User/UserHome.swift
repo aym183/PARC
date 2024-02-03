@@ -83,19 +83,19 @@ struct UserHome: View {
                     
                     VStack(alignment: .leading) {
                         HStack {
-                            Text("PARC").font(Font.custom("Nunito-Black", size: 60)).foregroundColor(Color("Secondary"))
+                            Text("PARC").font(Font.custom("Nunito-Black", size: 40)).foregroundColor(Color("Secondary"))
                             Spacer()
                             
                             Button(action: { account_shown.toggle() }) {
                                 if profile_image != nil {
                                     Image(uiImage: profile_image!)
                                         .resizable()
-                                        .frame(width: 50, height: 50)
+                                        .frame(width: 40, height: 40)
                                         .cornerRadius(100)
                                 } else {
                                     Image(systemName: "person.crop.circle")
                                         .resizable()
-                                        .frame(width: 50, height: 50)
+                                        .frame(width: 40, height: 40)
                                 }
                             }
                         }
