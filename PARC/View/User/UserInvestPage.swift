@@ -10,7 +10,8 @@ import SwiftUI
 struct UserInvestPage: View {
     
     @State var investment_amount = ""
-    @State var net_worth: Double = 0
+//    @State var net_worth: Double = 0
+    @AppStorage("net_worth") var net_worth: String = ""
     @State var net_worth_int: Int = 0
     @State var investment_limit = 0
     @State var isInvestmentAmountValid: Bool = false
@@ -33,135 +34,147 @@ struct UserInvestPage: View {
     @State var showingPaymentAlert = false
     @AppStorage("email") var email: String = ""
     
+    // Fix if net worth not entered
     var body: some View {
         GeometryReader { geometry in
             ZStack {
                 Color(.white).ignoresSafeArea()
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(alignment: .leading) {
-                        Text("Invest")
-                            .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.065))
-                            .padding(.bottom, -5)
                         
-                        Divider()
-                            .frame(height: 1)
-                            .overlay(.black)
-                        
-                        
-                        HStack {
-                            if net_worth_int >= 1000000 {
-                                Text("Net Worth: £\(net_worth_int)+")
-                            } else {
-                                Text("Net Worth: £\(net_worth_int)")
+                        if net_worth_int == 0 {
+                            Spacer()
+                            HStack {
+                                Spacer()
+                                Text("❌").font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.3))
+                                    .padding(.bottom, -20)
+                               Spacer()
                             }
-                        }
-                        .font(Font.custom("Nunito-Bold", size: 18))
-                        .padding(.top).padding(.bottom, -5)
-                        
-                        Slider(value: $net_worth, in: 10000...1000000, step: 1000)
-                            .onReceive([net_worth].publisher.first()) { value in
-                                net_worth_int = Int(net_worth)
-                                calculateInvestmentLimit()
-                                withAnimation(.easeOut(duration: 0.2)) {
-                                    user_ready_to_invest = true
+                            HStack {
+                                Spacer()
+                                Text("We need your onboarding details to continue").font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.065))
+                                    .multilineTextAlignment(.center)
+                                Spacer()
+                            }
+                            Spacer()
+                        } else {
+                            Text("Invest")
+                                .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.065))
+                                .padding(.bottom, -5)
+                            
+                            Divider()
+                                .frame(height: 1)
+                                .overlay(.black)
+                            
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    Text("£\(investment_limit)")
+                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.06))
+                                        .padding(.bottom, -5)
+                                    
+                                    Text("Your investment limit")
+                                        .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.04))
+                                        .foregroundColor(Color("Custom_Gray"))
+                                        .padding(.top, -5)
+                                }
+                                
+                                VStack(alignment: .leading) {
+                                    Text("£\(formattedNumber(input_number: Int(min_investment)!))")
+                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.06))
+                                        .padding(.bottom, -5)
+                                    
+                                    Text("Min investment")
+                                        .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.04))
+                                        .foregroundColor(Color("Custom_Gray"))
+                                        .padding(.top, -5)
+                                }
+                                .padding(.leading, 30)
+                            }
+                            .padding(.bottom, 5).padding(.top, 10)
+                            
+                            Divider()
+                                .frame(height: 1)
+                                .overlay(Color("Custom_Gray"))
+                                .opacity(0.5)
+                                .padding(.top, 2.5).padding(.bottom, -5)
+                            
+                            if investment_limit > 0 {
+                                Text("Investment Amount (£)").font(Font.custom("Nunito-Bold", size: 18))
+                                    .padding(.top).padding(.bottom, -2.5)
+                                
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 5)
+                                        .fill(Color.white)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 5)
+                                                .stroke(Color.black, lineWidth: 1.25)
+                                        )
+                                        .frame(width: max(0, geometry.size.width - 40), height: 50)
+                                        .opacity(0.5)
+                                    
+                                    TextField("", text: $investment_amount, prompt: Text("500").foregroundColor(.gray).font(Font.custom("Nunito-Medium", size: 16))).padding().frame(width: max(0, geometry.size.width-40), height: 50)
+                                        .foregroundColor(.black)
+                                        .autocorrectionDisabled(true)
+                                        .autocapitalization(.none)
+                                        .cornerRadius(5)
+                                        .font(Font.custom("Nunito-Bold", size: 16))
+                                        .onChange(of: investment_amount) {
+                                            withAnimation(.easeOut(duration: 0.2)) {
+                                                validateInvestmentAmount()
+                                            }
+                                        }
+                                        .keyboardType(.numberPad)
                                 }
                             }
-                            .accentColor(Color("Secondary"))
-                        
-                        Divider()
-                            .overlay(Color("Custom_Gray"))
-                            .opacity(0.5)
-                            .frame(height: 1)
-                            .padding(.top, 10)
-                        
-                        HStack {
-                            VStack(alignment: .leading) {
-                                Text("£\(investment_limit)")
-                                    .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.06))
-                                    .padding(.bottom, -5)
-                                
-                                Text("Your investment limit")
-                                    .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.04))
-                                    .foregroundColor(Color("Custom_Gray"))
-                                    .padding(.top, -5)
+                            
+                            if !isInvestmentAmountValid && investment_amount != "" {
+                                HStack {
+                                    Spacer()
+                                    Text("Invalid Amount").foregroundColor(.red).font(Font.custom("Nunito-Medium", size: min(geometry.size.width, geometry.size.height) * 0.035)).fontWeight(.bold)
+                                }
+                            } else if isInvestmentAmountValid && investment_amount != "" {
+                                HStack {
+                                    Spacer()
+                                    Text("\(String(format: "%.3f", (Double(investment_amount)!/equity_value)*100))% of equity").font(Font.custom("Nunito-Medium", size: min(geometry.size.width, geometry.size.height) * 0.035)).fontWeight(.bold)
+                                }
                             }
                             
-                            VStack(alignment: .leading) {
-                                Text("£\(formattedNumber(input_number: Int(min_investment)!))")
-                                    .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.06))
-                                    .padding(.bottom, -5)
-                                
-                                Text("Min investment")
-                                    .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.04))
-                                    .foregroundColor(Color("Custom_Gray"))
-                                    .padding(.top, -5)
+                            Spacer()
+                            Button(action: { showingPaymentAlert.toggle() }) {
+                                HStack {
+                                    Text("Confirm Investment")
+                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.06))
+                                }
+                                .frame(width: max(0, geometry.size.width-40), height: 55)
+                                .background(Color("Secondary"))
+                                .foregroundColor(Color.white)
+                                .cornerRadius(5)
+                                .padding(.bottom)
                             }
-                            .padding(.leading, 30)
-                        }
-                        .padding(.bottom, 5).padding(.top, 10)
-                        
-                        Divider()
-                            .overlay(Color("Custom_Gray"))
-                            .opacity(0.5)
-                            .frame(height: 1)
-                            .padding(.top, 2.5)
-                        
-                        if investment_limit > 0 {
-                            Text("Investment Amount (£)").font(Font.custom("Nunito-Bold", size: 18))
-                                .padding(.top).padding(.bottom, -2.5)
-                            
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 5)
-                                    .fill(Color.white)
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 5)
-                                            .stroke(Color.black, lineWidth: 1.25)
-                                    )
-                                    .frame(width: max(0, geometry.size.width - 40), height: 50)
-                                    .opacity(0.5)
-                                
-                                TextField("", text: $investment_amount, prompt: Text("500").foregroundColor(.gray).font(Font.custom("Nunito-Medium", size: 16))).padding().frame(width: max(0, geometry.size.width-40), height: 50)
-                                    .foregroundColor(.black)
-                                    .autocorrectionDisabled(true)
-                                    .autocapitalization(.none)
-                                    .cornerRadius(5)
-                                    .font(Font.custom("Nunito-Bold", size: 16))
-                                    .onChange(of: investment_amount) {
-                                        withAnimation(.easeOut(duration: 0.2)) {
-                                            validateInvestmentAmount()
-                                        }
-                                    }
-                                    .keyboardType(.numberPad)
-                            }
+                            .sensoryFeedback(.success, trigger: showingPaymentAlert)
+                            .disabled(isInvestmentAmountValid ? false : true)
+                            .opacity(isInvestmentAmountValid ? 1 : 0.75)
                         }
                         
-                        if !isInvestmentAmountValid && investment_amount != "" {
-                            HStack {
-                                Spacer()
-                                Text("Invalid Amount").foregroundColor(.red).font(Font.custom("Nunito-Medium", size: min(geometry.size.width, geometry.size.height) * 0.035)).fontWeight(.bold)
-                            }
-                        } else if isInvestmentAmountValid && investment_amount != "" {
-                            HStack {
-                                Spacer()
-                                Text("\(String(format: "%.3f", (Double(investment_amount)!/equity_value)*100))% of equity").font(Font.custom("Nunito-Medium", size: min(geometry.size.width, geometry.size.height) * 0.035)).fontWeight(.bold)
-                            }
-                        }
+//                        HStack {
+//                            if net_worth_int >= 1000000 {
+//                                Text("Net Worth: £\(net_worth_int)+")
+//                            } else {
+//                                Text("Net Worth: £\(net_worth_int)")
+//                            }
+//                        }
+//                        .font(Font.custom("Nunito-Bold", size: 18))
+//                        .padding(.top).padding(.bottom, -5)
                         
-                        Spacer()
-                        Button(action: { showingPaymentAlert.toggle() }) {
-                            HStack {
-                                Text("Confirm Investment")
-                                    .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.06))
-                            }
-                            .frame(width: max(0, geometry.size.width-40), height: 55)
-                            .background(Color("Secondary"))
-                            .foregroundColor(Color.white)
-                            .cornerRadius(5)
-                            .padding(.bottom)
-                        }
-                        .sensoryFeedback(.success, trigger: showingPaymentAlert)
-                        .disabled(isInvestmentAmountValid ? false : true)
-                        .opacity(isInvestmentAmountValid ? 1 : 0.75)
+//                        Slider(value: $net_worth, in: 10000...1000000, step: 1000)
+//                            .onReceive([net_worth].publisher.first()) { value in
+//                                net_worth_int = Int(net_worth)
+//                                calculateInvestmentLimit()
+//                                withAnimation(.easeOut(duration: 0.2)) {
+//                                    user_ready_to_invest = true
+//                                }
+//                            }
+//                            .accentColor(Color("Secondary"))
                     }
                     .frame(height: max(0, geometry.size.height - 20))
                     .padding(.horizontal, 5)
@@ -178,6 +191,11 @@ struct UserInvestPage: View {
                 UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isWithdrawalConfirmed: $isWithdrawalConfirmed, isShownHomePage: $isShownHomePage).navigationBarBackButtonHidden(true)
             }
             .onAppear {
+                net_worth_int = Int(net_worth)!
+                calculateInvestmentLimit()
+                withAnimation(.easeOut(duration: 0.2)) {
+                    user_ready_to_invest = true
+                }
                 equity_value = (asking_price*100)/(equity_offered)
             }
             .alert(isPresented: $showingPaymentAlert) {
