@@ -17,7 +17,11 @@ struct UserOnboarding: View {
     @State var net_worth = ""
     @State var isValidInput = true
     @State var verification_image: UIImage?
+    @AppStorage("email") var email: String = ""
     @Binding var isShownOnboarding: Bool
+    var isNetWorthValid: Bool {
+        net_worth.count>0 && Int(net_worth)!>0 && (selectedNo || selectedYes) && self.verification_image != nil
+    }
     
     var body: some View {
         GeometryReader { geometry in
@@ -206,7 +210,12 @@ struct UserOnboarding: View {
                                         
                                         Button(action: { 
                                             UserDefaults.standard.set(true, forKey: "onboarding_completed")
-                                            isShownOnboarding.toggle()
+                                            UserDefaults.standard.set(net_worth, forKey: "net_worth")
+                                            UpdateDB().updateUserTable(primary_key: "email", primary_key_value: email, table: "users", updated_key: "net_worth", updated_value: net_worth) { response in
+                                                if response == "users net_worth updated" {
+                                                    isShownOnboarding.toggle()
+                                                }
+                                            }
                                         }) {
                                                 Text("Submit")
                                                     .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.05))
@@ -215,6 +224,8 @@ struct UserOnboarding: View {
                                         .background(Color("Secondary"))
                                         .foregroundColor(Color.white)
                                         .cornerRadius(5)
+                                        .disabled(isNetWorthValid ? false : true)
+                                        .opacity(isNetWorthValid ? 1 : 0.75)
                                     }
                                     .frame(width: 135, height: 45)
                                 

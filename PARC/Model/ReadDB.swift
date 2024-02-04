@@ -34,6 +34,7 @@ class ReadDB: ObservableObject {
     let dispatchGroup = DispatchGroup()
     let apiKey = AppConfig.apiKey
     
+    
     func getFranchises() {
         var temp_dict: [String: String] = [:]
         let keysArray = ["description", "avg_revenue_18_months", "name", "logo", "display_image", "industry", "no_of_franchises", "ebitda_estimate", "avg_franchise_mom_revenues", "avg_startup_capital"]

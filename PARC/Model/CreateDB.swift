@@ -38,7 +38,7 @@ class CreateDB: ObservableObject {
                                 }
                             }
                             if !email_found {
-                                    let userApiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/users?email=\(email)&first_name=\(first_name)&last_name=\(last_name)&full_name=\(full_name)&picture=\(picture)&date_joined=\(Date.now)&balance=0")!
+                                    let userApiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/users?email=\(email)&first_name=\(first_name)&last_name=\(last_name)&full_name=\(full_name)&picture=\(picture)&date_joined=\(Date.now)&balance=0&net_worth=0")!
 
                                     var postRequest = URLRequest(url: userApiUrl)
                                     postRequest.httpMethod = "POST"
