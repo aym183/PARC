@@ -272,6 +272,39 @@ struct UserHomeContent: View {
                                                 .resizable()
                                                 .frame(height: 225)
                                                 .cornerRadius(5)
+                                            
+                                            VStack {
+                                                HStack {
+                                                    Spacer()
+                                                    ZStack {
+                                                        if getDaysRemaining(dateString: String(describing: opportunity_data[index]["close_date"]!))! <= 7 {
+                                                            Rectangle()
+                                                                .foregroundColor(.clear)
+                                                                .frame(width: 80, height: 20)
+                                                                .background(Color("Amber"))
+                                                                .cornerRadius(5)
+                                                        } else if getDaysRemaining(dateString: String(describing: opportunity_data[index]["close_date"]!))! <= 2 {
+                                                            Rectangle()
+                                                                .foregroundColor(.clear)
+                                                                .frame(width: 80, height: 20)
+                                                                .background(Color("Loss"))
+                                                                .cornerRadius(5)
+                                                        } else {
+                                                            Rectangle()
+                                                                .foregroundColor(.clear)
+                                                                .frame(width: 80, height: 20)
+                                                                .background(Color("Secondary"))
+                                                                .cornerRadius(5)
+                                                        }
+                                                        
+                                                        Text("\(String(describing: getDaysRemaining(dateString: String(describing: opportunity_data[index]["close_date"]!))!)) days left")
+                                                            .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.035))
+                                                            .foregroundColor(.white)
+                                                    }
+                                                    .padding([.trailing, .top], 10)
+                                                }
+                                                Spacer()
+                                            }
                                         } else {
                                             Image(systemName: bg_images[0])
                                                 .resizable()
@@ -368,7 +401,8 @@ struct UserHomeContent: View {
 //                                                .background(.red)
                                             
                                             HStack {
-                                                Text("\(String(describing: Int(Double(opportunity_data[index]["ratio"]!)!*100)))% - \(getDaysRemaining(dateString: String(describing: opportunity_data[index]["close_date"]!))!) days left")
+                                                
+                                                Text("\(String(describing: Int(Double(opportunity_data[index]["ratio"]!)!*100)))% - £\(formattedNumber(input_number:  Int(opportunity_data[index]["amount_raised"]!)!)) raised")
                                                     .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.0255))
                                                     .foregroundColor(Color("Custom_Gray"))
                                                     .frame(alignment: .leading)
