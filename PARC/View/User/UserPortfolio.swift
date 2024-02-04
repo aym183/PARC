@@ -154,8 +154,27 @@ struct UserPortfolio: View {
                                         if let opportunityID = Int(portfolio_data[index]["opportunity_id"]!) {
                                             if let opportunity = opportunity_data.first(where: { $0["opportunity_id"] == String(opportunityID) }) {
                                                 if let franchise = opportunity["franchise"] {
-                                                    Text("\(franchise)")
-                                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.045))
+                                                    
+                                                    HStack {
+                                                        Text("\(franchise)")
+                                                            .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.045))
+                                                        
+                                                        ZStack {
+                                                            Rectangle()
+                                                                .foregroundColor(.clear)
+                                                                .frame(width: 70, height: 20)
+                                                                .background(Color(red: 0.85, green: 0.85, blue: 0.85).opacity(0.5))
+                                                                .cornerRadius(5)
+                                                            
+                                                            HStack(spacing: 10) {
+                                                                Image("gbr").resizable().frame(width: 15, height: 15)
+                                                                Text(opportunity_data[opportunity_data.firstIndex(where: { $0["opportunity_id"] == portfolio_data[index]["opportunity_id"]!})!]["location"]!)
+                                                                    .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.03))
+                                                                    .foregroundColor(Color("Custom_Gray"))
+                                                                    .padding(.leading, -7.5)
+                                                            }
+                                                        }
+                                                    }
                                                 } else {
                                                     Text("Franchise key not found")
                                                 }
@@ -166,12 +185,12 @@ struct UserPortfolio: View {
                                             Text("Invalid opportunity_id value")
                                         }
                                         HStack {
-                                            Text("Bought - \(portfolio_data[index]["transaction_date"]!) | \(opportunity_data[opportunity_data.firstIndex(where: { $0["opportunity_id"] == portfolio_data[index]["opportunity_id"]!})!]["location"]!)")
+                                            Text("Bought - \(portfolio_data[index]["transaction_date"]!)")
                                         }
                                         .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.027))
                                         .foregroundColor(Color("Custom_Gray"))
                                     }
-                                    .padding(.leading, 5)
+//                                    .padding(.leading, 5)
                                     
                                     Spacer()
                                     
