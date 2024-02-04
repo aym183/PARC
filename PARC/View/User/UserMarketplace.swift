@@ -105,8 +105,9 @@ struct UserMarketplace: View {
                                 Spacer()
                                 Text("Available\nShares")
                             }
-                            .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.03))
+                            .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.04))
                             .padding(.top, 10)
+                            .multilineTextAlignment(.center)
                             
                             Divider()
                                 .overlay(Color("Custom_Gray"))
@@ -149,16 +150,8 @@ struct UserMarketplace: View {
                                             Spacer()
                                             
                                             HStack {
-                                                Text(String(describing: listed_shares[index].key))
                                                 Spacer()
-                                            }
-                                            .frame(width: 75)
-                                            .padding(.trailing, -25)
-                                            
-                                            Spacer()
-                                            
-                                            HStack {
-                                                Text("£\(formattedNumber(input_number: Int(String(describing: transformed_payouts_data[String(describing: listed_shares[index].key)]!))!))")
+                                                Text(String(describing: listed_shares[index].key))
                                                 Spacer()
                                             }
                                             .frame(width: 75)
@@ -167,14 +160,25 @@ struct UserMarketplace: View {
                                             Spacer()
                                             
                                             HStack {
+                                                Spacer()
+                                                Text("£\(formattedNumber(input_number: Int(String(describing: transformed_payouts_data[String(describing: listed_shares[index].key)]!))!))")
+                                                Spacer()
+                                            }
+                                            .frame(width: 75)
+                                            .padding(.trailing, -25)
+                                            
+                                            Spacer()
+                                            
+                                            HStack {
+                                                Spacer()
                                                 Text("£\(formattedNumber(input_number: Int(String(describing: listed_shares[index].value))!))")
                                                 Spacer()
                                             }
                                             .frame(width: 75)
-                                            .padding(.trailing, -20)
+                                            .padding(.trailing, -5)
                                         }
-                                        .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.03))
-                                        .multilineTextAlignment(.leading)
+                                        .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.035))
+                                        .multilineTextAlignment(.center)
                                     }
                                     
                                     Divider()
