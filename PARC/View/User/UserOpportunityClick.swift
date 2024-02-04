@@ -59,35 +59,51 @@ struct UserOpportunityClick: View {
                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.055))
                             
                             Spacer()
-                        }
-                        
-                        Text(franchise_data["description"]!)
-                            .foregroundColor(Color("Custom_Gray"))
-                            .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.030))
-                            .frame(width: max(0, geometry.size.width-40), height: 50)
-                            .multilineTextAlignment(.leading)
-                        
-                        HStack {
-                            Text("\(String(describing: Int(Double(opportunity_data["ratio"]!)!*100)))% - \(getDaysRemaining(dateString: String(describing: opportunity_data["close_date"]!))!) days left")
-                                .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.024))
-                                .foregroundColor(Color("Custom_Gray"))
-                            Spacer()
                             
                             ZStack {
                                 Rectangle()
                                     .foregroundColor(.clear)
-                                    .frame(width: 45, height: 14)
+                                    .frame(width: 70, height: 20)
                                     .background(Color(red: 0.85, green: 0.85, blue: 0.85).opacity(0.5))
                                     .cornerRadius(5)
                                 
-                                HStack {
-                                    Image("gbr").resizable().frame(width: 10, height: 10)
+                                HStack(spacing: 10) {
+                                    Image("gbr").resizable().frame(width: 15, height: 15)
                                     Text(String(describing: opportunity_data["location"]!))
-                                        .font(Font.custom("Nunito-SemiBold", size: 8))
+                                        .font(Font.custom("Nunito-Bold", size: 12))
                                         .foregroundColor(Color("Custom_Gray"))
                                         .padding(.leading, -7.5)
                                 }
                             }
+                        }
+                        
+                        Text(franchise_data["description"]!)
+                            .foregroundColor(Color("Custom_Gray"))
+                            .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.033))
+                            .frame(width: max(0, geometry.size.width-40), height: 80)
+                            .multilineTextAlignment(.leading).padding(.top, -10).padding(.bottom, -5)
+                        
+                        HStack {
+                            Text("\(String(describing: Int(Double(opportunity_data["ratio"]!)!*100)))% - \(getDaysRemaining(dateString: String(describing: opportunity_data["close_date"]!))!) days left")
+                                .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.0255))
+                                .foregroundColor(Color("Custom_Gray"))
+                            Spacer()
+                            
+//                            ZStack {
+//                                Rectangle()
+//                                    .foregroundColor(.clear)
+//                                    .frame(width: 45, height: 14)
+//                                    .background(Color(red: 0.85, green: 0.85, blue: 0.85).opacity(0.5))
+//                                    .cornerRadius(5)
+//                                
+//                                HStack {
+//                                    Image("gbr").resizable().frame(width: 10, height: 10)
+//                                    Text(String(describing: opportunity_data["location"]!))
+//                                        .font(Font.custom("Nunito-SemiBold", size: 8))
+//                                        .foregroundColor(Color("Custom_Gray"))
+//                                        .padding(.leading, -7.5)
+//                                }
+//                            }
                         }
                         .padding(.top, 5)
                         
@@ -98,13 +114,13 @@ struct UserOpportunityClick: View {
                         
                         HStack {
                             Text("Minimum Investment Amount - £\(opportunity_data["min_invest_amount"]!)")
-                                .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.024))
+                                .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.0255))
                                 .foregroundColor(Color("Custom_Gray"))
                             
                             Spacer()
                             
                             Text("Target - £\(String(describing: formattedNumber(input_number:Int(opportunity_data["asking_price"]!)!)))")
-                                .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.024))
+                                .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.0255))
                                 .foregroundColor(Color("Custom_Gray"))
                             
                         }
