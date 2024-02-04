@@ -99,11 +99,11 @@ struct UserMarketplace: View {
                             HStack {
                                 Text("Businesses")
                                 Spacer()
-                                Text("Estimated Valuation")
+                                Text("Estimated\nValuation")
                                 Spacer()
                                 Text("Payouts")
                                 Spacer()
-                                Text("Available Shares")
+                                Text("Available\nShares")
                             }
                             .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.03))
                             .padding(.top, 10)

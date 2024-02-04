@@ -42,12 +42,11 @@ func isTradingWindowActive(targetDate: String, start startDate: String, end endD
 func isTradingWindowComplete(targetDate: String, end endDate: String, status: String) -> Bool? {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "dd/MM/yyyy"
-    if status == "Cancelled" {
+    if status == "Cancelled" || status == "Completed" {
         return false
     } else {
         if let target = dateFormatter.date(from: targetDate),
            let end = dateFormatter.date(from: endDate) {
-
             return target > end
         }
     }
