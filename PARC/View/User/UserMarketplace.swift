@@ -24,6 +24,7 @@ struct UserMarketplace: View {
     @Binding var holding_data: [DropdownMenuOption]
     @Binding var listed_shares: [(key: String, value: Any)]
     @Binding var secondary_shares: [String: [[String: String]]]
+    @Binding var opportunity_data: [[String: String]]
     @State var transformed_secondary_shares: [[String: String]] = []
     @Binding var transformed_payouts_data: [String: Any]
     @Binding var franchises: [[String: String]]
@@ -207,7 +208,7 @@ struct UserMarketplace: View {
                     .padding(.trailing, 15).padding(.bottom)
                 }
                 .navigationDestination(isPresented: $marketplace_click_shown) {
-                    UserMarketplaceClick(title: $title, logo: $logo, shares_data: $transformed_secondary_shares, franchise_selected: $franchise_selected)
+                    UserMarketplaceClick(title: $title, logo: $logo, shares_data: $transformed_secondary_shares, franchise_selected: $franchise_selected, opportunity_data: $opportunity_data)
                 }
                 .navigationDestination(isPresented: $marketplace_list_shares_shown) {
                     UserListShares(franchise_data: $franchise_data, holding_data: $holding_data, marketplace_shown: $marketplace_shown)

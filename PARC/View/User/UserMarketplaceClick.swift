@@ -29,6 +29,7 @@ struct UserMarketplaceClick: View {
     @Binding var logo: String
     @Binding var shares_data: [[String: String]]
     @Binding var franchise_selected: [String: String]
+    @Binding var opportunity_data: [[String: String]]
     
     var body: some View {
         GeometryReader { geometry in
@@ -97,13 +98,16 @@ struct UserMarketplaceClick: View {
                             .frame(height: 1)
                             .overlay(.black)
                         
-                        HStack(spacing: 20) {
-                            Text("Share Price")
+                        HStack(spacing: 25) {
+                            Text("Share\nPrice")
                             Text("Equity")
-                            Text("Total Value")
+                            Text("Total\nValue")
+                            Text("Location")
+                            
                         }
                         .padding(.vertical, 7.5)
-                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.029))
+                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.032))
+                        .multilineTextAlignment(.center)
                         
                         Divider()
                             .overlay(Color("Custom_Gray"))
@@ -111,55 +115,78 @@ struct UserMarketplaceClick: View {
                             .frame(height: 1)
                             .padding(.top, -5)
                         
-                        ForEach(0..<shares_data.count, id: \.self) { index in
-                            HStack(spacing: 30) {
-                                HStack {
-                                    Text(share_prices[index])
-                                    Spacer()
-                                }
-                                .frame(width: 50)
-                                
-                                HStack {
-                                    Text(String(format: "%.2f", Float(shares_data[index]["equity"]!)!))
-                                    Spacer()
-                                }
-                                .frame(width: 55)
-                                
-                                HStack {
-                                    Text("£\(formattedNumber(input_number: Int(shares_data[index]["amount"]!)!))")
-                                    Spacer()
-                                }
-                                .frame(width: 80)
-                                .padding(.leading, -20)
-                                
-                                Button(action: {
-                                    selling_email = shares_data[index]["user_email"]!
-                                    equity = shares_data[index]["equity"]!
-                                    amount = shares_data[index]["amount"]!
-                                    opportunity_id = shares_data[index]["opportunity_id"]!
-                                    opportunity_name = shares_data[index]["opportunity_name"]!
-                                    user_holding_id = shares_data[index]["user_holdings_id"]!
-                                    showingPaymentAlert.toggle()
-                                }) {
+                        if shares_data.count != 0 && opportunity_data.count != 0 {
+                            ForEach(0..<shares_data.count, id: \.self) { index in
+                                HStack(spacing: 30) {
                                     HStack {
-                                        Text("Buy")
-                                            .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.04))
+                                        Text(share_prices[index])
+                                        Spacer()
                                     }
-                                    .frame(width: max(0, geometry.size.width-300), height: 40)
-                                    .background(Color("Secondary"))
-                                    .foregroundColor(Color.white)
-                                    .cornerRadius(5)
+                                    .frame(width: 50)
+                                    
+                                    HStack {
+                                        Text(String(format: "%.2f", Float(shares_data[index]["equity"]!)!))
+                                        Spacer()
+                                    }
+                                    .frame(width: 50)
+                                    .padding(.leading, -20)
+                                    
+                                    HStack {
+                                        Text("£\(formattedNumber(input_number: Int(shares_data[index]["amount"]!)!))")
+                                        Spacer()
+                                    }
+                                    .frame(width: 60)
+                                    .padding(.leading, -25)
+                                    
+                                    
+                                        HStack {
+                                            Text(opportunity_data[opportunity_data.firstIndex(where: { $0["opportunity_id"] == shares_data[index]["opportunity_id"]!})!]["location"]!)
+                                            Spacer()
+                                        }
+                                        .frame(width: 50)
+                                        .padding(.leading, -20)
+                                    
+                                    Button(action: {
+                                        selling_email = shares_data[index]["user_email"]!
+                                        equity = shares_data[index]["equity"]!
+                                        amount = shares_data[index]["amount"]!
+                                        opportunity_id = shares_data[index]["opportunity_id"]!
+                                        opportunity_name = shares_data[index]["opportunity_name"]!
+                                        user_holding_id = shares_data[index]["user_holdings_id"]!
+                                        showingPaymentAlert.toggle()
+                                    }) {
+                                        HStack {
+                                            Text("Buy")
+                                                .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.03))
+                                        }
+                                        .frame(width: max(0, geometry.size.width-325), height: 40)
+                                        .background(Color("Secondary"))
+                                        .foregroundColor(Color.white)
+                                        .cornerRadius(5)
+                                    }
+                                    
                                 }
+                                .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.035))
+                                .padding(.vertical, 5)
+                                .multilineTextAlignment(.center)
                                 
+                                Divider()
+                                    .overlay(Color("Custom_Gray"))
+                                    .opacity(0.5)
+                                    .frame(height: 1)
                             }
-                            .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.035))
-                            .padding(.vertical, 5)
+                            .onAppear() {
+                                print(shares_data)
+                            }
+                        } else {
+                            Text("☹️")
+                                .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.3))
+                                .padding(.bottom, -20)
                             
-                            Divider()
-                                .overlay(Color("Custom_Gray"))
-                                .opacity(0.5)
-                                .frame(height: 1)
+                            Text("No shares available yet")
+                                .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.065))
                         }
+                        
                     }
                     .foregroundColor(.black)
                 }
