@@ -85,6 +85,7 @@
 		61956B292AF969510038378E /* AdminFranchiseForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61956B282AF969510038378E /* AdminFranchiseForm.swift */; };
 		61956B2B2AFA3E4A0038378E /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61956B2A2AFA3E4A0038378E /* ImagePicker.swift */; };
 		619F4C0F2AE00F7100D7A861 /* UserHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619F4C0E2AE00F7100D7A861 /* UserHome.swift */; };
+		619F89E72B6F85E00034E440 /* SlidingTabView in Frameworks */ = {isa = PBXBuildFile; productRef = 619F89E62B6F85E00034E440 /* SlidingTabView */; };
 		61DBDFC42ADEF83F00AE41FA /* PARCApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DBDFC32ADEF83F00AE41FA /* PARCApp.swift */; };
 		61DBDFC62ADEF83F00AE41FA /* LandingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DBDFC52ADEF83F00AE41FA /* LandingPage.swift */; };
 		61DBDFC82ADEF84000AE41FA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 61DBDFC72ADEF84000AE41FA /* Assets.xcassets */; };
@@ -184,6 +185,7 @@
 				614F63F62B63FAFF000E6022 /* FirebaseInAppMessagingSwift-Beta in Frameworks */,
 				6136EC172AF551DC00A09DDA /* StripeApplePay in Frameworks */,
 				614F63E02B63FAFF000E6022 /* FirebaseAuthCombine-Community in Frameworks */,
+				619F89E72B6F85E00034E440 /* SlidingTabView in Frameworks */,
 				614F63F82B63FAFF000E6022 /* FirebaseInstallations in Frameworks */,
 				614F63E22B63FAFF000E6022 /* FirebaseCrashlytics in Frameworks */,
 				614F64002B63FAFF000E6022 /* FirebaseRemoteConfig in Frameworks */,
@@ -418,6 +420,7 @@
 				614F64012B63FAFF000E6022 /* FirebaseRemoteConfigSwift */,
 				614F64032B63FAFF000E6022 /* FirebaseStorage */,
 				614F64052B63FAFF000E6022 /* FirebaseStorageCombine-Community */,
+				619F89E62B6F85E00034E440 /* SlidingTabView */,
 			);
 			productName = PARC;
 			productReference = 61DBDFC02ADEF83F00AE41FA /* PARC.app */;
@@ -453,6 +456,7 @@
 				614C0C082AF24FC300D406A3 /* XCRemoteSwiftPackageReference "url-image" */,
 				6136EC132AF551DC00A09DDA /* XCRemoteSwiftPackageReference "stripe-ios-spm" */,
 				614F63C42B63DD9C000E6022 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				619F89E52B6F85E00034E440 /* XCRemoteSwiftPackageReference "SlidingTabView" */,
 			);
 			productRefGroup = 61DBDFC12ADEF83F00AE41FA /* Products */;
 			projectDirPath = "";
@@ -771,6 +775,14 @@
 				minimumVersion = 10.20.0;
 			};
 		};
+		619F89E52B6F85E00034E440 /* XCRemoteSwiftPackageReference "SlidingTabView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/QuynhNguyen/SlidingTabView";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.2;
+			};
+		};
 		61DBDFE12ADF0A3E00AE41FA /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
@@ -981,6 +993,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 614F63C42B63DD9C000E6022 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseStorageCombine-Community";
+		};
+		619F89E62B6F85E00034E440 /* SlidingTabView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 619F89E52B6F85E00034E440 /* XCRemoteSwiftPackageReference "SlidingTabView" */;
+			productName = SlidingTabView;
 		};
 		61DBDFE22ADF0A3E00AE41FA /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;

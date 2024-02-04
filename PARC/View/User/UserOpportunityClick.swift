@@ -6,13 +6,14 @@
 //
 
 import SwiftUI
+import SlidingTabView
 
 struct UserOpportunityClick: View {
     @Binding var opportunity_data: [String: String]
     @Binding var franchise_data: [String: String]
     @Binding var franchise_logo: UIImage?
     @Binding var display_image: UIImage?
-    @State var analytics_text = "Performance Analysis"
+    @State var text_selected = ""
     @State var user_invest_shown = false
     @State var asking_price = 0.0
     @State var equity_offered = 0.0
@@ -206,48 +207,87 @@ struct UserOpportunityClick: View {
                         }
                         
                         
-                        HStack {
-                            Text(analytics_text)
-                            Spacer()
-                            Menu {
-                                Button {
-                                    withAnimation(.easeOut(duration: 0.2)) {
-                                        analytics_text = "Similar Franchises"
-                                    }
-                                } label: {
-                                    Label("Similar Franchises", systemImage: "chart.pie")
+//                        HStack {
+//                            Text(analytics_text)
+                                           
+//                            Spacer()
+//                            Menu {
+//                                Button {
+//                                    withAnimation(.easeOut(duration: 0.2)) {
+//                                        analytics_text = "Similar Franchises"
+//                                    }
+//                                } label: {
+//                                    Label("Similar Franchises", systemImage: "chart.pie")
+//                                }
+//                                
+//                                Button {
+//                                    withAnimation(.easeOut(duration: 0.2)) {
+//                                        analytics_text = "Selected Franchise"
+//                                    }
+//                                } label: {
+//                                    Label("Selected Franchise", systemImage: "chart.line.uptrend.xyaxis")
+//                                }
+//                            } label: {
+//                                ZStack {
+//                                    RoundedRectangle(cornerRadius: 10)
+//                                        .fill(Color("Secondary"))
+//                                        .frame(width: geometry.size.width*0.15, height: 25)
+//                                    
+//                                    Text("Select \(Image(systemName: "chevron.down"))")
+//                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.025))
+//                                        .foregroundColor(.white)
+//                                }
+//                            }
+//                        }
+//                        .padding(.top)
+//                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.055))
+                                                
+                        HStack(spacing: 30) {
+                            Button(action : { 
+                                withAnimation(.easeOut(duration: 0.2)) {
+                                    text_selected = "Selected Franchise"
                                 }
-                                
-                                Button {
-                                    withAnimation(.easeOut(duration: 0.2)) {
-                                        analytics_text = "Selected Franchise"
-                                    }
-                                } label: {
-                                    Label("Selected Franchise", systemImage: "chart.line.uptrend.xyaxis")
-                                }
-                            } label: {
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .fill(Color("Secondary"))
-                                        .frame(width: geometry.size.width*0.15, height: 25)
+                            }) {
+                                VStack {
+                                    Text("Selected Franchise").font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.045))
                                     
-                                    Text("Select \(Image(systemName: "chevron.down"))")
-                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.025))
-                                        .foregroundColor(.white)
+                                    if text_selected == "Selected Franchise" {
+                                        Divider()
+                                            .frame(height: 2.5)
+                                            .background(Color("Secondary"))
+                                            .cornerRadius(5)
+                                            .padding(.top, -7.5)
+                                    }
+                                }
+                            }
+                            
+                            Button(action : {
+                                withAnimation(.easeOut(duration: 0.2)) {
+                                    text_selected = "Similar Franchises"
+                                }
+                            }) {
+                                VStack {
+                                    Text("Similar Franchises").font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.045))
+                                    if text_selected == "Similar Franchises" {
+                                        Divider()
+                                            .frame(height: 2.5)
+                                            .background(Color("Secondary"))
+                                            .cornerRadius(5)
+                                            .padding(.top, -7.5)
+                                    }
                                 }
                             }
                         }
-                        .padding(.top)
-                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.055))
-                        
+                        .padding(.top, 10)
                         
                         Divider()
                             .overlay(Color("Custom_Gray"))
                             .opacity(0.5)
                             .frame(height: 1)
-                            .padding(.top, -15)
+                            .padding(.top, -5)
                         
-                        if analytics_text == "Similar Franchises" {
+                                       
+                        if text_selected == "Similar Franchises" {
                             ForEach(0..<2, id: \.self) { index in
                                 HStack(spacing: 10) {
                                     ZStack {
@@ -476,3 +516,7 @@ struct UserOpportunityClick: View {
         }
     }
 }
+
+//#Preview {
+//    UserOpportunityClick(opportunity_data: .constant([:]), franchise_data: .constant([:]), franchise_logo: .constant(nil), display_image: .constant(nil))
+//}
