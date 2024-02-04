@@ -211,11 +211,11 @@ struct UserOnboarding: View {
                                         Button(action: { 
                                             UserDefaults.standard.set(true, forKey: "onboarding_completed")
                                             UserDefaults.standard.set(Int(net_worth)!, forKey: "net_worth")
-                                            UpdateDB().updateUserTable(primary_key: "email", primary_key_value: email, table: "users", updated_key: "net_worth", updated_value: net_worth) { response in
-                                                if response == "users net_worth updated" {
-                                                    isShownOnboarding.toggle()
-                                                }
-                                            }
+                                            isShownOnboarding.toggle()
+//                                            UpdateDB().updateUserTable(primary_key: "email", primary_key_value: email, table: "users", updated_key: "net_worth", updated_value: net_worth) { response in
+//                                                if response == "users net_worth updated" {
+//                                                }
+//                                            }
                                         }) {
                                                 Text("Submit")
                                                     .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.05))
