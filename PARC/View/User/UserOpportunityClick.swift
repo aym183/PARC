@@ -25,7 +25,7 @@ struct UserOpportunityClick: View {
     @State var titles_why_invest_1 = ["Passive Income", "Diversification"]
     @State var titles_why_invest_description = ["Get a share of the profits every month and earn money while you sleep", "Strengthen your portfolio by investing in franchises of different types"]
     @State var titles_why_invest_2 = ["Recession Proof", "Brand Value"]
-    @State var titles_why_invest_description_2 = ["The need for food and beverages remains during global economic crises", "The franchise has built up trust and credibility with its consumers globally"]
+    @State var titles_why_invest_description_2 = ["The need for food and beverages remains during economic crises", "The franchise has built up trust and credibility with its consumers"]
     @State var titles_similar_franchise_1 = ["Dividend Payout", "Net Return"]
     @State var titles_similar_franchise_images = ["Dividend_Payout", "Net_Return"]
     @State var titles_similar_franchise_2 = ["Annual Profit", "Success Rate"]
@@ -190,7 +190,8 @@ struct UserOpportunityClick: View {
                                         
                                         Text(titles_why_invest_description[index])
                                             .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.033))
-                                            .foregroundColor(.gray)
+//                                            .foregroundColor(.gray)
+                                            .foregroundColor(Color("Secondary"))
                                             .multilineTextAlignment(.center)
                                         
                                     }
@@ -209,7 +210,8 @@ struct UserOpportunityClick: View {
                                         
                                         Text(titles_why_invest_description_2[index])
                                             .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.033))
-                                            .foregroundColor(.gray)
+//                                            .foregroundColor(.gray)
+                                            .foregroundColor(Color("Secondary"))
                                             .multilineTextAlignment(.center)
                                         
                                     }
