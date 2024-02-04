@@ -41,14 +41,48 @@ struct UserOpportunityClick: View {
                 Color(.white).ignoresSafeArea()
                 
                 ScrollView(.vertical, showsIndicators: false) {
-                    Image(uiImage: display_image!)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: max(0, geometry.size.width))
-                        .padding(.top)
+                    
+                    ZStack {
+                        Image(uiImage: display_image!)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: max(0, geometry.size.width))
+                        
+                        VStack {
+                            HStack {
+                                Spacer()
+                                ZStack {
+                                    if getDaysRemaining(dateString: String(describing: opportunity_data["close_date"]!))! <= 7 {
+                                        Rectangle()
+                                            .foregroundColor(.clear)
+                                            .frame(width: 100, height: 35)
+                                            .background(Color("Amber"))
+                                            .cornerRadius(5)
+                                    } else if getDaysRemaining(dateString: String(describing: opportunity_data["close_date"]!))! <= 2 {
+                                        Rectangle()
+                                            .foregroundColor(.clear)
+                                            .frame(width: 100, height: 35)
+                                            .background(Color("Loss"))
+                                            .cornerRadius(5)
+                                    } else {
+                                        Rectangle()
+                                            .foregroundColor(.clear)
+                                            .frame(width: 100, height: 30)
+                                            .background(Color("Secondary"))
+                                            .cornerRadius(5)
+                                    }
+                                    
+                                    Text("\(String(describing: getDaysRemaining(dateString: String(describing: opportunity_data["close_date"]!))!)) days left")
+                                        .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.04))
+                                        .foregroundColor(.white)
+                                }
+                            }
+                            .padding([.trailing, .top], 10)
+                            Spacer()
+                        }
+                    }
                     
                     VStack {
-                        
                         HStack {
                             Image(uiImage: franchise_logo!)
                                 .resizable()
@@ -84,7 +118,7 @@ struct UserOpportunityClick: View {
                             .multilineTextAlignment(.leading).padding(.top, -10).padding(.bottom, -5)
                         
                         HStack {
-                            Text("\(String(describing: Int(Double(opportunity_data["ratio"]!)!*100)))% - \(getDaysRemaining(dateString: String(describing: opportunity_data["close_date"]!))!) days left")
+                            Text("\(String(describing: Int(Double(opportunity_data["ratio"]!)!*100)))% - £\(formattedNumber(input_number:  Int(opportunity_data["amount_raised"]!)!)) raised")
                                 .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.0255))
                                 .foregroundColor(Color("Custom_Gray"))
                             Spacer()
