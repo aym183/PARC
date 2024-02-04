@@ -171,6 +171,9 @@ struct UserInvestPage: View {
                 .foregroundColor(.black)
                 .frame(width: max(0, geometry.size.width - 40))
             }
+            .onTapGesture {
+                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+            }
             .navigationDestination(isPresented: $home_page_shown) {
                 UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isWithdrawalConfirmed: $isWithdrawalConfirmed, isShownHomePage: $isShownHomePage).navigationBarBackButtonHidden(true)
             }

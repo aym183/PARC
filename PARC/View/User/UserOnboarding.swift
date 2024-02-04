@@ -14,6 +14,8 @@ struct UserOnboarding: View {
     @State var selectedYes = false
     @State var selectedNo = false
     @State var showVerificationImagePicker = false
+    @State var net_worth = ""
+    @State var isValidInput = true
     @State var verification_image: UIImage?
     @Binding var isShownOnboarding: Bool
     
@@ -44,16 +46,42 @@ struct UserOnboarding: View {
                                 }
                                 
                                 HStack {
-                                    Text("What is your background?")
+                                    Text("Estimated net worth")
                                         .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.05))
                                     
                                     Spacer()
                                 }
-                                .padding(.bottom, 10)
                                 
-                                DropdownMenu(selectedOption: self.$selectedBackground, placeholder: "Select", options: DropdownMenuOption.testAllValues)
-                                    .padding(.bottom, 15).padding(.top, -10)
-                                    .frame(width: max(0, geometry.size.width - 80))
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 5)
+                                        .fill(Color.white)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 5)
+                                                .stroke(Color.black, lineWidth: 1.25)
+                                        )
+                                        .frame(width: max(0, geometry.size.width - 80), height: 50)
+                                        .opacity(0.5)
+                                    
+                                    TextField("", text: $net_worth, prompt: Text("500000").foregroundColor(.gray).font(Font.custom("Nunito-Medium", size: 16))).padding().frame(width: max(0, geometry.size.width-80), height: 50)
+                                        .cornerRadius(5)
+                                        .font(Font.custom("Nunito-Bold", size: 16))
+                                        .keyboardType(.numberPad)
+                                        .onChange(of: self.net_worth, perform: { value in
+                                            withAnimation(.easeOut(duration: 0.2)) {
+                                                if self.net_worth.count > 0 {
+                                                    if Int(self.net_worth)! == 0 { isValidInput = false }
+                                                } else { isValidInput = true }
+                                            }
+                                        })
+                                }
+                                .padding(.top, -10).padding(.bottom, 5)
+                                
+                                if !isValidInput {
+                                    HStack {
+                                        Spacer()
+                                        Text("Amount should be greater than 0").foregroundColor(.red).font(Font.custom("Nunito-Medium", size: min(geometry.size.width, geometry.size.height) * 0.035)).fontWeight(.bold)
+                                    }
+                                }
                                
                                 HStack {
                                     Text("Have you ever invested before?")
@@ -114,7 +142,7 @@ struct UserOnboarding: View {
                                     }
                                     .frame(width: 135, height: 45)
                                 }
-                                .padding(.top, -10)
+                                .padding(.top, -10).padding(.bottom, 5)
                                 
                                 
                                 HStack {
@@ -216,6 +244,9 @@ struct UserOnboarding: View {
                             .frame(height: max(0, geometry.size.height-300))
                     }
                     .frame(width: max(0, geometry.size.width - 70))
+                    }
+                    .onTapGesture {
+                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                     }
                     .sheet(isPresented: $showVerificationImagePicker) {
                         ImagePicker(image: $verification_image)

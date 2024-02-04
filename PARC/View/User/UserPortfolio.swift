@@ -158,6 +158,7 @@ struct UserPortfolio: View {
                                                     HStack {
                                                         Text("\(franchise)")
                                                             .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.045))
+//                                                            .foregroundColor(random_colors[index])
                                                         
                                                         ZStack {
                                                             Rectangle()
@@ -173,6 +174,7 @@ struct UserPortfolio: View {
                                                                     .foregroundColor(Color("Custom_Gray"))
                                                                     .padding(.leading, -7.5)
                                                             }
+                                                            
                                                         }
                                                     }
                                                 } else {
@@ -184,10 +186,10 @@ struct UserPortfolio: View {
                                         } else {
                                             Text("Invalid opportunity_id value")
                                         }
-                                        HStack {
+//                                        HStack {
                                             Text("Bought - \(portfolio_data[index]["transaction_date"]!)")
-                                        }
-                                        .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.027))
+//                                        }
+                                        .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.03))
                                         .foregroundColor(Color("Custom_Gray"))
                                     }
 //                                    .padding(.leading, 5)
