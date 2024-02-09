@@ -33,6 +33,7 @@ struct UserPortfolio: View {
     @State private var index = 0
     @State var payouts_indexes: [Int] = []
     @State var text_selected = ""
+    @State var payouts_colors: [String: Color] = [:]
     @Binding var portfolio_data: [[String: String]]
     @Binding var franchise_data: [[String: String]]
     @Binding var user_payouts_data: [[String: String]]
@@ -41,6 +42,7 @@ struct UserPortfolio: View {
     @Binding var holdings_value: Int
     @Binding var chart_values: [Float]
     @Binding var opportunity_data: [[String: String]]
+    @State var appeared_before = 0
     let random_colors: [Color] = [
         Color(red: 0.41568627450980394, green: 0.5529411764705883, blue: 0.45098039215686275),
         Color(red: 0.9568627450980393, green: 0.9921568627450981, blue: 0.8509803921568627),
@@ -186,9 +188,16 @@ struct UserPortfolio: View {
                                            let userIndex = user_payouts_data.firstIndex(where: {
                                                $0["opportunity_id"] == opportunityID && $0["equity"] == equity
                                            }) {
-                                            RoundedRectangle(cornerRadius: 5)
-                                                .frame(width: 40, height: 40)
-                                                .foregroundColor(random_colors[index])
+                                            
+//                                            if appeared_before == 0 {
+                                                RoundedRectangle(cornerRadius: 5)
+                                                    .frame(width: 40, height: 40)
+                                                    .foregroundColor(payouts_colors["\(user_payouts_data[userIndex]["opportunity_id"]!) - \((user_payouts_data[userIndex]["equity"]!))"])
+                                                    
+//                                                .onAppear() {
+//                                            }
+//                                                payouts_data[appeared_before].color
+//                                            }
                                         }
                                     }
 //                                    if let franchiseName = portfolio_data[index]["opportunity_name"] {
@@ -227,7 +236,7 @@ struct UserPortfolio: View {
                                                         HStack {
                                                             Text("\(franchise)")
                                                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.045))
-    //                                                            .foregroundColor(random_colors[index])
+    // .foregroundColor(random_colors[index])
                                                             
                                                             ZStack {
                                                                 Rectangle()
@@ -380,10 +389,10 @@ struct UserPortfolio: View {
                        let userIndex = user_payouts_data.firstIndex(where: {
                            $0["opportunity_id"] == opportunityID && $0["equity"] == equity
                        }) {
-                        payouts_indexes.append(index)
+                        payouts_colors["\(user_payouts_data[userIndex]["opportunity_id"]!) - \((user_payouts_data[userIndex]["equity"]!))"] = .red
+                        
                     }
                 }
-                
                 for (index, color) in random_colors.enumerated() {
                     if index < holdings_data.count {
                         holdings_data[index].color = color
@@ -391,13 +400,10 @@ struct UserPortfolio: View {
                         
                     }
                 }
-                
-                for (index, color) in random_colors.enumerated() {
-                    if index < payouts_data.count && payouts_indexes.contains(index) {
-                        payouts_data[index].color = color
-                    } else {
-                        
-                    }
+
+                for (index, key) in payouts_colors.keys.enumerated() {
+                    payouts_colors[key] = random_colors[index]
+                    payouts_data[index].color = random_colors[index]
                 }
             }
         }
