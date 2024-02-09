@@ -31,6 +31,7 @@ struct UserPortfolio: View {
     var metric_description = ["Estimated Holdings", "Payouts Received"]
     var logo_images = ["McDonalds", "Starbucks", "Chipotle"]
     @State private var index = 0
+    @State var text_selected = ""
     @Binding var portfolio_data: [[String: String]]
     @Binding var franchise_data: [[String: String]]
     @Binding var user_payouts_data: [[String: String]]
@@ -67,16 +68,11 @@ struct UserPortfolio: View {
             
             VStack {
                 Spacer()
-                
                 ScrollView(.vertical, showsIndicators: false) {
-                    
                     if portfolio_data.count != 0 {
-                        
-                        TabView(selection: $index) {
-                            ForEach((0..<2), id: \.self) { index in
                                 
                                 ZStack {
-                                    if index == 0 {
+                                    if text_selected == "Holdings" || text_selected == "" {
                                         Chart(holdings_data) { item in
                                             SectorMark(angle: .value("Label", item), innerRadius: .ratio(0.8))
                                                 .foregroundStyle(item.color)
@@ -89,34 +85,73 @@ struct UserPortfolio: View {
                                     }
                                     
                                     VStack(alignment: .center) {
-                                        if index == 0 {
+                                        if text_selected == "Holdings" || text_selected == "" {
                                             Text("£\(formattedNumber(input_number: holdings_value))")
                                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.1))
                                                 .foregroundColor(.black)
+                                            Text(metric_description[0])
+                                                .foregroundStyle(Color("Custom_Gray"))
+                                                .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.04))
+                                                .padding(.top, -36)
                                         } else {
                                             Text("£\(formattedNumber(input_number: payouts_value))")
                                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.1))
                                                 .foregroundColor(.black)
+                                            Text(metric_description[1])
+                                                .foregroundStyle(Color("Custom_Gray"))
+                                                .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.04))
+                                                .padding(.top, -36)
                                         }
                                         
-                                        Text(metric_description[index])
-                                            .foregroundStyle(Color("Custom_Gray"))
-                                            .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.04))
-                                            .padding(.top, -36)
                                         
+                                    }
+                                }
+                                .frame(height: geometry.size.height - 200)
+                        
+                        
+                        HStack(spacing: 80) {
+                            Button(action : {
+                                withAnimation(.easeOut(duration: 0.2)) {
+                                    text_selected = "Holdings"
+                                }
+                            }) {
+                                VStack {
+                                    Text("Holdings").font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.05))
+                                    
+                                    if text_selected == "Holdings" || text_selected == "" {
+                                        Divider()
+                                            .frame(width: min(geometry.size.width, geometry.size.height) * 0.25, height: 2.5)
+                                            .background(Color("Secondary"))
+                                            .cornerRadius(5)
+                                            .padding(.top, -7.5)
+                                    }
+                                }
+                            }
+                            
+                            Button(action : {
+                                withAnimation(.easeOut(duration: 0.2)) {
+                                    text_selected = "Payouts"
+                                }
+                            }) {
+                                VStack {
+                                    Text("Payouts").font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.05))
+                                    if text_selected == "Payouts" {
+                                        Divider()
+                                            .frame(width: min(geometry.size.width, geometry.size.height) * 0.25, height: 2.5)
+                                            .background(Color("Secondary"))
+                                            .cornerRadius(5)
+                                            .padding(.top, -7.5)
                                     }
                                 }
                             }
                         }
-                        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-                        .frame(height: geometry.size.height - 200)
+                        .padding(.top)
                         
                         Divider()
                             .overlay(Color("Custom_Gray"))
-                            .frame(height: 0.5)
-                            .padding(.top)
+                            .padding([.top, .bottom], 10)
                             .frame(height: 1)
-                            .padding(.bottom, 10)
+                        
                         
                         if opportunity_data.count != 0 {
                             ForEach(0..<portfolio_data.count, id: \.self) { index in
@@ -186,31 +221,32 @@ struct UserPortfolio: View {
                                         } else {
                                             Text("Invalid opportunity_id value")
                                         }
-//                                        HStack {
-                                            Text("Bought - \(portfolio_data[index]["transaction_date"]!)")
-//                                        }
-                                        .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.03))
-                                        .foregroundColor(Color("Custom_Gray"))
+                                            
+                                        Text("Bought - \(portfolio_data[index]["transaction_date"]!)")
+                                            .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.03))
+                                            .foregroundColor(Color("Custom_Gray"))
                                     }
-//                                    .padding(.leading, 5)
                                     
                                     Spacer()
                                     
-                                    // Reference GPT
-                                    if let opportunityID = portfolio_data[index]["opportunity_id"],
-                                       let equity = portfolio_data[index]["equity"],
-                                       let userIndex = user_payouts_data.firstIndex(where: {
-                                           $0["opportunity_id"] == opportunityID && $0["equity"] == equity
-                                       }) {
-                                        let foundElement = user_payouts_data[userIndex]["amount_received"]!
-                                        Text("+£\(foundElement)")
+                                    if text_selected == "Holdings" || text_selected == "" {
+                                        Text("£\(formattedNumber(input_number: Int(portfolio_data[index]["amount"]!)!))")
                                             .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.055))
-                                            .foregroundColor(Color("Profit"))
                                     } else {
-                                        Text("£0")
-                                            .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.055))
+                                        if let opportunityID = portfolio_data[index]["opportunity_id"],
+                                           let equity = portfolio_data[index]["equity"],
+                                           let userIndex = user_payouts_data.firstIndex(where: {
+                                               $0["opportunity_id"] == opportunityID && $0["equity"] == equity
+                                           }) {
+                                            let foundElement = user_payouts_data[userIndex]["amount_received"]!
+                                            Text("+£\(foundElement)")
+                                                .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.055))
+                                                .foregroundColor(Color("Profit"))
+                                        } else {
+                                            Text("£0")
+                                                .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.055))
+                                        }
                                     }
-                                    
                                 }
                                 Divider()
                                     .overlay(Color("Custom_Gray"))

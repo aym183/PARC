@@ -198,17 +198,17 @@ struct AdminHome: View {
                                                         } else if readDB.admin_opportunity_data[index-1]["status"]! == "Completed" {
                                                             Text("Completed")
                                                                 .foregroundColor(Color("Profit"))
-                                                        } else if getDaysRemaining(dateString: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))! <= 5 {
+                                                        } else if getDaysRemaining(date_input: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))! <= 5 {
                                                             
-                                                            Text("\(getDaysRemaining(dateString: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))!) days left")
+                                                            Text("\(getDaysRemaining(date_input: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))!) days left")
                                                                 .foregroundColor(Color("Loss"))
                                                             
-                                                        } else if getDaysRemaining(dateString: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))! > 5 && getDaysRemaining(dateString: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))! < 15 {
+                                                        } else if getDaysRemaining(date_input: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))! > 5 && getDaysRemaining(date_input: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))! < 15 {
                                                             
-                                                            Text("\(getDaysRemaining(dateString: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))!) days left")
+                                                            Text("\(getDaysRemaining(date_input: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))!) days left")
                                                                 .foregroundColor(Color("Amber"))
                                                         } else {
-                                                            Text("\(getDaysRemaining(dateString: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))!) days left")
+                                                            Text("\(getDaysRemaining(date_input: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))!) days left")
                                                         }
                                                         
                                                         Spacer()

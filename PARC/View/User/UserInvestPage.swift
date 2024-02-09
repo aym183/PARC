@@ -202,7 +202,6 @@ struct UserInvestPage: View {
                 Alert(
                     title: Text("Are you sure you want to buy this?"),
                     primaryButton: .default(Text("Yes")) {
-                        
                         updated_amount_offered = Int(amount_offered)! + Int(investment_amount)!
                         DispatchQueue.global(qos: .userInteractive).async {
                             UpdateDB().updateTable(primary_key: "opportunity_id", primary_key_value: opportunity_id, table: "opportunities", updated_key: "amount_raised", updated_value: String(describing: updated_amount_offered)) { response in

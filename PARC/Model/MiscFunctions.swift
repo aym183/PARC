@@ -53,16 +53,15 @@ func isTradingWindowComplete(targetDate: String, end endDate: String, status: St
     return nil
 }
 
-func getDaysRemaining(dateString: String) -> Int? {
-    let formatter = DateFormatter()
-    formatter.dateFormat = "dd/MM/yyyy"
+func getDaysRemaining(date_input: String) -> Int? {
+    let date_formatter = DateFormatter()
+    date_formatter.dateFormat = "dd/MM/yyyy"
 
-    if let futureDate = formatter.date(from: dateString) {
-        let today = Date()
-        let calendar = Calendar.current
-
-        let components = calendar.dateComponents([.day], from: today, to: futureDate)
-        return components.day
+    if let future_date = date_formatter.date(from: date_input) {
+        let current_date = Date()
+        let current_calendar = Calendar.current
+        let output_components = current_calendar.dateComponents([.day], from: current_date, to: future_date)
+        return output_components.day
     }
     return nil
 }
@@ -223,7 +222,7 @@ func sortByDaysRemaining(array: [[String: String]]) -> [[String : String]] {
             closedArray.append(ind)
         } else if ind["status"]! == "Completed" {
             completedArray.append(ind)
-        } else if getDaysRemaining(dateString: ind["close_date"]!)! >= 1  {
+        } else if getDaysRemaining(date_input: ind["close_date"]!)! >= 1  {
             outputArray.append(ind)
         }
     }
@@ -232,7 +231,7 @@ func sortByDaysRemaining(array: [[String: String]]) -> [[String : String]] {
            guard let closeDate1 = $0["close_date"], let closeDate2 = $1["close_date"] else {
                return false
            }
-           return getDaysRemaining(dateString: closeDate1)! < getDaysRemaining(dateString: closeDate2)!
+           return getDaysRemaining(date_input: closeDate1)! < getDaysRemaining(date_input: closeDate2)!
     }
 
     return outputArray + completedArray + closedArray

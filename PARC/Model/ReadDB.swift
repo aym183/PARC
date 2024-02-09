@@ -52,11 +52,7 @@ class ReadDB: ObservableObject {
                                 for value in itemsArray.reversed() {
                                     for data in keysArray.reversed() {
                                         if let nameDictionary = value[data] as? [String: String] {
-                                            if data == "opportunity_id" {
-                                                if let nValue = nameDictionary["N"] {
-                                                    temp_dict[data] = nValue
-                                                }
-                                            } else if let sValue = nameDictionary["S"] {
+                                            if let sValue = nameDictionary["S"] {
                                                 temp_dict[data] = sValue
                                             }
                                         }
@@ -102,7 +98,7 @@ class ReadDB: ObservableObject {
                                     for data in keysArray.reversed() {
                                         if let activeCheck = value["status"] as? [String: String],
                                            let dateCheck = value["close_date"] as? [String: String],
-                                           activeCheck["S"] == "Active" && getDaysRemaining(dateString: dateCheck["S"]!)! < 1 {
+                                           activeCheck["S"] == "Active" && getDaysRemaining(date_input: dateCheck["S"]!)! < 1 {
                                             
                                             if let nameDictionary = value[data] as? [String: String] {
                                                 if data == "opportunity_id" {

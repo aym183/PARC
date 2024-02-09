@@ -277,13 +277,13 @@ struct UserHomeContent: View {
                                                 HStack {
                                                     Spacer()
                                                     ZStack {
-                                                        if getDaysRemaining(dateString: String(describing: opportunity_data[index]["close_date"]!))! <= 7 {
+                                                        if getDaysRemaining(date_input: String(describing: opportunity_data[index]["close_date"]!))! <= 7 {
                                                             Rectangle()
                                                                 .foregroundColor(.clear)
                                                                 .frame(width: 80, height: 20)
                                                                 .background(Color("Amber"))
                                                                 .cornerRadius(5)
-                                                        } else if getDaysRemaining(dateString: String(describing: opportunity_data[index]["close_date"]!))! <= 2 {
+                                                        } else if getDaysRemaining(date_input: String(describing: opportunity_data[index]["close_date"]!))! <= 2 {
                                                             Rectangle()
                                                                 .foregroundColor(.clear)
                                                                 .frame(width: 80, height: 20)
@@ -297,7 +297,7 @@ struct UserHomeContent: View {
                                                                 .cornerRadius(5)
                                                         }
                                                         
-                                                        Text("\(String(describing: getDaysRemaining(dateString: String(describing: opportunity_data[index]["close_date"]!))!)) days left")
+                                                        Text("\(String(describing: getDaysRemaining(date_input: String(describing: opportunity_data[index]["close_date"]!))!)) days left")
                                                             .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.035))
                                                             .foregroundColor(.white)
                                                     }
@@ -501,7 +501,7 @@ struct UserHomeContent: View {
                 }
                 readDB.getUserHoldings(email: email) { response in
                     if response == "Fetched user holdings" {
-                        self.portfolio_data = sortArrayByDate(inputArray: readDB.user_holdings_data, field_name: "transaction_date", date_type: "yyyy-MM-dd")
+                        self.portfolio_data = readDB.user_holdings_data
                         self.holdings_value = calculateTotalValue(input: self.portfolio_data, field: "amount")
                         self.chart_values = calculatePortionHoldings(input: portfolio_data, holdings_value: calculateTotalValue(input: self.portfolio_data, field: "amount"))
                     }

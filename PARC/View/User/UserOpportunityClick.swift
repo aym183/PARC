@@ -52,13 +52,13 @@ struct UserOpportunityClick: View {
                             HStack {
                                 Spacer()
                                 ZStack {
-                                    if getDaysRemaining(dateString: String(describing: opportunity_data["close_date"]!))! <= 7 {
+                                    if getDaysRemaining(date_input: String(describing: opportunity_data["close_date"]!))! <= 7 {
                                         Rectangle()
                                             .foregroundColor(.clear)
                                             .frame(width: 100, height: 35)
                                             .background(Color("Amber"))
                                             .cornerRadius(5)
-                                    } else if getDaysRemaining(dateString: String(describing: opportunity_data["close_date"]!))! <= 2 {
+                                    } else if getDaysRemaining(date_input: String(describing: opportunity_data["close_date"]!))! <= 2 {
                                         Rectangle()
                                             .foregroundColor(.clear)
                                             .frame(width: 100, height: 35)
@@ -72,7 +72,7 @@ struct UserOpportunityClick: View {
                                             .cornerRadius(5)
                                     }
                                     
-                                    Text("\(String(describing: getDaysRemaining(dateString: String(describing: opportunity_data["close_date"]!))!)) days left")
+                                    Text("\(String(describing: getDaysRemaining(date_input: String(describing: opportunity_data["close_date"]!))!)) days left")
                                         .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.04))
                                         .foregroundColor(.white)
                                 }
@@ -303,7 +303,7 @@ struct UserOpportunityClick: View {
                                 VStack {
                                     Text("Selected Franchise").font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.045))
                                     
-                                    if text_selected == "Selected Franchise" {
+                                    if text_selected == "Selected Franchise" || text_selected == "" {
                                         Divider()
                                             .frame(height: 2.5)
                                             .background(Color("Secondary"))
