@@ -11,7 +11,7 @@ import Charts
 struct ChartData: Identifiable, Plottable {
     init?(primitivePlottable: Float) {
         self.primitivePlottable = primitivePlottable
-        self.color = .blue
+        self.color = Color("Secondary")
     }
     
     init?(primitivePlottable: Float, color: Color) {
@@ -31,6 +31,7 @@ struct UserPortfolio: View {
     var metric_description = ["Estimated Holdings", "Payouts Received"]
     var logo_images = ["McDonalds", "Starbucks", "Chipotle"]
     @State private var index = 0
+    @State var payouts_indexes: [Int] = []
     @State var text_selected = ""
     @Binding var portfolio_data: [[String: String]]
     @Binding var franchise_data: [[String: String]]
@@ -65,12 +66,10 @@ struct UserPortfolio: View {
     
     var body: some View {
         GeometryReader { geometry in
-            
             VStack {
                 Spacer()
                 ScrollView(.vertical, showsIndicators: false) {
                     if portfolio_data.count != 0 {
-                                
                                 ZStack {
                                     if text_selected == "Holdings" || text_selected == "" {
                                         Chart(holdings_data) { item in
@@ -147,84 +146,166 @@ struct UserPortfolio: View {
                         }
                         .padding(.top)
                         
-                        Divider()
-                            .overlay(Color("Custom_Gray"))
-                            .padding([.top, .bottom], 10)
-                            .frame(height: 1)
+                        if text_selected == "Holdings" || text_selected == "" {
+                            Divider()
+                                .overlay(Color("Custom_Gray"))
+                                .padding([.top, .bottom], 10)
+                                .frame(height: 1)
+                            
+                        } else {
+                            if let opportunityID = portfolio_data[index]["opportunity_id"],
+                               let equity = portfolio_data[index]["equity"],
+                               let userIndex = user_payouts_data.firstIndex(where: {
+                                   $0["opportunity_id"] == opportunityID && $0["equity"] == equity
+                               }) {
+                                Divider()
+                                    .overlay(Color("Custom_Gray"))
+                                    .padding([.top, .bottom], 10)
+                                    .frame(height: 1)
+                                
+                            } else {
+                                Divider()
+                                    .overlay(Color("Custom_Gray"))
+                                    .padding(.top, 10).padding(.bottom, 30)
+                                    .frame(height: 1)
+                            }
+                        }
                         
                         
                         if opportunity_data.count != 0 {
                             ForEach(0..<portfolio_data.count, id: \.self) { index in
                                 HStack {
                                     
-                                    if let franchiseName = portfolio_data[index]["opportunity_name"] {
-                                        if let franchiseIndex = franchise_data.firstIndex(where: { $0["name"] == franchiseName }) {
-                                            let matchedFranchise = franchise_data[franchiseIndex]["logo"]!
-                                            
-                                            if UserDefaults.standard.object(forKey: String(describing: matchedFranchise)) != nil {
-                                                Image(uiImage: loadDisplayImage(key: String(describing: matchedFranchise)))
-                                                    .resizable()
-                                                    .aspectRatio(contentMode: .fill)
-                                                    .frame(width: 50, height: 50)
-                                                    .padding(.leading, 10)
-                                            } else {
-                                                Image(systemName: "house")
-                                                    .resizable()
-                                                    .aspectRatio(contentMode: .fill)
-                                                    .frame(width: 50, height: 50)
-                                                    .padding(.leading, 10)
-                                            }
-                                            
-                                        } else {
-                                            Image(systemName: "house")
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fill)
-                                                .frame(width: 50, height: 50)
-                                                .padding(.leading, 10)
+                                    if text_selected == "Holdings" || text_selected == "" {
+                                        RoundedRectangle(cornerRadius: 5)
+                                            .frame(width: 40, height: 40)
+                                            .foregroundColor(random_colors[index])
+                                    } else {
+                                        if let opportunityID = portfolio_data[index]["opportunity_id"],
+                                           let equity = portfolio_data[index]["equity"],
+                                           let userIndex = user_payouts_data.firstIndex(where: {
+                                               $0["opportunity_id"] == opportunityID && $0["equity"] == equity
+                                           }) {
+                                            RoundedRectangle(cornerRadius: 5)
+                                                .frame(width: 40, height: 40)
+                                                .foregroundColor(random_colors[index])
                                         }
                                     }
+//                                    if let franchiseName = portfolio_data[index]["opportunity_name"] {
+//                                        if let franchiseIndex = franchise_data.firstIndex(where: { $0["name"] == franchiseName }) {
+//                                            let matchedFranchise = franchise_data[franchiseIndex]["logo"]!
+//                                            
+//                                            if UserDefaults.standard.object(forKey: String(describing: matchedFranchise)) != nil {
+//                                                Image(uiImage: loadDisplayImage(key: String(describing: matchedFranchise)))
+//                                                    .resizable()
+//                                                    .aspectRatio(contentMode: .fill)
+//                                                    .frame(width: 50, height: 50)
+//                                                    .padding(.leading, 10)
+//                                            } else {
+//                                                Image(systemName: "house")
+//                                                    .resizable()
+//                                                    .aspectRatio(contentMode: .fill)
+//                                                    .frame(width: 50, height: 50)
+//                                                    .padding(.leading, 10)
+//                                            }
+//                                            
+//                                        } else {
+//                                            Image(systemName: "house")
+//                                                .resizable()
+//                                                .aspectRatio(contentMode: .fill)
+//                                                .frame(width: 50, height: 50)
+//                                                .padding(.leading, 10)
+//                                        }
+//                                    }
                                     
                                     VStack(alignment: .leading) {
-                                        
-                                        if let opportunityID = Int(portfolio_data[index]["opportunity_id"]!) {
-                                            if let opportunity = opportunity_data.first(where: { $0["opportunity_id"] == String(opportunityID) }) {
-                                                if let franchise = opportunity["franchise"] {
-                                                    
-                                                    HStack {
-                                                        Text("\(franchise)")
-                                                            .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.045))
-//                                                            .foregroundColor(random_colors[index])
+                                        if text_selected == "Holdings" || text_selected == "" {
+                                            if let opportunityID = Int(portfolio_data[index]["opportunity_id"]!) {
+                                                if let opportunity = opportunity_data.first(where: { $0["opportunity_id"] == String(opportunityID) }) {
+                                                    if let franchise = opportunity["franchise"] {
                                                         
-                                                        ZStack {
-                                                            Rectangle()
-                                                                .foregroundColor(.clear)
-                                                                .frame(width: 70, height: 20)
-                                                                .background(Color(red: 0.85, green: 0.85, blue: 0.85).opacity(0.5))
-                                                                .cornerRadius(5)
+                                                        HStack {
+                                                            Text("\(franchise)")
+                                                                .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.045))
+    //                                                            .foregroundColor(random_colors[index])
                                                             
-                                                            HStack(spacing: 10) {
-                                                                Image("gbr").resizable().frame(width: 15, height: 15)
-                                                                Text(opportunity_data[opportunity_data.firstIndex(where: { $0["opportunity_id"] == portfolio_data[index]["opportunity_id"]!})!]["location"]!)
-                                                                    .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.03))
-                                                                    .foregroundColor(Color("Custom_Gray"))
-                                                                    .padding(.leading, -7.5)
+                                                            ZStack {
+                                                                Rectangle()
+                                                                    .foregroundColor(.clear)
+                                                                    .frame(width: 70, height: 20)
+                                                                    .background(Color(red: 0.85, green: 0.85, blue: 0.85).opacity(0.5))
+                                                                    .cornerRadius(5)
+                                                                
+                                                                HStack(spacing: 10) {
+                                                                    Image("gbr").resizable().frame(width: 15, height: 15)
+                                                                    Text(opportunity_data[opportunity_data.firstIndex(where: { $0["opportunity_id"] == portfolio_data[index]["opportunity_id"]!})!]["location"]!)
+                                                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.03))
+                                                                        .foregroundColor(Color("Custom_Gray"))
+                                                                        .padding(.leading, -7.5)
+                                                                }
+                                                                
                                                             }
-                                                            
                                                         }
+                                                    } else {
+                                                        Text("Franchise key not found")
                                                     }
                                                 } else {
-                                                    Text("Franchise key not found")
+                                                    Text("Opportunity not found")
                                                 }
                                             } else {
-                                                Text("Opportunity not found")
+                                                Text("Invalid opportunity_id value")
                                             }
+                                                
+                                            Text("Bought - \(portfolio_data[index]["transaction_date"]!)")
+                                                .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.03))
+                                                .foregroundColor(Color("Custom_Gray"))
+                                        
+
                                         } else {
-                                            Text("Invalid opportunity_id value")
+                                            if let opportunityID = portfolio_data[index]["opportunity_id"],
+                                               let equity = portfolio_data[index]["equity"],
+                                               let userIndex = user_payouts_data.firstIndex(where: {
+                                                   $0["opportunity_id"] == opportunityID && $0["equity"] == equity
+                                               }) {
+                                                if let opportunityID = Int(portfolio_data[index]["opportunity_id"]!) {
+                                                    if let opportunity = opportunity_data.first(where: { $0["opportunity_id"] == String(opportunityID) }) {
+                                                        if let franchise = opportunity["franchise"] {
+                                                            
+                                                            HStack {
+                                                                Text("\(franchise)")
+                                                                    .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.045))
+                                                                ZStack {
+                                                                    Rectangle()
+                                                                        .foregroundColor(.clear)
+                                                                        .frame(width: 70, height: 20)
+                                                                        .background(Color(red: 0.85, green: 0.85, blue: 0.85).opacity(0.5))
+                                                                        .cornerRadius(5)
+                                                                    
+                                                                    HStack(spacing: 10) {
+                                                                        Image("gbr").resizable().frame(width: 15, height: 15)
+                                                                        Text(opportunity_data[opportunity_data.firstIndex(where: { $0["opportunity_id"] == portfolio_data[index]["opportunity_id"]!})!]["location"]!)
+                                                                            .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.03))
+                                                                            .foregroundColor(Color("Custom_Gray"))
+                                                                            .padding(.leading, -7.5)
+                                                                    }
+                                                                    
+                                                                }
+                                                            }
+                                                        } else {
+                                                            Text("Franchise key not found")
+                                                        }
+                                                    } else {
+                                                        Text("Opportunity not found")
+                                                    }
+                                                } else {
+                                                    Text("Invalid opportunity_id value")
+                                                }
+                                                    
+                                                Text("Bought - \(portfolio_data[index]["transaction_date"]!)")
+                                                    .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.03))
+                                                    .foregroundColor(Color("Custom_Gray"))
+                                            }
                                         }
-                                            
-                                        Text("Bought - \(portfolio_data[index]["transaction_date"]!)")
-                                            .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.03))
-                                            .foregroundColor(Color("Custom_Gray"))
                                     }
                                     
                                     Spacer()
@@ -242,16 +323,28 @@ struct UserPortfolio: View {
                                             Text("+£\(foundElement)")
                                                 .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.055))
                                                 .foregroundColor(Color("Profit"))
-                                        } else {
-                                            Text("£0")
-                                                .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.055))
                                         }
                                     }
                                 }
-                                Divider()
-                                    .overlay(Color("Custom_Gray"))
-                                    .frame(height: 0.5)
                                 
+                                if text_selected == "Holdings" || text_selected == "" {
+                                    Divider()
+                                        .overlay(Color("Custom_Gray"))
+                                        .frame(height: 0.5)
+                                    
+                                } else {
+                                    if let opportunityID = portfolio_data[index]["opportunity_id"],
+                                       let equity = portfolio_data[index]["equity"],
+                                       let userIndex = user_payouts_data.firstIndex(where: {
+                                           $0["opportunity_id"] == opportunityID && $0["equity"] == equity
+                                       }) {
+                                        Divider()
+                                            .overlay(Color("Custom_Gray"))
+                                            .frame(height: 0.5)
+                                            .padding(.bottom, 10)
+                                        
+                                    }
+                                }
                             }
                         }
                         
@@ -281,6 +374,16 @@ struct UserPortfolio: View {
                     return ChartData(primitivePlottable: value) ?? ChartData(primitivePlottable: 0)
                 })
                 
+                for (index, value) in portfolio_data.enumerated() {
+                    if let opportunityID = portfolio_data[index]["opportunity_id"],
+                       let equity = portfolio_data[index]["equity"],
+                       let userIndex = user_payouts_data.firstIndex(where: {
+                           $0["opportunity_id"] == opportunityID && $0["equity"] == equity
+                       }) {
+                        payouts_indexes.append(index)
+                    }
+                }
+                
                 for (index, color) in random_colors.enumerated() {
                     if index < holdings_data.count {
                         holdings_data[index].color = color
@@ -290,7 +393,7 @@ struct UserPortfolio: View {
                 }
                 
                 for (index, color) in random_colors.enumerated() {
-                    if index < payouts_data.count {
+                    if index < payouts_data.count && payouts_indexes.contains(index) {
                         payouts_data[index].color = color
                     } else {
                         

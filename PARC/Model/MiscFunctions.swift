@@ -104,7 +104,6 @@ func calculateTotalValue(input: [[String: String]], field: String) -> Int {
 
 func calculatePortionHoldings(input: [[String: String]], holdings_value: Int) -> [Float] {
     var output_array: [Float] = []
-    
     if input.count != 0 {
         for holding in input {
             let amount = Float(holding["amount"]!)!
@@ -113,7 +112,6 @@ func calculatePortionHoldings(input: [[String: String]], holdings_value: Int) ->
         return output_array
     }
     return [0]
-    
 }
 
 // GPT - REFERENCE
@@ -122,11 +120,14 @@ func calculatePayoutOpportunities(input: [[String: String]]) -> [Float] {
     var indexMap: [String: Int] = [:]
 
     for dict in input {
-        if let opportunityID = dict["opportunity_id"] {
-            if let index = indexMap[opportunityID] {
+        if let opportunityID = dict["opportunity_id"],
+           let equity = dict["equity"] {
+            let uniqueIdentifier = "\(opportunityID)-\(equity)"
+            
+            if let index = indexMap[uniqueIdentifier] {
                 outputArray[index] += 1
             } else {
-                indexMap[opportunityID] = outputArray.count
+                indexMap[uniqueIdentifier] = outputArray.count
                 outputArray.append(1)
             }
         }

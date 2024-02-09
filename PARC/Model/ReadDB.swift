@@ -270,7 +270,11 @@ class ReadDB: ObservableObject {
                                                 if data == "user_payout_id" {
                                                     temp_dict[data] = nameDictionary["N"]
                                                 } else if let sValue = nameDictionary["S"] {
-                                                    temp_dict[data] = sValue
+                                                    if data == "date_created" {
+                                                        temp_dict[data] = convertDate(dateString: sValue)
+                                                    } else {
+                                                        temp_dict[data] = sValue
+                                                    }
                                                 }
                                             }
                                         }
