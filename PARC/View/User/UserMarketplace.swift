@@ -97,13 +97,10 @@ struct UserMarketplace: View {
                     Color(.white).ignoresSafeArea()
                     ScrollView(.vertical, showsIndicators: false) {
                         VStack {
-                            HStack {
-                                Text("Businesses")
-                                Spacer()
-                                Text("Estimated\nValuation")
-                                Spacer()
+                            HStack(spacing: 40) {
+                                Text("Logo")
+                                Text("Franchise")
                                 Text("Payouts")
-                                Spacer()
                                 Text("Available\nShares")
                             }
                             .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.04))
@@ -156,7 +153,7 @@ struct UserMarketplace: View {
                                                 Spacer()
                                             }
                                             .frame(width: 75)
-                                            .padding(.trailing, -30)
+//                                            .padding(.trailing, -30)
                                             
                                             Spacer()
                                             
@@ -166,7 +163,7 @@ struct UserMarketplace: View {
                                                 Spacer()
                                             }
                                             .frame(width: 75)
-                                            .padding(.trailing, -25)
+//                                            .padding(.trailing, -25)
                                             
                                             Spacer()
                                             
@@ -176,7 +173,7 @@ struct UserMarketplace: View {
                                                 Spacer()
                                             }
                                             .frame(width: 75)
-                                            .padding(.trailing, -5)
+//                                            .padding(.trailing, -5)
                                         }
                                         .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.035))
                                         .multilineTextAlignment(.center)
@@ -214,7 +211,7 @@ struct UserMarketplace: View {
                     UserListShares(franchise_data: $franchise_data, holding_data: $holding_data, marketplace_shown: $marketplace_shown)
                 }
                 .sheet(isPresented: $marketplace_bottom_sheet_shown) {
-                    UserMarketplaceBottomSheet(marketplace_bottom_sheet_shown: $marketplace_bottom_sheet_shown, marketplace_list_shares_shown: $marketplace_list_shares_shown).presentationDetents([.height(150)])
+                    UserMarketplaceBottomSheet(marketplace_bottom_sheet_shown: $marketplace_bottom_sheet_shown, marketplace_list_shares_shown: $marketplace_list_shares_shown).presentationDetents([.height(100)])
                 }
             }
         }
