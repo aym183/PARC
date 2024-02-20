@@ -214,6 +214,33 @@ struct UserAccount: View {
                                 .padding(.trailing, 13)
                         }
                         .padding(.horizontal).padding(.top, 10)
+                        
+                        Divider()
+                            .overlay(Color("Custom_Gray"))
+                            .opacity(0.75)
+                            .frame(height: 1)
+                        
+                        HStack {
+                            Text("Data Privacy")
+                                .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.052))
+                            Spacer()
+                            Button(action: {  UIApplication.shared.open(URL(string: "https://docs.google.com/document/d/1oWR6Uc1m2JdHRmBzIMflfTg4N7gzNmzGyhujgn1c9wo/edit?usp=sharing")!) }) {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 5)
+                                        .fill(Color.white)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 5)
+                                                .stroke(Color.black, lineWidth: 1.25)
+                                        )
+                                        .frame(width: 100, height: 35)
+                                    
+                                    Text("Check")
+                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.04))
+                                }
+                            }
+                        }
+                        .padding(.horizontal).padding(.top, 10)
+                        
                     }
                     .padding(.top)
                     .foregroundColor(Color("Custom_Gray"))

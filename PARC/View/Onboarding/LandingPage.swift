@@ -20,27 +20,15 @@ struct LandingPage: View {
     @AppStorage("email") var email: String = ""
     var body: some View {
         NavigationStack {
-            //            if email
-            //            if loggedInUser {
-            //                UserHome(isInvestmentConfirmed: $isInvestmentConfirmed)
-            //            } else {
-            //                LandingContent()
-            //            }
-            //            if loggedInAdmin {
-            //            } else {
-            
-//            if isShownHomePage && logged_in {
-//                UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isShownHomePage: $isShownHomePage)
-//            } else 
-            if logged_in && !isShownHomePage && email == "ayman.ali1302@gmail.com" {
+            // CHANGE THIS BACK the == | !=
+            if logged_in && !isShownHomePage && email != "ayman.ali1302@gmail.com" {
                 UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isWithdrawalConfirmed: $isWithdrawalConfirmed, isShownHomePage: $isShownHomePage)
-            } else if logged_in && !isShownHomePage && email != "ayman.ali1302@gmail.com" {
+            } else if logged_in && !isShownHomePage && email == "ayman.ali1302@gmail.com" {
                 AdminHome()
             } else {
                 LandingContent(isShownHomePage: $isShownHomePage)
             }
             
-            //            }
         }
     }
 }

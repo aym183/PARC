@@ -40,7 +40,7 @@ struct PARCApp: App {
                 }
             }
         } else {
-            // No biometrics
+            UserDefaults.standard.set(true, forKey: "is_unlocked")
         }
     }
     
