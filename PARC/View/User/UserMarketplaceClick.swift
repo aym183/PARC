@@ -99,9 +99,9 @@ struct UserMarketplaceClick: View {
                             .overlay(.black)
                         
                         HStack(spacing: 25) {
-                            Text("Share\nPrice")
+                            Text("Bought\nPrice")
                             Text("Equity")
-                            Text("Total\nValue")
+                            Text("Listed\nPrice")
                             Text("Location")
                             
                         }
@@ -117,7 +117,7 @@ struct UserMarketplaceClick: View {
                         
                         if shares_data.count != 0 && opportunity_data.count != 0 {
                             ForEach(0..<shares_data.count, id: \.self) { index in
-                                HStack(spacing: 30) {
+                                HStack(spacing: 35) {
                                     HStack {
                                         Text(share_prices[index])
                                         Spacer()
@@ -157,7 +157,7 @@ struct UserMarketplaceClick: View {
                                     }) {
                                         HStack {
                                             Text("Buy")
-                                                .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.03))
+                                                .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.035))
                                         }
                                         .frame(width: max(0, geometry.size.width-325), height: 40)
                                         .background(Color("Secondary"))

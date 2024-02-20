@@ -158,7 +158,7 @@ struct AdminFranchiseForm: View {
                                 .frame(width: max(0, geometry.size.width-45), height: 100)
                             
                             TextEditor(text: $description)
-                                .padding([.horizontal, .bottom], 12).padding(.top, 5).padding(.bottom, 25)
+                                .padding([.horizontal, .bottom], 12).padding(.top, 5)
                                 .frame(width: max(0, geometry.size.width-45), height: 100)
                                 .scrollContentBackground(.hidden)
                                 .cornerRadius(5)

@@ -34,6 +34,7 @@ struct AdminHome: View {
     @State var init_profile_image: UIImage?
     @State private var counter = 2
     @State var trading_window_ongoing = false
+    @AppStorage("is_unlocked") var isUnlocked: Bool = false
     
     var body: some View {
         GeometryReader { geometry in
@@ -518,6 +519,7 @@ struct AdminHome: View {
                     }
                 }
             }
+            .blur(radius: isUnlocked ? 0 : 10)
         }
         .onAppear {
             loadProfileImage() { response in

@@ -7,16 +7,43 @@
 
 import SwiftUI
 import FirebaseCore
+import LocalAuthentication
 
 @main
 struct PARCApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    @State var isUnlocked = false
 
     var body: some Scene {
         WindowGroup {
             LandingPage().preferredColorScheme(.light)
+                .onAppear() {
+                    UserDefaults.standard.set(false, forKey: "is_unlocked")
+                    authenticate()
+                }
         }
     }
+    
+    // Reference - https://www.youtube.com/watch?v=0Bcui9hyXhY
+    func authenticate() {
+        let context = LAContext()
+        var error: NSError?
+        
+        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+            let reason = "We need to secure your app from being accessed by unauthorised parties"
+            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, authenticationError in
+                if success {
+                    isUnlocked = true
+                    UserDefaults.standard.set(true, forKey: "is_unlocked")
+                } else {
+                    // Unsuccessful auth
+                }
+            }
+        } else {
+            // No biometrics
+        }
+    }
+    
 }
 
 class AppDelegate: NSObject, UIApplicationDelegate {
@@ -27,3 +54,4 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         return true
     }
 }
+

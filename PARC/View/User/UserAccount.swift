@@ -66,7 +66,7 @@ struct UserAccount: View {
                                         VStack {
                                             HStack {
                                                 Spacer()
-                                                Button(action: {}) {
+                                                Button(action: { showProfileImagePicker.toggle() }) {
                                                     Image(systemName: "pencil.circle.fill")
                                                         .resizable()
                                                         .foregroundColor(.gray)
@@ -129,9 +129,18 @@ struct UserAccount: View {
                             Text("Verification Status")
                                 .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.052))
                             Spacer()
-                            Text("Completed")
-                                .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.052))
-                                .foregroundColor(Color("Profit"))
+                            
+                            // Could just do a test here to check if user uploaded verification image
+//                            @AppStorage("verification_completed") var verification_completed: String = ""
+//                            if verification_completed == "true" {
+                                Text("Completed")
+                                    .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.052))
+                                    .foregroundColor(Color("Profit"))
+//                            } else {
+//                                Text("Incomplete")
+//                                    .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.052))
+//                                    .foregroundColor(Color("Loss"))
+//                            }
                         }
                         .padding(.horizontal).padding(.top, 10)
                         

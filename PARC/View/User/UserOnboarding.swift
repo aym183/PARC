@@ -256,9 +256,6 @@ struct UserOnboarding: View {
                     }
                     .frame(width: max(0, geometry.size.width - 70))
                     }
-                    .onTapGesture {
-                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                    }
                     .sheet(isPresented: $showVerificationImagePicker) {
                         ImagePicker(image: $verification_image)
                     }
@@ -266,9 +263,11 @@ struct UserOnboarding: View {
                 }
                 .foregroundColor(.black)
                 .cornerRadius(10)
-                
-                
             }
+            .onTapGesture {
+                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+            }
+            .ignoresSafeArea(.keyboard)
             
         }
     }

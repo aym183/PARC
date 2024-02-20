@@ -31,6 +31,7 @@ struct UserHome: View {
     @State var transformed_payouts_data: [String: Any] = [:]
     @State var profile_image: UIImage?
     @State var init_profile_image: UIImage?
+    @AppStorage("is_unlocked") var isUnlocked: Bool = false
     
     var body: some View {
         GeometryReader { geometry in
@@ -208,6 +209,7 @@ struct UserHome: View {
                     .opacity(isShownHomePage ? 0 : 1)
                     .opacity(isWithdrawalConfirmed ? 0 : 1)
                 }
+                .blur(radius: isUnlocked ? 0 : 10)
                 .navigationDestination(isPresented: $account_shown) {
                     UserAccount(payoutsValue: $payouts_value, secondaryTransactionsValue: $readDB.secondary_market_transactions_ind, profile_image: $profile_image, init_profile_image: $init_profile_image, user_holdings: $readDB.user_holdings_data, user_holdings_sold: $readDB.sold_shares)
                 }
