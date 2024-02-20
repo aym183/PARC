@@ -13,6 +13,7 @@ struct UserAccount: View {
     @Binding var secondaryTransactionsValue: Int
     @AppStorage("full_name") var fullName: String = ""
     @AppStorage("email") var email: String = ""
+    @AppStorage("verification_completed") var verification_completed: Bool = false
     @State var showProfileImagePicker = false
     @State var logged_out = false
     @State var withdraw_request = false
@@ -130,17 +131,15 @@ struct UserAccount: View {
                                 .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.052))
                             Spacer()
                             
-                            // Could just do a test here to check if user uploaded verification image
-//                            @AppStorage("verification_completed") var verification_completed: String = ""
-//                            if verification_completed == "true" {
+                            if verification_completed == true {
                                 Text("Completed")
                                     .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.052))
                                     .foregroundColor(Color("Profit"))
-//                            } else {
-//                                Text("Incomplete")
-//                                    .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.052))
-//                                    .foregroundColor(Color("Loss"))
-//                            }
+                            } else {
+                                Text("Incomplete")
+                                    .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.052))
+                                    .foregroundColor(Color("Loss"))
+                            }
                         }
                         .padding(.horizontal).padding(.top, 10)
                         

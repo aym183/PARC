@@ -210,6 +210,7 @@ struct UserOnboarding: View {
                                         
                                         Button(action: { 
                                             UserDefaults.standard.set(true, forKey: "onboarding_completed")
+                                            UserDefaults.standard.set(true, forKey: "verification_completed")
                                             UserDefaults.standard.set(Int(net_worth)!, forKey: "net_worth")
                                             isShownOnboarding.toggle()
 //                                            UpdateDB().updateUserTable(primary_key: "email", primary_key_value: email, table: "users", updated_key: "net_worth", updated_value: net_worth) { response in

@@ -33,6 +33,7 @@ struct UserInvestPage: View {
     @State var updated_amount_offered = 0
     @State var showingPaymentAlert = false
     @AppStorage("email") var email: String = ""
+    @AppStorage("verification_completed") var verification_completed: Bool = false
     
     // Fix if net worth not entered
     var body: some View {
@@ -42,7 +43,7 @@ struct UserInvestPage: View {
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(alignment: .leading) {
                         
-                        if net_worth_int == 0 {
+                        if net_worth_int == 0 || verification_completed == false {
                             Spacer()
                             HStack {
                                 Spacer()
