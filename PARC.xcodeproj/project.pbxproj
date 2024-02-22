@@ -147,6 +147,7 @@
 		619372212B6BC704000966A9 /* UserTransactionHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTransactionHistory.swift; sourceTree = "<group>"; };
 		61956B282AF969510038378E /* AdminFranchiseForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminFranchiseForm.swift; sourceTree = "<group>"; };
 		61956B2A2AFA3E4A0038378E /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		6195E8622B86AA9C00B6DA90 /* PARC.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; name = PARC.xctestplan; path = UnitTests/PARC.xctestplan; sourceTree = "<group>"; };
 		619F4C0E2AE00F7100D7A861 /* UserHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserHome.swift; sourceTree = "<group>"; };
 		61DBDFC02ADEF83F00AE41FA /* PARC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PARC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61DBDFC32ADEF83F00AE41FA /* PARCApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PARCApp.swift; sourceTree = "<group>"; };
@@ -246,6 +247,7 @@
 		61DBDFB72ADEF83E00AE41FA = {
 			isa = PBXGroup;
 			children = (
+				6195E8622B86AA9C00B6DA90 /* PARC.xctestplan */,
 				61DBDFC22ADEF83F00AE41FA /* PARC */,
 				61E855022B851E5000B74677 /* UnitTests */,
 				61DBDFC12ADEF83F00AE41FA /* Products */,
