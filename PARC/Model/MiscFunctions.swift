@@ -16,8 +16,12 @@ func convertDate(dateString: String) -> String {
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let date = dateFormatter.date(from: datePart)
         dateFormatter.dateFormat = "dd/MM/yyyy"
-        let formattedDate = dateFormatter.string(from: date!)
-        return formattedDate
+        if let unwrappedDate = date {
+            let formattedDate = dateFormatter.string(from: unwrappedDate)
+            return formattedDate
+        } else {
+            return("nil")
+        }
     }
     return("nil")
 }
@@ -61,7 +65,12 @@ func getDaysRemaining(date_input: String) -> Int? {
         let current_date = Date()
         let current_calendar = Calendar.current
         let output_components = current_calendar.dateComponents([.day], from: current_date, to: future_date)
-        return output_components.day
+        
+        if output_components.day! < 0 {
+            return 0
+        } else {
+            return output_components.day
+        }
     }
     return nil
 }
@@ -70,6 +79,10 @@ func getDaysRemaining(date_input: String) -> Int? {
 func dateStringByAddingDays(days: Int, dateString: String) -> String? {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "dd/MM/yyyy"
+    
+    if days <= 0 {
+      return dateString
+    }
     
     if let inputDate = dateFormatter.date(from: dateString) {
         let calendar = Calendar.current
@@ -92,10 +105,13 @@ func formattedNumber(input_number: Int) -> String {
 func calculateTotalValue(input: [[String: String]], field: String) -> Int {
     
     var final_amount = 0
-    
     if input.count != 0 {
         for x in input {
-            final_amount += Int(x[field]!)!
+            if let fieldValue = x[field], let intValue = Int(fieldValue) {
+                final_amount += intValue
+            } else {
+                final_amount += 0
+            }
         }
         return final_amount
     }
@@ -106,8 +122,11 @@ func calculatePortionHoldings(input: [[String: String]], holdings_value: Int) ->
     var output_array: [Float] = []
     if input.count != 0 {
         for holding in input {
-            let amount = Float(holding["amount"]!)!
-            output_array.append((amount/Float(holdings_value))*100)
+            if let amountString = holding["amount"], let amountValue = Float(amountString) {
+                output_array.append((amountValue/Float(holdings_value))*100)
+            } else {
+                output_array.append(0)
+            }
         }
         return output_array
     }
@@ -167,6 +186,7 @@ func transformListedShares(listed_shares: [String: [[String: String]]]) -> [(key
             }
         }
     }
+    
     return traversed_franchises.sorted { $0.value as! Int > $1.value as! Int }
 }
 
@@ -174,16 +194,20 @@ func transformTradingWindowData(listed_shares: [[String: String]]) -> [String: I
     var traversed_trading_window: [String: Int] = [:]
     
     for share in listed_shares {
-            var franchise = share["trading_window_id"]!
-            var amount = Int(share["price"]!)!
-            if traversed_trading_window.keys.contains("\(franchise)_trades") {
-                let transformed_amount = traversed_trading_window["\(franchise)_volume"]! + amount
-                let transformed_count = traversed_trading_window["\(franchise)_trades"]! + 1
-                traversed_trading_window["\(franchise)_volume"] = transformed_amount
-                traversed_trading_window["\(franchise)_trades"] = transformed_count
+            if let tradingWindowID = share["trading_window_id"] {
+                var franchise = tradingWindowID
+                var amount = Int(share["price"]!)!
+                if traversed_trading_window.keys.contains("\(franchise)_trades") {
+                    let transformed_amount = traversed_trading_window["\(franchise)_volume"]! + amount
+                    let transformed_count = traversed_trading_window["\(franchise)_trades"]! + 1
+                    traversed_trading_window["\(franchise)_volume"] = transformed_amount
+                    traversed_trading_window["\(franchise)_trades"] = transformed_count
+                } else {
+                    traversed_trading_window["\(franchise)_volume"] = amount
+                    traversed_trading_window["\(franchise)_trades"] = 1
+                }
             } else {
-                traversed_trading_window["\(franchise)_volume"] = amount
-                traversed_trading_window["\(franchise)_trades"] = 1
+                return ["nil": 0]
             }
     }
     return traversed_trading_window
