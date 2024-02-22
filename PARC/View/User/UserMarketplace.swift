@@ -130,19 +130,19 @@ struct UserMarketplace: View {
                                                         Image(uiImage: loadDisplayImage(key: String(describing: matchedFranchise)))
                                                             .resizable()
                                                             .aspectRatio(contentMode: .fill)
-                                                            .frame(width: 50, height: 50)
+                                                            .frame(width: 40, height: 40)
                                                     } else {
                                                         Image(systemName: "house")
                                                             .resizable()
                                                             .aspectRatio(contentMode: .fill)
-                                                            .frame(width: 50, height: 50)
+                                                            .frame(width: 40, height: 40)
                                                     }
                                                     
                                                 } else {
                                                     Image(systemName: "house")
                                                         .resizable()
                                                         .aspectRatio(contentMode: .fill)
-                                                        .frame(width: 50, height: 50)
+                                                        .frame(width: 40, height: 40)
                                                 }
                                 
                                             Spacer()
@@ -152,8 +152,8 @@ struct UserMarketplace: View {
                                                 Text(String(describing: listed_shares[index].key))
                                                 Spacer()
                                             }
-                                            .frame(width: 75)
-//                                            .padding(.trailing, -30)
+                                            .frame(width: geometry.size.width*0.25)
+                                            .padding(.trailing, -10)
                                             
                                             Spacer()
                                             
@@ -177,6 +177,7 @@ struct UserMarketplace: View {
                                         }
                                         .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.035))
                                         .multilineTextAlignment(.center)
+                                        .padding(.horizontal, 5)
                                     }
                                     
                                     Divider()

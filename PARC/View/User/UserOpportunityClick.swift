@@ -55,19 +55,19 @@ struct UserOpportunityClick: View {
                                     if getDaysRemaining(date_input: String(describing: opportunity_data["close_date"]!))! <= 7 {
                                         Rectangle()
                                             .foregroundColor(.clear)
-                                            .frame(width: 100, height: 35)
+                                            .frame(width: geometry.size.width*0.3, height: 35)
                                             .background(Color("Amber"))
                                             .cornerRadius(5)
                                     } else if getDaysRemaining(date_input: String(describing: opportunity_data["close_date"]!))! <= 2 {
                                         Rectangle()
                                             .foregroundColor(.clear)
-                                            .frame(width: 100, height: 35)
+                                            .frame(width: geometry.size.width*0.3, height: 35)
                                             .background(Color("Loss"))
                                             .cornerRadius(5)
                                     } else {
                                         Rectangle()
                                             .foregroundColor(.clear)
-                                            .frame(width: 100, height: 30)
+                                            .frame(width: geometry.size.width*0.3, height: 30)
                                             .background(Color("Secondary"))
                                             .cornerRadius(5)
                                     }

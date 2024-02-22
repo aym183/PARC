@@ -159,7 +159,7 @@ struct UserMarketplaceClick: View {
                                             Text("Buy")
                                                 .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.035))
                                         }
-                                        .frame(width: max(0, geometry.size.width-325), height: 40)
+                                        .frame(width: geometry.size.width*0.2, height: 40)
                                         .background(Color("Secondary"))
                                         .foregroundColor(Color.white)
                                         .cornerRadius(5)

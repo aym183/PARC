@@ -282,19 +282,19 @@ struct UserHomeContent: View {
                                                         if getDaysRemaining(date_input: String(describing: opportunity_data[index]["close_date"]!))! <= 7 {
                                                             Rectangle()
                                                                 .foregroundColor(.clear)
-                                                                .frame(width: 80, height: 20)
+                                                                .frame(width: geometry.size.width*0.22, height: 22)
                                                                 .background(Color("Amber"))
                                                                 .cornerRadius(5)
                                                         } else if getDaysRemaining(date_input: String(describing: opportunity_data[index]["close_date"]!))! <= 2 {
                                                             Rectangle()
                                                                 .foregroundColor(.clear)
-                                                                .frame(width: 80, height: 20)
+                                                                .frame(width: geometry.size.width*0.22, height: 22)
                                                                 .background(Color("Loss"))
                                                                 .cornerRadius(5)
                                                         } else {
                                                             Rectangle()
                                                                 .foregroundColor(.clear)
-                                                                .frame(width: 80, height: 20)
+                                                                .frame(width: geometry.size.width*0.22, height: 22)
                                                                 .background(Color("Secondary"))
                                                                 .cornerRadius(5)
                                                         }
