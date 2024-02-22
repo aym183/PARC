@@ -372,6 +372,45 @@ final class UnitTests: XCTestCase {
         XCTAssertEqual(function, ["invalid value_trades": 1, "invalid value_volume": 15000, "1_volume": 1000, "1_trades": 1])
     }
     
+    // transformPayouts
+    
+    func testValidTransformPayouts() {
+        let payouts_array = [["franchise": "Oodles", "amount_offered": "25000"], ["franchise": "Oodles", "amount_offered": "2000"]]
+        let function = transformPayouts(payouts_array: payouts_array)
+        XCTAssertEqual(function as NSDictionary, ["Oodles": 27000] as NSDictionary)
+    }
+    
+    func testInvalidKeyTransformPayouts() {
+        let payouts_array = [["invalid key": "Oodles", "amount_offered": "25000"], ["franchise": "Oodles", "amount_offered": "2000"]]
+        let function = transformPayouts(payouts_array: payouts_array)
+        XCTAssertEqual(function as NSDictionary, ["null": 0] as NSDictionary)
+    }
+    
+    func testInvalidValueTransformPayouts() {
+        let payouts_array = [["franchise": "0", "amount_offered": "25000"], ["franchise": "Oodles", "amount_offered": "2000"]]
+        let function = transformPayouts(payouts_array: payouts_array)
+        XCTAssertEqual(function as NSDictionary, ["0": 25000, "Oodles": 2000] as NSDictionary)
+    }
+    
+    // sortByDaysRemaining
+    
+    func testValidSortDaysRemaining() {
+        let array = [["status": "Closed", "close_date": "20/04/2024"], ["status": "Ongoing", "close_date": "15/04/2024"], ["status": "Ongoing", "close_date": "17/04/2024"], ["status": "Ongoing", "close_date": "02/04/2024"]]
+        let function = sortByDaysRemaining(array: array)
+        XCTAssertEqual(function, [["close_date": "02/04/2024", "status": "Ongoing"], ["close_date": "15/04/2024", "status": "Ongoing"], ["close_date": "17/04/2024", "status": "Ongoing"], ["status": "Closed", "close_date": "20/04/2024"]])
+    }
+    
+    func testInvalidKeySortDaysRemaining() {
+        let array = [["invalid status": "Closed", "close_date": "20/04/2024"], ["invalid status": "Ongoing", "close_date": "15/04/2024"], ["invalid status": "Ongoing", "close_date": "17/04/2024"]]
+        let function = sortByDaysRemaining(array: array)
+        XCTAssertEqual(function, [["null": "0"]])
+    }
+    
+    func testInvalidValueSortDaysRemaining() {
+        let array = [["status": "Closed", "close_date": "20/04/2024"], ["status": "Ongoing", "close_date": "15/04/2024"], ["status": "Ongoing", "close_date": "17/04/2024"], ["status": "Ongoing", "close_date": "02/04/2024"]]
+        let function = sortByDaysRemaining(array: array)
+        XCTAssertEqual(function, [["close_date": "02/04/2024", "status": "Ongoing"], ["close_date": "15/04/2024", "status": "Ongoing"], ["status": "Ongoing", "close_date": "17/04/2024"], ["close_date": "20/04/2024", "status": "Closed"]])
+    }
     
 //    func testInvalidListedShares() {
 //        let listed_shares = [["opportunity_name": , "amount": ]]

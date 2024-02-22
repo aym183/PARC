@@ -224,13 +224,16 @@ func transformPayouts(payouts_array: [[String: String]]) -> [String: Any] {
     var traversed_payouts: [String:Any] = [:]
     
     for share in payouts_array {
-        var franchise = share["franchise"]!
-        var amount = Int(share["amount_offered"]!)!
-        if traversed_payouts.keys.contains(franchise) {
-            let transformed_amount = traversed_payouts[franchise] as! Int + amount
-            traversed_payouts[franchise] = transformed_amount
+        if let franchise = share["franchise"] {
+            var amount = Int(share["amount_offered"]!)!
+            if traversed_payouts.keys.contains(franchise) {
+                let transformed_amount = traversed_payouts[franchise] as! Int + amount
+                traversed_payouts[franchise] = transformed_amount
+            } else {
+                traversed_payouts[franchise] = amount
+            }
         } else {
-            traversed_payouts[franchise] = amount
+            return ["null": 0]
         }
     }
     return traversed_payouts
@@ -243,12 +246,16 @@ func sortByDaysRemaining(array: [[String: String]]) -> [[String : String]] {
     var outputArray: [[String : String]]  = []
     
     for ind in array {
-        if ind["status"]! == "Closed" {
-            closedArray.append(ind)
-        } else if ind["status"]! == "Completed" {
-            completedArray.append(ind)
-        } else if getDaysRemaining(date_input: ind["close_date"]!)! >= 1  {
-            outputArray.append(ind)
+        if let status = ind["status"] {
+            if status == "Closed" {
+                closedArray.append(ind)
+            } else if status == "Completed" {
+                completedArray.append(ind)
+            } else if getDaysRemaining(date_input: ind["close_date"]!)! >= 1  {
+                outputArray.append(ind)
+            }
+        } else {
+            return [["null": "0"]]
         }
     }
     
