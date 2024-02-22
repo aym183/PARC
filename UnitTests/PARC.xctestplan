@@ -1,0 +1,28 @@
+{
+  "configurations" : [
+    {
+      "id" : "DB3B7555-1AFD-4A5F-9E17-A37794143635",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:PARC.xcodeproj",
+      "identifier" : "61DBDFBF2ADEF83E00AE41FA",
+      "name" : "PARC"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:PARC.xcodeproj",
+        "identifier" : "61E855002B851E5000B74677",
+        "name" : "UnitTests"
+      }
+    }
+  ],
+  "version" : 1
+}
