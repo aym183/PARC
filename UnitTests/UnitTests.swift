@@ -412,9 +412,31 @@ final class UnitTests: XCTestCase {
         XCTAssertEqual(function, [["close_date": "02/04/2024", "status": "Ongoing"], ["close_date": "15/04/2024", "status": "Ongoing"], ["status": "Ongoing", "close_date": "17/04/2024"], ["close_date": "20/04/2024", "status": "Closed"]])
     }
     
-//    func testInvalidListedShares() {
-//        let listed_shares = [["opportunity_name": , "amount": ]]
-//    }
+    // convertNumberAmount
+    
+    func testThousandNumberAmount() {
+        let input_number = 1000.0
+        let function = convertNumberAmount(input_number: input_number)
+        XCTAssertEqual(function, "1k")
+    }
+    
+    func testMillionNumberAmount() {
+        let input_number = 1000000.0
+        let function = convertNumberAmount(input_number: input_number)
+        XCTAssertEqual(function, "1M")
+    }
+    
+    func testBillionNumberAmount() {
+        let input_number = 1000000000.0
+        let function = convertNumberAmount(input_number: input_number)
+        XCTAssertEqual(function, "1B")
+    }
+    
+    func testNumberAmount() {
+        let input_number = 100.0
+        let function = convertNumberAmount(input_number: input_number)
+        XCTAssertEqual(function, "100")
+    }
     
     // Test functions in individual files
 }
