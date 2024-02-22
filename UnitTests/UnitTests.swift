@@ -437,6 +437,4 @@ final class UnitTests: XCTestCase {
         let function = convertNumberAmount(input_number: input_number)
         XCTAssertEqual(function, "100")
     }
-    
-    // Test functions in individual files
 }
