@@ -117,34 +117,34 @@ struct UserMarketplaceClick: View {
                         
                         if shares_data.count != 0 && opportunity_data.count != 0 {
                             ForEach(0..<shares_data.count, id: \.self) { index in
-                                HStack(spacing: 35) {
+                                HStack(spacing: 20) {
                                     HStack {
                                         Text(share_prices[index])
                                         Spacer()
                                     }
-                                    .frame(width: 50)
+                                    .frame(width: geometry.size.width*0.15)
                                     
                                     HStack {
                                         Text(String(format: "%.2f", Float(shares_data[index]["equity"]!)!))
                                         Spacer()
                                     }
-                                    .frame(width: 50)
-                                    .padding(.leading, -20)
+                                    .frame(width: geometry.size.width*0.15)
+                                    .padding(.leading, -5)
                                     
                                     HStack {
                                         Text("£\(formattedNumber(input_number: Int(shares_data[index]["amount"]!)!))")
                                         Spacer()
                                     }
-                                    .frame(width: 60)
-                                    .padding(.leading, -25)
+                                    .frame(width: geometry.size.width*0.2)
+                                    .padding(.leading, -20)
                                     
                                     
                                         HStack {
                                             Text(opportunity_data[opportunity_data.firstIndex(where: { $0["opportunity_id"] == shares_data[index]["opportunity_id"]!})!]["location"]!)
                                             Spacer()
                                         }
-                                        .frame(width: 50)
-                                        .padding(.leading, -20)
+                                        .frame(width: geometry.size.width*0.15)
+                                        .padding(.leading, -25)
                                     
                                     Button(action: {
                                         selling_email = shares_data[index]["user_email"]!
@@ -157,7 +157,7 @@ struct UserMarketplaceClick: View {
                                     }) {
                                         HStack {
                                             Text("Buy")
-                                                .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.035))
+                                                .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.0325))
                                         }
                                         .frame(width: geometry.size.width*0.2, height: 40)
                                         .background(Color("Secondary"))
@@ -166,7 +166,7 @@ struct UserMarketplaceClick: View {
                                     }
                                     
                                 }
-                                .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.035))
+                                .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.0325))
                                 .padding(.vertical, 5)
                                 .multilineTextAlignment(.center)
                                 
@@ -175,9 +175,7 @@ struct UserMarketplaceClick: View {
                                     .opacity(0.5)
                                     .frame(height: 1)
                             }
-                            .onAppear() {
-                                print(shares_data)
-                            }
+                            
                         } else {
                             Text("☹️")
                                 .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.3))
