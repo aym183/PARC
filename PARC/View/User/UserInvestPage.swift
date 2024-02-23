@@ -192,7 +192,12 @@ struct UserInvestPage: View {
                 UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isWithdrawalConfirmed: $isWithdrawalConfirmed, isShownHomePage: $isShownHomePage).navigationBarBackButtonHidden(true)
             }
             .onAppear {
-                net_worth_int = Int(net_worth)!
+                if let netWorthInt = Int(net_worth) {
+                    // Conversion succeeded, netWorthInt contains the integer value
+                    net_worth_int = netWorthInt
+                } else {
+                    net_worth_int = 0
+                }
                 calculateInvestmentLimit()
                 withAnimation(.easeOut(duration: 0.2)) {
                     user_ready_to_invest = true

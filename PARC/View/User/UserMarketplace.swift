@@ -56,7 +56,7 @@ struct UserMarketplace: View {
                     .padding(.bottom)
                 }
             } else if trading_window_active == "true" && listed_shares.count == 0 {
-                ZStack {
+                ZStack() {
                     Color(.white).ignoresSafeArea()
                     VStack {
                         Spacer()
@@ -67,22 +67,26 @@ struct UserMarketplace: View {
                         Text("No shares currently listed")
                             .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.065))
                         Spacer()
+                        
+                        HStack {
+                            Spacer() 
+                            Button(action: { marketplace_bottom_sheet_shown.toggle() }) {
+                                ZStack {
+                                    Circle()
+                                        .fill(Color("Secondary"))
+                                        .frame(width: 50, height: 50)
+                                    
+                                    Image(systemName: "plus")
+                                        .font(Font.custom("Nunito-Black", size: min(geometry.size.width, geometry.size.height) * 0.055))
+                                        .foregroundColor(.white)
+                                }
+                            }
+                            .padding(.trailing, 15).padding(.bottom)
+                        }
                     }
                     .multilineTextAlignment(.center)
                     .foregroundColor(.black)
                     
-                    Button(action: { marketplace_bottom_sheet_shown.toggle() }) {
-                        ZStack {
-                            Circle()
-                                .fill(Color("Secondary"))
-                                .frame(width: 50, height: 50)
-                            
-                            Image(systemName: "plus")
-                                .font(Font.custom("Nunito-Black", size: min(geometry.size.width, geometry.size.height) * 0.055))
-                                .foregroundColor(.white)
-                        }
-                    }
-                    .padding(.trailing, 15).padding(.bottom)
                 }
                 .navigationDestination(isPresented: $marketplace_list_shares_shown) {
                     UserListShares(franchise_data: $franchise_data, holding_data: $holding_data, marketplace_shown: $marketplace_shown)
