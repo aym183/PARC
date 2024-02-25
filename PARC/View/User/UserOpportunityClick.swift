@@ -531,7 +531,7 @@ struct UserOpportunityClick: View {
                 }
                 .foregroundColor(.black)
                 
-                HStack {
+                HStack(spacing: 20) {
                     VStack {
                         Spacer()
                         Button(action: {
@@ -548,7 +548,7 @@ struct UserOpportunityClick: View {
                                 Text("Invest")
                                     .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.06))
                             }
-                            .frame(width: max(0, geometry.size.width-40), height: 55)
+                            .frame(width: geometry.size.width*0.7, height: geometry.size.height*0.0725)
                             .background(Color("Secondary"))
                             .foregroundColor(Color.white)
                             .cornerRadius(5)
@@ -556,8 +556,21 @@ struct UserOpportunityClick: View {
                         }
                         Spacer()
                     }
-                    .frame(height: 50)
+                    .frame(height: 40)
                     .padding(.top, 40)
+                    
+                    Button(action: {}) {
+                        HStack {
+                            Image(systemName: "message.fill")
+                                .foregroundColor(.white)
+                                .font(.system(size: geometry.size.width*0.05))
+                                
+                        }
+                        .frame(width:  geometry.size.width*0.14, height: geometry.size.height*0.0725)
+                        .background(Color("Secondary"))
+                        .cornerRadius(100)
+                    }
+                    .padding(.top, 20)
                 }
                 .frame(width: max(0, geometry.size.width))
                 .background(.white)
@@ -568,7 +581,3 @@ struct UserOpportunityClick: View {
         }
     }
 }
-
-//#Preview {
-//    UserOpportunityClick(opportunity_data: .constant([:]), franchise_data: .constant([:]), franchise_logo: .constant(nil), display_image: .constant(nil))
-//}
