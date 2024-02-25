@@ -580,7 +580,7 @@ struct UserOpportunityClick: View {
                 UserInvestPage(user_invest_shown: $user_invest_shown, asking_price: $asking_price, equity_offered: $equity_offered, opportunity_id: $opportunity_id, opportunity_name: $opportunity_name, amount_offered: $amount_offered, investors: $investors, min_investment: $min_investment_amount)
             }
             .sheet(isPresented: $chatbot_shown) {
-//                .presentationDetents([.height(750)])
+                UserChatbot().presentationDetents([.height(750)])
             }
         }
     }
