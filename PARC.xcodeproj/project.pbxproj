@@ -67,6 +67,7 @@
 		615243D02AE128F500A18880 /* UserPortfolio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615243CF2AE128F500A18880 /* UserPortfolio.swift */; };
 		615243D22AE1290400A18880 /* UserMarketplace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615243D12AE1290400A18880 /* UserMarketplace.swift */; };
 		615243D42AE1290B00A18880 /* UserAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615243D32AE1290B00A18880 /* UserAccount.swift */; };
+		616FC07B2B8BEB450019E062 /* UserChatbot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616FC07A2B8BEB450019E062 /* UserChatbot.swift */; };
 		6179DC322AEE31B100A83F9A /* AdminOpportunityClick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6179DC312AEE31B100A83F9A /* AdminOpportunityClick.swift */; };
 		6179DC342AEE31ED00A83F9A /* AdminPayoutClick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6179DC332AEE31ED00A83F9A /* AdminPayoutClick.swift */; };
 		6179DC362AEE31FB00A83F9A /* AdminTradingClick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6179DC352AEE31FB00A83F9A /* AdminTradingClick.swift */; };
@@ -130,6 +131,7 @@
 		615243CF2AE128F500A18880 /* UserPortfolio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPortfolio.swift; sourceTree = "<group>"; };
 		615243D12AE1290400A18880 /* UserMarketplace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMarketplace.swift; sourceTree = "<group>"; };
 		615243D32AE1290B00A18880 /* UserAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccount.swift; sourceTree = "<group>"; };
+		616FC07A2B8BEB450019E062 /* UserChatbot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserChatbot.swift; sourceTree = "<group>"; };
 		6179DC312AEE31B100A83F9A /* AdminOpportunityClick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminOpportunityClick.swift; sourceTree = "<group>"; };
 		6179DC332AEE31ED00A83F9A /* AdminPayoutClick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminPayoutClick.swift; sourceTree = "<group>"; };
 		6179DC352AEE31FB00A83F9A /* AdminTradingClick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminTradingClick.swift; sourceTree = "<group>"; };
@@ -382,6 +384,7 @@
 				61346E1E2AE66E0F00E1941B /* UserMarketplaceBottomSheet.swift */,
 				6136EC112AF5375500A09DDA /* UserOnboarding.swift */,
 				619372212B6BC704000966A9 /* UserTransactionHistory.swift */,
+				616FC07A2B8BEB450019E062 /* UserChatbot.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -584,6 +587,7 @@
 				6136EC122AF5375500A09DDA /* UserOnboarding.swift in Sources */,
 				617E98822AECD4980085C4EE /* UserListShares.swift in Sources */,
 				6180FAE72AED550900A99D6D /* AdminTradingForm.swift in Sources */,
+				616FC07B2B8BEB450019E062 /* UserChatbot.swift in Sources */,
 				6136EC262AF5614500A09DDA /* DropdownMenuList.swift in Sources */,
 				619372222B6BC704000966A9 /* UserTransactionHistory.swift in Sources */,
 				6132F8D52AFBD439004A85FC /* MiscFunctions.swift in Sources */,

@@ -15,6 +15,7 @@ struct UserOpportunityClick: View {
     @Binding var display_image: UIImage?
     @State var text_selected = ""
     @State var user_invest_shown = false
+    @State var chatbot_shown = false
     @State var asking_price = 0.0
     @State var equity_offered = 0.0
     @State var opportunity_id = ""
@@ -559,7 +560,7 @@ struct UserOpportunityClick: View {
                     .frame(height: 40)
                     .padding(.top, 40)
                     
-                    Button(action: {}) {
+                    Button(action: { chatbot_shown.toggle() }) {
                         HStack {
                             Image(systemName: "message.fill")
                                 .foregroundColor(.white)
@@ -577,6 +578,9 @@ struct UserOpportunityClick: View {
             }
             .navigationDestination(isPresented: $user_invest_shown) {
                 UserInvestPage(user_invest_shown: $user_invest_shown, asking_price: $asking_price, equity_offered: $equity_offered, opportunity_id: $opportunity_id, opportunity_name: $opportunity_name, amount_offered: $amount_offered, investors: $investors, min_investment: $min_investment_amount)
+            }
+            .sheet(isPresented: $chatbot_shown) {
+//                .presentationDetents([.height(750)])
             }
         }
     }
