@@ -26,7 +26,15 @@ struct UserChatbot: View {
                     ScrollView(.vertical, showsIndicators: true) {
                         VStack {
                             HStack {
-                                Text("Hei")
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 20)
+                                        .fill(Color("Custom_Gray"))
+                                        .opacity(0.2)
+                                    
+                                    Text("Is there anything I can help with to you today with what I do today in ")
+                                        .padding(10)
+                                }
+                                .frame(width: geometry.size.width*0.65, height: 70)
                                 Spacer()
                             }
                             HStack {
@@ -34,6 +42,7 @@ struct UserChatbot: View {
                                 Text("Hei")
                             }
                         }
+                        .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.035))
                     }
                     .frame(width: max(0, geometry.size.width-40))
                     .padding(.top)
@@ -46,12 +55,12 @@ struct UserChatbot: View {
                                     RoundedRectangle(cornerRadius: 5)
                                         .stroke(Color.black, lineWidth: 1.25)
                                 )
-                                .frame(width: geometry.size.width*0.65, height: 50)
+                                .frame(width: geometry.size.width*0.68, height: 50)
                             
-                            TextField("", text: $text_input, prompt: Text("Enter your input here...").foregroundColor(.gray).font(Font.custom("Nunito-Medium", size: 16))).padding().padding(.horizontal, 40).frame(width: max(0, geometry.size.width-40), height: 50)
+                            TextField("", text: $text_input, prompt: Text("Enter your input here...").foregroundColor(.gray).font(Font.custom("Nunito-Medium", size: 16))).padding().padding(.horizontal, geometry.size.width*0.1).frame(width: max(0, geometry.size.width-40), height: 50)
                                 .foregroundColor(.black)
                                 .font(Font.custom("Nunito-SemiBold", size: 16))
-                                .frame(width: geometry.size.width*0.65, height: 50)
+                                .frame(width: geometry.size.width*0.68, height: 50)
                         }
                         
                         Button(action: {}) {
@@ -61,7 +70,7 @@ struct UserChatbot: View {
                                     .font(.system(size: geometry.size.width*0.05))
                                     
                             }
-                            .frame(width:  geometry.size.width*0.14, height: geometry.size.height*0.0725)
+                            .frame(width:  geometry.size.width*0.13, height: geometry.size.height*0.065)
                             .background(Color("Secondary"))
                             .cornerRadius(100)
                         }
@@ -69,9 +78,14 @@ struct UserChatbot: View {
                     
                 }
                 .frame(width: max(0, geometry.size.width-40), height: max(0, geometry.size.height - 20))
+                .padding(.vertical)
+            }
+            .onTapGesture {
+                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
             }
         }
     }
+    
 }
 
 #Preview {
