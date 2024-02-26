@@ -9,7 +9,7 @@ import SwiftUI
 
 struct UserChatbot: View {
     @State var text_input = ""
-    @State var test_input = [["type": "Receiver", "data": "Is there anything I can help with to you today with what I do today in"], ["type": "Sender", "data": "Yes of course, I would like some assistance with this"]]
+    @State var test_input = [["type": "Receiver", "data": "Is there anything I can help with to you today with what I do today in for you to do this today if I want this"], ["type": "Sender", "data": "Yes of course, I would like some assistance with this. I have for franchises to select from - Starbucks, MCdondald, KFC. Which one do I invest in?"]]
     var body: some View {
         GeometryReader { geometry in
             ZStack {
@@ -24,43 +24,40 @@ struct UserChatbot: View {
                         .frame(width: max(0, geometry.size.width))
                     
                     Spacer()
-                    ScrollView(.vertical, showsIndicators: true) {
+                    ScrollView(.vertical, showsIndicators: false) {
                         ForEach(0..<test_input.count, id: \.self) { index in
                             VStack {
                                 HStack {
                                     if test_input[index]["type"] == "Receiver" {
                                         ZStack {
-                                            RoundedRectangle(cornerRadius: 20)
-                                                .fill(Color("Custom_Gray"))
-                                                .opacity(0.2)
                                             
                                             Text(test_input[index]["data"]!)
-                                                .padding(5)
+                                                .padding(12.5)
+                                                .background(
+                                                    RoundedRectangle(cornerRadius: 20)
+                                                        .fill(Color("Custom_Gray"))
+                                                        .opacity(0.2)
+                                                )
                                             
                                         }
-                                        .frame(width: geometry.size.width*0.65, height: 70)
+                                        .frame(width: geometry.size.width*0.5)
                                         Spacer()
                                     } else {
                                         Spacer()
-                                        ZStack {
-                                            RoundedRectangle(cornerRadius: 20)
-                                                .fill(Color("Secondary"))
-                                            
-                                            Text(test_input[index]["data"]!)
-                                                .padding(5)
-                                                .foregroundColor(.white)
-                                            
-                                        }
-                                        .frame(width: geometry.size.width*0.5, height: 70)
+                                        Text(test_input[index]["data"]!)
+                                            .padding(15)
+                                            .foregroundColor(.white)
+                                            .background(
+                                                RoundedRectangle(cornerRadius: 20)
+                                                    .fill(Color("Secondary"))
+                                            )
+                                            .frame(width: geometry.size.width*0.5)
                                     }
 
                                 }
-                                .padding(.vertical, 5)
+                                .padding(.top, 5)
                                 .multilineTextAlignment(.leading)
-//                                HStack {
-//                                    Spacer()
-//                                    Text("Hei")
-//                                }
+
                             }
                             .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.035))
                             .id(index)
@@ -85,7 +82,12 @@ struct UserChatbot: View {
                                 .frame(width: geometry.size.width*0.68, height: 50)
                         }
                         
-                        Button(action: {}) {
+                        Button(action: {
+                            withAnimation(.easeOut(duration: 0.2)) {
+                                test_input.append(["type": "Sender", "data": text_input])
+                                text_input = ""
+                            }
+                        }) {
                             HStack {
                                 Image(systemName: "paperplane.fill")
                                     .foregroundColor(.white)
