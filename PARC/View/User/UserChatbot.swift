@@ -9,7 +9,7 @@ import SwiftUI
 
 struct UserChatbot: View {
     @State var text_input = ""
-    @State var test_input: [[String: String]] = [["type": "Receiver", "data": "Is there anything I can help with to you today with what I do today in for you to do this today if I want this"], ["type": "Sender", "data": "Yes of course, I would like some assistance with this. I have for franchises to select from - Starbucks, MCdondald, KFC. Which one do I invest in?"], ["type": "Sender", "data": "Yes of course, I would like some assistance with this. I have for franchises to select from - Starbucks, MCdondald, KFC. Which one do I invest in?"], ["type": "Sender", "data": "Yes of course, I would like some assistance with this. I have for franchises to select from - Starbucks, MCdondald, KFC. Which one do I invest in?"]]
+    @State var test_input: [[String: String]] = [["type": "Receiver", "data": "Is there anything I can help with to you today with what I do today in for you to do this today if I want this"], ["type": "Sender", "data": "Yes of course, I would like some assistance with this. I have for franchises to select from - Starbucks, MCdondald, KFC. Which one do I invest in?"], ["type": "Receiver", "data": "Yes of course, I would like some assistance with this. I have for franchises to select from - Starbucks, MCdondald, KFC. Which one do I invest in?"], ["type": "Sender", "data": "Yes of course, I would like some assistance with this. I have for franchises to select from - Starbucks, MCdondald, KFC. Which one do I invest in?"]]
 
     var body: some View {
         GeometryReader { geometry in
@@ -91,9 +91,10 @@ struct UserChatbot: View {
                             
                             Button(action: {
                                 withAnimation(.easeOut(duration: 0.2)) {
-                                    test_input.append(["type": "Sender", "data": text_input])
-//                                    proxy.scrollTo(test_input.count-2, anchor: .bottom)
-                                    text_input = ""
+                                    if text_input.count != 0 {
+                                        test_input.append(["type": "Sender", "data": text_input])
+                                        text_input = ""
+                                    }
                                 }
                             }) {
                                 HStack {
