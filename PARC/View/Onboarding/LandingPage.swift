@@ -21,9 +21,9 @@ struct LandingPage: View {
     var body: some View {
         NavigationStack {
             // CHANGE THIS BACK == | !=
-            if logged_in && !isShownHomePage && email == "ayman.ali1302@gmail.com" {
+            if logged_in && !isShownHomePage && email != "ayman.ali1302@gmail.com" {
                 UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isWithdrawalConfirmed: $isWithdrawalConfirmed, isShownHomePage: $isShownHomePage)
-            } else if logged_in && !isShownHomePage && email != "ayman.ali1302@gmail.com" {
+            } else if logged_in && !isShownHomePage && email == "ayman.ali1302@gmail.com" {
                 AdminHome()
             } else {
                 LandingContent(isShownHomePage: $isShownHomePage)
