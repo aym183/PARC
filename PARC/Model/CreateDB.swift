@@ -510,4 +510,23 @@ class CreateDB: ObservableObject {
             }
         }.resume()
     }
+    
+    func createChatbotRequest(message: String) {
+        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/chatbot?user_input=\(message)")
+        var request = URLRequest(url: apiUrl!)
+        request.httpMethod = "POST"
+        request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
+
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let data = data, let responseText = String(data: data, encoding: .utf8) {
+                DispatchQueue.main.async {
+                    print(responseText)
+                }
+            } else if let error = error {
+                DispatchQueue.main.async {
+                    print("Error creating message response: \(error.localizedDescription)")
+                }
+            }
+        }.resume()
+    }
 }

@@ -93,6 +93,7 @@ struct UserChatbot: View {
                                 withAnimation(.easeOut(duration: 0.2)) {
                                     if text_input.count != 0 {
                                         test_input.append(["type": "Sender", "data": text_input])
+                                        CreateDB().createChatbotRequest(message: text_input)
                                         text_input = ""
                                     }
                                 }
