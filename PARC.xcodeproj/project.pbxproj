@@ -74,6 +74,7 @@
 		6179DC382AEE412300A83F9A /* AdminAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6179DC372AEE412300A83F9A /* AdminAccount.swift */; };
 		617E98822AECD4980085C4EE /* UserListShares.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617E98812AECD4980085C4EE /* UserListShares.swift */; };
 		617E98842AECE53B0085C4EE /* UserInvestPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617E98832AECE53B0085C4EE /* UserInvestPage.swift */; };
+		618045622B8F200400262940 /* loading_dots.json in Resources */ = {isa = PBXBuildFile; fileRef = 618045612B8F200400262940 /* loading_dots.json */; };
 		6180FADB2AED1D9400A99D6D /* confetti.json in Resources */ = {isa = PBXBuildFile; fileRef = 6180FADA2AED1D9400A99D6D /* confetti.json */; };
 		6180FADD2AED214200A99D6D /* transaction.json in Resources */ = {isa = PBXBuildFile; fileRef = 6180FADC2AED214200A99D6D /* transaction.json */; };
 		6180FAE12AED2D6F00A99D6D /* AdminHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6180FAE02AED2D6F00A99D6D /* AdminHome.swift */; };
@@ -138,6 +139,7 @@
 		6179DC372AEE412300A83F9A /* AdminAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminAccount.swift; sourceTree = "<group>"; };
 		617E98812AECD4980085C4EE /* UserListShares.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListShares.swift; sourceTree = "<group>"; };
 		617E98832AECE53B0085C4EE /* UserInvestPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInvestPage.swift; sourceTree = "<group>"; };
+		618045612B8F200400262940 /* loading_dots.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loading_dots.json; sourceTree = "<group>"; };
 		6180FADA2AED1D9400A99D6D /* confetti.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = confetti.json; path = "../../../../../IOS Dev/Mishki/Kitt/View/Lottie Files/confetti.json"; sourceTree = "<group>"; };
 		6180FADC2AED214200A99D6D /* transaction.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = transaction.json; sourceTree = "<group>"; };
 		6180FAE02AED2D6F00A99D6D /* AdminHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminHome.swift; sourceTree = "<group>"; };
@@ -329,6 +331,7 @@
 		61DBDFDC2ADF09A400AE41FA /* Lottie Files */ = {
 			isa = PBXGroup;
 			children = (
+				618045612B8F200400262940 /* loading_dots.json */,
 				614C0C062AF17CCA00D406A3 /* loading_3.0.json */,
 				6180FADC2AED214200A99D6D /* transaction.json */,
 				6180FADA2AED1D9400A99D6D /* confetti.json */,
@@ -538,6 +541,7 @@
 				61DBDFE52ADFDC8D00AE41FA /* shop.json in Resources */,
 				61DBDFEB2ADFE29C00AE41FA /* LaunchScreen.storyboard in Resources */,
 				619372202B6A62C7000966A9 /* GoogleService-Info.plist in Resources */,
+				618045622B8F200400262940 /* loading_dots.json in Resources */,
 				61DBDFC82ADEF84000AE41FA /* Assets.xcassets in Resources */,
 				614C0C052AF1740C00D406A3 /* Auth0.plist in Resources */,
 			);

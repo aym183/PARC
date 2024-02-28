@@ -9,7 +9,7 @@ import SwiftUI
 
 struct UserChatbot: View {
     @State var text_input = ""
-    @State var test_input: [[String: String]] = [["type": "Receiver", "data": "Is there anything I can help with to you today with what I do today in for you to do this today if I want this"], ["type": "Sender", "data": "Yes of course, I would like some assistance with this. I have for franchises to select from - Starbucks, MCdondald, KFC. Which one do I invest in?"], ["type": "Receiver", "data": "Yes of course, I would like some assistance with this. I have for franchises to select from - Starbucks, MCdondald, KFC. Which one do I invest in?"], ["type": "Sender", "data": "Yes of course, I would like some assistance with this. I have for franchises to select from - Starbucks, MCdondald, KFC. Which one do I invest in?"]]
+    @State var test_input: [[String: String]] = [["type": "Receiver", "data": "Hi! How can I help you today? 😊"]]
 
     var body: some View {
         GeometryReader { geometry in
@@ -39,9 +39,9 @@ struct UserChatbot: View {
                                                         .fill(Color("Custom_Gray"))
                                                         .opacity(0.2)
                                                 )
-                                                .frame(width: geometry.size.width*0.5)
+                                                .padding(.trailing, geometry.size.width/5)
                                             Spacer()
-                                        } else {
+                                        } else if test_input[index]["type"] == "Sender" {
                                             Spacer()
                                         
                                             Text(test_input[index]["data"]!)
@@ -51,7 +51,21 @@ struct UserChatbot: View {
                                                     RoundedRectangle(cornerRadius: 20)
                                                         .fill(Color("Secondary"))
                                                 )
-                                                .frame(width: geometry.size.width*0.5)
+                                                .padding(.leading, geometry.size.width/5)
+                                        } else {
+                                            
+                                            ZStack {
+                                                RoundedRectangle(cornerRadius: 20)
+                                                    .fill(Color("Custom_Gray"))
+                                                    .opacity(0.2)
+                                                
+                                                LottieView(name: "loading_3.0", speed: 1, loop: true)
+                                                    .frame(width: geometry.size.width*0.05, height: geometry.size.height*0.1)
+                                                
+                                            }
+                                            .frame(width: geometry.size.width*0.25)
+                                            
+                                            Spacer()
                                         }
 
                                     }
@@ -93,7 +107,13 @@ struct UserChatbot: View {
                                 withAnimation(.easeOut(duration: 0.2)) {
                                     if text_input.count != 0 {
                                         test_input.append(["type": "Sender", "data": text_input])
-                                        CreateDB().createChatbotRequest(message: text_input)
+                                        test_input.append(["type": "Loading"])
+                                        // Disable user chat after this
+                                        CreateDB().createChatbotRequest(message: text_input) { response in
+                                            if response != nil {
+                                                test_input[test_input.count-1] = ["type": "Receiver", "data": response!.trimmingCharacters(in: .whitespacesAndNewlines)]
+                                            }
+                                        }
                                         text_input = ""
                                     }
                                 }
