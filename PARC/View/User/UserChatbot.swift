@@ -10,6 +10,7 @@ import SwiftUI
 struct UserChatbot: View {
     @State var text_input = ""
     @State var test_input: [[String: String]] = [["type": "Receiver", "data": "Hi! How can I help you today? 😊"]]
+    @State var input_sent = false
 
     var body: some View {
         GeometryReader { geometry in
@@ -92,7 +93,7 @@ struct UserChatbot: View {
                                     .fill(Color.white)
                                     .overlay(
                                         RoundedRectangle(cornerRadius: 5)
-                                            .stroke(Color.black, lineWidth: 1.25)
+                                            .stroke(input_sent ? Color.gray : Color.black, lineWidth: 1.25)
                                     )
                                     .frame(width: geometry.size.width*0.68, height: 50)
                                 
@@ -100,6 +101,7 @@ struct UserChatbot: View {
                                     .foregroundColor(.black)
                                     .font(Font.custom("Nunito-SemiBold", size: 16))
                                     .frame(width: geometry.size.width*0.68, height: 50)
+                                    .disabled(input_sent ? true : false)
 
                             }
                             
@@ -108,10 +110,11 @@ struct UserChatbot: View {
                                     if text_input.count != 0 {
                                         test_input.append(["type": "Sender", "data": text_input])
                                         test_input.append(["type": "Loading"])
-                                        // Disable user chat after this
+                                        input_sent.toggle()
                                         CreateDB().createChatbotRequest(message: text_input) { response in
                                             if response != nil {
-                                                test_input[test_input.count-1] = ["type": "Receiver", "data": response!.trimmingCharacters(in: .whitespacesAndNewlines)]
+                                                test_input[test_input.count-1] = ["type": "Receiver", "data": response!]
+                                                input_sent.toggle()
                                             }
                                         }
                                         text_input = ""
@@ -127,7 +130,9 @@ struct UserChatbot: View {
                                 .frame(width:  geometry.size.width*0.13, height: geometry.size.height*0.065)
                                 .background(Color("Secondary"))
                                 .cornerRadius(100)
+                                .opacity(input_sent ? 0.6 : 1)
                             }
+                            .disabled(input_sent ? true : false)
                         }
                     }
                 }

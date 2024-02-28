@@ -520,7 +520,7 @@ class CreateDB: ObservableObject {
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data, let responseText = String(data: data, encoding: .utf8) {
                 DispatchQueue.main.async {
-                    completion(responseText)
+                    completion(responseText.replacingOccurrences(of: "\n\n", with: "").replacingOccurrences(of: "\n", with: "").replacingOccurrences(of: "\"", with: ""))
                 }
             } else if let error = error {
                 DispatchQueue.main.async {
