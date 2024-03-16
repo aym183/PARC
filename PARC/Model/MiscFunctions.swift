@@ -8,6 +8,10 @@
 import Foundation
 import SwiftUI
 
+/// Description - this is the code does
+///
+/// - Parameter dateString:
+/// - Returns: <#description#>
 func convertDate(dateString: String) -> String {
 
     let components = dateString.components(separatedBy: " ")
@@ -27,6 +31,14 @@ func convertDate(dateString: String) -> String {
 }
 
 // GPT - REFERENCE
+
+/// <#Description#>
+/// - Parameters:
+///   - targetDate: <#targetDate description#>
+///   - startDate: <#startDate description#>
+///   - endDate: <#endDate description#>
+///   - status: <#status description#>
+/// - Returns: <#description#>
 func isTradingWindowActive(targetDate: String, start startDate: String, end endDate: String, status: String) -> Bool? {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "dd/MM/yyyy"
@@ -43,6 +55,13 @@ func isTradingWindowActive(targetDate: String, start startDate: String, end endD
     return nil
 }
 
+
+/// <#Description#>
+/// - Parameters:
+///   - targetDate: <#targetDate description#>
+///   - endDate: <#endDate description#>
+///   - status: <#status description#>
+/// - Returns: <#description#>
 func isTradingWindowComplete(targetDate: String, end endDate: String, status: String) -> Bool? {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "dd/MM/yyyy"
@@ -57,6 +76,10 @@ func isTradingWindowComplete(targetDate: String, end endDate: String, status: St
     return nil
 }
 
+
+/// <#Description#>
+/// - Parameter date_input: <#date_input description#>
+/// - Returns: <#description#>
 func getDaysRemaining(date_input: String) -> Int? {
     let date_formatter = DateFormatter()
     date_formatter.dateFormat = "dd/MM/yyyy"
@@ -76,6 +99,12 @@ func getDaysRemaining(date_input: String) -> Int? {
 }
 
 // GPT - REFERENCE
+
+/// <#Description#>
+/// - Parameters:
+///   - days: <#days description#>
+///   - dateString: <#dateString description#>
+/// - Returns: <#description#>
 func dateStringByAddingDays(days: Int, dateString: String) -> String? {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "dd/MM/yyyy"
@@ -95,6 +124,10 @@ func dateStringByAddingDays(days: Int, dateString: String) -> String? {
     return nil
 }
 
+
+/// <#Description#>
+/// - Parameter input_number: <#input_number description#>
+/// - Returns: <#description#>
 func formattedNumber(input_number: Int) -> String {
     let numberFormatter = NumberFormatter()
     numberFormatter.numberStyle = .decimal
@@ -102,6 +135,12 @@ func formattedNumber(input_number: Int) -> String {
     return numberFormatter.string(from: NSNumber(value: input_number)) ?? ""
 }
 
+
+/// <#Description#>
+/// - Parameters:
+///   - input: <#input description#>
+///   - field: <#field description#>
+/// - Returns: <#description#>
 func calculateTotalValue(input: [[String: String]], field: String) -> Int {
     
     var final_amount = 0
@@ -118,6 +157,12 @@ func calculateTotalValue(input: [[String: String]], field: String) -> Int {
     return 0
 }
 
+
+/// <#Description#>
+/// - Parameters:
+///   - input: <#input description#>
+///   - holdings_value: <#holdings_value description#>
+/// - Returns: <#description#>
 func calculatePortionHoldings(input: [[String: String]], holdings_value: Int) -> [Float] {
     var output_array: [Float] = []
     if input.count != 0 {
@@ -134,6 +179,10 @@ func calculatePortionHoldings(input: [[String: String]], holdings_value: Int) ->
 }
 
 // GPT - REFERENCE
+
+/// <#Description#>
+/// - Parameter input: <#input description#>
+/// - Returns: <#description#>
 func calculatePayoutOpportunities(input: [[String: String]]) -> [Float] {
     var outputArray: [Float] = []
     var indexMap: [String: Int] = [:]
@@ -155,6 +204,13 @@ func calculatePayoutOpportunities(input: [[String: String]]) -> [Float] {
 }
 
 // GPT - REFERENCE
+
+/// <#Description#>
+/// - Parameters:
+///   - inputArray: <#inputArray description#>
+///   - field_name: <#field_name description#>
+///   - date_type: <#date_type description#>
+/// - Returns: <#description#>
 func sortArrayByDate(inputArray: [[String: String]], field_name: String, date_type: String) -> [[String: String]] {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = date_type
@@ -171,6 +227,10 @@ func sortArrayByDate(inputArray: [[String: String]], field_name: String, date_ty
     return sortedArray
 }
 
+
+/// <#Description#>
+/// - Parameter listed_shares: <#listed_shares description#>
+/// - Returns: <#description#>
 func transformListedShares(listed_shares: [String: [[String: String]]]) -> [(key: String, value: Any)] {
     var traversed_franchises: [String:Any] = [:]
     
@@ -190,6 +250,10 @@ func transformListedShares(listed_shares: [String: [[String: String]]]) -> [(key
     return traversed_franchises.sorted { $0.value as! Int > $1.value as! Int }
 }
 
+
+/// <#Description#>
+/// - Parameter listed_shares: <#listed_shares description#>
+/// - Returns: <#description#>
 func transformTradingWindowData(listed_shares: [[String: String]]) -> [String: Int] {
     var traversed_trading_window: [String: Int] = [:]
     
@@ -213,6 +277,10 @@ func transformTradingWindowData(listed_shares: [[String: String]]) -> [String: I
     return traversed_trading_window
 }
 
+
+/// <#Description#>
+/// - Parameter input: <#input description#>
+/// - Returns: <#description#>
 func textBeforeApostrophe(_ input: String) -> String? {
     guard let range = input.range(of: "'") else {
         return nil
@@ -220,6 +288,10 @@ func textBeforeApostrophe(_ input: String) -> String? {
     return String(input[..<range.lowerBound])
 }
 
+
+/// <#Description#>
+/// - Parameter payouts_array: <#payouts_array description#>
+/// - Returns: <#description#>
 func transformPayouts(payouts_array: [[String: String]]) -> [String: Any] {
     var traversed_payouts: [String:Any] = [:]
     
@@ -239,7 +311,10 @@ func transformPayouts(payouts_array: [[String: String]]) -> [String: Any] {
     return traversed_payouts
 }
 
-// Not the
+
+/// <#Description#>
+/// - Parameter array: <#array description#>
+/// - Returns: <#description#>
 func sortByDaysRemaining(array: [[String: String]]) -> [[String : String]] {
     var completedArray: [[String : String]] = []
     var closedArray: [[String : String]] = []
@@ -271,6 +346,10 @@ func sortByDaysRemaining(array: [[String: String]]) -> [[String : String]] {
 
 // Reference GPT
 // Wont show listed or sold shares
+
+/// <#Description#>
+/// - Parameter entries: <#entries description#>
+/// - Returns: <#description#>
 func transformPayoutsArray(entries: [[String:String]]) -> [[String: String]]{
     var resultDictionary: [String: Double] = [:]
         for entry in entries {
@@ -300,6 +379,10 @@ func transformPayoutsArray(entries: [[String:String]]) -> [[String: String]]{
 }
 
 // Reference GPT
+
+/// <#Description#>
+/// - Parameter input_number: <#input_number description#>
+/// - Returns: <#description#>
 func convertNumberAmount(input_number: Double) -> String {
     let formatter = NumberFormatter()
     formatter.numberStyle = .decimal
@@ -320,12 +403,20 @@ func convertNumberAmount(input_number: Double) -> String {
     }
 }
 
+
+/// <#Description#>
+/// - Parameter key: <#key description#>
+/// - Returns: <#description#>
 func loadFranchiseLogo(key: String) -> UIImage {
     let imageData = UserDefaults.standard.data(forKey: key)
     let cachedImage = UIImage(data: imageData!)
     return cachedImage!
 }
 
+
+/// <#Description#>
+/// - Parameter key: <#key description#>
+/// - Returns: <#description#>
 func loadDisplayImage(key: String) -> UIImage {
     let imageData = UserDefaults.standard.data(forKey: key)
     let cachedImage = UIImage(data: imageData!)
@@ -333,6 +424,8 @@ func loadDisplayImage(key: String) -> UIImage {
 }
 
 
+/// <#Description#>
+/// - Parameter completion: <#completion description#>
 func loadProfileImage(completion: @escaping (UIImage?) -> Void) {
     if let imageData = UserDefaults.standard.data(forKey: "profile_image"), let cachedImage = UIImage(data: imageData)  {
             completion(cachedImage)
@@ -340,6 +433,8 @@ func loadProfileImage(completion: @escaping (UIImage?) -> Void) {
     }
 }
 
+
+/// <#Description#>
 func deleteAllUserDefaultsData() {
     let keysToRemove = UserDefaults.standard.dictionaryRepresentation().keys.filter { $0 != "profile_image" }
         for key in keysToRemove {
