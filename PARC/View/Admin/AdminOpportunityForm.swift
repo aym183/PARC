@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// This view is responsible for handling all form interactions when an admin wants to create an opportunity
 struct AdminOpportunityForm: View {
     @Binding var franchise_data: [DropdownMenuOption]
     @State var franchise = ""

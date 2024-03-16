@@ -8,6 +8,7 @@
 import SwiftUI
 import Foundation
 
+// The content shown on login to admins which allows them to manage all operations that users get to interact with
 struct AdminHome: View {
     var rows: [GridItem] = [
         GridItem(.flexible() , spacing: nil, alignment: nil),

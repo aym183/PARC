@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// This view is responsible for handling all interactions when an admin wants to manage opportunities
 struct AdminOpportunityClick: View {
     var data_titles = ["Opportunity ID", "Location", "Type", "Money Raised", "Target Raised", "Investors", "Minimum Investment", "Investment Deadline"]
     var data_values = ["24", "Stratford, London", "Equity", "£400,000", "£1,000,000", "500", "£100", "18/08/2023"]

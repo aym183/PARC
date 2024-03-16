@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// This view is responsible for handling all interactions when an admin wants to manage secondary market windows
 struct AdminTradingClick: View {
     var data_titles = ["Trading Volume", "Trades", "Scheduled Date", "Duration", "Most Traded Opportunity", "Biggest Trade"]
     var data_values = ["£178,000,000", "Check", "21/03/2023", "15/04/2023", "McDonald's, 25", "McDonald's - £1.5M"]

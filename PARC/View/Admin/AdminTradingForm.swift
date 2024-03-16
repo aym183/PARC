@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// This view is responsible for handling all form interactions when an admin wants to create secondary market windows
 struct AdminTradingForm: View {
     @State var start_date = Date()
     @State var end_date = Date()

@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// This view is responsible for handling all interactions when an admin wants to manage payouts
 struct AdminPayoutClick: View {
     var payout_data_titles = ["Investors", "Revenue Generated (past month)", "% of Revenue", "Payout Date"]
     var payout_data_values = ["investors", "revenue_generated", "percentage_of_revenue", "date_scheduled"]

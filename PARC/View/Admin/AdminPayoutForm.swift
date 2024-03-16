@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// This view is responsible for handling all form interactions when an admin wants to create payouts
 struct AdminPayoutForm: View {
     @State var opportunity = ""
     @State var amount_offered = ""

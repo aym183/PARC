@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// This view is responsible for handling all interactions when an admin wants to view their account and log out
 struct AdminAccount: View {
     @AppStorage("full_name") var fullName: String = ""
     @AppStorage("email") var email: String = ""

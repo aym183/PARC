@@ -361,11 +361,11 @@
 				6180FAE22AED4BA400A99D6D /* AdminOpportunityForm.swift */,
 				6180FAE42AED506900A99D6D /* AdminPayoutForm.swift */,
 				6180FAE62AED550900A99D6D /* AdminTradingForm.swift */,
+				61956B282AF969510038378E /* AdminFranchiseForm.swift */,
 				6179DC312AEE31B100A83F9A /* AdminOpportunityClick.swift */,
 				6179DC332AEE31ED00A83F9A /* AdminPayoutClick.swift */,
 				6179DC352AEE31FB00A83F9A /* AdminTradingClick.swift */,
 				6179DC372AEE412300A83F9A /* AdminAccount.swift */,
-				61956B282AF969510038378E /* AdminFranchiseForm.swift */,
 			);
 			path = Admin;
 			sourceTree = "<group>";

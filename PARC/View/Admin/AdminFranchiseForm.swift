@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// This view is responsible for handling all form interactions when an admin wants to create franchises
 struct AdminFranchiseForm: View {
     @State var name = ""
     @State var logo = ""
