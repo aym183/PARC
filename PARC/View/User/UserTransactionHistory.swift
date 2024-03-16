@@ -54,7 +54,7 @@ struct UserTransactionHistory: View {
                                     } else {
                                         Text("-£\(formattedNumber(input_number: Int(user_holdings[index]["amount"]!)!))")
                                             .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.04))
-                                        .foregroundColor(Color("Loss"))
+                                            .foregroundColor(Color("Loss"))
                                     }
                                 }
                                 .padding(.vertical, 10)

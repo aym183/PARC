@@ -11,7 +11,7 @@ struct UserChatbot: View {
     @State var text_input = ""
     @State var test_input: [[String: String]] = [["type": "Receiver", "data": "Hi! How can I help you today? 😊"]]
     @State var input_sent = false
-
+    
     var body: some View {
         GeometryReader { geometry in
             ZStack {
@@ -44,7 +44,7 @@ struct UserChatbot: View {
                                             Spacer()
                                         } else if test_input[index]["type"] == "Sender" {
                                             Spacer()
-                                        
+                                            
                                             Text(test_input[index]["data"]!)
                                                 .padding(15)
                                                 .foregroundColor(.white)
@@ -68,11 +68,11 @@ struct UserChatbot: View {
                                             
                                             Spacer()
                                         }
-
+                                        
                                     }
                                     .padding(.top, 5)
                                     .multilineTextAlignment(.leading)
-
+                                    
                                 }
                                 .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.035))
                                 .id(index)
@@ -102,7 +102,7 @@ struct UserChatbot: View {
                                     .font(Font.custom("Nunito-SemiBold", size: 16))
                                     .frame(width: geometry.size.width*0.68, height: 50)
                                     .disabled(input_sent ? true : false)
-
+                                
                             }
                             
                             Button(action: {
@@ -125,7 +125,7 @@ struct UserChatbot: View {
                                     Image(systemName: "paperplane.fill")
                                         .foregroundColor(.white)
                                         .font(.system(size: geometry.size.width*0.05))
-                                        
+                                    
                                 }
                                 .frame(width:  geometry.size.width*0.13, height: geometry.size.height*0.065)
                                 .background(Color("Secondary"))

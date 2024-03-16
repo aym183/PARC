@@ -13,7 +13,7 @@ import LocalAuthentication
 struct PARCApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @State var isUnlocked = false
-
+    
     var body: some Scene {
         WindowGroup {
             LandingPage().preferredColorScheme(.light)

@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct ImagePicker: UIViewControllerRepresentable {
- 
+    
     @Binding var image: UIImage?
     private let image_controller = UIImagePickerController()
- 
+    
     func makeCoordinator() -> Coordinator {
         return Coordinator(parent: self)
     }
- 
+    
     class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
         let parent: ImagePicker
         init(parent: ImagePicker) {
@@ -29,14 +29,14 @@ struct ImagePicker: UIViewControllerRepresentable {
             picker.dismiss(animated: true)
         }
     }
- 
+    
     func makeUIViewController(context: Context) -> some UIViewController {
         image_controller.delegate = context.coordinator
         return image_controller
     }
- 
+    
     func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
- 
+        
     }
- 
+    
 }

@@ -139,12 +139,12 @@ struct UserMarketplaceClick: View {
                                     .padding(.leading, -20)
                                     
                                     
-                                        HStack {
-                                            Text(opportunity_data[opportunity_data.firstIndex(where: { $0["opportunity_id"] == shares_data[index]["opportunity_id"]!})!]["location"]!)
-                                            Spacer()
-                                        }
-                                        .frame(width: geometry.size.width*0.15)
-                                        .padding(.leading, -25)
+                                    HStack {
+                                        Text(opportunity_data[opportunity_data.firstIndex(where: { $0["opportunity_id"] == shares_data[index]["opportunity_id"]!})!]["location"]!)
+                                        Spacer()
+                                    }
+                                    .frame(width: geometry.size.width*0.15)
+                                    .padding(.leading, -25)
                                     
                                     Button(action: {
                                         selling_email = shares_data[index]["user_email"]!

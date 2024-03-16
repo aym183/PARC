@@ -127,28 +127,28 @@ struct UserMarketplace: View {
                                         marketplace_click_shown.toggle()
                                     }) {
                                         HStack {
-                                                if let franchiseIndex = franchises.firstIndex(where: { $0["name"] == listed_shares[index].key }) {
-                                                    let matchedFranchise = franchises[franchiseIndex]["logo"]!
-                                                    
-                                                    if UserDefaults.standard.object(forKey: String(describing: matchedFranchise)) != nil {
-                                                        Image(uiImage: loadDisplayImage(key: String(describing: matchedFranchise)))
-                                                            .resizable()
-                                                            .aspectRatio(contentMode: .fill)
-                                                            .frame(width: 40, height: 40)
-                                                    } else {
-                                                        Image(systemName: "house")
-                                                            .resizable()
-                                                            .aspectRatio(contentMode: .fill)
-                                                            .frame(width: 40, height: 40)
-                                                    }
-                                                    
+                                            if let franchiseIndex = franchises.firstIndex(where: { $0["name"] == listed_shares[index].key }) {
+                                                let matchedFranchise = franchises[franchiseIndex]["logo"]!
+                                                
+                                                if UserDefaults.standard.object(forKey: String(describing: matchedFranchise)) != nil {
+                                                    Image(uiImage: loadDisplayImage(key: String(describing: matchedFranchise)))
+                                                        .resizable()
+                                                        .aspectRatio(contentMode: .fill)
+                                                        .frame(width: 40, height: 40)
                                                 } else {
                                                     Image(systemName: "house")
                                                         .resizable()
                                                         .aspectRatio(contentMode: .fill)
                                                         .frame(width: 40, height: 40)
                                                 }
-                                
+                                                
+                                            } else {
+                                                Image(systemName: "house")
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fill)
+                                                    .frame(width: 40, height: 40)
+                                            }
+                                            
                                             Spacer()
                                             
                                             HStack {
@@ -167,7 +167,7 @@ struct UserMarketplace: View {
                                                 Spacer()
                                             }
                                             .frame(width: 75)
-//                                            .padding(.trailing, -25)
+                                            //                                            .padding(.trailing, -25)
                                             
                                             Spacer()
                                             
@@ -177,7 +177,7 @@ struct UserMarketplace: View {
                                                 Spacer()
                                             }
                                             .frame(width: 75)
-//                                            .padding(.trailing, -5)
+                                            //                                            .padding(.trailing, -5)
                                         }
                                         .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.035))
                                         .multilineTextAlignment(.center)

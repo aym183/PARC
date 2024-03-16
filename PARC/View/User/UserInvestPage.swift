@@ -10,7 +10,7 @@ import SwiftUI
 struct UserInvestPage: View {
     
     @State var investment_amount = ""
-//    @State var net_worth: Double = 0
+    //    @State var net_worth: Double = 0
     @AppStorage("net_worth") var net_worth: String = ""
     @State var net_worth_int: Int = 0
     @State var investment_limit = 0
@@ -49,7 +49,7 @@ struct UserInvestPage: View {
                                 Spacer()
                                 Text("❌").font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.3))
                                     .padding(.bottom, -20)
-                               Spacer()
+                                Spacer()
                             }
                             HStack {
                                 Spacer()
@@ -157,25 +157,25 @@ struct UserInvestPage: View {
                             .opacity(isInvestmentAmountValid ? 1 : 0.75)
                         }
                         
-//                        HStack {
-//                            if net_worth_int >= 1000000 {
-//                                Text("Net Worth: £\(net_worth_int)+")
-//                            } else {
-//                                Text("Net Worth: £\(net_worth_int)")
-//                            }
-//                        }
-//                        .font(Font.custom("Nunito-Bold", size: 18))
-//                        .padding(.top).padding(.bottom, -5)
+                        //                        HStack {
+                        //                            if net_worth_int >= 1000000 {
+                        //                                Text("Net Worth: £\(net_worth_int)+")
+                        //                            } else {
+                        //                                Text("Net Worth: £\(net_worth_int)")
+                        //                            }
+                        //                        }
+                        //                        .font(Font.custom("Nunito-Bold", size: 18))
+                        //                        .padding(.top).padding(.bottom, -5)
                         
-//                        Slider(value: $net_worth, in: 10000...1000000, step: 1000)
-//                            .onReceive([net_worth].publisher.first()) { value in
-//                                net_worth_int = Int(net_worth)
-//                                calculateInvestmentLimit()
-//                                withAnimation(.easeOut(duration: 0.2)) {
-//                                    user_ready_to_invest = true
-//                                }
-//                            }
-//                            .accentColor(Color("Secondary"))
+                        //                        Slider(value: $net_worth, in: 10000...1000000, step: 1000)
+                        //                            .onReceive([net_worth].publisher.first()) { value in
+                        //                                net_worth_int = Int(net_worth)
+                        //                                calculateInvestmentLimit()
+                        //                                withAnimation(.easeOut(duration: 0.2)) {
+                        //                                    user_ready_to_invest = true
+                        //                                }
+                        //                            }
+                        //                            .accentColor(Color("Secondary"))
                     }
                     .frame(height: max(0, geometry.size.height - 20))
                     .padding(.horizontal, 5)

@@ -10,32 +10,32 @@ import Foundation
 import JWTDecode
 
 struct Profile {
-  
-  let id: String
-  let given_name: String
-  let family_name: String
-  let name: String
-  let email: String
-  let picture: String
-  let updatedAt: String
-
+    
+    let id: String
+    let given_name: String
+    let family_name: String
+    let name: String
+    let email: String
+    let picture: String
+    let updatedAt: String
+    
 }
 
 
 extension Profile {
-  
-  static var empty: Self {
-    return Profile(
-      id: "",
-      given_name: "",
-      family_name: "",
-      name: "",
-      email: "",
-      picture: "",
-      updatedAt: ""
-    )
-  }
-  
+    
+    static var empty: Self {
+        return Profile(
+            id: "",
+            given_name: "",
+            family_name: "",
+            name: "",
+            email: "",
+            picture: "",
+            updatedAt: ""
+        )
+    }
+    
     static func from(_ idToken: String) -> Self {
         guard
             let jwt = try? decode(jwt: idToken),
@@ -49,13 +49,13 @@ extension Profile {
         else { return .empty }
         
         return Profile(
-          id: id,
-          given_name: given_name,
-          family_name: family_name,
-          name: name,
-          email: email,
-          picture: picture,
-          updatedAt: updatedAt
+            id: id,
+            given_name: given_name,
+            family_name: family_name,
+            name: name,
+            email: email,
+            picture: picture,
+            updatedAt: updatedAt
         )
     }
 }

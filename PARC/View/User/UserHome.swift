@@ -203,7 +203,7 @@ struct UserHome: View {
                                 self.admin_opportunity_data = readDB.admin_opportunity_data
                             }
                         }
-
+                        
                     }
                     .opacity(isInvestmentConfirmed ? 0 : 1)
                     .opacity(isShownHomePage ? 0 : 1)
@@ -400,7 +400,7 @@ struct UserHomeContent: View {
                                                 .frame(height: 80)
                                                 .multilineTextAlignment(.leading)
                                                 .padding(.horizontal, 12).padding(.top, -18).padding(.bottom, -15)
-//                                                .background(.red)
+                                            //                                                .background(.red)
                                             
                                             HStack {
                                                 
@@ -410,21 +410,21 @@ struct UserHomeContent: View {
                                                     .frame(alignment: .leading)
                                                 Spacer()
                                                 
-//                                                ZStack {
-//                                                    Rectangle()
-//                                                        .foregroundColor(.clear)
-//                                                        .frame(width: 45, height: 14)
-//                                                        .background(Color(red: 0.85, green: 0.85, blue: 0.85).opacity(0.5))
-//                                                        .cornerRadius(5)
-//                                                    
-//                                                    HStack {
-//                                                        Image("gbr").resizable().frame(width: 10, height: 10)
-//                                                        Text(String(describing: opportunity_data[index]["location"]!))
-//                                                            .font(Font.custom("Nunito-SemiBold", size: 8))
-//                                                            .foregroundColor(Color("Custom_Gray"))
-//                                                            .padding(.leading, -7.5)
-//                                                    }
-//                                                }
+                                                //                                                ZStack {
+                                                //                                                    Rectangle()
+                                                //                                                        .foregroundColor(.clear)
+                                                //                                                        .frame(width: 45, height: 14)
+                                                //                                                        .background(Color(red: 0.85, green: 0.85, blue: 0.85).opacity(0.5))
+                                                //                                                        .cornerRadius(5)
+                                                //                                                    
+                                                //                                                    HStack {
+                                                //                                                        Image("gbr").resizable().frame(width: 10, height: 10)
+                                                //                                                        Text(String(describing: opportunity_data[index]["location"]!))
+                                                //                                                            .font(Font.custom("Nunito-SemiBold", size: 8))
+                                                //                                                            .foregroundColor(Color("Custom_Gray"))
+                                                //                                                            .padding(.leading, -7.5)
+                                                //                                                    }
+                                                //                                                }
                                             }
                                             .padding(.horizontal,12)
                                             .padding(.top, 5).padding(.bottom, -2)

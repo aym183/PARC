@@ -483,9 +483,9 @@ class ReadDB: ObservableObject {
                                         trading_window_id = temp_dict["trading-window-id"]!
                                         UserDefaults.standard.set("false", forKey: "trading_window_active")
                                     } 
-//                                    else {
-//                                        UserDefaults.standard.set("false", forKey: "trading_window_active")
-//                                    }
+                                    //                                    else {
+                                    //                                        UserDefaults.standard.set("false", forKey: "trading_window_active")
+                                    //                                    }
                                     temp_dict = [:]
                                 }
                                 self.trading_window_data = sortArrayByDate(inputArray: self.trading_window_data, field_name: "start_date", date_type: "dd/MM/yyyy")

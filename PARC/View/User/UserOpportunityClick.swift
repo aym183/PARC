@@ -124,21 +124,6 @@ struct UserOpportunityClick: View {
                                 .foregroundColor(Color("Custom_Gray"))
                             Spacer()
                             
-//                            ZStack {
-//                                Rectangle()
-//                                    .foregroundColor(.clear)
-//                                    .frame(width: 45, height: 14)
-//                                    .background(Color(red: 0.85, green: 0.85, blue: 0.85).opacity(0.5))
-//                                    .cornerRadius(5)
-//                                
-//                                HStack {
-//                                    Image("gbr").resizable().frame(width: 10, height: 10)
-//                                    Text(String(describing: opportunity_data["location"]!))
-//                                        .font(Font.custom("Nunito-SemiBold", size: 8))
-//                                        .foregroundColor(Color("Custom_Gray"))
-//                                        .padding(.leading, -7.5)
-//                                }
-//                            }
                         }
                         .padding(.top, 5)
                         
@@ -225,7 +210,7 @@ struct UserOpportunityClick: View {
                                         
                                         Text(titles_why_invest_description[index])
                                             .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.033))
-//                                            .foregroundColor(.gray)
+                                        //                                            .foregroundColor(.gray)
                                             .foregroundColor(Color("Secondary"))
                                             .multilineTextAlignment(.center)
                                         
@@ -245,7 +230,7 @@ struct UserOpportunityClick: View {
                                         
                                         Text(titles_why_invest_description_2[index])
                                             .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.033))
-//                                            .foregroundColor(.gray)
+                                        //                                            .foregroundColor(.gray)
                                             .foregroundColor(Color("Secondary"))
                                             .multilineTextAlignment(.center)
                                         
@@ -260,43 +245,8 @@ struct UserOpportunityClick: View {
                         }
                         
                         
-//                        HStack {
-//                            Text(analytics_text)
-                                           
-//                            Spacer()
-//                            Menu {
-//                                Button {
-//                                    withAnimation(.easeOut(duration: 0.2)) {
-//                                        analytics_text = "Similar Franchises"
-//                                    }
-//                                } label: {
-//                                    Label("Similar Franchises", systemImage: "chart.pie")
-//                                }
-//                                
-//                                Button {
-//                                    withAnimation(.easeOut(duration: 0.2)) {
-//                                        analytics_text = "Selected Franchise"
-//                                    }
-//                                } label: {
-//                                    Label("Selected Franchise", systemImage: "chart.line.uptrend.xyaxis")
-//                                }
-//                            } label: {
-//                                ZStack {
-//                                    RoundedRectangle(cornerRadius: 10)
-//                                        .fill(Color("Secondary"))
-//                                        .frame(width: geometry.size.width*0.15, height: 25)
-//                                    
-//                                    Text("Select \(Image(systemName: "chevron.down"))")
-//                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.025))
-//                                        .foregroundColor(.white)
-//                                }
-//                            }
-//                        }
-//                        .padding(.top)
-//                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.055))
-                                                
                         HStack(spacing: 30) {
-                            Button(action : { 
+                            Button(action : {
                                 withAnimation(.easeOut(duration: 0.2)) {
                                     text_selected = "Selected Franchise"
                                 }
@@ -339,7 +289,7 @@ struct UserOpportunityClick: View {
                             .frame(height: 1)
                             .padding(.top, -5)
                         
-                                       
+                        
                         if text_selected == "Similar Franchises" {
                             ForEach(0..<2, id: \.self) { index in
                                 HStack(spacing: 10) {
@@ -565,7 +515,7 @@ struct UserOpportunityClick: View {
                             Image(systemName: "message.fill")
                                 .foregroundColor(.white)
                                 .font(.system(size: geometry.size.width*0.05))
-                                
+                            
                         }
                         .frame(width:  geometry.size.width*0.14, height: geometry.size.height*0.0725)
                         .background(Color("Secondary"))

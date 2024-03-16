@@ -48,10 +48,10 @@ struct UserAccount: View {
                                             HStack {
                                                 Spacer()
                                                 Image(systemName: "pencil.circle.fill")
-                                                        .resizable()
-                                                        .foregroundColor(.gray)
-                                                        .opacity(0.8)
-                                                        .frame(width: 25, height: 25)
+                                                    .resizable()
+                                                    .foregroundColor(.gray)
+                                                    .opacity(0.8)
+                                                    .frame(width: 25, height: 25)
                                             }
                                             Spacer()
                                         }
@@ -176,33 +176,6 @@ struct UserAccount: View {
                             .overlay(Color("Custom_Gray"))
                             .opacity(0.75)
                             .frame(height: 1)
-                        
-                        
-//                        HStack {
-//                            Text("Set Pin")
-//                                .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.052))
-//                            Spacer()
-//                            Button(action: {}) {
-//                                ZStack {
-//                                    RoundedRectangle(cornerRadius: 5)
-//                                        .fill(Color.white)
-//                                        .overlay(
-//                                            RoundedRectangle(cornerRadius: 5)
-//                                                .stroke(Color.black, lineWidth: 1.25)
-//                                        )
-//                                        .frame(width: 100, height: 35)
-//                                    
-//                                    Text("Set")
-//                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.04))
-//                                }
-//                            }
-//                        }
-//                        .padding(.horizontal).padding(.top, 10)
-//                        
-//                        Divider()
-//                            .overlay(Color("Custom_Gray"))
-//                            .opacity(0.75)
-//                            .frame(height: 1)
                         
                         HStack {
                             Text("Balance")

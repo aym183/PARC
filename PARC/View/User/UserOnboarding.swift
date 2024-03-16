@@ -86,7 +86,7 @@ struct UserOnboarding: View {
                                         Text("Amount should be greater than 0").foregroundColor(.red).font(Font.custom("Nunito-Medium", size: min(geometry.size.width, geometry.size.height) * 0.035)).fontWeight(.bold)
                                     }
                                 }
-                               
+                                
                                 HStack {
                                     Text("Have you ever invested before?")
                                         .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.05))
@@ -103,7 +103,7 @@ struct UserOnboarding: View {
                                                 RoundedRectangle(cornerRadius: 5)
                                                     .stroke(Color.black, lineWidth: 1.5)
                                             )
-                                            
+                                        
                                         Button(action: {
                                             if self.selectedNo == true {
                                                 self.selectedNo.toggle()
@@ -129,7 +129,7 @@ struct UserOnboarding: View {
                                                 RoundedRectangle(cornerRadius: 5)
                                                     .stroke(Color.black, lineWidth: 1.5)
                                             )
-                                            
+                                        
                                         Button(action: { 
                                             if self.selectedYes == true {
                                                 self.selectedYes.toggle()
@@ -165,7 +165,7 @@ struct UserOnboarding: View {
                                                 .fontWeight(.semibold).padding(.vertical).padding(.leading, 5).padding(.top, -3)
                                         }
                                     }
-                                  
+                                    
                                     Spacer()
                                 }
                                 if isShowingVerificationHint {
@@ -213,14 +213,14 @@ struct UserOnboarding: View {
                                             UserDefaults.standard.set(true, forKey: "verification_completed")
                                             UserDefaults.standard.set(Int(net_worth)!, forKey: "net_worth")
                                             isShownOnboarding.toggle()
-//                                            UpdateDB().updateUserTable(primary_key: "email", primary_key_value: email, table: "users", updated_key: "net_worth", updated_value: net_worth) { response in
-//                                                if response == "users net_worth updated" {
-//                                                }
-//                                            }
+                                            //                                            UpdateDB().updateUserTable(primary_key: "email", primary_key_value: email, table: "users", updated_key: "net_worth", updated_value: net_worth) { response in
+                                            //                                                if response == "users net_worth updated" {
+                                            //                                                }
+                                            //                                            }
                                         }) {
-                                                Text("Submit")
-                                                    .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.05))
-                                                    .frame(width: 135, height: 45)
+                                            Text("Submit")
+                                                .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.05))
+                                                .frame(width: 135, height: 45)
                                         }
                                         .background(Color("Secondary"))
                                         .foregroundColor(Color.white)
@@ -229,7 +229,7 @@ struct UserOnboarding: View {
                                         .opacity(isNetWorthValid ? 1 : 0.75)
                                     }
                                     .frame(width: 135, height: 45)
-                                
+                                    
                                     Spacer()
                                     
                                     ZStack {
@@ -239,7 +239,7 @@ struct UserOnboarding: View {
                                                 RoundedRectangle(cornerRadius: 5)
                                                     .stroke(Color.black, lineWidth: 1.25)
                                             )
-                                            
+                                        
                                         Button(action: { isShownOnboarding.toggle() }) {
                                             Text("Skip")
                                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.05))
@@ -254,8 +254,8 @@ struct UserOnboarding: View {
                             }
                             .padding(10)
                             .frame(height: max(0, geometry.size.height-300))
-                    }
-                    .frame(width: max(0, geometry.size.width - 70))
+                        }
+                        .frame(width: max(0, geometry.size.width - 70))
                     }
                     .sheet(isPresented: $showVerificationImagePicker) {
                         ImagePicker(image: $verification_image)
