@@ -4,8 +4,8 @@
 //
 //  Created by Ayman Ali on 31/10/2023.
 //
+//  Adopted from: https://github.com/auth0-blog/auth0-swiftui-login-video/blob/main/iOS%20SwiftUI%20Login%20(complete)/iOS%20SwiftUI%20Login/Profile.swift
 
-// REFER AUTH0!!!!!!!!!!!
 import Foundation
 import JWTDecode
 

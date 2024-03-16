@@ -154,8 +154,7 @@ struct UserOnboarding: View {
                                         .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.05))
                                     
                                     if let image = self.verification_image {
-                                        Text("✅")
-                                            .padding(.vertical)
+                                        Text("✅").padding(.vertical)
                                     } else {
                                         Button(action: {
                                             withAnimation(.easeOut(duration: 0.5)) { isShowingVerificationHint.toggle() }
@@ -213,10 +212,6 @@ struct UserOnboarding: View {
                                             UserDefaults.standard.set(true, forKey: "verification_completed")
                                             UserDefaults.standard.set(Int(net_worth)!, forKey: "net_worth")
                                             isShownOnboarding.toggle()
-                                            //                                            UpdateDB().updateUserTable(primary_key: "email", primary_key_value: email, table: "users", updated_key: "net_worth", updated_value: net_worth) { response in
-                                            //                                                if response == "users net_worth updated" {
-                                            //                                                }
-                                            //                                            }
                                         }) {
                                             Text("Submit")
                                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.05))

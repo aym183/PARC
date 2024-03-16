@@ -32,18 +32,6 @@ struct AdminOpportunityClick: View {
                         }
                         
                         if opportunity_data["status"]! == "Active" {
-                            //                            HStack(spacing: 20) {
-                            //                                Button(action: {}) {
-                            //                                    HStack {
-                            //                                        Text("Edit Opportunity")
-                            //                                            .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.038))
-                            //                                    }
-                            //                                    .frame(width: geometry.size.width*0.44, height: 45)
-                            //                                    .background(Color("Secondary"))
-                            //                                    .foregroundColor(Color.white)
-                            //                                    .cornerRadius(5)
-                            //                                    .padding(.bottom)
-                            //                                }
                             
                             Button(action: { showingDeleteAlert.toggle() }) {
                                 HStack {

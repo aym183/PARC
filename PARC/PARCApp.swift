@@ -24,7 +24,7 @@ struct PARCApp: App {
         }
     }
     
-    // Reference - https://www.youtube.com/watch?v=0Bcui9hyXhY
+    // Adopted from: https://www.youtube.com/watch?v=0Bcui9hyXhY
     func authenticate() {
         let context = LAContext()
         var error: NSError?

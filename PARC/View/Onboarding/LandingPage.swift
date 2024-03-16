@@ -115,7 +115,6 @@ extension LandingContent {
                     print("Failed with: \(error)")
                     
                 case .success(let credentials):
-                    //                    self.isAuthenticated = true
                     self.isShownHomePage = true
                     self.userProfile = Profile.from(credentials.idToken)
                     UserDefaults.standard.set(self.userProfile.given_name, forKey: "first_name")

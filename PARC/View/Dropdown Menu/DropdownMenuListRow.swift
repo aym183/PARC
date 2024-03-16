@@ -3,7 +3,7 @@
 //  PARC
 //
 //  Created by Ayman Ali on 03/11/2023.
-//
+//  Adopted from: https://github.com/aym183/openrack/blob/main/openrack/DropdownMenuListRow.swift
 
 import SwiftUI
 

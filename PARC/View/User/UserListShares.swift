@@ -24,7 +24,6 @@ struct UserListShares: View {
     var validFormInputs: Bool { selectedHolding != nil && asking_price.count>0 && is_on }
     @State var isValidInput = true
     
-    //Refactor this view to show for loop components as compared to replicating
     var body: some View {
         GeometryReader { geometry in
             ZStack {

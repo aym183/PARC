@@ -167,7 +167,6 @@ struct UserMarketplace: View {
                                                 Spacer()
                                             }
                                             .frame(width: 75)
-                                            //                                            .padding(.trailing, -25)
                                             
                                             Spacer()
                                             
@@ -177,7 +176,6 @@ struct UserMarketplace: View {
                                                 Spacer()
                                             }
                                             .frame(width: 75)
-                                            //                                            .padding(.trailing, -5)
                                         }
                                         .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.035))
                                         .multilineTextAlignment(.center)

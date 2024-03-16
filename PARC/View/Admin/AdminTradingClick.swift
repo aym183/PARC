@@ -26,19 +26,7 @@ struct AdminTradingClick: View {
                             .font(Font.custom("Nunito-Bold", size: 50))
                         
                         if selected_trading_window["status"]! == "Ongoing" {
-                            //                            HStack(spacing: 20) {
-                            //                                Button(action: {}) {
-                            //                                    HStack {
-                            //                                        Text("Edit Window")
-                            //                                            .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.038))
-                            //                                    }
-                            //                                    .frame(width: geometry.size.width*0.4, height: 45)
-                            //                                    .background(Color("Secondary"))
-                            //                                    .foregroundColor(Color.white)
-                            //                                    .cornerRadius(5)
-                            //                                    .padding(.bottom)
-                            //                                }
-                            //                                
+                            
                             Button(action: { showingDeleteAlert.toggle() }) {
                                 HStack {
                                     Text("Close Window")
@@ -50,7 +38,6 @@ struct AdminTradingClick: View {
                                 .cornerRadius(5)
                                 .padding(.bottom)
                             }
-                            //                            }
                             
                         }
                         

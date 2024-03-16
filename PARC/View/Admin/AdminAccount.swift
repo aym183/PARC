@@ -112,34 +112,6 @@ struct AdminAccount: View {
                     
                     VStack(alignment: .center) {
                         
-                        //                        HStack {
-                        //                            Text("Set Pin")
-                        //                                .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.052))
-                        //                            Spacer()
-                        //                            
-                        //                            Button(action: {}) {
-                        //                                ZStack {
-                        //                                    RoundedRectangle(cornerRadius: 5)
-                        //                                        .fill(Color.white)
-                        //                                        .overlay(
-                        //                                            RoundedRectangle(cornerRadius: 5)
-                        //                                                .stroke(Color.black, lineWidth: 1.25)
-                        //                                        )
-                        //                                        .frame(width: 100, height: 35)
-                        //                                    
-                        //                                    Text("Set")
-                        //                                        .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.04))
-                        //                                }
-                        //                            }
-                        //                            
-                        //                        }
-                        //                        .padding(.horizontal).padding(.top)
-                        //                        
-                        //                        Divider()
-                        //                            .overlay(Color("Custom_Gray"))
-                        //                            .opacity(0.75)
-                        //                            .frame(height: 1)
-                        
                         HStack {
                             
                             Button(action: { showing_log_out.toggle() }) {

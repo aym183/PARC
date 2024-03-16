@@ -189,44 +189,13 @@ struct UserPortfolio: View {
                                                $0["opportunity_id"] == opportunityID && $0["equity"] == equity
                                            }) {
                                             
-                                            //                                            if appeared_before == 0 {
                                             RoundedRectangle(cornerRadius: 5)
                                                 .frame(width: 40, height: 40)
                                                 .foregroundColor(payouts_colors["\(user_payouts_data[userIndex]["opportunity_id"]!) - \((user_payouts_data[userIndex]["equity"]!))"])
                                             
-                                            //                                                .onAppear() {
-                                            //                                            }
-                                            //                                                payouts_data[appeared_before].color
-                                            //                                            }
                                         }
                                     }
-                                    //                                    if let franchiseName = portfolio_data[index]["opportunity_name"] {
-                                    //                                        if let franchiseIndex = franchise_data.firstIndex(where: { $0["name"] == franchiseName }) {
-                                    //                                            let matchedFranchise = franchise_data[franchiseIndex]["logo"]!
-                                    //                                            
-                                    //                                            if UserDefaults.standard.object(forKey: String(describing: matchedFranchise)) != nil {
-                                    //                                                Image(uiImage: loadDisplayImage(key: String(describing: matchedFranchise)))
-                                    //                                                    .resizable()
-                                    //                                                    .aspectRatio(contentMode: .fill)
-                                    //                                                    .frame(width: 50, height: 50)
-                                    //                                                    .padding(.leading, 10)
-                                    //                                            } else {
-                                    //                                                Image(systemName: "house")
-                                    //                                                    .resizable()
-                                    //                                                    .aspectRatio(contentMode: .fill)
-                                    //                                                    .frame(width: 50, height: 50)
-                                    //                                                    .padding(.leading, 10)
-                                    //                                            }
-                                    //                                            
-                                    //                                        } else {
-                                    //                                            Image(systemName: "house")
-                                    //                                                .resizable()
-                                    //                                                .aspectRatio(contentMode: .fill)
-                                    //                                                .frame(width: 50, height: 50)
-                                    //                                                .padding(.leading, 10)
-                                    //                                        }
-                                    //                                    }
-                                    
+
                                     VStack(alignment: .leading) {
                                         if text_selected == "Holdings" || text_selected == "" {
                                             if let opportunityID = Int(portfolio_data[index]["opportunity_id"]!) {
