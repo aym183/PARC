@@ -35,7 +35,7 @@ class ReadDB: ObservableObject {
     let apiKey = AppConfig.apiKey
     
     
-    /// <#Description#>
+    /// Retrieves all the franchises from the database
     func getFranchises() {
         var temp_dict: [String: String] = [:]
         let keysArray = ["description", "avg_revenue_18_months", "name", "logo", "display_image", "industry", "no_of_franchises", "ebitda_estimate", "avg_franchise_mom_revenues", "avg_startup_capital"]
@@ -81,10 +81,8 @@ class ReadDB: ObservableObject {
         }.resume()
     }
     
-    // Separated admin and user so that admin can get all opportunities and and user can get only active ones
     
-    /// <#Description#>
-    /// - Parameter completion: <#completion description#>
+    /// Retrieves all the opportunities visible to users. This is only the active opprtunities available to invest.
     func getUserOpportunities(completion: @escaping (String?) -> Void) {
         var keysArray = ["min_invest_amount", "location", "date_created", "equity_offered", "amount_raised", "close_date", "status", "franchise", "asking_price", "opportunity_id", "investors"]
         var temp_dict: [String: String] = [:]
@@ -156,8 +154,7 @@ class ReadDB: ObservableObject {
     }
     
     
-    /// <#Description#>
-    /// - Parameter completion: <#completion description#>
+    /// Retrieves all the opportunities visible from the database. This is different to the previuous function as admins should be able to see all opportunities
     func getAdminOpportunities(completion: @escaping (String?) -> Void) {
         var keysArray = ["min_invest_amount", "location", "date_created", "equity_offered", "amount_raised", "close_date", "status", "franchise", "asking_price", "opportunity_id", "investors"]
         var temp_dict: [String: String] = [:]
@@ -208,8 +205,7 @@ class ReadDB: ObservableObject {
     }
     
     
-    /// <#Description#>
-    /// - Parameter completion: <#completion description#>
+    /// Retrieves all high-level payouts information such as total amount given out to investors
     func getPayouts(completion: @escaping (String?) -> Void) {
         var keysArray = ["franchise", "revenue_generated", "date_scheduled", "status", "opportunity_id", "date_created", "payout_id", "amount_offered"]
         var temp_dict: [String: String] = [:]
@@ -261,10 +257,9 @@ class ReadDB: ObservableObject {
     }
     
     
-    /// <#Description#>
+    /// Fetches all individual payouts sent to users from te database. This wil include granular information such as how much a user has earned in payouts during an opportunity's lifetime
     /// - Parameters:
-    ///   - email: <#email description#>
-    ///   - completion: <#completion description#>
+    ///   - email: Email of the user for whom payouts need to be checked
     func getUserPayouts(email: String, completion: @escaping (String?) -> Void) {
         let keysArray = ["user_payout_id", "equity", "opportunity_id", "amount_received", "user_email", "payout_date"]
         var temp_dict: [String: String] = [:]
@@ -313,10 +308,9 @@ class ReadDB: ObservableObject {
     }
     
     
-    /// <#Description#>
+    /// Fetches a user's investment holdings from the database
     /// - Parameters:
-    ///   - email: <#email description#>
-    ///   - completion: <#completion description#>
+    ///   - email: Email of the user for whom holdings need to be retrieved
     func getUserHoldings(email: String, completion: @escaping (String?) -> Void) {
         var keysArray = ["opportunity_name", "user_holdings_id", "user_email", "status", "opportunity_id", "equity", "amount", "transaction_date"]
         var temp_dict: [String: String] = [:]
@@ -397,7 +391,7 @@ class ReadDB: ObservableObject {
     }
     
     
-    /// <#Description#>
+    /// Retrieves all user holdings for the admin to keep track of investments made for an opportunity
     func getAllUserHoldings() {
         var keysArray = ["opportunity_name", "user_holdings_id", "user_email", "status", "opportunity_id", "equity", "amount", "transaction_date"]
         var temp_dict: [String: String] = [:]
@@ -439,7 +433,7 @@ class ReadDB: ObservableObject {
     }
     
     
-    /// <#Description#>
+    /// Retrieves all trading windows from the database for the admin to manage each
     func getTradingWindows() {
         var keysArray = ["trading-window-id", "start_date", "status", "duration", "trading_volume"]
         var temp_dict: [String: String] = [:]
@@ -525,7 +519,7 @@ class ReadDB: ObservableObject {
     }
     
     
-    /// <#Description#>
+    /// Retrieves all trading window transactions to show each trading window's performance to the admin
     func getTradingWindowTransactions() {
         var temp_dict: [String: String] = [:]
         let keysArray = ["user_selling", "user_buying", "trading_window_id", "opportunity_id", "equity", "transaction_date", "transaction_id", "price"]
@@ -568,7 +562,7 @@ class ReadDB: ObservableObject {
     }
     
     
-    /// <#Description#>
+    /// Retrieves all trading window transactions that involves the seller being the logged in user. This is to add the balance from sales to the user's withdrawable amount
     func getTradingWindowTransactionsEmail() {
         let keysArray = ["user_selling", "user_buying", "trading_window_id", "opportunity_id", "equity", "transaction_date", "transaction_id", "price"]
         let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/transactions-secondary-market")!
@@ -607,8 +601,8 @@ class ReadDB: ObservableObject {
     }
     
     
-    /// <#Description#>
-    /// - Parameter path: <#path description#>
+    /// Retrieves an image from Firebase Storage
+    /// - Parameter path: The path from which the image is retrieved
     func getImage(path: String) {
         let storage = Storage.storage()
         let storageRef = storage.reference()
@@ -626,10 +620,8 @@ class ReadDB: ObservableObject {
     }
     
     
-    /// <#Description#>
-    /// - Parameters:
-    ///   - path: <#path description#>
-    ///   - completion: <#completion description#>
+    /// Retrieves an image from Firebase Storage
+    /// - Parameter path: The path from which the image is retrieved
     func getDisImage(path: String, completion: @escaping (UIImage?) -> Void) {
         let storage = Storage.storage()
         let storageRef = storage.reference()
