@@ -34,6 +34,8 @@ class ReadDB: ObservableObject {
     let dispatchGroup = DispatchGroup()
     let apiKey = AppConfig.apiKey
     
+    
+    /// <#Description#>
     func getFranchises() {
         var temp_dict: [String: String] = [:]
         let keysArray = ["description", "avg_revenue_18_months", "name", "logo", "display_image", "industry", "no_of_franchises", "ebitda_estimate", "avg_franchise_mom_revenues", "avg_startup_capital"]
@@ -80,6 +82,9 @@ class ReadDB: ObservableObject {
     }
     
     // Separated admin and user so that admin can get all opportunities and and user can get only active ones
+    
+    /// <#Description#>
+    /// - Parameter completion: <#completion description#>
     func getUserOpportunities(completion: @escaping (String?) -> Void) {
         var keysArray = ["min_invest_amount", "location", "date_created", "equity_offered", "amount_raised", "close_date", "status", "franchise", "asking_price", "opportunity_id", "investors"]
         var temp_dict: [String: String] = [:]
@@ -150,6 +155,9 @@ class ReadDB: ObservableObject {
         }.resume()
     }
     
+    
+    /// <#Description#>
+    /// - Parameter completion: <#completion description#>
     func getAdminOpportunities(completion: @escaping (String?) -> Void) {
         var keysArray = ["min_invest_amount", "location", "date_created", "equity_offered", "amount_raised", "close_date", "status", "franchise", "asking_price", "opportunity_id", "investors"]
         var temp_dict: [String: String] = [:]
@@ -199,6 +207,9 @@ class ReadDB: ObservableObject {
         }.resume()
     }
     
+    
+    /// <#Description#>
+    /// - Parameter completion: <#completion description#>
     func getPayouts(completion: @escaping (String?) -> Void) {
         var keysArray = ["franchise", "revenue_generated", "date_scheduled", "status", "opportunity_id", "date_created", "payout_id", "amount_offered"]
         var temp_dict: [String: String] = [:]
@@ -249,6 +260,11 @@ class ReadDB: ObservableObject {
         }.resume()
     }
     
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - email: <#email description#>
+    ///   - completion: <#completion description#>
     func getUserPayouts(email: String, completion: @escaping (String?) -> Void) {
         let keysArray = ["user_payout_id", "equity", "opportunity_id", "amount_received", "user_email", "payout_date"]
         var temp_dict: [String: String] = [:]
@@ -296,6 +312,11 @@ class ReadDB: ObservableObject {
         }.resume()
     }
     
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - email: <#email description#>
+    ///   - completion: <#completion description#>
     func getUserHoldings(email: String, completion: @escaping (String?) -> Void) {
         var keysArray = ["opportunity_name", "user_holdings_id", "user_email", "status", "opportunity_id", "equity", "amount", "transaction_date"]
         var temp_dict: [String: String] = [:]
@@ -375,6 +396,8 @@ class ReadDB: ObservableObject {
         }.resume()
     }
     
+    
+    /// <#Description#>
     func getAllUserHoldings() {
         var keysArray = ["opportunity_name", "user_holdings_id", "user_email", "status", "opportunity_id", "equity", "amount", "transaction_date"]
         var temp_dict: [String: String] = [:]
@@ -415,6 +438,8 @@ class ReadDB: ObservableObject {
         }.resume()
     }
     
+    
+    /// <#Description#>
     func getTradingWindows() {
         var keysArray = ["trading-window-id", "start_date", "status", "duration", "trading_volume"]
         var temp_dict: [String: String] = [:]
@@ -499,6 +524,8 @@ class ReadDB: ObservableObject {
         }.resume()
     }
     
+    
+    /// <#Description#>
     func getTradingWindowTransactions() {
         var temp_dict: [String: String] = [:]
         let keysArray = ["user_selling", "user_buying", "trading_window_id", "opportunity_id", "equity", "transaction_date", "transaction_id", "price"]
@@ -540,6 +567,8 @@ class ReadDB: ObservableObject {
         }.resume()
     }
     
+    
+    /// <#Description#>
     func getTradingWindowTransactionsEmail() {
         let keysArray = ["user_selling", "user_buying", "trading_window_id", "opportunity_id", "equity", "transaction_date", "transaction_id", "price"]
         let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/transactions-secondary-market")!
@@ -577,6 +606,9 @@ class ReadDB: ObservableObject {
         
     }
     
+    
+    /// <#Description#>
+    /// - Parameter path: <#path description#>
     func getImage(path: String) {
         let storage = Storage.storage()
         let storageRef = storage.reference()
@@ -594,6 +626,10 @@ class ReadDB: ObservableObject {
     }
     
     
+    /// <#Description#>
+    /// - Parameters:
+    ///   - path: <#path description#>
+    ///   - completion: <#completion description#>
     func getDisImage(path: String, completion: @escaping (UIImage?) -> Void) {
         let storage = Storage.storage()
         let storageRef = storage.reference()
