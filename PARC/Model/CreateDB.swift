@@ -14,6 +14,15 @@ class CreateDB: ObservableObject {
     let currentDate = Date()
     let apiKey = AppConfig.apiKey
 
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - email: <#email description#>
+    ///   - first_name: <#first_name description#>
+    ///   - last_name: <#last_name description#>
+    ///   - full_name: <#full_name description#>
+    ///   - picture: <#picture description#>
+    ///   - completion: <#completion description#>
     func createUser(email: String, first_name: String, last_name: String, full_name: String, picture: String, completion: @escaping (String?) -> Void) {
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/users")!
         var request = URLRequest(url: apiUrl)
@@ -67,6 +76,11 @@ class CreateDB: ObservableObject {
         }.resume()
     }
     
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - name: <#name description#>
+    ///   - email: <#email description#>
     func create_onboarding_email(name: String, email: String) {
         let apiUrl = URL(string: "https://brdh472ip2.execute-api.us-east-1.amazonaws.com/development/emails/send-intro-email?email=\(email)&name=\(name)")!
         var request = URLRequest(url: apiUrl)
@@ -86,6 +100,13 @@ class CreateDB: ObservableObject {
         }.resume()
     }
     
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - email: <#email description#>
+    ///   - amount: <#amount description#>
+    ///   - opportunity_name: <#opportunity_name description#>
+    ///   - type: <#type description#>
     func createInvestmentConfirmation(email: String, amount: String, opportunity_name: String, type: String) {
         if type == "buyer" {
             let apiUrl = URL(string: "https://brdh472ip2.execute-api.us-east-1.amazonaws.com/development/emails/investment-confirmed?email=\(email)&amount=\(amount)&opportunity_name=\(opportunity_name)")
@@ -124,6 +145,19 @@ class CreateDB: ObservableObject {
         
     }
     
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - name: <#name description#>
+    ///   - logo: <#logo description#>
+    ///   - display_image: <#display_image description#>
+    ///   - description: <#description description#>
+    ///   - no_of_franchises: <#no_of_franchises description#>
+    ///   - avg_franchise_mom_revenues: <#avg_franchise_mom_revenues description#>
+    ///   - avg_startup_capital: <#avg_startup_capital description#>
+    ///   - avg_revenue_18_months: <#avg_revenue_18_months description#>
+    ///   - ebitda_estimate: <#ebitda_estimate description#>
+    ///   - completion: <#completion description#>
     func createFranchise(name: String, logo: String, display_image: String, description: String, no_of_franchises: String, avg_franchise_mom_revenues: String, avg_startup_capital: String, avg_revenue_18_months: String, ebitda_estimate: String, completion: @escaping (String?) -> Void) {
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/franchises?name=\(name)&logo=\(logo)&display_image=\(display_image)&description=\(description)&no_of_franchises=\(no_of_franchises)&avg_franchise_mom_revenues=\(avg_franchise_mom_revenues)&avg_startup_capital=\(avg_startup_capital)&avg_revenue_18_months=\(avg_revenue_18_months)&ebitda_estimate=\(ebitda_estimate)")!
         var request = URLRequest(url: apiUrl)
@@ -143,6 +177,16 @@ class CreateDB: ObservableObject {
         }.resume()
     }
     
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - franchise_name: <#franchise_name description#>
+    ///   - location: <#location description#>
+    ///   - asking_price: <#asking_price description#>
+    ///   - equity_offered: <#equity_offered description#>
+    ///   - min_invest_amount: <#min_invest_amount description#>
+    ///   - close_date: <#close_date description#>
+    ///   - completion: <#completion description#>
     func create_opportunity(franchise_name: String, location: String, asking_price: String, equity_offered: String, min_invest_amount: String, close_date: String, completion: @escaping (String?) -> Void) {
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/opportunities")!
         var request = URLRequest(url: apiUrl)
@@ -188,6 +232,12 @@ class CreateDB: ObservableObject {
         }.resume()
     }
     
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - image: <#image description#>
+    ///   - folder: <#folder description#>
+    /// - Returns: <#description#>
     func upload_logo_image(image: UIImage, folder: String) -> String {
         @AppStorage("email") var email: String = ""
         let imageData = image.jpegData(compressionQuality: 0.8)
@@ -213,6 +263,16 @@ class CreateDB: ObservableObject {
         return path
     }
     
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - franchise: <#franchise description#>
+    ///   - revenue_generated: <#revenue_generated description#>
+    ///   - opportunity_id: <#opportunity_id description#>
+    ///   - date_scheduled: <#date_scheduled description#>
+    ///   - amount_offered: <#amount_offered description#>
+    ///   - user_holdings: <#user_holdings description#>
+    ///   - completion: <#completion description#>
     func createPayout(franchise: String, revenue_generated: String, opportunity_id: Int, date_scheduled: String, amount_offered: String, user_holdings: [[String: String]], completion: @escaping (String?) -> Void) {
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/payouts")!
         var request = URLRequest(url: apiUrl)
@@ -255,8 +315,13 @@ class CreateDB: ObservableObject {
         }.resume()
     }
     
-    // Reference GPT
     
+    /// <#Description#>
+    /// - Parameters:
+    ///   - opportunity_id: <#opportunity_id description#>
+    ///   - user_holdings: <#user_holdings description#>
+    ///   - amount_offered: <#amount_offered description#>
+    ///   - payout_id: <#payout_id description#>
     func createUserPayout(opportunity_id: Int, user_holdings: [[String: String]], amount_offered: String, payout_id: Int) {
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/payouts/user-payouts")!
         var request = URLRequest(url: apiUrl)
@@ -325,6 +390,12 @@ class CreateDB: ObservableObject {
         }.resume()
     }
     
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - opportunity_id: <#opportunity_id description#>
+    ///   - email: <#email description#>
+    ///   - amount: <#amount description#>
     func createOpportunityTransaction(opportunity_id: String, email: String, amount: String) {
         
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/transactions")!
@@ -366,6 +437,14 @@ class CreateDB: ObservableObject {
         }.resume()
     }
     
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - opportunity_name: <#opportunity_name description#>
+    ///   - opportunity_id: <#opportunity_id description#>
+    ///   - email: <#email description#>
+    ///   - equity: <#equity description#>
+    ///   - amount: <#amount description#>
     func createUserInvestmentHolding(opportunity_name: String, opportunity_id: String, email: String, equity: String, amount: String) {
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/user-holdings")!
         var request = URLRequest(url: apiUrl)
@@ -408,6 +487,13 @@ class CreateDB: ObservableObject {
         
     }
     
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - start_date: <#start_date description#>
+    ///   - duration: <#duration description#>
+    ///   - status: <#status description#>
+    ///   - completion: <#completion description#>
     func createTradingWindow(start_date: String, duration: String, status: String, completion: @escaping (String?) -> Void) {
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/trading-windows")!
         var request = URLRequest(url: apiUrl)
@@ -450,6 +536,16 @@ class CreateDB: ObservableObject {
         }.resume()
     }
     
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - opportunity_id: <#opportunity_id description#>
+    ///   - trading_window_id: <#trading_window_id description#>
+    ///   - price: <#price description#>
+    ///   - equity: <#equity description#>
+    ///   - user_buying: <#user_buying description#>
+    ///   - user_selling: <#user_selling description#>
+    ///   - completion: <#completion description#>
     func createSecondaryMarketTransaction(opportunity_id: String, trading_window_id: String, price: String, equity: String, user_buying: String, user_selling: String, completion: @escaping (String?) -> Void) {
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/transactions-secondary-market")!
         var request = URLRequest(url: apiUrl)
@@ -492,6 +588,11 @@ class CreateDB: ObservableObject {
         }.resume()
     }
     
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - email: <#email description#>
+    ///   - amount: <#amount description#>
     func createWithdrawalConfirmation(email: String, amount: String) {
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/users/withdrawals?email=\(email)&amount=\(amount)")
         var request = URLRequest(url: apiUrl!)
@@ -511,6 +612,11 @@ class CreateDB: ObservableObject {
         }.resume()
     }
     
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - message: <#message description#>
+    ///   - completion: <#completion description#>
     func createChatbotRequest(message: String, completion: @escaping (String?) -> Void) {
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/chatbot?user_input=\(message)")
         var request = URLRequest(url: apiUrl!)

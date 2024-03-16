@@ -12,7 +12,7 @@ import SwiftUI
 /// - Parameter dateString: Original date string
 /// - Returns: Modified date string
 func convertDate(dateString: String) -> String {
-
+    
     let components = dateString.components(separatedBy: " ")
     if let datePart = components.first {
         let dateFormatter = DateFormatter()
@@ -45,7 +45,7 @@ func isTradingWindowActive(targetDate: String, start startDate: String, end endD
         if let target = dateFormatter.date(from: targetDate),
            let start = dateFormatter.date(from: startDate),
            let end = dateFormatter.date(from: endDate) {
-
+            
             return target >= start && target <= end
         }
     }
@@ -80,7 +80,7 @@ func isTradingWindowComplete(targetDate: String, end endDate: String, status: St
 func getDaysRemaining(date_input: String) -> Int? {
     let date_formatter = DateFormatter()
     date_formatter.dateFormat = "dd/MM/yyyy"
-
+    
     if let future_date = date_formatter.date(from: date_input) {
         let current_date = Date()
         let current_calendar = Calendar.current
@@ -105,7 +105,7 @@ func dateStringByAddingDays(days: Int, dateString: String) -> String? {
     dateFormatter.dateFormat = "dd/MM/yyyy"
     
     if days <= 0 {
-      return dateString
+        return dateString
     }
     
     if let inputDate = dateFormatter.date(from: dateString) {
@@ -180,7 +180,7 @@ func calculatePortionHoldings(input: [[String: String]], holdings_value: Int) ->
 func calculatePayoutOpportunities(input: [[String: String]]) -> [Float] {
     var outputArray: [Float] = []
     var indexMap: [String: Int] = [:]
-
+    
     for dict in input {
         if let opportunityID = dict["opportunity_id"],
            let equity = dict["equity"] {
@@ -215,7 +215,7 @@ func sortArrayByDate(inputArray: [[String: String]], field_name: String, date_ty
         }
         return date1 > date2
     }
-
+    
     return sortedArray
 }
 
@@ -250,21 +250,21 @@ func transformTradingWindowData(listed_shares: [[String: String]]) -> [String: I
     var traversed_trading_window: [String: Int] = [:]
     
     for share in listed_shares {
-            if let tradingWindowID = share["trading_window_id"] {
-                var franchise = tradingWindowID
-                var amount = Int(share["price"]!)!
-                if traversed_trading_window.keys.contains("\(franchise)_trades") {
-                    let transformed_amount = traversed_trading_window["\(franchise)_volume"]! + amount
-                    let transformed_count = traversed_trading_window["\(franchise)_trades"]! + 1
-                    traversed_trading_window["\(franchise)_volume"] = transformed_amount
-                    traversed_trading_window["\(franchise)_trades"] = transformed_count
-                } else {
-                    traversed_trading_window["\(franchise)_volume"] = amount
-                    traversed_trading_window["\(franchise)_trades"] = 1
-                }
+        if let tradingWindowID = share["trading_window_id"] {
+            var franchise = tradingWindowID
+            var amount = Int(share["price"]!)!
+            if traversed_trading_window.keys.contains("\(franchise)_trades") {
+                let transformed_amount = traversed_trading_window["\(franchise)_volume"]! + amount
+                let transformed_count = traversed_trading_window["\(franchise)_trades"]! + 1
+                traversed_trading_window["\(franchise)_volume"] = transformed_amount
+                traversed_trading_window["\(franchise)_trades"] = transformed_count
             } else {
-                return ["nil": 0]
+                traversed_trading_window["\(franchise)_volume"] = amount
+                traversed_trading_window["\(franchise)_trades"] = 1
             }
+        } else {
+            return ["nil": 0]
+        }
     }
     return traversed_trading_window
 }
@@ -327,12 +327,12 @@ func sortByDaysRemaining(array: [[String: String]]) -> [[String : String]] {
     }
     
     outputArray.sort {
-           guard let closeDate1 = $0["close_date"], let closeDate2 = $1["close_date"] else {
-               return false
-           }
-           return getDaysRemaining(date_input: closeDate1)! < getDaysRemaining(date_input: closeDate2)!
+        guard let closeDate1 = $0["close_date"], let closeDate2 = $1["close_date"] else {
+            return false
+        }
+        return getDaysRemaining(date_input: closeDate1)! < getDaysRemaining(date_input: closeDate2)!
     }
-
+    
     return outputArray + completedArray + closedArray
 }
 
@@ -341,30 +341,30 @@ func sortByDaysRemaining(array: [[String: String]]) -> [[String : String]] {
 /// - Returns: Split of each payout with details about the opportunity it belongs to
 func transformPayoutsArray(entries: [[String:String]]) -> [[String: String]]{
     var resultDictionary: [String: Double] = [:]
-        for entry in entries {
-            if let opportunityID = entry["opportunity_id"], let equity = entry["equity"], let amountReceivedString = entry["amount_received"], let amountReceived = Double(amountReceivedString) {
-                let key = "\(opportunityID)-\(equity)"
-                resultDictionary[key, default: 0.0] += amountReceived
-            }
+    for entry in entries {
+        if let opportunityID = entry["opportunity_id"], let equity = entry["equity"], let amountReceivedString = entry["amount_received"], let amountReceived = Double(amountReceivedString) {
+            let key = "\(opportunityID)-\(equity)"
+            resultDictionary[key, default: 0.0] += amountReceived
         }
-
-        var resultArray: [[String: String]] = []
-
-        for (key, value) in resultDictionary {
-            let components = key.components(separatedBy: "-")
-            if components.count == 2 {
-                let opportunityID = components[0]
-                let equity = components[1]
-                let resultEntry: [String: String] = [
-                    "opportunity_id": opportunityID,
-                    "equity": equity,
-                    "amount_received": "\(value)"
-                ]
-                resultArray.append(resultEntry)
-            }
+    }
+    
+    var resultArray: [[String: String]] = []
+    
+    for (key, value) in resultDictionary {
+        let components = key.components(separatedBy: "-")
+        if components.count == 2 {
+            let opportunityID = components[0]
+            let equity = components[1]
+            let resultEntry: [String: String] = [
+                "opportunity_id": opportunityID,
+                "equity": equity,
+                "amount_received": "\(value)"
+            ]
+            resultArray.append(resultEntry)
         }
-
-        return resultArray
+    }
+    
+    return resultArray
 }
 
 
@@ -417,8 +417,8 @@ func loadDisplayImage(key: String) -> UIImage {
 /// - Returns: UIImage
 func loadProfileImage(completion: @escaping (UIImage?) -> Void) {
     if let imageData = UserDefaults.standard.data(forKey: "profile_image"), let cachedImage = UIImage(data: imageData)  {
-            completion(cachedImage)
-            return
+        completion(cachedImage)
+        return
     }
 }
 
@@ -426,8 +426,8 @@ func loadProfileImage(completion: @escaping (UIImage?) -> Void) {
 /// Deletes all UserDefaults
 func deleteAllUserDefaultsData() {
     let keysToRemove = UserDefaults.standard.dictionaryRepresentation().keys.filter { $0 != "profile_image" }
-        for key in keysToRemove {
-            UserDefaults.standard.removeObject(forKey: key)
-        }
-        UserDefaults.standard.synchronize()
+    for key in keysToRemove {
+        UserDefaults.standard.removeObject(forKey: key)
+    }
+    UserDefaults.standard.synchronize()
 }
