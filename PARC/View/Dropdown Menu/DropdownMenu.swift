@@ -62,11 +62,3 @@ struct DropdownMenu: View {
         .padding(.bottom, self.isOptionsPresented ? padding_bottom_value : 0)
     }
 }
-
-#Preview {
-    DropdownMenu(
-        selectedOption: .constant(nil),
-        placeholder: "Select your background",
-        options: DropdownMenuOption.testAllValues
-    )
-}

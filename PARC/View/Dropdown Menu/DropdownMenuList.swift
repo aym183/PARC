@@ -15,19 +15,14 @@ struct DropdownMenuList: View {
         ScrollView(showsIndicators: true) {
             LazyVStack(alignment: .leading, spacing: 2) {
                 ForEach(options) { option in
-                    DropdownMenuListRow(option: option, onSelectedAction: self.onSelectedAction)
+                    DropdownMenuListRow(selected_option: self.onSelectedAction, option_init: option)
                 }
             }
         }
         .frame(height: 100)
         .padding(.vertical, 5)
         .overlay(alignment: .top) {
-            RoundedRectangle(cornerRadius: 5)
-                .stroke(.black, lineWidth: 1.25)
+            RoundedRectangle(cornerRadius: 5).stroke(.black, lineWidth: 1.25)
         }
     }
-}
-
-#Preview {
-    DropdownMenuList(options: DropdownMenuOption.testAllValues, onSelectedAction: {_ in})
 }
