@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// This is the chatbot that users can use as their "franchise investing expert" to interact with and gather granular data about franchises
 struct UserChatbot: View {
     @State var text_input = ""
     @State var test_input: [[String: String]] = [["type": "Receiver", "data": "Hi! How can I help you today? 😊"]]
@@ -145,8 +146,4 @@ struct UserChatbot: View {
         }
     }
     
-}
-
-#Preview {
-    UserChatbot()
 }

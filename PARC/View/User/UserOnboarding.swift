@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// This is the onboarding process a users goes through to gauge their financial stability and experience investing
 struct UserOnboarding: View {
     @State var isShowingVerificationHint = false
     @State var isShowingCardHint = false

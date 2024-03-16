@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// Content shown when a user clicks on a listed franchise on the secondary market page
 struct UserMarketplaceClick: View {
     @State var investment_titles = ["Industry", "Number of franchises", "Franchise Revenue (monthly)", "Estimated EBITDA Margin"]
     @State var investment_values = ["Food & Beverage", "50", "£50,000", "42"]

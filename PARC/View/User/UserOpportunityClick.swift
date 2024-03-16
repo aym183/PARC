@@ -8,6 +8,7 @@
 import SwiftUI
 import SlidingTabView
 
+// Content seen by users when an investable opportunity is clicked on
 struct UserOpportunityClick: View {
     @Binding var opportunity_data: [String: String]
     @Binding var franchise_data: [String: String]

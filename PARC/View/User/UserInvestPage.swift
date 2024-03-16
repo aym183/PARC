@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// When a user is ready to invest, they get navigated to this view to confirm their investment
 struct UserInvestPage: View {
     
     @State var investment_amount = ""
@@ -41,6 +42,7 @@ struct UserInvestPage: View {
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(alignment: .leading) {
                         
+                        // Verifying that the user has completed onboarding. If not, they can't invest
                         if net_worth_int == 0 || verification_completed == false {
                             Spacer()
                             HStack {
@@ -215,6 +217,9 @@ struct UserInvestPage: View {
         }
     }
     
+    
+    
+    /// Valides whether the inputted amount by the user is within the limits set
     private func validateInvestmentAmount() {
         if investment_amount != "" && (Int(investment_amount)! >= Int(min_investment)! && Int(investment_amount)! <= investment_limit) {
             isInvestmentAmountValid = true
@@ -223,6 +228,8 @@ struct UserInvestPage: View {
         }
     }
     
+    
+    ///  Calculates how much the user is allowed to invest
     private func calculateInvestmentLimit() {
         investment_limit = 10*(net_worth_int/100)
     }

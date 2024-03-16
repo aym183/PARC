@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// This is the form where users list shares they want to sell on the secondary market page
 struct UserListShares: View {
     @Binding var franchise_data: [DropdownMenuOption]
     @Binding var holding_data: [DropdownMenuOption]

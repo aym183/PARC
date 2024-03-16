@@ -62,9 +62,3 @@ struct BottomNavBar: View {
         .padding(.horizontal)
     }
 }
-
-struct BottomNavBar_Previews: PreviewProvider {
-    static var previews: some View {
-        BottomNavBar(selectedTab: .constant(.house))
-    }
-}

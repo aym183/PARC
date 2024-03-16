@@ -8,6 +8,7 @@
 import SwiftUI
 import Charts
 
+// Creates the charts in a way that each holding is identifiable and has a distinct colour
 struct ChartData: Identifiable, Plottable {
     init?(primitivePlottable: Float) {
         self.primitivePlottable = primitivePlottable
@@ -27,6 +28,7 @@ struct ChartData: Identifiable, Plottable {
 var holdings_data: [ChartData] = [].compactMap({ $0 })
 var payouts_data: [ChartData] = [].compactMap({ $0 })
 
+// Displays a user's portfolio that shows all holdings and payouts received
 struct UserPortfolio: View {
     var metric_description = ["Estimated Holdings", "Payouts Received"]
     var logo_images = ["McDonalds", "Starbucks", "Chipotle"]

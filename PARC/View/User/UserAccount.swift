@@ -8,6 +8,7 @@
 import SwiftUI
 import URLImage
 
+// Shows the users their account with details such as withdrawable balance and transactio history
 struct UserAccount: View {
     @Binding var payoutsValue: Int
     @Binding var secondaryTransactionsValue: Int

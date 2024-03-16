@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// Bottom sheet shown in the secondary market page when a user initiates listing shares
 struct UserMarketplaceBottomSheet: View {
     @Binding var marketplace_bottom_sheet_shown: Bool
     @Binding var marketplace_list_shares_shown: Bool

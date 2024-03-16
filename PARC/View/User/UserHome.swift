@@ -8,6 +8,7 @@
 import SwiftUI
 import URLImage
 
+// Displays the central home content for users with the bottom navigation bar
 struct UserHome: View {
     @State var selectedTab: Tab = .house
     @State var account_shown = false
@@ -219,6 +220,7 @@ struct UserHome: View {
     }
 }
 
+// Displays the content shown to the user specifically when the home tab on the bottom navigation bar is selected. This displays all investable opportunities
 struct UserHomeContent: View {
     var bg_images = ["store_live", "store_live_2"]
     var logo_images = ["McDonalds", "Starbucks"]

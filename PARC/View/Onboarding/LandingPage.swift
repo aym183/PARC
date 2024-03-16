@@ -8,6 +8,8 @@
 import SwiftUI
 import Auth0
 
+
+// Decides which view is displayed whether it is a (i) New user, (ii) Logged in user, or (iii) Logged in admin
 struct LandingPage: View {
     @State var loggedInUser = true
     @State var loggedInAdmin = false
@@ -20,7 +22,6 @@ struct LandingPage: View {
     @AppStorage("email") var email: String = ""
     var body: some View {
         NavigationStack {
-            // CHANGE THIS BACK == | !=
             if logged_in && !isShownHomePage && email == "ayman.ali1302@gmail.com" {
                 UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isWithdrawalConfirmed: $isWithdrawalConfirmed, isShownHomePage: $isShownHomePage)
             } else if logged_in && !isShownHomePage && email != "ayman.ali1302@gmail.com" {
@@ -32,6 +33,7 @@ struct LandingPage: View {
     }
 }
 
+// Displays content to new users (i.e. the landing page)
 struct LandingContent: View {
     @State private var index = 0
     @State var isInvestmentConfirmed = false

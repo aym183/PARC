@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// Displays the secondary market where users can buy and sell shares between each other
 struct UserMarketplace: View {
     var logo_images = ["McDonalds", "Chipotle", "Dominos", "McDonalds", "Dominos", "Chipotle", "Dominos", "Subway"]
     var title_texts = ["McDonald's", "Chipotle", "Dominos", "McDonald's", "Dominos", "Chipotle", "Dominos", "Subway"]

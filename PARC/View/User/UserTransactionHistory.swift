@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// Transaction history of investments and sales available to users in their account page
 struct UserTransactionHistory: View {
     @Binding var user_holdings: [[String: String]]
     
