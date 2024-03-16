@@ -13,6 +13,7 @@ enum Tab: String, CaseIterable {
     case bag
 }
 
+// View responsible for displaying the bottom navigation bar shown to users
 struct BottomNavBar: View {
     @Binding var selectedTab: Tab
     private var fillImage: String {
@@ -26,6 +27,7 @@ struct BottomNavBar: View {
                 ForEach(Tab.allCases, id: \.rawValue) { tab in
                     Spacer()
                     VStack {
+                        // Lines 30-38 adopted from: https://github.com/federicoazzu/Custom-Tab-Bar/blob/main/TestProject0105/CustomTabBar.swift
                         Image(systemName: selectedTab == tab ? fillImage : tab.rawValue)
                             .scaleEffect(selectedTab == tab ? 1.25 : 1.0)
                             .foregroundColor(selectedTab == tab ? Color("Secondary") : .black)
@@ -35,6 +37,7 @@ struct BottomNavBar: View {
                                     selectedTab = tab
                                 }
                             }
+                        
                         if tab.rawValue == "house" {
                             Text("Home")
                                 .font(Font.custom("Nunito-Bold", size: 10))

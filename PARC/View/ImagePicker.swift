@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// Functionality that allows users to upload images from their phone gallery
 struct ImagePicker: UIViewControllerRepresentable {
     
     @Binding var image: UIImage?
