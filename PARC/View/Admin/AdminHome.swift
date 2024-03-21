@@ -318,8 +318,8 @@ struct AdminHome: View {
                                                         HStack {
                                                             
                                                             Text("Investors: \(String(describing: readDB.admin_opportunity_data[Int(readDB.payout_data[index-1]["opportunity_id"]!)!-1]["investors"]!))")
-                                                            Divider()
-                                                                .frame(height: 15)
+                                                            
+                                                            Divider().frame(height: 15)
                                                             
                                                             if readDB.payout_data[index-1]["status"] == "Scheduled" {
                                                                 Text("Scheduled: \(String(describing: readDB.payout_data[index-1]["date_scheduled"]!))")

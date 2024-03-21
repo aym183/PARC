@@ -13,7 +13,7 @@ struct UserOpportunityClick: View {
     @Binding var opportunity_data: [String: String]
     @Binding var franchise_data: [String: String]
     @Binding var franchise_logo: UIImage?
-    @Binding var display_image: UIImage?
+    @Binding var display_image: String?
     @State var text_selected = ""
     @State var user_invest_shown = false
     @State var chatbot_shown = false
@@ -45,7 +45,7 @@ struct UserOpportunityClick: View {
                 ScrollView(.vertical, showsIndicators: false) {
                     
                     ZStack {
-                        Image(uiImage: display_image!)
+                        Image(display_image!)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: max(0, geometry.size.width))

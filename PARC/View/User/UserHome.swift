@@ -222,14 +222,13 @@ struct UserHome: View {
 
 // Displays the content shown to the user specifically when the home tab on the bottom navigation bar is selected. This displays all investable opportunities
 struct UserHomeContent: View {
-    var bg_images = ["store_live", "store_live_2"]
     var logo_images = ["McDonalds", "Starbucks"]
     @State var opportunity_shown = false
     @Binding var opportunity_data: [[String: String]]
     @State var selected_opportunity: [String: String] = [:]
     @State var selected_franchise: [String: String] = [:]
     @State var franchise_logo: UIImage?
-    @State var display_image: UIImage?
+    @State var display_image: String?
     @Binding var franchise_data: [[String: String]]
     @Binding var user_holdings_data: [[String: String]]
     @ObservedObject var readDB: ReadDB
@@ -263,19 +262,15 @@ struct UserHomeContent: View {
                             selected_franchise = franchise_data[franchise_data.firstIndex(where: { $0["name"] == opportunity_data[index]["franchise"]!})!]
                             selected_opportunity = opportunity_data[index]
                             franchise_logo = loadDisplayImage(key: franchise_data[franchise_data.firstIndex(where: { $0["name"] == opportunity_data[index]["franchise"]!})!]["logo"]!)
-                            display_image = loadDisplayImage(key: franchise_data[franchise_data.firstIndex(where: { $0["name"] == opportunity_data[index]["franchise"]!})!]["display_image"]!)
+                            display_image = franchise_data[franchise_data.firstIndex(where: { $0["name"] == opportunity_data[index]["franchise"]!})!]["display_image"]!
                             opportunity_shown.toggle()
                         }) {
                             ZStack{
-                                if let franchiseName = opportunity_data[index]["franchise"] {
-                                    if let franchiseIndex = franchise_data.firstIndex(where: { $0["name"] == franchiseName }) {
-                                        let matchedFranchise = readDB.franchise_data[franchiseIndex]["display_image"]!
-                                        
-                                        if UserDefaults.standard.object(forKey: String(describing: matchedFranchise)) != nil {
-                                            Image(uiImage: loadDisplayImage(key: String(describing: matchedFranchise)))
-                                                .resizable()
-                                                .frame(height: 225)
-                                                .cornerRadius(5)
+                                Image(franchise_data[franchise_data.firstIndex(where: { $0["name"] == opportunity_data[index]["franchise"]!})!]["display_image"]!)
+                                            .resizable()
+                                            .frame(height: 225)
+                                            .cornerRadius(5)
+                                            
                                             
                                             VStack {
                                                 HStack {
@@ -309,21 +304,9 @@ struct UserHomeContent: View {
                                                 }
                                                 Spacer()
                                             }
-                                        } else {
-                                            Image(systemName: bg_images[0])
-                                                .resizable()
-                                                .frame(height: 225)
-                                                .cornerRadius(5)
-                                        }
+
                                         
-                                    } else {
-                                        Image(systemName: bg_images[0])
-                                            .resizable()
-                                            .frame(height: 225)
-                                            .cornerRadius(5)
-                                    }
-                                }
-                                
+
                                 Rectangle()
                                     .opacity(0)
                                     .frame(height: 225)
@@ -352,6 +335,7 @@ struct UserHomeContent: View {
                                                                 .frame(width: 40, height: 30)
                                                                 .padding(.top, 10)
                                                                 .padding(.leading, 5)
+                                                                
                                                         } else {
                                                             Image(systemName: "house")
                                                                 .resizable()

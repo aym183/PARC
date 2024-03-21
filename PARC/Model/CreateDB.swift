@@ -157,7 +157,9 @@ class CreateDB: ObservableObject {
     ///   - avg_revenue_18_months: Average revenue after 18 months
     ///   - ebitda_estimate: Franchise EBITDA (Earnings before interest, taxes, depreciation, and ammortisation) estimate
     func createFranchise(name: String, logo: String, display_image: String, description: String, no_of_franchises: String, avg_franchise_mom_revenues: String, avg_startup_capital: String, avg_revenue_18_months: String, ebitda_estimate: String, completion: @escaping (String?) -> Void) {
-        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/franchises?name=\(name)&logo=\(logo)&display_image=\(display_image)&description=\(description)&no_of_franchises=\(no_of_franchises)&avg_franchise_mom_revenues=\(avg_franchise_mom_revenues)&avg_startup_capital=\(avg_startup_capital)&avg_revenue_18_months=\(avg_revenue_18_months)&ebitda_estimate=\(ebitda_estimate)")!
+        
+        var bg_images = ["store_live_3", "store_live_4", "store_live_5", "store_live_6", "store_live_7", "store_live_8"]
+        let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/franchises?name=\(name)&logo=\(logo)&display_image=\(bg_images.randomElement())&description=\(description)&no_of_franchises=\(no_of_franchises)&avg_franchise_mom_revenues=\(avg_franchise_mom_revenues)&avg_startup_capital=\(avg_startup_capital)&avg_revenue_18_months=\(avg_revenue_18_months)&ebitda_estimate=\(ebitda_estimate)")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "POST"
         request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
