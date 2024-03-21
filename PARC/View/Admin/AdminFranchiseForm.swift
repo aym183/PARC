@@ -21,13 +21,12 @@ struct AdminFranchiseForm: View {
     @State var showLogoImagePicker = false
     @State var showDisplayImagePicker = false
     @State var logo_image: UIImage?
-    @State var display_image: UIImage?
     @Binding var franchise_form_shown: Bool
     @Binding var franchise_data: [DropdownMenuOption]
     @State var logo_path = ""
     @State var display_path = ""
     var validFormInputs: Bool {
-        name.count>0 && description.count>0 && noOfFranchises.count>0 && MoMRevenue.count>0 && startupCapital.count>0 && monthRev18.count>0 && ebitdaEstimate.count>0 && logo_image != nil && display_image != nil
+        name.count>0 && description.count>0 && noOfFranchises.count>0 && MoMRevenue.count>0 && startupCapital.count>0 && monthRev18.count>0 && ebitdaEstimate.count>0 && logo_image != nil
     }
     
     var body: some View {
@@ -70,7 +69,6 @@ struct AdminFranchiseForm: View {
                                 .cornerRadius(5)
                                 .font(Font.custom("Nunito-SemiBold", size: 16))
                         }
-                        HStack {
                             VStack(alignment: .leading) {
                                 HStack {
                                     Text("Logo")
@@ -93,56 +91,20 @@ struct AdminFranchiseForm: View {
                                             RoundedRectangle(cornerRadius: 5)
                                                 .stroke(Color.black, lineWidth: 1.25)
                                         )
-                                        .frame(width: max(0, geometry.size.width - 250), height: 50)
+                                        .frame(width: max(0, geometry.size.width - 45), height: 50)
                                     
                                     Button(action: { showLogoImagePicker.toggle() }) {
                                         HStack {
                                             Text("Upload")
                                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.05))
                                         }
-                                        .frame(width: max(0, geometry.size.width - 250), height: 50)
+                                        .frame(width: max(0, geometry.size.width - 45), height: 50)
                                         .cornerRadius(5)
                                     }
                                 }
                                 .padding(.leading, 2.5)
                             }
                             
-                            VStack(alignment: .leading) {
-                                HStack {
-                                    Text("Display Image")
-                                    
-                                    if let image = self.display_image {
-                                        Text("✅")
-                                            .onAppear {
-                                                display_path = CreateDB().upload_logo_image(image: image, folder: "display_images")
-                                            }
-                                    }
-                                    Spacer()
-                                }
-                                .padding(.top, 5).padding(.bottom, -5)
-                                .font(Font.custom("Nunito-Bold", size: 18))
-                                
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 5)
-                                        .fill(Color.white)
-                                        .overlay(
-                                            RoundedRectangle(cornerRadius: 5)
-                                                .stroke(Color.black, lineWidth: 1.25)
-                                        )
-                                        .frame(width: max(0, geometry.size.width - 250), height: 50)
-                                    
-                                    Button(action: { showDisplayImagePicker.toggle() }) {
-                                        HStack {
-                                            Text("Upload")
-                                                .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.05))
-                                        }
-                                        .frame(width: max(0, geometry.size.width - 250), height: 50)
-                                        .cornerRadius(5)
-                                    }
-                                }
-                            }
-                            
-                        }
                         HStack {
                             Text("Description").font(Font.custom("Nunito-Bold", size: 18))
                                 .padding(.top, 5).padding(.bottom, -5).padding(.leading,2.5)
@@ -324,7 +286,7 @@ struct AdminFranchiseForm: View {
                             DispatchQueue.global(qos: .userInteractive).async {
                                 self.franchise_data.append(DropdownMenuOption(option: self.name))
                                 
-                                CreateDB().createFranchise(name: self.name, logo: logo_path, display_image: display_path, description: self.description, no_of_franchises: self.noOfFranchises, avg_franchise_mom_revenues: self.MoMRevenue, avg_startup_capital: self.startupCapital, avg_revenue_18_months: self.monthRev18, ebitda_estimate: self.ebitdaEstimate) { response in
+                                CreateDB().createFranchise(name: self.name, logo: logo_path, description: self.description, no_of_franchises: self.noOfFranchises, avg_franchise_mom_revenues: self.MoMRevenue, avg_startup_capital: self.startupCapital, avg_revenue_18_months: self.monthRev18, ebitda_estimate: self.ebitdaEstimate) { response in
                                     
                                     if response == "Franchise Created" {
                                         franchise_form_shown.toggle()
@@ -354,9 +316,6 @@ struct AdminFranchiseForm: View {
             }
             .sheet(isPresented: $showLogoImagePicker) {
                 ImagePicker(image: $logo_image)
-            }
-            .sheet(isPresented: $showDisplayImagePicker) {
-                ImagePicker(image: $display_image)
             }
             .padding(.top, 30)
         }
