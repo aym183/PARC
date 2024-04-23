@@ -29,7 +29,7 @@ class ReadDB: ObservableObject {
     @Published var opportunity_data_dropdown: [DropdownMenuOption] = []
     @Published var secondary_market_transactions_ind: Int = 0
     @Published var franchise_images: [[String: UIImage]] = []
-    @State var currentFormattedDate: String = convertDate(dateString: String(describing: Date()))
+    @State var currentFormattedDate: String = convert_date(dateString: String(describing: Date()))
     @AppStorage("email") var email: String = ""
     let dispatchGroup = DispatchGroup()
     let apiKey = AppConfig.apiKey
@@ -101,7 +101,7 @@ class ReadDB: ObservableObject {
                                     for data in keysArray.reversed() {
                                         if let activeCheck = value["status"] as? [String: String],
                                            let dateCheck = value["close_date"] as? [String: String],
-                                           activeCheck["S"] == "Active" && getDaysRemaining(date_input: dateCheck["S"]!)! < 1 {
+                                           activeCheck["S"] == "Active" && get_days_remaining(date_input: dateCheck["S"]!)! < 1 {
                                             
                                             if let nameDictionary = value[data] as? [String: String] {
                                                 if data == "opportunity_id" {
@@ -141,7 +141,7 @@ class ReadDB: ObservableObject {
                                     }
                                     temp_dict = [:]
                                 }
-                                self.user_opportunity_data = sortByDaysRemaining(array: self.user_opportunity_data)
+                                self.user_opportunity_data = sort_by_days_remaining(array: self.user_opportunity_data)
                                 completion("Fetched all opportunities")
                             }
                         }
@@ -192,7 +192,7 @@ class ReadDB: ObservableObject {
                                     temp_dict = [:]
                                 }
                                 // Sort in such a way that active shows first sorted then completed shows one
-                                self.admin_opportunity_data = sortByDaysRemaining(array: self.admin_opportunity_data)
+                                self.admin_opportunity_data = sort_by_days_remaining(array: self.admin_opportunity_data)
                                 completion("Fetched all opportunities")
                             }
                         }
@@ -229,7 +229,7 @@ class ReadDB: ObservableObject {
                                                 }
                                             } else if let sValue = nameDictionary["S"] {
                                                 if data == "date_created" || data == "date_scheduled" {
-                                                    temp_dict[data] = convertDate(dateString: sValue)
+                                                    temp_dict[data] = convert_date(dateString: sValue)
                                                 } else {
                                                     temp_dict[data] = sValue
                                                 }
@@ -243,7 +243,7 @@ class ReadDB: ObservableObject {
                                     self.payout_data.append(temp_dict)
                                     temp_dict = [:]
                                 }
-                                self.payout_data = sortArrayByDate(inputArray: self.payout_data, field_name: "date_created", date_type: "dd/MM/yyyy")
+                                self.payout_data = sort_array_by_date(inputArray: self.payout_data, field_name: "date_created", date_type: "dd/MM/yyyy")
                                 completion("Fetched payouts")
                                 
                             }
@@ -282,7 +282,7 @@ class ReadDB: ObservableObject {
                                                     temp_dict[data] = nameDictionary["N"]
                                                 } else if let sValue = nameDictionary["S"] {
                                                     if data == "date_created" {
-                                                        temp_dict[data] = convertDate(dateString: sValue)
+                                                        temp_dict[data] = convert_date(dateString: sValue)
                                                     } else {
                                                         temp_dict[data] = sValue
                                                     }
@@ -295,7 +295,7 @@ class ReadDB: ObservableObject {
                                         temp_dict = [:]
                                     }
                                 }
-                                self.user_payout_data = sortArrayByDate(inputArray: self.user_payout_data, field_name: "date_created", date_type: "dd/MM/yyyy")
+                                self.user_payout_data = sort_array_by_date(inputArray: self.user_payout_data, field_name: "date_created", date_type: "dd/MM/yyyy")
                                 completion("Fetched user payouts")
                             }
                         }
@@ -334,7 +334,7 @@ class ReadDB: ObservableObject {
                                                 if data == "opportunity_id" || data == "user_holdings_id" {
                                                     temp_dict[data] = nameDictionary["N"]
                                                 } else if data == "transaction_date" {
-                                                    temp_dict[data] = convertDate(dateString: nameDictionary["S"]!)
+                                                    temp_dict[data] = convert_date(dateString: nameDictionary["S"]!)
                                                 } else if let sValue = nameDictionary["S"] {
                                                     temp_dict[data] = sValue
                                                 }
@@ -353,7 +353,7 @@ class ReadDB: ObservableObject {
                                                 if data == "opportunity_id" || data == "user_holdings_id" {
                                                     sold_temp_dict[data] = nameDictionary["N"]
                                                 } else if data == "transaction_date" {
-                                                    sold_temp_dict[data] = convertDate(dateString: nameDictionary["S"]!)
+                                                    sold_temp_dict[data] = convert_date(dateString: nameDictionary["S"]!)
                                                 } else if let sValue = nameDictionary["S"] {
                                                     sold_temp_dict[data] = sValue
                                                 }
@@ -376,9 +376,9 @@ class ReadDB: ObservableObject {
                                         sold_temp_dict = [:]
                                     }
                                 }
-                                self.secondary_market_data = transformListedShares(listed_shares: self.listed_shares)
-                                self.user_holdings_data = sortArrayByDate(inputArray: self.user_holdings_data, field_name: "transaction_date", date_type: "dd/MM/yyyy")
-                                self.sold_shares = sortArrayByDate(inputArray: self.sold_shares, field_name: "transaction_date", date_type: "dd/MM/yyyy")
+                                self.secondary_market_data = transform_listed_shares(listed_shares: self.listed_shares)
+                                self.user_holdings_data = sort_array_by_date(inputArray: self.user_holdings_data, field_name: "transaction_date", date_type: "dd/MM/yyyy")
+                                self.sold_shares = sort_array_by_date(inputArray: self.sold_shares, field_name: "transaction_date", date_type: "dd/MM/yyyy")
                                 completion("Fetched user holdings")
                             }
                         }
@@ -461,7 +461,7 @@ class ReadDB: ObservableObject {
                                                 }
                                             } else if let sValue = nameDictionary["S"] {
                                                 if data == "start_date" {
-                                                    temp_dict[data] = convertDate(dateString: sValue)
+                                                    temp_dict[data] = convert_date(dateString: sValue)
                                                 } else {
                                                     temp_dict[data] = sValue
                                                 }
@@ -470,14 +470,14 @@ class ReadDB: ObservableObject {
                                     }
                                     self.trading_window_data.append(temp_dict)
                                     
-                                    if isTradingWindowActive(targetDate: currentFormattedDate, start: temp_dict["start_date"]!, end: dateStringByAddingDays(days: Int(temp_dict["duration"]!)!, dateString: temp_dict["start_date"]!)!, status: temp_dict["status"]!)! {
+                                    if is_trading_window_active(targetDate: currentFormattedDate, start: temp_dict["start_date"]!, end: date_string_by_adding_days(days: Int(temp_dict["duration"]!)!, dateString: temp_dict["start_date"]!)!, status: temp_dict["status"]!)! {
                                         trading_window_active = true
                                         current_status = temp_dict["status"]!
                                         trading_window_id = temp_dict["trading-window-id"]!
                                         UserDefaults.standard.set("true", forKey: "trading_window_active")
                                         UserDefaults.standard.set(temp_dict["trading-window-id"], forKey: "trading_window_id")
                                         
-                                    } else if isTradingWindowComplete(targetDate: currentFormattedDate, end: dateStringByAddingDays(days: Int(temp_dict["duration"]!)!, dateString: temp_dict["start_date"]!)!, status: temp_dict["status"]!)! {
+                                    } else if is_trading_window_complete(targetDate: currentFormattedDate, end: date_string_by_adding_days(days: Int(temp_dict["duration"]!)!, dateString: temp_dict["start_date"]!)!, status: temp_dict["status"]!)! {
                                         trading_window_completed = true
                                         current_status = temp_dict["status"]!
                                         trading_window_id = temp_dict["trading-window-id"]!
@@ -488,7 +488,7 @@ class ReadDB: ObservableObject {
                                     //                                    }
                                     temp_dict = [:]
                                 }
-                                self.trading_window_data = sortArrayByDate(inputArray: self.trading_window_data, field_name: "start_date", date_type: "dd/MM/yyyy")
+                                self.trading_window_data = sort_array_by_date(inputArray: self.trading_window_data, field_name: "start_date", date_type: "dd/MM/yyyy")
                                 if trading_window_active && current_status == "Scheduled"  {
                                     UpdateDB().update_table(primary_key: "trading-window-id", primary_key_value: trading_window_id, table: "trading-windows", updated_key: "status", updated_value: "Ongoing") { response in
                                         
@@ -550,7 +550,7 @@ class ReadDB: ObservableObject {
                                     self.trading_window_transactions_data.append(temp_dict)
                                     temp_dict = [:]
                                 }
-                                self.transformed_trading_window_transactions_data = transformTradingWindowData(listed_shares: self.trading_window_transactions_data)
+                                self.transformed_trading_window_transactions_data = transform_trading_window_data(listed_shares: self.trading_window_transactions_data)
                             }
                         }
                     }

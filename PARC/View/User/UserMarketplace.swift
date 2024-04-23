@@ -132,7 +132,7 @@ struct UserMarketplace: View {
                                                 let matchedFranchise = franchises[franchiseIndex]["logo"]!
                                                 
                                                 if UserDefaults.standard.object(forKey: String(describing: matchedFranchise)) != nil {
-                                                    Image(uiImage: loadDisplayImage(key: String(describing: matchedFranchise)))
+                                                    Image(uiImage: load_display_image(key: String(describing: matchedFranchise)))
                                                         .resizable()
                                                         .aspectRatio(contentMode: .fill)
                                                         .frame(width: 40, height: 40)
@@ -164,7 +164,7 @@ struct UserMarketplace: View {
                                             
                                             HStack {
                                                 Spacer()
-                                                Text("£\(formattedNumber(input_number: Int(String(describing: transformed_payouts_data[String(describing: listed_shares[index].key)]!))!))")
+                                                Text("£\(formatted_number(input_number: Int(String(describing: transformed_payouts_data[String(describing: listed_shares[index].key)]!))!))")
                                                 Spacer()
                                             }
                                             .frame(width: 75)
@@ -173,7 +173,7 @@ struct UserMarketplace: View {
                                             
                                             HStack {
                                                 Spacer()
-                                                Text("£\(formattedNumber(input_number: Int(String(describing: listed_shares[index].value))!))")
+                                                Text("£\(formatted_number(input_number: Int(String(describing: listed_shares[index].value))!))")
                                                 Spacer()
                                             }
                                             .frame(width: 75)

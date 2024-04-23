@@ -54,13 +54,13 @@ struct UserOpportunityClick: View {
                             HStack {
                                 Spacer()
                                 ZStack {
-                                    if getDaysRemaining(date_input: String(describing: opportunity_data["close_date"]!))! <= 7 {
+                                    if get_days_remaining(date_input: String(describing: opportunity_data["close_date"]!))! <= 7 {
                                         Rectangle()
                                             .foregroundColor(.clear)
                                             .frame(width: geometry.size.width*0.3, height: 35)
                                             .background(Color("Amber"))
                                             .cornerRadius(5)
-                                    } else if getDaysRemaining(date_input: String(describing: opportunity_data["close_date"]!))! <= 2 {
+                                    } else if get_days_remaining(date_input: String(describing: opportunity_data["close_date"]!))! <= 2 {
                                         Rectangle()
                                             .foregroundColor(.clear)
                                             .frame(width: geometry.size.width*0.3, height: 35)
@@ -74,7 +74,7 @@ struct UserOpportunityClick: View {
                                             .cornerRadius(5)
                                     }
                                     
-                                    Text("\(String(describing: getDaysRemaining(date_input: String(describing: opportunity_data["close_date"]!))!)) days left")
+                                    Text("\(String(describing: get_days_remaining(date_input: String(describing: opportunity_data["close_date"]!))!)) days left")
                                         .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.04))
                                         .foregroundColor(.white)
                                 }
@@ -120,7 +120,7 @@ struct UserOpportunityClick: View {
                             .multilineTextAlignment(.leading).padding(.top, -10).padding(.bottom, -5)
                         
                         HStack {
-                            Text("\(String(describing: Int(Double(opportunity_data["ratio"]!)!*100)))% - £\(formattedNumber(input_number:  Int(opportunity_data["amount_raised"]!)!)) raised")
+                            Text("\(String(describing: Int(Double(opportunity_data["ratio"]!)!*100)))% - £\(formatted_number(input_number:  Int(opportunity_data["amount_raised"]!)!)) raised")
                                 .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.0255))
                                 .foregroundColor(Color("Custom_Gray"))
                             Spacer()
@@ -140,7 +140,7 @@ struct UserOpportunityClick: View {
                             
                             Spacer()
                             
-                            Text("Target - £\(String(describing: formattedNumber(input_number:Int(opportunity_data["asking_price"]!)!)))")
+                            Text("Target - £\(String(describing: formatted_number(input_number:Int(opportunity_data["asking_price"]!)!)))")
                                 .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.0255))
                                 .foregroundColor(Color("Custom_Gray"))
                             
@@ -156,7 +156,7 @@ struct UserOpportunityClick: View {
                         
                         HStack {
                             VStack(alignment: .leading) {
-                                Text("£\(String(describing: formattedNumber(input_number:Int(opportunity_data["amount_raised"]!)!)))")
+                                Text("£\(String(describing: formatted_number(input_number:Int(opportunity_data["amount_raised"]!)!)))")
                                     .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.075))
                                 Text("Invested")
                                     .foregroundColor(Color("Custom_Gray"))
@@ -379,7 +379,7 @@ struct UserOpportunityClick: View {
                                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.045))
                                                 .padding(.top, 5)
                                             
-                                            Text("£\(convertNumberAmount(input_number: Double(franchise_data[selected_franchise_data[index]]!)!))")
+                                            Text("£\(convert_number_amount(input_number: Double(franchise_data[selected_franchise_data[index]]!)!))")
                                                 .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.1))
                                                 .foregroundColor(Color("Secondary"))
                                                 .padding(.vertical, 1.5)

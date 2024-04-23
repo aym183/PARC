@@ -89,7 +89,7 @@ struct UserPortfolio: View {
                             
                             VStack(alignment: .center) {
                                 if text_selected == "Holdings" || text_selected == "" {
-                                    Text("£\(formattedNumber(input_number: holdings_value))")
+                                    Text("£\(formatted_number(input_number: holdings_value))")
                                         .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.1))
                                         .foregroundColor(.black)
                                     Text(metric_description[0])
@@ -97,7 +97,7 @@ struct UserPortfolio: View {
                                         .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.04))
                                         .padding(.top, -36)
                                 } else {
-                                    Text("£\(formattedNumber(input_number: payouts_value))")
+                                    Text("£\(formatted_number(input_number: payouts_value))")
                                         .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.1))
                                         .foregroundColor(.black)
                                     Text(metric_description[1])
@@ -291,7 +291,7 @@ struct UserPortfolio: View {
                                     Spacer()
                                     
                                     if text_selected == "Holdings" || text_selected == "" {
-                                        Text("£\(formattedNumber(input_number: Int(portfolio_data[index]["amount"]!)!))")
+                                        Text("£\(formatted_number(input_number: Int(portfolio_data[index]["amount"]!)!))")
                                             .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.055))
                                     } else {
                                         if let opportunityID = portfolio_data[index]["opportunity_id"],
@@ -343,7 +343,7 @@ struct UserPortfolio: View {
             .foregroundColor(.black)
             .frame(width: max(0, geometry.size.width))
             .onAppear {
-                user_payouts_data = transformPayoutsArray(entries: user_payouts_data)
+                user_payouts_data = transform_payouts_array(entries: user_payouts_data)
                 holdings_data = []
                 payouts_data = []
                 holdings_data.append(contentsOf: chart_values.compactMap { value in

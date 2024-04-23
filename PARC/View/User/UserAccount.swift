@@ -154,7 +154,7 @@ struct UserAccount: View {
                                 .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.052))
                             Spacer()
                             Button(action: {
-                                self.sorted_user_holdings = sortArrayByDate(inputArray: user_holdings + user_holdings_sold, field_name: "transaction_date", date_type: "dd/MM/yyyy")
+                                self.sorted_user_holdings = sort_array_by_date(inputArray: user_holdings + user_holdings_sold, field_name: "transaction_date", date_type: "dd/MM/yyyy")
                                 transaction_history_shown.toggle()
                             }) {
                                 ZStack {
@@ -182,7 +182,7 @@ struct UserAccount: View {
                             Text("Balance")
                                 .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.052))
                             Spacer()
-                            Text("£\(formattedNumber(input_number: payoutsValue+secondaryTransactionsValue))")
+                            Text("£\(formatted_number(input_number: payoutsValue+secondaryTransactionsValue))")
                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.052))
                                 .foregroundColor(.black)
                                 .padding(.trailing, 13)
@@ -259,7 +259,7 @@ struct UserAccount: View {
                 Alert(
                     title: Text("Are you sure you want to log out?"),
                     primaryButton: .default(Text("Yes")) {
-                        deleteAllUserDefaultsData()
+                        delete_all_user_defaults_data()
                         logged_out.toggle()
                     },
                     secondaryButton: .destructive(Text("No")) {}
@@ -270,7 +270,7 @@ struct UserAccount: View {
                     title: Text("Are you sure you want to withdraw?"),
                     primaryButton: .default(Text("Yes")) {
                         DispatchQueue.global(qos: .userInteractive).async {
-                            CreateDB().create_withdrawal_confirmation(email: email, amount: formattedNumber(input_number: payoutsValue+secondaryTransactionsValue))
+                            CreateDB().create_withdrawal_confirmation(email: email, amount: formatted_number(input_number: payoutsValue+secondaryTransactionsValue))
                         }
                         withdraw_request_confirmed.toggle()
                     },

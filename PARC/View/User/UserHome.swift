@@ -151,7 +151,7 @@ struct UserHome: View {
                                 }
                             }
                         }
-                        loadProfileImage() { response in
+                        load_profile_image() { response in
                             if response != nil {
                                 profile_image = response!
                                 init_profile_image = response!
@@ -176,21 +176,21 @@ struct UserHome: View {
                         readDB.get_trading_window_transactions_email()
                         readDB.get_payouts() { response in
                             if response == "Fetched payouts" {
-                                self.transformed_payouts_data = transformPayouts(payouts_array: readDB.payout_data)
+                                self.transformed_payouts_data = transform_payouts(payouts_array: readDB.payout_data)
                             }
                         }
                         readDB.get_user_payouts(email: email) { response in
                             if response == "Fetched user payouts" {
                                 self.user_payouts_data = readDB.user_payout_data
-                                self.payouts_value = calculateTotalValue(input: self.user_payouts_data, field: "amount_received")
-                                self.payouts_chart_values = calculatePayoutOpportunities(input: self.user_payouts_data)
+                                self.payouts_value = calculate_total_value(input: self.user_payouts_data, field: "amount_received")
+                                self.payouts_chart_values = calculate_payout_opportunities(input: self.user_payouts_data)
                             }
                         }
                         readDB.get_user_holdings(email: email) { response in
                             if response == "Fetched user holdings" {
                                 self.portfolio_data = readDB.user_holdings_data
-                                self.holdings_value = calculateTotalValue(input: self.portfolio_data, field: "amount")
-                                self.chart_values = calculatePortionHoldings(input: portfolio_data, holdings_value: calculateTotalValue(input: self.portfolio_data, field: "amount"))
+                                self.holdings_value = calculate_total_value(input: self.portfolio_data, field: "amount")
+                                self.chart_values = calculate_portion_holdings(input: portfolio_data, holdings_value: calculate_total_value(input: self.portfolio_data, field: "amount"))
                             }
                         }
                         readDB.get_admin_opportunities() { response in
@@ -261,7 +261,7 @@ struct UserHomeContent: View {
                         Button(action: {
                             selected_franchise = franchise_data[franchise_data.firstIndex(where: { $0["name"] == opportunity_data[index]["franchise"]!})!]
                             selected_opportunity = opportunity_data[index]
-                            franchise_logo = loadDisplayImage(key: franchise_data[franchise_data.firstIndex(where: { $0["name"] == opportunity_data[index]["franchise"]!})!]["logo"]!)
+                            franchise_logo = load_display_image(key: franchise_data[franchise_data.firstIndex(where: { $0["name"] == opportunity_data[index]["franchise"]!})!]["logo"]!)
                             display_image = franchise_data[franchise_data.firstIndex(where: { $0["name"] == opportunity_data[index]["franchise"]!})!]["display_image"]!
                             opportunity_shown.toggle()
                         }) {
@@ -276,13 +276,13 @@ struct UserHomeContent: View {
                                                 HStack {
                                                     Spacer()
                                                     ZStack {
-                                                        if getDaysRemaining(date_input: String(describing: opportunity_data[index]["close_date"]!))! <= 7 {
+                                                        if get_days_remaining(date_input: String(describing: opportunity_data[index]["close_date"]!))! <= 7 {
                                                             Rectangle()
                                                                 .foregroundColor(.clear)
                                                                 .frame(width: geometry.size.width*0.22, height: 22)
                                                                 .background(Color("Amber"))
                                                                 .cornerRadius(5)
-                                                        } else if getDaysRemaining(date_input: String(describing: opportunity_data[index]["close_date"]!))! <= 2 {
+                                                        } else if get_days_remaining(date_input: String(describing: opportunity_data[index]["close_date"]!))! <= 2 {
                                                             Rectangle()
                                                                 .foregroundColor(.clear)
                                                                 .frame(width: geometry.size.width*0.22, height: 22)
@@ -296,7 +296,7 @@ struct UserHomeContent: View {
                                                                 .cornerRadius(5)
                                                         }
                                                         
-                                                        Text("\(String(describing: getDaysRemaining(date_input: String(describing: opportunity_data[index]["close_date"]!))!)) days left")
+                                                        Text("\(String(describing: get_days_remaining(date_input: String(describing: opportunity_data[index]["close_date"]!))!)) days left")
                                                             .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.035))
                                                             .foregroundColor(.white)
                                                     }
@@ -329,7 +329,7 @@ struct UserHomeContent: View {
                                                         let matchedFranchise = readDB.franchise_data[franchiseIndex]["logo"]!
                                                         
                                                         if UserDefaults.standard.object(forKey: String(describing: matchedFranchise)) != nil {
-                                                            Image(uiImage: loadDisplayImage(key: String(describing: matchedFranchise)))
+                                                            Image(uiImage: load_display_image(key: String(describing: matchedFranchise)))
                                                                 .resizable()
                                                                 .aspectRatio(contentMode: .fit)
                                                                 .frame(width: 40, height: 30)
@@ -389,7 +389,7 @@ struct UserHomeContent: View {
                                             
                                             HStack {
                                                 
-                                                Text("\(String(describing: Int(Double(opportunity_data[index]["ratio"]!)!*100)))% - £\(formattedNumber(input_number:  Int(opportunity_data[index]["amount_raised"]!)!)) raised")
+                                                Text("\(String(describing: Int(Double(opportunity_data[index]["ratio"]!)!*100)))% - £\(formatted_number(input_number:  Int(opportunity_data[index]["amount_raised"]!)!)) raised")
                                                     .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.0255))
                                                     .foregroundColor(Color("Custom_Gray"))
                                                     .frame(alignment: .leading)
@@ -410,7 +410,7 @@ struct UserHomeContent: View {
                                                     .foregroundColor(Color("Custom_Gray"))
                                                     .frame(alignment: .leading)
                                                 Spacer()
-                                                Text("Target - £\(String(describing: formattedNumber(input_number:Int(opportunity_data[index]["asking_price"]!)!)))")
+                                                Text("Target - £\(String(describing: formatted_number(input_number:Int(opportunity_data[index]["asking_price"]!)!)))")
                                                     .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.0255))
                                                     .foregroundColor(Color("Custom_Gray"))
                                                     .frame(alignment: .leading)
@@ -461,21 +461,21 @@ struct UserHomeContent: View {
                 readDB.get_trading_window_transactions_email()
                 readDB.get_payouts() { response in
                     if response == "Fetched payouts" {
-                        self.transformed_payouts_data = transformPayouts(payouts_array: readDB.payout_data)
+                        self.transformed_payouts_data = transform_payouts(payouts_array: readDB.payout_data)
                     }
                 }
                 readDB.get_user_payouts(email: email) { response in
                     if response == "Fetched user payouts" {
                         self.user_payouts_data = readDB.user_payout_data
-                        self.payouts_value = calculateTotalValue(input: self.user_payouts_data, field: "amount_received")
-                        self.payouts_chart_values = calculatePayoutOpportunities(input: self.user_payouts_data)
+                        self.payouts_value = calculate_total_value(input: self.user_payouts_data, field: "amount_received")
+                        self.payouts_chart_values = calculate_payout_opportunities(input: self.user_payouts_data)
                     }
                 }
                 readDB.get_user_holdings(email: email) { response in
                     if response == "Fetched user holdings" {
                         self.portfolio_data = readDB.user_holdings_data
-                        self.holdings_value = calculateTotalValue(input: self.portfolio_data, field: "amount")
-                        self.chart_values = calculatePortionHoldings(input: portfolio_data, holdings_value: calculateTotalValue(input: self.portfolio_data, field: "amount"))
+                        self.holdings_value = calculate_total_value(input: self.portfolio_data, field: "amount")
+                        self.chart_values = calculate_portion_holdings(input: portfolio_data, holdings_value: calculate_total_value(input: self.portfolio_data, field: "amount"))
                     }
                 }
                 readDB.get_admin_opportunities() { response in

@@ -39,7 +39,7 @@ struct UserMarketplaceClick: View {
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(alignment: .leading) {
                         HStack {
-                            Image(uiImage: loadFranchiseLogo(key: franchise_selected["logo"]!))
+                            Image(uiImage: load_franchise_logo(key: franchise_selected["logo"]!))
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .frame(width: 55, height: 55)
@@ -72,7 +72,7 @@ struct UserMarketplaceClick: View {
                                     Text(franchise_selected["no_of_franchises"]!)
                                         .font(Font.custom("Nunito-SemiBold", size: 14))
                                 } else if investment_titles[index] == "Franchise Revenue (monthly)" {
-                                    Text("£\(formattedNumber(input_number: Int(franchise_selected["avg_franchise_mom_revenues"]!)!))")
+                                    Text("£\(formatted_number(input_number: Int(franchise_selected["avg_franchise_mom_revenues"]!)!))")
                                         .font(Font.custom("Nunito-SemiBold", size: 14))
                                 } else if investment_titles[index] == "Estimated EBITDA Margin" {
                                     Text("\(franchise_selected["ebitda_estimate"]!)%")
@@ -133,7 +133,7 @@ struct UserMarketplaceClick: View {
                                     .padding(.leading, -5)
                                     
                                     HStack {
-                                        Text("£\(formattedNumber(input_number: Int(shares_data[index]["amount"]!)!))")
+                                        Text("£\(formatted_number(input_number: Int(shares_data[index]["amount"]!)!))")
                                         Spacer()
                                     }
                                     .frame(width: geometry.size.width*0.2)

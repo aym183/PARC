@@ -112,7 +112,7 @@ struct AdminHome: View {
                                         } else {
                                             ZStack {
                                                 Button(action: {
-                                                    opportunity_logo = loadDisplayImage(key: readDB.franchise_data[readDB.franchise_data.firstIndex(where: { $0["name"] ==  readDB.admin_opportunity_data[index-1]["franchise"]})!]["logo"]!)
+                                                    opportunity_logo = load_display_image(key: readDB.franchise_data[readDB.franchise_data.firstIndex(where: { $0["name"] ==  readDB.admin_opportunity_data[index-1]["franchise"]})!]["logo"]!)
                                                     opportunity_data = readDB.admin_opportunity_data[index-1]
                                                     admin_opportunity_click_shown.toggle()
                                                 }) {
@@ -132,7 +132,7 @@ struct AdminHome: View {
                                                                 let matchedFranchise = readDB.franchise_data[franchiseIndex]["logo"]!
                                                                 
                                                                 if UserDefaults.standard.object(forKey: String(describing: matchedFranchise)) != nil {
-                                                                    Image(uiImage: loadDisplayImage(key: String(describing: matchedFranchise)))
+                                                                    Image(uiImage: load_display_image(key: String(describing: matchedFranchise)))
                                                                         .resizable()
                                                                         .aspectRatio(contentMode: .fill)
                                                                         .frame(width: 30, height: 30)
@@ -182,7 +182,7 @@ struct AdminHome: View {
                                                         
                                                         Spacer()
                                                         
-                                                        Text("Created - \(convertDate(dateString: String(describing: readDB.admin_opportunity_data[index-1]["date_created"]!)))")
+                                                        Text("Created - \(convert_date(dateString: String(describing: readDB.admin_opportunity_data[index-1]["date_created"]!)))")
                                                             .font(Font.custom("Nunito-SemiBold", size: 7))
                                                             .foregroundColor(Color("Custom_Gray"))
                                                     }
@@ -200,17 +200,17 @@ struct AdminHome: View {
                                                         } else if readDB.admin_opportunity_data[index-1]["status"]! == "Completed" {
                                                             Text("Completed")
                                                                 .foregroundColor(Color("Profit"))
-                                                        } else if getDaysRemaining(date_input: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))! <= 5 {
+                                                        } else if get_days_remaining(date_input: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))! <= 5 {
                                                             
-                                                            Text("\(getDaysRemaining(date_input: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))!) days left")
+                                                            Text("\(get_days_remaining(date_input: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))!) days left")
                                                                 .foregroundColor(Color("Loss"))
                                                             
-                                                        } else if getDaysRemaining(date_input: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))! > 5 && getDaysRemaining(date_input: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))! < 15 {
+                                                        } else if get_days_remaining(date_input: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))! > 5 && get_days_remaining(date_input: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))! < 15 {
                                                             
-                                                            Text("\(getDaysRemaining(date_input: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))!) days left")
+                                                            Text("\(get_days_remaining(date_input: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))!) days left")
                                                                 .foregroundColor(Color("Amber"))
                                                         } else {
-                                                            Text("\(getDaysRemaining(date_input: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))!) days left")
+                                                            Text("\(get_days_remaining(date_input: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))!) days left")
                                                         }
                                                         
                                                         Spacer()
@@ -310,7 +310,7 @@ struct AdminHome: View {
                                                         
                                                         Spacer()
                                                         
-                                                        Text("+£\(String(describing:   formattedNumber(input_number: Int(readDB.payout_data[index-1]["amount_offered"]!)!)))")
+                                                        Text("+£\(String(describing: formatted_number(input_number: Int(readDB.payout_data[index-1]["amount_offered"]!)!)))")
                                                             .font(Font.custom("Nunito-Bold", size: 25))
                                                         
                                                         Spacer()
@@ -444,7 +444,7 @@ struct AdminHome: View {
                                                             HStack {
                                                                 if readDB.transformed_trading_window_transactions_data.keys.contains("\(String(describing: readDB.trading_window_data[index-1]["trading-window-id"]!))_volume") {
                                                                     
-                                                                    Text("Volume - £\(convertNumberAmount(input_number: Double(readDB.transformed_trading_window_transactions_data["\(String(describing: readDB.trading_window_data[index-1]["trading-window-id"]!))_volume"]!)))")
+                                                                    Text("Volume - £\(convert_number_amount(input_number: Double(readDB.transformed_trading_window_transactions_data["\(String(describing: readDB.trading_window_data[index-1]["trading-window-id"]!))_volume"]!)))")
                                                                 } else {
                                                                     Text("Volume - £0")
                                                                     
@@ -500,7 +500,7 @@ struct AdminHome: View {
                         if response == "Fetched all opportunities" {
                             readDB.get_payouts() { response in
                                 if response == "Fetched payouts data" {
-                                    readDB.payout_data = sortArrayByDate(inputArray: readDB.payout_data, field_name: "date_created", date_type: "dd/MM/yyyy")
+                                    readDB.payout_data = sort_array_by_date(inputArray: readDB.payout_data, field_name: "date_created", date_type: "dd/MM/yyyy")
                                 }
                             }
                             readDB.get_trading_windows()
@@ -523,7 +523,7 @@ struct AdminHome: View {
             .blur(radius: isUnlocked ? 0 : 10)
         }
         .onAppear {
-            loadProfileImage() { response in
+            load_profile_image() { response in
                 if response != nil {
                     profile_image = response!
                     init_profile_image = response!
@@ -545,7 +545,7 @@ struct AdminHome: View {
                 if response == "Fetched all opportunities" {
                     readDB.get_payouts() { response in
                         if response == "Fetched payouts" {
-                            readDB.payout_data = sortArrayByDate(inputArray: readDB.payout_data, field_name: "date_created", date_type: "dd/MM/yyyy")
+                            readDB.payout_data = sort_array_by_date(inputArray: readDB.payout_data, field_name: "date_created", date_type: "dd/MM/yyyy")
                         }
                     }
                     readDB.get_trading_windows()

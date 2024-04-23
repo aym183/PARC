@@ -139,7 +139,7 @@ struct AdminAccount: View {
                 Alert(
                     title: Text("Are you sure you want to log out?"),
                     primaryButton: .default(Text("Yes")) {
-                        deleteAllUserDefaultsData()
+                        delete_all_user_defaults_data()
                         logged_out.toggle()
                     },
                     secondaryButton: .destructive(Text("No")) {}

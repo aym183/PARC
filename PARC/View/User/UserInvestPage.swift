@@ -80,7 +80,7 @@ struct UserInvestPage: View {
                                 }
                                 
                                 VStack(alignment: .leading) {
-                                    Text("£\(formattedNumber(input_number: Int(min_investment)!))")
+                                    Text("£\(formatted_number(input_number: Int(min_investment)!))")
                                         .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.06))
                                         .padding(.bottom, -5)
                                     

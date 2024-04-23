@@ -49,11 +49,11 @@ struct UserTransactionHistory: View {
                                     Spacer()
                                     
                                     if user_holdings[index]["status"]! == "Owned" {
-                                        Text("+£\(formattedNumber(input_number: Int(user_holdings[index]["amount"]!)!))")
+                                        Text("+£\(formatted_number(input_number: Int(user_holdings[index]["amount"]!)!))")
                                             .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.04))
                                             .foregroundColor(Color("Profit"))
                                     } else {
-                                        Text("-£\(formattedNumber(input_number: Int(user_holdings[index]["amount"]!)!))")
+                                        Text("-£\(formatted_number(input_number: Int(user_holdings[index]["amount"]!)!))")
                                             .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.04))
                                             .foregroundColor(Color("Loss"))
                                     }

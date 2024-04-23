@@ -109,7 +109,7 @@ struct AdminOpportunityClick: View {
                             Text("Money Raised")
                                 .foregroundColor(.gray)
                             Spacer()
-                            Text("£\(formattedNumber(input_number: Int(opportunity_data["amount_raised"]!)!))")
+                            Text("£\(formatted_number(input_number: Int(opportunity_data["amount_raised"]!)!))")
                         }
                         .font(Font.custom("Nunito-Medium", size: 14))
                         .padding(.vertical, 6)
@@ -123,7 +123,7 @@ struct AdminOpportunityClick: View {
                             Text("Target Raised")
                                 .foregroundColor(.gray)
                             Spacer()
-                            Text("£\(formattedNumber(input_number: Int(opportunity_data["asking_price"]!)!))")
+                            Text("£\(formatted_number(input_number: Int(opportunity_data["asking_price"]!)!))")
                         }
                         .font(Font.custom("Nunito-Medium", size: 14))
                         .padding(.vertical, 6)
@@ -151,7 +151,7 @@ struct AdminOpportunityClick: View {
                             Text("Minimum Investment")
                                 .foregroundColor(.gray)
                             Spacer()
-                            Text("£\(formattedNumber(input_number: Int(opportunity_data["min_invest_amount"]!)!))")
+                            Text("£\(formatted_number(input_number: Int(opportunity_data["min_invest_amount"]!)!))")
                         }
                         .font(Font.custom("Nunito-Medium", size: 14))
                         .padding(.vertical, 6)

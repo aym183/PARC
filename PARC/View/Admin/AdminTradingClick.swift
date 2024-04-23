@@ -74,7 +74,7 @@ struct AdminTradingClick: View {
                                         .cornerRadius(5)
                                     }
                                 } else if data_titles[index] == "Trading Volume" {
-                                    Text("£\(formattedNumber(input_number: trading_volume))")
+                                    Text("£\(formatted_number(input_number: trading_volume))")
                                 }
                                 else if data_titles[index] == "Scheduled Date" {
                                     Text(selected_trading_window["start_date"]!)

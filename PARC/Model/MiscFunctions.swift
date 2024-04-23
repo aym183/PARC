@@ -11,7 +11,7 @@ import SwiftUI
 /// Converts dates from "yyyy-MM-dd" to dd/MM/yyyy format
 /// - Parameter dateString: Original date string
 /// - Returns: Modified date string
-func convertDate(dateString: String) -> String {
+func convert_date(dateString: String) -> String {
     
     let components = dateString.components(separatedBy: " ")
     if let datePart = components.first {
@@ -36,7 +36,7 @@ func convertDate(dateString: String) -> String {
 ///   - endDate: End of the trading window
 ///   - status: Current status of the trading window
 /// - Returns: Boolean identifying if the trading window is active
-func isTradingWindowActive(targetDate: String, start startDate: String, end endDate: String, status: String) -> Bool? {
+func is_trading_window_active(targetDate: String, start startDate: String, end endDate: String, status: String) -> Bool? {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "dd/MM/yyyy"
     if status == "Cancelled" || status == "Completed" {
@@ -59,7 +59,7 @@ func isTradingWindowActive(targetDate: String, start startDate: String, end endD
 ///   - endDate: End of the trading window
 ///   - status: Current status of the trading window
 /// - Returns: Boolean identifying if the trading window is completed
-func isTradingWindowComplete(targetDate: String, end endDate: String, status: String) -> Bool? {
+func is_trading_window_complete(targetDate: String, end endDate: String, status: String) -> Bool? {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "dd/MM/yyyy"
     if status == "Cancelled" || status == "Completed" {
@@ -77,7 +77,7 @@ func isTradingWindowComplete(targetDate: String, end endDate: String, status: St
 /// Takes a date and returns the days remaining till that date from present day
 /// - Parameter date_input: Date to compare
 /// - Returns: Integer showing the number of days remaining
-func getDaysRemaining(date_input: String) -> Int? {
+func get_days_remaining(date_input: String) -> Int? {
     let date_formatter = DateFormatter()
     date_formatter.dateFormat = "dd/MM/yyyy"
     
@@ -100,7 +100,7 @@ func getDaysRemaining(date_input: String) -> Int? {
 ///   - days: Number of days to add
 ///   - dateString: Date to start with
 /// - Returns: Formatted date after adding days
-func dateStringByAddingDays(days: Int, dateString: String) -> String? {
+func date_string_by_adding_days(days: Int, dateString: String) -> String? {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "dd/MM/yyyy"
     
@@ -123,7 +123,7 @@ func dateStringByAddingDays(days: Int, dateString: String) -> String? {
 /// Takes a number and returns it as a formatted string with the appropriate ","
 /// - Parameter input_number: Number to be formatted
 /// - Returns: Formatted number
-func formattedNumber(input_number: Int) -> String {
+func formatted_number(input_number: Int) -> String {
     let numberFormatter = NumberFormatter()
     numberFormatter.numberStyle = .decimal
     numberFormatter.maximumFractionDigits = 0
@@ -136,7 +136,7 @@ func formattedNumber(input_number: Int) -> String {
 ///   - input: Array of arrays to be parsed
 ///   - field: Key from which values are to be fetched
 /// - Returns: Total value
-func calculateTotalValue(input: [[String: String]], field: String) -> Int {
+func calculate_total_value(input: [[String: String]], field: String) -> Int {
     
     var final_amount = 0
     if input.count != 0 {
@@ -158,7 +158,7 @@ func calculateTotalValue(input: [[String: String]], field: String) -> Int {
 ///   - input: Array of arrays of user holdings
 ///   - holdings_value: Total value of holdings
 /// - Returns: Array with the split of each holding and its contribution
-func calculatePortionHoldings(input: [[String: String]], holdings_value: Int) -> [Float] {
+func calculate_portion_holdings(input: [[String: String]], holdings_value: Int) -> [Float] {
     var output_array: [Float] = []
     if input.count != 0 {
         for holding in input {
@@ -177,7 +177,7 @@ func calculatePortionHoldings(input: [[String: String]], holdings_value: Int) ->
 /// Calculates how much a user recived in payouts for each holding
 /// - Parameter input: Array of arrays of holdings
 /// - Returns: Payouts for each holding
-func calculatePayoutOpportunities(input: [[String: String]]) -> [Float] {
+func calculate_payout_opportunities(input: [[String: String]]) -> [Float] {
     var outputArray: [Float] = []
     var indexMap: [String: Int] = [:]
     
@@ -203,7 +203,7 @@ func calculatePayoutOpportunities(input: [[String: String]]) -> [Float] {
 ///   - field_name: Date key name
 ///   - date_type: Format of the date values
 /// - Returns: Sorted date array
-func sortArrayByDate(inputArray: [[String: String]], field_name: String, date_type: String) -> [[String: String]] {
+func sort_array_by_date(inputArray: [[String: String]], field_name: String, date_type: String) -> [[String: String]] {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = date_type
     let sortedArray = inputArray.sorted { dict1, dict2 in
@@ -223,7 +223,7 @@ func sortArrayByDate(inputArray: [[String: String]], field_name: String, date_ty
 /// Fetches the total amount of holdings available in secondary market listings per franchise
 /// - Parameter listed_shares: Array of arrays containing the listed shares
 /// - Returns: Array containing the total value of each franchise's listings
-func transformListedShares(listed_shares: [String: [[String: String]]]) -> [(key: String, value: Any)] {
+func transform_listed_shares(listed_shares: [String: [[String: String]]]) -> [(key: String, value: Any)] {
     var traversed_franchises: [String:Any] = [:]
     
     for (_, subArray) in listed_shares {
@@ -246,7 +246,7 @@ func transformListedShares(listed_shares: [String: [[String: String]]]) -> [(key
 /// Fetches the total volume and number of trades for each secondary market trading window
 /// - Parameter listed_shares: Array of arrays of all listed shares
 /// - Returns: total figures for each trading window
-func transformTradingWindowData(listed_shares: [[String: String]]) -> [String: Int] {
+func transform_trading_window_data(listed_shares: [[String: String]]) -> [String: Int] {
     var traversed_trading_window: [String: Int] = [:]
     
     for share in listed_shares {
@@ -273,7 +273,7 @@ func transformTradingWindowData(listed_shares: [[String: String]]) -> [String: I
 /// Fetches characters from a string before an apostrophe
 /// - Parameter input: String to be used
 /// - Returns: String before apostrophe
-func textBeforeApostrophe(_ input: String) -> String? {
+func text_before_apostrophe(_ input: String) -> String? {
     guard let range = input.range(of: "'") else {
         return nil
     }
@@ -284,7 +284,7 @@ func textBeforeApostrophe(_ input: String) -> String? {
 /// Calculates how much payouts was sent out for each franchise
 /// - Parameter payouts_array: Array of arrays containing payouts
 /// - Returns: Total payouts for each franchise
-func transformPayouts(payouts_array: [[String: String]]) -> [String: Any] {
+func transform_payouts(payouts_array: [[String: String]]) -> [String: Any] {
     var traversed_payouts: [String:Any] = [:]
     
     for share in payouts_array {
@@ -304,10 +304,10 @@ func transformPayouts(payouts_array: [[String: String]]) -> [String: Any] {
 }
 
 
-/// Uses the getDaysRemaining function to sort an array based on these values
+/// Uses the get_days_remaining function to sort an array based on these values
 /// - Parameter array: Array of arrays
 /// - Returns: Sorted array
-func sortByDaysRemaining(array: [[String: String]]) -> [[String : String]] {
+func sort_by_days_remaining(array: [[String: String]]) -> [[String : String]] {
     var completedArray: [[String : String]] = []
     var closedArray: [[String : String]] = []
     var outputArray: [[String : String]]  = []
@@ -318,7 +318,7 @@ func sortByDaysRemaining(array: [[String: String]]) -> [[String : String]] {
                 closedArray.append(ind)
             } else if status == "Completed" {
                 completedArray.append(ind)
-            } else if getDaysRemaining(date_input: ind["close_date"]!)! >= 1  {
+            } else if get_days_remaining(date_input: ind["close_date"]!)! >= 1  {
                 outputArray.append(ind)
             }
         } else {
@@ -330,7 +330,7 @@ func sortByDaysRemaining(array: [[String: String]]) -> [[String : String]] {
         guard let closeDate1 = $0["close_date"], let closeDate2 = $1["close_date"] else {
             return false
         }
-        return getDaysRemaining(date_input: closeDate1)! < getDaysRemaining(date_input: closeDate2)!
+        return get_days_remaining(date_input: closeDate1)! < get_days_remaining(date_input: closeDate2)!
     }
     
     return outputArray + completedArray + closedArray
@@ -339,7 +339,7 @@ func sortByDaysRemaining(array: [[String: String]]) -> [[String : String]] {
 /// Calculates total paouts received by a user as part of their active portfolio (i.e. No listed or sold shares)
 /// - Parameter entries: Array of arrays containing payouts
 /// - Returns: Split of each payout with details about the opportunity it belongs to
-func transformPayoutsArray(entries: [[String:String]]) -> [[String: String]]{
+func transform_payouts_array(entries: [[String:String]]) -> [[String: String]]{
     var resultDictionary: [String: Double] = [:]
     for entry in entries {
         if let opportunityID = entry["opportunity_id"], let equity = entry["equity"], let amountReceivedString = entry["amount_received"], let amountReceived = Double(amountReceivedString) {
@@ -371,7 +371,7 @@ func transformPayoutsArray(entries: [[String:String]]) -> [[String: String]]{
 ///  Function that transforms numbers (example: 1000000 -> 1M)
 /// - Parameter input_number: Number to be converted
 /// - Returns: Transformed number
-func convertNumberAmount(input_number: Double) -> String {
+func convert_number_amount(input_number: Double) -> String {
     let formatter = NumberFormatter()
     formatter.numberStyle = .decimal
     
@@ -395,7 +395,7 @@ func convertNumberAmount(input_number: Double) -> String {
 /// Fetches UIImage record from cache
 /// - Parameter key: Record of cache
 /// - Returns: UIImage
-func loadFranchiseLogo(key: String) -> UIImage {
+func load_franchise_logo(key: String) -> UIImage {
     let imageData = UserDefaults.standard.data(forKey: key)
     let cachedImage = UIImage(data: imageData!)
     return cachedImage!
@@ -405,7 +405,7 @@ func loadFranchiseLogo(key: String) -> UIImage {
 /// Fetches UIImage record from cache
 /// - Parameter key: Record of cache
 /// - Returns: UIImage
-func loadDisplayImage(key: String) -> UIImage {
+func load_display_image(key: String) -> UIImage {
     let imageData = UserDefaults.standard.data(forKey: key)
     let cachedImage = UIImage(data: imageData!)
     return cachedImage!
@@ -415,7 +415,7 @@ func loadDisplayImage(key: String) -> UIImage {
 /// Fetches UIImage record from cache
 /// - Parameter key: Record of cache
 /// - Returns: UIImage
-func loadProfileImage(completion: @escaping (UIImage?) -> Void) {
+func load_profile_image(completion: @escaping (UIImage?) -> Void) {
     if let imageData = UserDefaults.standard.data(forKey: "profile_image"), let cachedImage = UIImage(data: imageData)  {
         completion(cachedImage)
         return
@@ -424,7 +424,7 @@ func loadProfileImage(completion: @escaping (UIImage?) -> Void) {
 
 
 /// Deletes all UserDefaults
-func deleteAllUserDefaultsData() {
+func delete_all_user_defaults_data() {
     let keysToRemove = UserDefaults.standard.dictionaryRepresentation().keys.filter { $0 != "profile_image" }
     for key in keysToRemove {
         UserDefaults.standard.removeObject(forKey: key)
