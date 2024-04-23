@@ -14,13 +14,13 @@ struct UserInvestPage: View {
     @AppStorage("net_worth") var net_worth: String = ""
     @State var net_worth_int: Int = 0
     @State var investment_limit = 0
-    @State var isInvestmentAmountValid: Bool = false
-    @State var isSharesListed = false
+    @State var is_investment_amount_valid: Bool = false
+    @State var is_shares_listed = false
     @State var home_page_shown = false
-    @State var isInvestmentConfirmed = true
+    @State var is_investment_confirmed = true
     @State var user_ready_to_invest = false
-    @State var isShownHomePage = false
-    @State var isWithdrawalConfirmed = false
+    @State var is_shown_home_page = false
+    @State var is_withdrawal_confirmed = false
     @Binding var user_invest_shown: Bool
     @Binding var asking_price: Double
     @Binding var equity_offered: Double
@@ -31,7 +31,7 @@ struct UserInvestPage: View {
     @Binding var min_investment: String
     @State var equity_value = 0.0
     @State var updated_amount_offered = 0
-    @State var showingPaymentAlert = false
+    @State var showing_payment_alert = false
     @AppStorage("email") var email: String = ""
     @AppStorage("verification_completed") var verification_completed: Bool = false
     
@@ -128,12 +128,12 @@ struct UserInvestPage: View {
                                 }
                             }
                             
-                            if !isInvestmentAmountValid && investment_amount != "" {
+                            if !is_investment_amount_valid && investment_amount != "" {
                                 HStack {
                                     Spacer()
                                     Text("Invalid Amount").foregroundColor(.red).font(Font.custom("Nunito-Medium", size: min(geometry.size.width, geometry.size.height) * 0.035)).fontWeight(.bold)
                                 }
-                            } else if isInvestmentAmountValid && investment_amount != "" {
+                            } else if is_investment_amount_valid && investment_amount != "" {
                                 HStack {
                                     Spacer()
                                     Text("\(String(format: "%.3f", (Double(investment_amount)!/equity_value)*100))% of equity").font(Font.custom("Nunito-Medium", size: min(geometry.size.width, geometry.size.height) * 0.035)).fontWeight(.bold)
@@ -141,7 +141,7 @@ struct UserInvestPage: View {
                             }
                             
                             Spacer()
-                            Button(action: { showingPaymentAlert.toggle() }) {
+                            Button(action: { showing_payment_alert.toggle() }) {
                                 HStack {
                                     Text("Confirm Investment")
                                         .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.06))
@@ -152,9 +152,9 @@ struct UserInvestPage: View {
                                 .cornerRadius(5)
                                 .padding(.bottom)
                             }
-                            .sensoryFeedback(.success, trigger: showingPaymentAlert)
-                            .disabled(isInvestmentAmountValid ? false : true)
-                            .opacity(isInvestmentAmountValid ? 1 : 0.75)
+                            .sensoryFeedback(.success, trigger: showing_payment_alert)
+                            .disabled(is_investment_amount_valid ? false : true)
+                            .opacity(is_investment_amount_valid ? 1 : 0.75)
                         }
                     }
                     .frame(height: max(0, geometry.size.height - 20))
@@ -169,7 +169,7 @@ struct UserInvestPage: View {
                 UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
             }
             .navigationDestination(isPresented: $home_page_shown) {
-                UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isWithdrawalConfirmed: $isWithdrawalConfirmed, isShownHomePage: $isShownHomePage).navigationBarBackButtonHidden(true)
+                UserHome(is_investment_confirmed: $is_investment_confirmed, is_withdrawal_confirmed: $is_withdrawal_confirmed, is_shown_home_page: $is_shown_home_page).navigationBarBackButtonHidden(true)
             }
             .onAppear {
                 if let netWorthInt = Int(net_worth) {
@@ -184,7 +184,7 @@ struct UserInvestPage: View {
                 }
                 equity_value = (asking_price*100)/(equity_offered)
             }
-            .alert(isPresented: $showingPaymentAlert) {
+            .alert(isPresented: $showing_payment_alert) {
                 Alert(
                     title: Text("Are you sure you want to buy this?"),
                     primaryButton: .default(Text("Yes")) {
@@ -222,9 +222,9 @@ struct UserInvestPage: View {
     /// Valides whether the inputted amount by the user is within the limits set
     private func validateInvestmentAmount() {
         if investment_amount != "" && (Int(investment_amount)! >= Int(min_investment)! && Int(investment_amount)! <= investment_limit) {
-            isInvestmentAmountValid = true
+            is_investment_amount_valid = true
         } else {
-            isInvestmentAmountValid = false
+            is_investment_amount_valid = false
         }
     }
     

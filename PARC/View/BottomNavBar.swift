@@ -15,9 +15,9 @@ enum Tab: String, CaseIterable {
 
 // View responsible for displaying the bottom navigation bar shown to users
 struct BottomNavBar: View {
-    @Binding var selectedTab: Tab
-    private var fillImage: String {
-        selectedTab.rawValue + ".fill"
+    @Binding var selected_tab: Tab
+    private var fill_image: String {
+        selected_tab.rawValue + ".fill"
     }
     var tab_names: [String:String] = ["house": "Home", "chartPie": "Portfolio", "bag": "Secondary Market"]
     
@@ -28,30 +28,30 @@ struct BottomNavBar: View {
                     Spacer()
                     VStack {
                         // Lines 30-38 adopted from: https://github.com/federicoazzu/Custom-Tab-Bar/blob/main/TestProject0105/CustomTabBar.swift
-                        Image(systemName: selectedTab == tab ? fillImage : tab.rawValue)
-                            .scaleEffect(selectedTab == tab ? 1.25 : 1.0)
-                            .foregroundColor(selectedTab == tab ? Color("Secondary") : .black)
+                        Image(systemName: selected_tab == tab ? fill_image : tab.rawValue)
+                            .scaleEffect(selected_tab == tab ? 1.25 : 1.0)
+                            .foregroundColor(selected_tab == tab ? Color("Secondary") : .black)
                             .font(.system(size: 22))
                             .onTapGesture {
                                 withAnimation(.easeIn(duration: 0.1)) {
-                                    selectedTab = tab
+                                    selected_tab = tab
                                 }
                             }
                         
                         if tab.rawValue == "house" {
                             Text("Home")
                                 .font(Font.custom("Nunito-Bold", size: 10))
-                                .foregroundColor(selectedTab == tab ? Color("Secondary") : .black)
+                                .foregroundColor(selected_tab == tab ? Color("Secondary") : .black)
                                 .padding(.top, 2)
                         } else if tab.rawValue == "chart.pie" {
                             Text("Portfolio")
                                 .font(Font.custom("Nunito-Bold", size: 10))
-                                .foregroundColor(selectedTab == tab ? Color("Secondary") : .black)
+                                .foregroundColor(selected_tab == tab ? Color("Secondary") : .black)
                                 .padding(.top, 2)
                         } else if tab.rawValue == "bag" {
                             Text("Marketplace")
                                 .font(Font.custom("Nunito-Bold", size: 10))
-                                .foregroundColor(selectedTab == tab ? Color("Secondary") : .black)
+                                .foregroundColor(selected_tab == tab ? Color("Secondary") : .black)
                                 .padding(.top, 2)
                         }
                     }

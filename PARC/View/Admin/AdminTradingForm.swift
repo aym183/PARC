@@ -13,7 +13,7 @@ struct AdminTradingForm: View {
     @State var end_date = Date()
     @State var duration = ""
     @State var admin_home_shown = false
-    let dateRange: ClosedRange<Date> = {
+    let date_range: ClosedRange<Date> = {
         let calendar = Calendar.current
         let startComponents = DateComponents(year: 2023, month: 11, day: 1)
         let endComponents = DateComponents(year: 2050, month: 12, day: 31)
@@ -21,10 +21,10 @@ struct AdminTradingForm: View {
         ...
         calendar.date(from:endComponents)!
     }()
-    var validFormInputs: Bool {
+    var valid_form_inputs: Bool {
         duration.count>0
     }
-    @State var isValidInput = true
+    @State var is_valid_input = true
     
     var body: some View {
         GeometryReader { geometry in
@@ -44,7 +44,7 @@ struct AdminTradingForm: View {
                         Text("Start Date").font(Font.custom("Nunito-Bold", size: 18))
                             .padding(.bottom, -5).padding(.leading,2.5)
                         
-                        DatePicker("Select a Date", selection: $start_date, in: dateRange, displayedComponents: [.date])
+                        DatePicker("Select a Date", selection: $start_date, in: date_range, displayedComponents: [.date])
                             .padding([.horizontal, .top], 2)
                         
                         HStack(spacing: 5) {
@@ -69,14 +69,14 @@ struct AdminTradingForm: View {
                                 .onChange(of: self.duration, perform: { value in
                                     withAnimation(.easeOut(duration: 0.2)) {
                                         if self.duration.count > 0 {
-                                            if Int(self.duration)! == 0 { isValidInput = false }
-                                            else if Int(self.duration)! > 60 { isValidInput = false }
-                                        } else { isValidInput = true }
+                                            if Int(self.duration)! == 0 { is_valid_input = false }
+                                            else if Int(self.duration)! > 60 { is_valid_input = false }
+                                        } else { is_valid_input = true }
                                     }
                                 })
                         }
                         
-                        if !isValidInput {
+                        if !is_valid_input {
                             HStack {
                                 Spacer()
                                 Text("Amount should be between 0 and 60").foregroundColor(.red).font(Font.custom("Nunito-Medium", size: min(geometry.size.width, geometry.size.height) * 0.035)).fontWeight(.bold)
@@ -102,8 +102,8 @@ struct AdminTradingForm: View {
                             .cornerRadius(5)
                             .padding(.bottom)
                         }
-                        .disabled(validFormInputs ? false : true)
-                        .opacity(validFormInputs ? 1 : 0.75)
+                        .disabled(valid_form_inputs ? false : true)
+                        .opacity(valid_form_inputs ? 1 : 0.75)
                     }
                     .frame(width: max(0, geometry.size.width-40), height: max(0, geometry.size.height))
                     .foregroundColor(.black)

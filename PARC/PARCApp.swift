@@ -12,7 +12,7 @@ import LocalAuthentication
 @main
 struct PARCApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    @State var isUnlocked = false
+    @State var is_unlocked = false
     
     var body: some Scene {
         WindowGroup {
@@ -33,7 +33,7 @@ struct PARCApp: App {
             let reason = "We need to secure your app from being accessed by unauthorised parties"
             context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, authenticationError in
                 if success {
-                    isUnlocked = true
+                    is_unlocked = true
                     UserDefaults.standard.set(true, forKey: "is_unlocked")
                 } else {
                     // Unsuccessful auth

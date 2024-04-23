@@ -15,7 +15,7 @@ struct AdminTradingClick: View {
     @Binding var trading_volume: Int
     @Binding var no_of_trades: Int
     @State var admin_home_shown = false
-    @State var showingDeleteAlert = false
+    @State var showing_delete_alert = false
     
     var body: some View {
         GeometryReader { geometry in
@@ -28,7 +28,7 @@ struct AdminTradingClick: View {
                         
                         if selected_trading_window["status"]! == "Ongoing" {
                             
-                            Button(action: { showingDeleteAlert.toggle() }) {
+                            Button(action: { showing_delete_alert.toggle() }) {
                                 HStack {
                                     Text("Close Window")
                                         .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.038))
@@ -108,7 +108,7 @@ struct AdminTradingClick: View {
             .navigationDestination(isPresented: $admin_home_shown) {
                 AdminHome().navigationBarBackButtonHidden(true)
             }
-            .alert(isPresented: $showingDeleteAlert) {
+            .alert(isPresented: $showing_delete_alert) {
                 Alert(
                     title: Text("Are you sure you want to close this window?"),
                     primaryButton: .default(Text("Yes")) {

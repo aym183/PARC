@@ -18,22 +18,22 @@ struct AdminOpportunityForm: View {
     @State var opportunity_close_date = ""
     @State var franchise_form_shown = false
     @State var admin_home_shown = false
-    @State private var selectedFranchise: DropdownMenuOption? = nil
+    @State private var selected_franchise: DropdownMenuOption? = nil
     @State private var date = Date()
-    let dateRange: ClosedRange<Date> = {
+    let date_range: ClosedRange<Date> = {
         let calendar = Calendar.current
-        let startComponents = DateComponents(year: 2023, month: 11, day: 1)
+        let startComponents = DateComponents(year: 2024, month: 05, day: 1)
         let endComponents = DateComponents(year: 2050, month: 12, day: 31)
         return calendar.date(from:startComponents)!
         ...
         calendar.date(from:endComponents)!
     }()
-    var validFormInputs: Bool {
-        selectedFranchise != nil && location.count>0 && asking_price.count>0 && equity_offered.count>0 && min_investment_amount.count>0
+    var valid_form_inputs: Bool {
+        selected_franchise != nil && location.count>0 && asking_price.count>0 && equity_offered.count>0 && min_investment_amount.count>0
     }
-    @State var isValidInput = true
-    @State var isEquityValid = true
-    @State var isMinInvestValid = true
+    @State var is_valid_input = true
+    @State var is_equity_valid = true
+    @State var is_min_invest_valid = true
     
     var body: some View {
         GeometryReader { geometry in
@@ -55,7 +55,7 @@ struct AdminOpportunityForm: View {
                         
                         HStack(spacing: 15) {
                             
-                            DropdownMenu(selectedOption: self.$selectedFranchise, placeholder: "Select", options: franchise_data)
+                            DropdownMenu(selected_option: self.$selected_franchise, placeholder: "Select", options: franchise_data)
                                 .frame(width: max(0, geometry.size.width - 100))
                             
                             Button(action: { franchise_form_shown.toggle() }) {
@@ -108,13 +108,13 @@ struct AdminOpportunityForm: View {
                                 .onChange(of: self.asking_price, perform: { value in
                                     withAnimation(.easeOut(duration: 0.2)) {
                                         if self.asking_price.count > 0 {
-                                            if Int(self.asking_price)! == 0 { isValidInput = false }
-                                        } else { isValidInput = true }
+                                            if Int(self.asking_price)! == 0 { is_valid_input = false }
+                                        } else { is_valid_input = true }
                                     }
                                 })
                         }
                         
-                        if !isValidInput {
+                        if !is_valid_input {
                             HStack {
                                 Spacer()
                                 Text("Amount should be greater than 0").foregroundColor(.red).font(Font.custom("Nunito-Medium", size: min(geometry.size.width, geometry.size.height) * 0.035)).fontWeight(.bold)
@@ -143,14 +143,14 @@ struct AdminOpportunityForm: View {
                                 .onChange(of: self.equity_offered, perform: { value in
                                     withAnimation(.easeOut(duration: 0.2)) {
                                         if self.equity_offered.count > 0 {
-                                            if Int(self.equity_offered)! == 0 { isEquityValid = false }
-                                            else if Int(self.equity_offered)! > 100 { isEquityValid = false }
-                                        } else { isEquityValid = true }
+                                            if Int(self.equity_offered)! == 0 { is_equity_valid = false }
+                                            else if Int(self.equity_offered)! > 100 { is_equity_valid = false }
+                                        } else { is_equity_valid = true }
                                     }
                                 })
                         }
                         
-                        if !isEquityValid {
+                        if !is_equity_valid {
                             HStack {
                                 Spacer()
                                 Text("Amount should be between 0 and 100").foregroundColor(.red).font(Font.custom("Nunito-Medium", size: min(geometry.size.width, geometry.size.height) * 0.035)).fontWeight(.bold)
@@ -178,13 +178,13 @@ struct AdminOpportunityForm: View {
                                 .onChange(of: self.min_investment_amount, perform: { value in
                                     withAnimation(.easeOut(duration: 0.2)) {
                                         if self.min_investment_amount.count > 0 {
-                                            if Int(self.min_investment_amount)! == 0 { isMinInvestValid = false }
-                                        } else { isMinInvestValid = true }
+                                            if Int(self.min_investment_amount)! == 0 { is_min_invest_valid = false }
+                                        } else { is_min_invest_valid = true }
                                     }
                                 })
                         }
                         
-                        if !isMinInvestValid {
+                        if !is_min_invest_valid {
                             HStack {
                                 Spacer()
                                 Text("Amount should be greater than 0").foregroundColor(.red).font(Font.custom("Nunito-Medium", size: min(geometry.size.width, geometry.size.height) * 0.035)).fontWeight(.bold)
@@ -194,14 +194,14 @@ struct AdminOpportunityForm: View {
                         Text("Opportunity Close Date").font(Font.custom("Nunito-Bold", size: 18))
                             .padding(.top, 10).padding(.bottom, -5).padding(.leading,2.5)
                         
-                        DatePicker("Select a Date", selection: $date, in: dateRange, displayedComponents: [.date])
+                        DatePicker("Select a Date", selection: $date, in: date_range, displayedComponents: [.date])
                             .padding([.horizontal, .top], 2)
                         
                         Spacer()
                         
                         Button(action: {
                             DispatchQueue.global(qos: .userInteractive).async {
-                                CreateDB().create_opportunity(franchise_name: selectedFranchise!.option, location: location, asking_price: asking_price, equity_offered: equity_offered, min_invest_amount: min_investment_amount, close_date: String(describing: date)) { response in
+                                CreateDB().create_opportunity(franchise_name: selected_franchise!.option, location: location, asking_price: asking_price, equity_offered: equity_offered, min_invest_amount: min_investment_amount, close_date: String(describing: date)) { response in
                                     if response == "Opportunity Created" {
                                         admin_home_shown.toggle()
                                     }
@@ -219,8 +219,8 @@ struct AdminOpportunityForm: View {
                             .cornerRadius(5)
                             .padding(.bottom)
                         }
-                        .disabled(validFormInputs ? false : true)
-                        .opacity(validFormInputs ? 1 : 0.75)
+                        .disabled(valid_form_inputs ? false : true)
+                        .opacity(valid_form_inputs ? 1 : 0.75)
                         
                     }
                     .frame(width: max(0, geometry.size.width-40), height: max(0, geometry.size.height))

@@ -17,7 +17,7 @@ struct AdminPayoutForm: View {
     @Binding var opportunity_data : [DropdownMenuOption]
     @Binding var user_holdings_data : [[String: String]]
     @State private var date = Date()
-    var dateRange: ClosedRange<Date> = {
+    var date_range: ClosedRange<Date> = {
         var calendar = Calendar.current
         var startComponents = DateComponents(year: 2023, month: 11, day: 20)
         var endComponents = DateComponents(year: 2050, month: 12, day: 31)
@@ -26,8 +26,8 @@ struct AdminPayoutForm: View {
         calendar.date(from:endComponents)!
     }()
     @State var admin_home_shown = false
-    var validFormInputs: Bool { selectedOpportunity != nil && amount_offered.count>0 && revenue_generated.count>0 }
-    @State var isValidInput = true
+    var valid_form_inputs: Bool { selectedOpportunity != nil && amount_offered.count>0 && revenue_generated.count>0 }
+    @State var is_valid_input = true
     @State var isRevenueValid = true
     
     var body: some View {
@@ -48,7 +48,7 @@ struct AdminPayoutForm: View {
                         Text("Opportunity").font(Font.custom("Nunito-Bold", size: 18))
                             .padding(.bottom, -5).padding(.leading,2.5)
                         
-                        DropdownMenu(selectedOption: self.$selectedOpportunity, placeholder: "Select", options: opportunity_data)
+                        DropdownMenu(selected_option: self.$selectedOpportunity, placeholder: "Select", options: opportunity_data)
                             .frame(width: max(0, geometry.size.width - 45))
                             .padding(.leading,2.5)
                         
@@ -73,13 +73,13 @@ struct AdminPayoutForm: View {
                                 .onChange(of: self.amount_offered, perform: { value in
                                     withAnimation(.easeOut(duration: 0.2)) {
                                         if self.amount_offered.count > 0 {
-                                            if Int(self.amount_offered)! == 0 { isValidInput = false }
-                                        } else { isValidInput = true }
+                                            if Int(self.amount_offered)! == 0 { is_valid_input = false }
+                                        } else { is_valid_input = true }
                                     }
                                 })
                         }
                         
-                        if !isValidInput {
+                        if !is_valid_input {
                             HStack {
                                 Spacer()
                                 Text("Amount should be greater than 0").foregroundColor(.red).font(Font.custom("Nunito-Medium", size: min(geometry.size.width, geometry.size.height) * 0.035)).fontWeight(.bold)
@@ -123,7 +123,7 @@ struct AdminPayoutForm: View {
                         Text("Payout Date").font(Font.custom("Nunito-Bold", size: 18))
                             .padding(.top, 10).padding(.bottom, -5).padding(.leading,2.5)
                         
-                        DatePicker("Select a Date", selection: $date, in: dateRange, displayedComponents: [.date])
+                        DatePicker("Select a Date", selection: $date, in: date_range, displayedComponents: [.date])
                             .padding([.horizontal, .top], 2.5)
                         
                         Spacer()
@@ -151,8 +151,8 @@ struct AdminPayoutForm: View {
                             .cornerRadius(5)
                             .padding(.bottom)
                         }
-                        .disabled(validFormInputs ? false : true)
-                        .opacity(validFormInputs ? 1 : 0.75)
+                        .disabled(valid_form_inputs ? false : true)
+                        .opacity(valid_form_inputs ? 1 : 0.75)
                         
                     }
                     .frame(width: max(0, geometry.size.width-40), height: max(0, geometry.size.height))

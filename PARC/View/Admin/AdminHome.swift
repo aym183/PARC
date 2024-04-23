@@ -26,16 +26,16 @@ struct AdminHome: View {
     @State var opportunity_data: [String:String] = [:]
     @State var payout_data: [String:String] = [:]
     @State var selected_trading_window: [String: String] = [:]
-    @ObservedObject var readDB = ReadDB()
+    @ObservedObject var read_db = ReadDB()
     var trading_window_transactions: [String:Int] = [:]
     @State var trading_volume = 0
     @State var no_of_trades = 0
-    @State var isRefreshing = false
+    @State var is_refreshing = false
     @State var profile_image: UIImage?
     @State var init_profile_image: UIImage?
     @State private var counter = 2
     @State var trading_window_ongoing = false
-    @AppStorage("is_unlocked") var isUnlocked: Bool = false
+    @AppStorage("is_unlocked") var is_unlocked: Bool = false
     
     var body: some View {
         GeometryReader { geometry in
@@ -62,7 +62,7 @@ struct AdminHome: View {
                         }
                         
                         
-                        if (self.isRefreshing == true) {
+                        if (self.is_refreshing == true) {
                             VStack(alignment: .center) {
                                 Spacer()
                                 LottieView(name: "loading_3.0", speed: 1, loop: false).frame(width: 75, height: 75)
@@ -82,7 +82,7 @@ struct AdminHome: View {
                             
                             ScrollView(.horizontal, showsIndicators: false) {
                                 LazyHGrid(rows: rows, spacing: 20) {
-                                    ForEach(0..<readDB.admin_opportunity_data.count+1, id: \.self ) { index in
+                                    ForEach(0..<read_db.admin_opportunity_data.count+1, id: \.self ) { index in
                                         if index == 0 {
                                             Button(action: { admin_opportunity_form_shown.toggle() }) {
                                                 ZStack {
@@ -112,8 +112,8 @@ struct AdminHome: View {
                                         } else {
                                             ZStack {
                                                 Button(action: {
-                                                    opportunity_logo = load_display_image(key: readDB.franchise_data[readDB.franchise_data.firstIndex(where: { $0["name"] ==  readDB.admin_opportunity_data[index-1]["franchise"]})!]["logo"]!)
-                                                    opportunity_data = readDB.admin_opportunity_data[index-1]
+                                                    opportunity_logo = load_display_image(key: read_db.franchise_data[read_db.franchise_data.firstIndex(where: { $0["name"] ==  read_db.admin_opportunity_data[index-1]["franchise"]})!]["logo"]!)
+                                                    opportunity_data = read_db.admin_opportunity_data[index-1]
                                                     admin_opportunity_click_shown.toggle()
                                                 }) {
                                                     RoundedRectangle(cornerRadius: 5)
@@ -127,9 +127,9 @@ struct AdminHome: View {
                                                 
                                                 VStack {
                                                     HStack {
-                                                        if let franchiseName = readDB.admin_opportunity_data[index-1]["franchise"] {
-                                                            if let franchiseIndex = readDB.franchise_data.firstIndex(where: { $0["name"] == franchiseName }) {
-                                                                let matchedFranchise = readDB.franchise_data[franchiseIndex]["logo"]!
+                                                        if let franchiseName = read_db.admin_opportunity_data[index-1]["franchise"] {
+                                                            if let franchiseIndex = read_db.franchise_data.firstIndex(where: { $0["name"] == franchiseName }) {
+                                                                let matchedFranchise = read_db.franchise_data[franchiseIndex]["logo"]!
                                                                 
                                                                 if UserDefaults.standard.object(forKey: String(describing: matchedFranchise)) != nil {
                                                                     Image(uiImage: load_display_image(key: String(describing: matchedFranchise)))
@@ -154,7 +154,7 @@ struct AdminHome: View {
                                                             }
                                                         }
                                                         
-                                                        Text(String(describing: readDB.admin_opportunity_data[index-1]["franchise"]!))
+                                                        Text(String(describing: read_db.admin_opportunity_data[index-1]["franchise"]!))
                                                             .font(Font.custom("Nunito-Bold", size: 16))
                                                             .padding(.top, 10)
                                                         
@@ -173,7 +173,7 @@ struct AdminHome: View {
                                                             
                                                             HStack(spacing: 10) {
                                                                 Image("gbr").resizable().frame(width: 10, height: 10)
-                                                                Text(String(describing: readDB.admin_opportunity_data[index-1]["location"]!))
+                                                                Text(String(describing: read_db.admin_opportunity_data[index-1]["location"]!))
                                                                     .font(Font.custom("Nunito-SemiBold", size: 8))
                                                                     .foregroundColor(Color("Custom_Gray"))
                                                                     .padding(.leading, -7.5)
@@ -182,35 +182,35 @@ struct AdminHome: View {
                                                         
                                                         Spacer()
                                                         
-                                                        Text("Created - \(convert_date(dateString: String(describing: readDB.admin_opportunity_data[index-1]["date_created"]!)))")
+                                                        Text("Created - \(convert_date(dateString: String(describing: read_db.admin_opportunity_data[index-1]["date_created"]!)))")
                                                             .font(Font.custom("Nunito-SemiBold", size: 7))
                                                             .foregroundColor(Color("Custom_Gray"))
                                                     }
                                                     .padding(.horizontal, 10)
                                                     
-                                                    ProgressView(value: Double(readDB.admin_opportunity_data[index-1]["ratio"]!))
+                                                    ProgressView(value: Double(read_db.admin_opportunity_data[index-1]["ratio"]!))
                                                         .tint(Color("Secondary"))
                                                         .scaleEffect(x: 1, y: 2, anchor: .center)
                                                         .padding(.top,3)
                                                         .frame(width: 140)
                                                     
                                                     HStack {
-                                                        if readDB.admin_opportunity_data[index-1]["status"]! == "Closed"{
+                                                        if read_db.admin_opportunity_data[index-1]["status"]! == "Closed"{
                                                             Text("Closed")
-                                                        } else if readDB.admin_opportunity_data[index-1]["status"]! == "Completed" {
+                                                        } else if read_db.admin_opportunity_data[index-1]["status"]! == "Completed" {
                                                             Text("Completed")
                                                                 .foregroundColor(Color("Profit"))
-                                                        } else if get_days_remaining(date_input: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))! <= 5 {
+                                                        } else if get_days_remaining(date_input: String(describing: read_db.admin_opportunity_data[index-1]["close_date"]!))! <= 5 {
                                                             
-                                                            Text("\(get_days_remaining(date_input: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))!) days left")
+                                                            Text("\(get_days_remaining(date_input: String(describing: read_db.admin_opportunity_data[index-1]["close_date"]!))!) days left")
                                                                 .foregroundColor(Color("Loss"))
                                                             
-                                                        } else if get_days_remaining(date_input: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))! > 5 && get_days_remaining(date_input: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))! < 15 {
+                                                        } else if get_days_remaining(date_input: String(describing: read_db.admin_opportunity_data[index-1]["close_date"]!))! > 5 && get_days_remaining(date_input: String(describing: read_db.admin_opportunity_data[index-1]["close_date"]!))! < 15 {
                                                             
-                                                            Text("\(get_days_remaining(date_input: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))!) days left")
+                                                            Text("\(get_days_remaining(date_input: String(describing: read_db.admin_opportunity_data[index-1]["close_date"]!))!) days left")
                                                                 .foregroundColor(Color("Amber"))
                                                         } else {
-                                                            Text("\(get_days_remaining(date_input: String(describing: readDB.admin_opportunity_data[index-1]["close_date"]!))!) days left")
+                                                            Text("\(get_days_remaining(date_input: String(describing: read_db.admin_opportunity_data[index-1]["close_date"]!))!) days left")
                                                         }
                                                         
                                                         Spacer()
@@ -237,7 +237,7 @@ struct AdminHome: View {
                             
                             ScrollView(.horizontal, showsIndicators: false) {
                                 LazyHGrid(rows: rows, spacing: 20) {
-                                    ForEach(0..<readDB.payout_data.count+1, id: \.self ) { index in
+                                    ForEach(0..<read_db.payout_data.count+1, id: \.self ) { index in
                                         
                                         if index == 0 {
                                             Button(action: { admin_payout_form_shown.toggle() }) {
@@ -267,8 +267,8 @@ struct AdminHome: View {
                                             }
                                         } else {
                                             Button(action: {
-                                                opportunity_data = readDB.admin_opportunity_data[Int(readDB.payout_data[index-1]["opportunity_id"]!)!-1]
-                                                payout_data = readDB.payout_data[index-1]
+                                                opportunity_data = read_db.admin_opportunity_data[Int(read_db.payout_data[index-1]["opportunity_id"]!)!-1]
+                                                payout_data = read_db.payout_data[index-1]
                                                 admin_payout_click_shown.toggle()
                                             }) {
                                                 ZStack {
@@ -281,28 +281,28 @@ struct AdminHome: View {
                                                     
                                                     VStack {
                                                         ZStack {
-                                                            if readDB.payout_data[index-1]["status"] == "Scheduled" {
+                                                            if read_db.payout_data[index-1]["status"] == "Scheduled" {
                                                                 RoundedRectangle(cornerRadius: 5)
                                                                     .fill(Color("Amber"))
                                                                     .frame(width: geometry.size.width*0.2, height: 25)
                                                                 
-                                                                Text(String(describing: readDB.payout_data[index-1]["status"]!))
+                                                                Text(String(describing: read_db.payout_data[index-1]["status"]!))
                                                                     .font(Font.custom("Nunito-ExtraBold", size: 12))
                                                                     .foregroundColor(.white)
-                                                            } else if readDB.payout_data[index-1]["status"] == "Completed" {
+                                                            } else if read_db.payout_data[index-1]["status"] == "Completed" {
                                                                 RoundedRectangle(cornerRadius: 5)
                                                                     .fill(Color("Profit"))
                                                                     .frame(width: geometry.size.width*0.2, height: 25)
                                                                 
-                                                                Text(String(describing: readDB.payout_data[index-1]["status"]!))
+                                                                Text(String(describing: read_db.payout_data[index-1]["status"]!))
                                                                     .font(Font.custom("Nunito-ExtraBold", size: 12))
                                                                     .foregroundColor(.white)
-                                                            } else if readDB.payout_data[index-1]["status"] == "Cancelled" {
+                                                            } else if read_db.payout_data[index-1]["status"] == "Cancelled" {
                                                                 RoundedRectangle(cornerRadius: 5)
                                                                     .fill(Color("Loss"))
                                                                     .frame(width: geometry.size.width*0.2, height: 25)
                                                                 
-                                                                Text(String(describing: readDB.payout_data[index-1]["status"]!))
+                                                                Text(String(describing: read_db.payout_data[index-1]["status"]!))
                                                                     .font(Font.custom("Nunito-ExtraBold", size: 12))
                                                                     .foregroundColor(.white)
                                                             }
@@ -310,24 +310,24 @@ struct AdminHome: View {
                                                         
                                                         Spacer()
                                                         
-                                                        Text("+£\(String(describing: formatted_number(input_number: Int(readDB.payout_data[index-1]["amount_offered"]!)!)))")
+                                                        Text("+£\(String(describing: formatted_number(input_number: Int(read_db.payout_data[index-1]["amount_offered"]!)!)))")
                                                             .font(Font.custom("Nunito-Bold", size: 25))
                                                         
                                                         Spacer()
                                                         
                                                         HStack {
                                                             
-                                                            Text("Investors: \(String(describing: readDB.admin_opportunity_data[Int(readDB.payout_data[index-1]["opportunity_id"]!)!-1]["investors"]!))")
+                                                            Text("Investors: \(String(describing: read_db.admin_opportunity_data[Int(read_db.payout_data[index-1]["opportunity_id"]!)!-1]["investors"]!))")
                                                             
                                                             Divider().frame(height: 15)
                                                             
-                                                            if readDB.payout_data[index-1]["status"] == "Scheduled" {
-                                                                Text("Scheduled: \(String(describing: readDB.payout_data[index-1]["date_scheduled"]!))")
-                                                            } else if readDB.payout_data[index-1]["status"] == "Completed" {
-                                                                Text("Created: \(String(describing: readDB.payout_data[index-1]["date_created"]!))")
+                                                            if read_db.payout_data[index-1]["status"] == "Scheduled" {
+                                                                Text("Scheduled: \(String(describing: read_db.payout_data[index-1]["date_scheduled"]!))")
+                                                            } else if read_db.payout_data[index-1]["status"] == "Completed" {
+                                                                Text("Created: \(String(describing: read_db.payout_data[index-1]["date_created"]!))")
                                                                 
-                                                            } else if readDB.payout_data[index-1]["status"] == "Cancelled" {
-                                                                Text("Created: \(String(describing: readDB.payout_data[index-1]["date_created"]!))")
+                                                            } else if read_db.payout_data[index-1]["status"] == "Cancelled" {
+                                                                Text("Created: \(String(describing: read_db.payout_data[index-1]["date_created"]!))")
                                                             }
                                                         }
                                                         .font(Font.custom("Nunito-SemiBold", size: 6.5))
@@ -353,7 +353,7 @@ struct AdminHome: View {
                             
                             ScrollView(.horizontal, showsIndicators: false) {
                                 LazyHGrid(rows: rows, spacing: 20) {
-                                    ForEach(0..<readDB.trading_window_data.count+1, id: \.self ) { index in
+                                    ForEach(0..<read_db.trading_window_data.count+1, id: \.self ) { index in
                                         
                                         if index == 0 {
                                             Button(action: { admin_trading_form_shown.toggle() }) {
@@ -386,9 +386,9 @@ struct AdminHome: View {
                                             .disabled(trading_window_ongoing ? true : false)
                                         } else {
                                             Button(action: {
-                                                selected_trading_window = readDB.trading_window_data[index-1]
-                                                trading_volume = readDB.transformed_trading_window_transactions_data["\(String(describing: readDB.trading_window_data[index-1]["trading-window-id"]!))_volume"] ?? 0
-                                                no_of_trades = readDB.transformed_trading_window_transactions_data["\(String(describing: readDB.trading_window_data[index-1]["trading-window-id"]!))_trades"] ?? 0
+                                                selected_trading_window = read_db.trading_window_data[index-1]
+                                                trading_volume = read_db.transformed_trading_window_transactions_data["\(String(describing: read_db.trading_window_data[index-1]["trading-window-id"]!))_volume"] ?? 0
+                                                no_of_trades = read_db.transformed_trading_window_transactions_data["\(String(describing: read_db.trading_window_data[index-1]["trading-window-id"]!))_trades"] ?? 0
                                                 admin_trading_click_shown.toggle()
                                             }) {
                                                 
@@ -402,37 +402,37 @@ struct AdminHome: View {
                                                     
                                                     VStack {
                                                         ZStack {
-                                                            if readDB.trading_window_data[index-1]["status"] == "Scheduled" {
+                                                            if read_db.trading_window_data[index-1]["status"] == "Scheduled" {
                                                                 RoundedRectangle(cornerRadius: 5)
                                                                     .fill(.blue)
                                                                     .frame(width: geometry.size.width*0.2, height: 25)
-                                                            } else if readDB.trading_window_data[index-1]["status"] == "Ongoing"  {
+                                                            } else if read_db.trading_window_data[index-1]["status"] == "Ongoing"  {
                                                                 RoundedRectangle(cornerRadius: 5)
                                                                     .fill(Color("Amber"))
                                                                     .frame(width: geometry.size.width*0.2, height: 25)
                                                                     .onAppear() {
                                                                         self.trading_window_ongoing = true
                                                                     }
-                                                            } else if readDB.trading_window_data[index-1]["status"] == "Completed"  {
+                                                            } else if read_db.trading_window_data[index-1]["status"] == "Completed"  {
                                                                 RoundedRectangle(cornerRadius: 5)
                                                                     .fill(Color("Profit"))
                                                                     .frame(width: geometry.size.width*0.2, height: 25)
-                                                            } else if readDB.trading_window_data[index-1]["status"] == "Cancelled"  {
+                                                            } else if read_db.trading_window_data[index-1]["status"] == "Cancelled"  {
                                                                 RoundedRectangle(cornerRadius: 5)
                                                                     .fill(Color("Loss"))
                                                                     .frame(width: geometry.size.width*0.2, height: 25)
                                                             }
                                                             
-                                                            Text(String(describing: readDB.trading_window_data[index-1]["status"]!))
+                                                            Text(String(describing: read_db.trading_window_data[index-1]["status"]!))
                                                                 .font(Font.custom("Nunito-ExtraBold", size: 12))
                                                                 .foregroundColor(.white)
                                                         }
                                                         
                                                         Spacer()
                                                         
-                                                        if readDB.transformed_trading_window_transactions_data.count != 0 {
-                                                            if readDB.transformed_trading_window_transactions_data.keys.contains("\(String(describing: readDB.trading_window_data[index-1]["trading-window-id"]!))_trades") {
-                                                                Text("\(readDB.transformed_trading_window_transactions_data["\(String(describing: readDB.trading_window_data[index-1]["trading-window-id"]!))_trades"]!) Trades")
+                                                        if read_db.transformed_trading_window_transactions_data.count != 0 {
+                                                            if read_db.transformed_trading_window_transactions_data.keys.contains("\(String(describing: read_db.trading_window_data[index-1]["trading-window-id"]!))_trades") {
+                                                                Text("\(read_db.transformed_trading_window_transactions_data["\(String(describing: read_db.trading_window_data[index-1]["trading-window-id"]!))_trades"]!) Trades")
                                                                     .font(Font.custom("Nunito-Bold", size: 25))
                                                             } else {
                                                                 Text("0 Trades")
@@ -442,9 +442,9 @@ struct AdminHome: View {
                                                             Spacer()
                                                             
                                                             HStack {
-                                                                if readDB.transformed_trading_window_transactions_data.keys.contains("\(String(describing: readDB.trading_window_data[index-1]["trading-window-id"]!))_volume") {
+                                                                if read_db.transformed_trading_window_transactions_data.keys.contains("\(String(describing: read_db.trading_window_data[index-1]["trading-window-id"]!))_volume") {
                                                                     
-                                                                    Text("Volume - £\(convert_number_amount(input_number: Double(readDB.transformed_trading_window_transactions_data["\(String(describing: readDB.trading_window_data[index-1]["trading-window-id"]!))_volume"]!)))")
+                                                                    Text("Volume - £\(convert_number_amount(input_number: Double(read_db.transformed_trading_window_transactions_data["\(String(describing: read_db.trading_window_data[index-1]["trading-window-id"]!))_volume"]!)))")
                                                                 } else {
                                                                     Text("Volume - £0")
                                                                     
@@ -453,10 +453,10 @@ struct AdminHome: View {
                                                                 Divider()
                                                                     .frame(height: 15)
                                                                 
-                                                                if readDB.trading_window_data[index-1]["status"] == "Scheduled" {
-                                                                    Text("Scheduled: \(readDB.trading_window_data[index-1]["start_date"]!)")
+                                                                if read_db.trading_window_data[index-1]["status"] == "Scheduled" {
+                                                                    Text("Scheduled: \(read_db.trading_window_data[index-1]["start_date"]!)")
                                                                 } else {
-                                                                    Text("Started: \(readDB.trading_window_data[index-1]["start_date"]!)")
+                                                                    Text("Started: \(read_db.trading_window_data[index-1]["start_date"]!)")
                                                                 }
                                                             }
                                                             .font(Font.custom("Nunito-SemiBold", size: 6.5))
@@ -482,29 +482,29 @@ struct AdminHome: View {
                 }
                 .refreshable() {
                     withAnimation(.easeOut(duration: 0.25)) {
-                        isRefreshing = true
+                        is_refreshing = true
                     }
-                    readDB.franchise_data = []
-                    readDB.franchise_data_dropdown = []
-                    readDB.admin_opportunity_data = []
-                    readDB.payout_data = []
-                    readDB.sold_shares = []
-                    readDB.opportunity_data_dropdown = []
-                    readDB.full_user_holdings_data = []
-                    readDB.trading_window_data = []
-                    readDB.trading_window_transactions_data = []
-                    readDB.transformed_trading_window_transactions_data = [:]
-                    readDB.get_franchises()
-                    readDB.get_all_user_holdings()
-                    readDB.get_admin_opportunities() { response in
+                    read_db.franchise_data = []
+                    read_db.franchise_data_dropdown = []
+                    read_db.admin_opportunity_data = []
+                    read_db.payout_data = []
+                    read_db.sold_shares = []
+                    read_db.opportunity_data_dropdown = []
+                    read_db.full_user_holdings_data = []
+                    read_db.trading_window_data = []
+                    read_db.trading_window_transactions_data = []
+                    read_db.transformed_trading_window_transactions_data = [:]
+                    read_db.get_franchises()
+                    read_db.get_all_user_holdings()
+                    read_db.get_admin_opportunities() { response in
                         if response == "Fetched all opportunities" {
-                            readDB.get_payouts() { response in
+                            read_db.get_payouts() { response in
                                 if response == "Fetched payouts data" {
-                                    readDB.payout_data = sort_array_by_date(inputArray: readDB.payout_data, field_name: "date_created", date_type: "dd/MM/yyyy")
+                                    read_db.payout_data = sort_array_by_date(inputArray: read_db.payout_data, field_name: "date_created", date_type: "dd/MM/yyyy")
                                 }
                             }
-                            readDB.get_trading_windows()
-                            readDB.get_trading_window_transactions()
+                            read_db.get_trading_windows()
+                            read_db.get_trading_window_transactions()
                         }
                     }
                     
@@ -513,14 +513,14 @@ struct AdminHome: View {
                             self.counter -= 1
                         } else {
                             withAnimation(.easeOut(duration: 0.25)) {
-                                isRefreshing = false
+                                is_refreshing = false
                             }
                             timer.invalidate()
                         }
                     }
                 }
             }
-            .blur(radius: isUnlocked ? 0 : 10)
+            .blur(radius: is_unlocked ? 0 : 10)
         }
         .onAppear {
             load_profile_image() { response in
@@ -529,35 +529,35 @@ struct AdminHome: View {
                     init_profile_image = response!
                 }
             }
-            readDB.franchise_data = []
-            readDB.franchise_data_dropdown = []
-            readDB.admin_opportunity_data = []
-            readDB.payout_data = []
-            readDB.opportunity_data_dropdown = []
-            readDB.full_user_holdings_data = []
-            readDB.trading_window_data = []
-            readDB.sold_shares = []
-            readDB.trading_window_transactions_data = []
-            readDB.transformed_trading_window_transactions_data = [:]
-            readDB.get_franchises()
-            readDB.get_all_user_holdings()
-            readDB.get_admin_opportunities() { response in
+            read_db.franchise_data = []
+            read_db.franchise_data_dropdown = []
+            read_db.admin_opportunity_data = []
+            read_db.payout_data = []
+            read_db.opportunity_data_dropdown = []
+            read_db.full_user_holdings_data = []
+            read_db.trading_window_data = []
+            read_db.sold_shares = []
+            read_db.trading_window_transactions_data = []
+            read_db.transformed_trading_window_transactions_data = [:]
+            read_db.get_franchises()
+            read_db.get_all_user_holdings()
+            read_db.get_admin_opportunities() { response in
                 if response == "Fetched all opportunities" {
-                    readDB.get_payouts() { response in
+                    read_db.get_payouts() { response in
                         if response == "Fetched payouts" {
-                            readDB.payout_data = sort_array_by_date(inputArray: readDB.payout_data, field_name: "date_created", date_type: "dd/MM/yyyy")
+                            read_db.payout_data = sort_array_by_date(inputArray: read_db.payout_data, field_name: "date_created", date_type: "dd/MM/yyyy")
                         }
                     }
-                    readDB.get_trading_windows()
-                    readDB.get_trading_window_transactions()
+                    read_db.get_trading_windows()
+                    read_db.get_trading_window_transactions()
                 }
             }
         }
         .navigationDestination(isPresented: $admin_payout_form_shown){
-            AdminPayoutForm(opportunity_data: $readDB.opportunity_data_dropdown, user_holdings_data: $readDB.full_user_holdings_data)
+            AdminPayoutForm(opportunity_data: $read_db.opportunity_data_dropdown, user_holdings_data: $read_db.full_user_holdings_data)
         }
         .navigationDestination(isPresented: $admin_opportunity_form_shown){
-            AdminOpportunityForm(franchise_data: $readDB.franchise_data_dropdown)
+            AdminOpportunityForm(franchise_data: $read_db.franchise_data_dropdown)
         }
         .navigationDestination(isPresented: $admin_trading_form_shown){
             AdminTradingForm()

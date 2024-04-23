@@ -16,14 +16,14 @@ struct UserListShares: View {
     @State var asking_price = ""
     @State var is_on = false
     @Binding var marketplace_shown: Bool
-    @State var isInvestmentConfirmed = false
-    @State var isSharesListed = true
-    @State var isShownHomePage = false
-    @State var isWithdrawalConfirmed = false
-    @State private var selectedFranchise: DropdownMenuOption? = nil
-    @State private var selectedHolding: DropdownMenuOption? = nil
-    var validFormInputs: Bool { selectedHolding != nil && asking_price.count>0 && is_on }
-    @State var isValidInput = true
+    @State var is_investment_confirmed = false
+    @State var is_shares_listed = true
+    @State var is_shown_home_page = false
+    @State var is_withdrawal_confirmed = false
+    @State private var selected_franchise: DropdownMenuOption? = nil
+    @State private var selected_holding: DropdownMenuOption? = nil
+    var valid_form_inputs: Bool { selected_holding != nil && asking_price.count>0 && is_on }
+    @State var is_valid_input = true
     
     var body: some View {
         GeometryReader { geometry in
@@ -43,7 +43,7 @@ struct UserListShares: View {
                         Text("Holding").font(Font.custom("Nunito-Bold", size: 18))
                             .padding(.top).padding(.bottom, -5)
                         
-                        DropdownMenu(selectedOption: self.$selectedHolding, placeholder: "Select", options: holding_data)
+                        DropdownMenu(selected_option: self.$selected_holding, placeholder: "Select", options: holding_data)
                             .frame(width: max(0, geometry.size.width - 40), height: 50)
                             .padding(.top, 0.5)
                         
@@ -69,13 +69,13 @@ struct UserListShares: View {
                                 .onChange(of: self.asking_price, perform: { value in
                                     withAnimation(.easeOut(duration: 0.2)) {
                                         if self.asking_price.count > 0 {
-                                            if Int(self.asking_price)! == 0 { isValidInput = false }
-                                        } else { isValidInput = true }
+                                            if Int(self.asking_price)! == 0 { is_valid_input = false }
+                                        } else { is_valid_input = true }
                                     }
                                 })
                         }
                         
-                        if !isValidInput {
+                        if !is_valid_input {
                             HStack {
                                 Spacer()
                                 Text("Amount should be greater than 0").foregroundColor(.red).font(Font.custom("Nunito-Medium", size: min(geometry.size.width, geometry.size.height) * 0.035)).fontWeight(.bold)
@@ -99,7 +99,7 @@ struct UserListShares: View {
                         Spacer()
                         
                         Button(action: {
-                            let components = selectedHolding!.option.components(separatedBy: "-")
+                            let components = selected_holding!.option.components(separatedBy: "-")
                             if let userHoldingID = Int((components.first?.trimmingCharacters(in: .whitespaces))!) {
                                 DispatchQueue.global(qos: .userInteractive).async {
                                     UpdateDB().update_table(primary_key: "user_holdings_id", primary_key_value: String(describing: userHoldingID), table: "user-holdings", updated_key: "status", updated_value: "Listed") { response in
@@ -125,8 +125,8 @@ struct UserListShares: View {
                             .cornerRadius(5)
                             .padding(.bottom)
                         }
-                        .disabled(validFormInputs ? false : true)
-                        .opacity(validFormInputs ? 1 : 0.75)
+                        .disabled(valid_form_inputs ? false : true)
+                        .opacity(valid_form_inputs ? 1 : 0.75)
                     }
                     .frame(width: max(0, geometry.size.width - 40), height: max(0, geometry.size.height))
                     .padding(10)
@@ -137,7 +137,7 @@ struct UserListShares: View {
             }
             .foregroundColor(.black)
             .navigationDestination(isPresented: $marketplace_shown) {
-                UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isWithdrawalConfirmed: $isWithdrawalConfirmed, isShownHomePage: $isShownHomePage).navigationBarBackButtonHidden(true)
+                UserHome(is_investment_confirmed: $is_investment_confirmed, is_withdrawal_confirmed: $is_withdrawal_confirmed, is_shown_home_page: $is_shown_home_page).navigationBarBackButtonHidden(true)
             }
         }
     }

@@ -29,10 +29,10 @@ class ReadDB: ObservableObject {
     @Published var opportunity_data_dropdown: [DropdownMenuOption] = []
     @Published var secondary_market_transactions_ind: Int = 0
     @Published var franchise_images: [[String: UIImage]] = []
-    @State var currentFormattedDate: String = convert_date(dateString: String(describing: Date()))
+    @State var current_formatted_date: String = convert_date(dateString: String(describing: Date()))
     @AppStorage("email") var email: String = ""
-    let dispatchGroup = DispatchGroup()
-    let apiKey = AppConfig.apiKey
+    let dispatch_group = DispatchGroup()
+    let api_key = AppConfig.apiKey
     
     
     /// Retrieves all the franchises from the database
@@ -42,7 +42,7 @@ class ReadDB: ObservableObject {
         let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/franchises")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
-        request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
+        request.addValue(self.api_key, forHTTPHeaderField: "x-api-key")
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data {
@@ -89,7 +89,7 @@ class ReadDB: ObservableObject {
         let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/opportunities")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
-        request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
+        request.addValue(self.api_key, forHTTPHeaderField: "x-api-key")
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data {
@@ -161,7 +161,7 @@ class ReadDB: ObservableObject {
         let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/opportunities")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
-        request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
+        request.addValue(self.api_key, forHTTPHeaderField: "x-api-key")
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data {
@@ -212,7 +212,7 @@ class ReadDB: ObservableObject {
         let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/payouts")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
-        request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
+        request.addValue(self.api_key, forHTTPHeaderField: "x-api-key")
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data, let responseText = String(data: data, encoding: .utf8) {
@@ -266,7 +266,7 @@ class ReadDB: ObservableObject {
         let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/payouts/user-payouts")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
-        request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
+        request.addValue(self.api_key, forHTTPHeaderField: "x-api-key")
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data {
@@ -319,7 +319,7 @@ class ReadDB: ObservableObject {
         let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/user-holdings")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
-        request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
+        request.addValue(self.api_key, forHTTPHeaderField: "x-api-key")
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data, let responseText = String(data: data, encoding: .utf8) {
@@ -398,7 +398,7 @@ class ReadDB: ObservableObject {
         let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/user-holdings")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
-        request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
+        request.addValue(self.api_key, forHTTPHeaderField: "x-api-key")
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data, let responseText = String(data: data, encoding: .utf8) {
@@ -444,7 +444,7 @@ class ReadDB: ObservableObject {
         let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/trading-windows")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
-        request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
+        request.addValue(self.api_key, forHTTPHeaderField: "x-api-key")
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data {
@@ -470,14 +470,14 @@ class ReadDB: ObservableObject {
                                     }
                                     self.trading_window_data.append(temp_dict)
                                     
-                                    if is_trading_window_active(targetDate: currentFormattedDate, start: temp_dict["start_date"]!, end: date_string_by_adding_days(days: Int(temp_dict["duration"]!)!, dateString: temp_dict["start_date"]!)!, status: temp_dict["status"]!)! {
+                                    if is_trading_window_active(targetDate: current_formatted_date, start: temp_dict["start_date"]!, end: date_string_by_adding_days(days: Int(temp_dict["duration"]!)!, dateString: temp_dict["start_date"]!)!, status: temp_dict["status"]!)! {
                                         trading_window_active = true
                                         current_status = temp_dict["status"]!
                                         trading_window_id = temp_dict["trading-window-id"]!
                                         UserDefaults.standard.set("true", forKey: "trading_window_active")
                                         UserDefaults.standard.set(temp_dict["trading-window-id"], forKey: "trading_window_id")
                                         
-                                    } else if is_trading_window_complete(targetDate: currentFormattedDate, end: date_string_by_adding_days(days: Int(temp_dict["duration"]!)!, dateString: temp_dict["start_date"]!)!, status: temp_dict["status"]!)! {
+                                    } else if is_trading_window_complete(targetDate: current_formatted_date, end: date_string_by_adding_days(days: Int(temp_dict["duration"]!)!, dateString: temp_dict["start_date"]!)!, status: temp_dict["status"]!)! {
                                         trading_window_completed = true
                                         current_status = temp_dict["status"]!
                                         trading_window_id = temp_dict["trading-window-id"]!
@@ -526,7 +526,7 @@ class ReadDB: ObservableObject {
         let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/transactions-secondary-market")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
-        request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
+        request.addValue(self.api_key, forHTTPHeaderField: "x-api-key")
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data {
@@ -568,7 +568,7 @@ class ReadDB: ObservableObject {
         let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/transactions-secondary-market")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
-        request.addValue(self.apiKey, forHTTPHeaderField: "x-api-key")
+        request.addValue(self.api_key, forHTTPHeaderField: "x-api-key")
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data {

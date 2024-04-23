@@ -9,29 +9,28 @@
 import SwiftUI
 
 struct DropdownMenu: View {
-    @State var isOptionsPresented: Bool = false
-    @Binding var selectedOption: DropdownMenuOption?
-    @State private var selectedBackground: DropdownMenuOption? = nil
+    @State var is_options_presented: Bool = false
+    @Binding var selected_option: DropdownMenuOption?
+    @State private var selected_background: DropdownMenuOption? = nil
     let placeholder: String
     let options: [DropdownMenuOption]
-    
-    let dropdownListHeight: CGFloat = 180
+    let dropdown_list_height: CGFloat = 180
     let padding_bottom_value: CGFloat = 130
     
     var body: some View {
         Button(action: {
             withAnimation {
-                self.isOptionsPresented.toggle()
+                self.is_options_presented.toggle()
             }
         }) {
             HStack {
-                Text(selectedOption == nil ? placeholder : selectedOption!.option)
+                Text(selected_option == nil ? placeholder : selected_option!.option)
                     .font(Font.custom("Nunito-Medium", size: 15))
-                    .foregroundColor(selectedOption == nil ? .gray : .black)
+                    .foregroundColor(selected_option == nil ? .gray : .black)
                 
                 Spacer()
                 
-                Image(systemName: self.isOptionsPresented ? "chevron.up" : "chevron.down")
+                Image(systemName: self.is_options_presented ? "chevron.up" : "chevron.down")
                     .fontWeight(.medium)
             }
         }
@@ -42,23 +41,23 @@ struct DropdownMenu: View {
         }
         .overlay {
             VStack {
-                if self.isOptionsPresented {
+                if self.is_options_presented {
                     if self.options.count == 0 {
-                        Spacer(minLength: dropdownListHeight - 20)
+                        Spacer(minLength: dropdown_list_height - 20)
                         Text("No available options")
                             .font(Font.custom("Nunito-Medium", size: 15))
                             .foregroundColor(.black)
                         
                     } else {
-                        Spacer(minLength: dropdownListHeight)
+                        Spacer(minLength: dropdown_list_height)
                         DropdownMenuList(options: self.options) { option in
-                            self.isOptionsPresented = false
-                            self.selectedOption = option
+                            self.is_options_presented = false
+                            self.selected_option = option
                         }
                     }
                 }
             }
         }
-        .padding(.bottom, self.isOptionsPresented ? padding_bottom_value : 0)
+        .padding(.bottom, self.is_options_presented ? padding_bottom_value : 0)
     }
 }

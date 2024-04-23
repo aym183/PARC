@@ -12,12 +12,12 @@ struct UserMarketplaceClick: View {
     @State var investment_titles = ["Industry", "Number of franchises", "Franchise Revenue (monthly)", "Estimated EBITDA Margin"]
     @State var investment_values = ["Food & Beverage", "50", "£50,000", "42"]
     @State var share_prices = ["£400", "£560", "£230", "£120"]
-    @State var showingPaymentAlert = false
+    @State var showing_payment_alert = false
     @State var home_page_shown = false
-    @State var isInvestmentConfirmed = true
-    @State var isWithdrawalConfirmed = false
-    @State var isShownHomePage = false
-    @State var isSharesListed = false
+    @State var is_investment_confirmed = true
+    @State var is_withdrawal_confirmed = false
+    @State var is_shown_home_page = false
+    @State var is_shares_listed = false
     @AppStorage("trading_window_id") var trading_window_id: String = ""
     @AppStorage("email") var email: String = ""
     @State var selling_email = ""
@@ -154,7 +154,7 @@ struct UserMarketplaceClick: View {
                                         opportunity_id = shares_data[index]["opportunity_id"]!
                                         opportunity_name = shares_data[index]["opportunity_name"]!
                                         user_holding_id = shares_data[index]["user_holdings_id"]!
-                                        showingPaymentAlert.toggle()
+                                        showing_payment_alert.toggle()
                                     }) {
                                         HStack {
                                             Text("Buy")
@@ -193,9 +193,9 @@ struct UserMarketplaceClick: View {
                 .padding(.top,10)
             }
             .navigationDestination(isPresented: $home_page_shown) {
-                UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isWithdrawalConfirmed: $isWithdrawalConfirmed, isShownHomePage: $isShownHomePage).navigationBarBackButtonHidden(true)
+                UserHome(is_investment_confirmed: $is_investment_confirmed, is_withdrawal_confirmed: $is_withdrawal_confirmed, is_shown_home_page: $is_shown_home_page).navigationBarBackButtonHidden(true)
             }
-            .alert(isPresented: $showingPaymentAlert) {
+            .alert(isPresented: $showing_payment_alert) {
                 Alert(
                     title: Text("Are you sure you want to buy this?"),
                     primaryButton: .default(Text("Yes")) {

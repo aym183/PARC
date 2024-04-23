@@ -9,12 +9,12 @@ import SwiftUI
 
 // This view is responsible for handling all interactions when an admin wants to view their account and log out
 struct AdminAccount: View {
-    @AppStorage("full_name") var fullName: String = ""
+    @AppStorage("full_name") var full_name: String = ""
     @AppStorage("email") var email: String = ""
-    @State var showProfileImagePicker = false
+    @State var show_profile_image_picker = false
     @State var logged_out = false
     @State var showing_log_out = false
-    @State var isShownHomePage = false
+    @State var is_shown_home_page = false
     @Binding var profile_image: UIImage?
     @Binding var init_profile_image: UIImage?
     
@@ -25,7 +25,7 @@ struct AdminAccount: View {
                 VStack(alignment: .center) {
                     HStack {
                         VStack {
-                            Button(action: { showProfileImagePicker.toggle() }) {
+                            Button(action: { show_profile_image_picker.toggle() }) {
                                 if let image = profile_image {
                                     ZStack {
                                         Image(uiImage: profile_image!)
@@ -100,7 +100,7 @@ struct AdminAccount: View {
                         }
                         
                         VStack(alignment: .leading) {
-                            Text(fullName)
+                            Text(full_name)
                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.08))
                             
                             Text("Member since November 2023")
@@ -146,9 +146,9 @@ struct AdminAccount: View {
                 )
             }
             .navigationDestination(isPresented: $logged_out) {
-                LandingContent(isShownHomePage: $isShownHomePage).navigationBarBackButtonHidden()
+                LandingContent(is_shown_home_page: $is_shown_home_page).navigationBarBackButtonHidden()
             }
-            .sheet(isPresented: $showProfileImagePicker) {
+            .sheet(isPresented: $show_profile_image_picker) {
                 ImagePicker(image: $profile_image)
             }
             .frame(width: max(0, geometry.size.width-40))

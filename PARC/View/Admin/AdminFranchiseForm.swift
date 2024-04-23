@@ -12,21 +12,21 @@ struct AdminFranchiseForm: View {
     @State var name = ""
     @State var logo = ""
     @State var description = ""
-    @State var noOfFranchises = ""
-    @State var MoMRevenue = ""
-    @State var startupCapital = ""
-    @State var monthRev18 = ""
-    @State var ebitdaEstimate = ""
-    @State var isDescriptionValid = false
-    @State var showLogoImagePicker = false
-    @State var showDisplayImagePicker = false
+    @State var no_of_franchises = ""
+    @State var mom_revenue = ""
+    @State var startup_capital = ""
+    @State var month_rev_18 = ""
+    @State var ebitda_estimate = ""
+    @State var is_description_valid = false
+    @State var show_logo_image_picker = false
+    @State var show_display_image_picker = false
     @State var logo_image: UIImage?
     @Binding var franchise_form_shown: Bool
     @Binding var franchise_data: [DropdownMenuOption]
     @State var logo_path = ""
     @State var display_path = ""
-    var validFormInputs: Bool {
-        name.count>0 && description.count>0 && noOfFranchises.count>0 && MoMRevenue.count>0 && startupCapital.count>0 && monthRev18.count>0 && ebitdaEstimate.count>0 && logo_image != nil
+    var valid_form_inputs: Bool {
+        name.count>0 && description.count>0 && no_of_franchises.count>0 && mom_revenue.count>0 && startup_capital.count>0 && month_rev_18.count>0 && ebitda_estimate.count>0 && logo_image != nil
     }
     
     var body: some View {
@@ -93,7 +93,7 @@ struct AdminFranchiseForm: View {
                                         )
                                         .frame(width: max(0, geometry.size.width - 45), height: 50)
                                     
-                                    Button(action: { showLogoImagePicker.toggle() }) {
+                                    Button(action: { show_logo_image_picker.toggle() }) {
                                         HStack {
                                             Text("Upload")
                                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.05))
@@ -143,7 +143,7 @@ struct AdminFranchiseForm: View {
                                     .padding([.top, .leading], 15)
                             }
                             
-                            if isDescriptionValid {
+                            if is_description_valid {
                                 VStack {
                                     Spacer()
                                     HStack {
@@ -180,7 +180,7 @@ struct AdminFranchiseForm: View {
                                 )
                                 .frame(width: max(0, geometry.size.width - 45), height: 50)
                             
-                            TextField("", text: $noOfFranchises, prompt: Text("150").foregroundColor(.gray).font(Font.custom("Nunito-Medium", size: 16))).padding().frame(width: max(0, geometry.size.width-40), height: 50)
+                            TextField("", text: $no_of_franchises, prompt: Text("150").foregroundColor(.gray).font(Font.custom("Nunito-Medium", size: 16))).padding().frame(width: max(0, geometry.size.width-40), height: 50)
                                 .foregroundColor(.black)
                                 .autocorrectionDisabled(true)
                                 .autocapitalization(.none)
@@ -203,7 +203,7 @@ struct AdminFranchiseForm: View {
                                 )
                                 .frame(width: max(0, geometry.size.width - 45), height: 50)
                             
-                            TextField("", text: $MoMRevenue, prompt: Text("25000").foregroundColor(.gray).font(Font.custom("Nunito-Medium", size: 16))).padding().frame(width: max(0, geometry.size.width-40), height: 50)
+                            TextField("", text: $mom_revenue, prompt: Text("25000").foregroundColor(.gray).font(Font.custom("Nunito-Medium", size: 16))).padding().frame(width: max(0, geometry.size.width-40), height: 50)
                                 .foregroundColor(.black)
                                 .autocorrectionDisabled(true)
                                 .autocapitalization(.none)
@@ -226,7 +226,7 @@ struct AdminFranchiseForm: View {
                                 )
                                 .frame(width: max(0, geometry.size.width - 45), height: 50)
                             
-                            TextField("", text: $startupCapital, prompt: Text("15000000").foregroundColor(.gray).font(Font.custom("Nunito-Medium", size: 16))).padding().frame(width: max(0, geometry.size.width-40), height: 50)
+                            TextField("", text: $startup_capital, prompt: Text("15000000").foregroundColor(.gray).font(Font.custom("Nunito-Medium", size: 16))).padding().frame(width: max(0, geometry.size.width-40), height: 50)
                                 .foregroundColor(.black)
                                 .autocorrectionDisabled(true)
                                 .autocapitalization(.none)
@@ -249,7 +249,7 @@ struct AdminFranchiseForm: View {
                                 )
                                 .frame(width: max(0, geometry.size.width - 45), height: 50)
                             
-                            TextField("", text: $monthRev18, prompt: Text("450000").foregroundColor(.gray).font(Font.custom("Nunito-Medium", size: 16))).padding().frame(width: max(0, geometry.size.width-40), height: 50)
+                            TextField("", text: $month_rev_18, prompt: Text("450000").foregroundColor(.gray).font(Font.custom("Nunito-Medium", size: 16))).padding().frame(width: max(0, geometry.size.width-40), height: 50)
                                 .foregroundColor(.black)
                                 .autocorrectionDisabled(true)
                                 .autocapitalization(.none)
@@ -272,7 +272,7 @@ struct AdminFranchiseForm: View {
                                 )
                                 .frame(width: max(0, geometry.size.width - 45), height: 50)
                             
-                            TextField("", text: $ebitdaEstimate, prompt: Text("28").foregroundColor(.gray).font(Font.custom("Nunito-Medium", size: 16))).padding().frame(width: max(0, geometry.size.width-40), height: 50)
+                            TextField("", text: $ebitda_estimate, prompt: Text("28").foregroundColor(.gray).font(Font.custom("Nunito-Medium", size: 16))).padding().frame(width: max(0, geometry.size.width-40), height: 50)
                                 .foregroundColor(.black)
                                 .autocorrectionDisabled(true)
                                 .autocapitalization(.none)
@@ -286,7 +286,7 @@ struct AdminFranchiseForm: View {
                             DispatchQueue.global(qos: .userInteractive).async {
                                 self.franchise_data.append(DropdownMenuOption(option: self.name))
                                 
-                                CreateDB().createFranchise(name: self.name, logo: logo_path, description: self.description, no_of_franchises: self.noOfFranchises, avg_franchise_mom_revenues: self.MoMRevenue, avg_startup_capital: self.startupCapital, avg_revenue_18_months: self.monthRev18, ebitda_estimate: self.ebitdaEstimate) { response in
+                                CreateDB().createFranchise(name: self.name, logo: logo_path, description: self.description, no_of_franchises: self.no_of_franchises, avg_franchise_mom_revenues: self.mom_revenue, avg_startup_capital: self.startup_capital, avg_revenue_18_months: self.month_rev_18, ebitda_estimate: self.ebitda_estimate) { response in
                                     
                                     if response == "Franchise Created" {
                                         franchise_form_shown.toggle()
@@ -304,8 +304,8 @@ struct AdminFranchiseForm: View {
                             .cornerRadius(5)
                             .padding(.bottom)
                         }
-                        .disabled(validFormInputs ? false : true)
-                        .opacity(validFormInputs ? 1 : 0.75)
+                        .disabled(valid_form_inputs ? false : true)
+                        .opacity(valid_form_inputs ? 1 : 0.75)
                     }
                     .foregroundColor(.black)
                 }
@@ -314,7 +314,7 @@ struct AdminFranchiseForm: View {
             .onTapGesture {
                 UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
             }
-            .sheet(isPresented: $showLogoImagePicker) {
+            .sheet(isPresented: $show_logo_image_picker) {
                 ImagePicker(image: $logo_image)
             }
             .padding(.top, 30)
@@ -323,9 +323,9 @@ struct AdminFranchiseForm: View {
     
     func validateDescriptionCount(value: String) {
         if value.count > 0 {
-            isDescriptionValid = true
+            is_description_valid = true
         } else {
-            isDescriptionValid = false
+            is_description_valid = false
         }
     }
 }

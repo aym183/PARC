@@ -10,12 +10,12 @@ import SwiftUI
 
 struct DropdownMenuList: View {
     let options: [DropdownMenuOption]
-    let onSelectedAction: (_ option: DropdownMenuOption) -> Void
+    let on_selected_action: (_ option: DropdownMenuOption) -> Void
     var body: some View {
         ScrollView(showsIndicators: true) {
             LazyVStack(alignment: .leading, spacing: 2) {
                 ForEach(options) { option in
-                    DropdownMenuListRow(selected_option: self.onSelectedAction, option_init: option)
+                    DropdownMenuListRow(selected_option: self.on_selected_action, option_init: option)
                 }
             }
         }

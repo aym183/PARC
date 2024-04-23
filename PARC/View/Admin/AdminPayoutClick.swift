@@ -17,7 +17,7 @@ struct AdminPayoutClick: View {
     @Binding var payout_data: [String:String]
     @Binding var admin_payout_click_shown: Bool
     @State var admin_home_shown = false
-    @State var showingDeleteAlert = false
+    @State var showing_delete_alert = false
     @State var payout_id = ""
     
     var body: some View {

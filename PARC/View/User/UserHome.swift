@@ -10,17 +10,17 @@ import URLImage
 
 // Displays the central home content for users with the bottom navigation bar
 struct UserHome: View {
-    @State var selectedTab: Tab = .house
+    @State var selected_tab: Tab = .house
     @State var account_shown = false
-    @Binding var isInvestmentConfirmed: Bool
-    @Binding var isWithdrawalConfirmed: Bool
-    @Binding var isShownHomePage: Bool
-    @State var isShownOnboarding = false
-    @AppStorage("first_name") var firstName: String = ""
+    @Binding var is_investment_confirmed: Bool
+    @Binding var is_withdrawal_confirmed: Bool
+    @Binding var is_shown_home_page: Bool
+    @State var is_shown_onboarding = false
+    @AppStorage("first_name") var first_name: String = ""
     @AppStorage("email") var email: String = ""
     @AppStorage("onboarding_completed") var onboarding_completed: Bool = false
-    @State var imageURL = URL(string: "")
-    @ObservedObject var readDB = ReadDB()
+    @State var image_url = URL(string: "")
+    @ObservedObject var read_db = ReadDB()
     @State var portfolio_data: [[String: String]] = []
     @State var user_payouts_data: [[String: String]] = []
     @State var holdings_value: Int = 0
@@ -32,28 +32,28 @@ struct UserHome: View {
     @State var transformed_payouts_data: [String: Any] = [:]
     @State var profile_image: UIImage?
     @State var init_profile_image: UIImage?
-    @AppStorage("is_unlocked") var isUnlocked: Bool = false
+    @AppStorage("is_unlocked") var is_unlocked: Bool = false
     
     var body: some View {
         GeometryReader { geometry in
-            if isShownOnboarding {
-                UserOnboarding(isShownOnboarding: $isShownOnboarding)
+            if is_shown_onboarding {
+                UserOnboarding(is_shown_onboarding: $is_shown_onboarding)
             } else {
                 ZStack {
                     Color(.white).ignoresSafeArea()
                     
-                    if isShownHomePage {
+                    if is_shown_home_page {
                         VStack(alignment: .center) {
                             Spacer()
                             LottieView(name: "loading_3.0", speed: 1, loop: false).frame(width: 100, height: 100)
-                            Text("Welcome \(firstName)").font(Font.custom("Nunito-ExtraBold", size: 30)).multilineTextAlignment(.center).padding(.horizontal).foregroundColor(.black).padding(.top, -5)
+                            Text("Welcome \(first_name)").font(Font.custom("Nunito-ExtraBold", size: 30)).multilineTextAlignment(.center).padding(.horizontal).foregroundColor(.black).padding(.top, -5)
                             Text("Your PARC journey awaits 🥳").font(Font.custom("Nunito-Medium", size: 20)).multilineTextAlignment(.center).padding(.horizontal).foregroundColor(.black)
                             Spacer()
                         }
                         .foregroundColor(.black).frame(width: max(0, geometry.size.width))
                     }
                     
-                    if isInvestmentConfirmed {
+                    if is_investment_confirmed {
                         VStack(alignment: .center) {
                             Spacer()
                             Text("Congratulations!").font(Font.custom("Nunito-Bold", size: 40))
@@ -68,7 +68,7 @@ struct UserHome: View {
                         LottieView(name: "confetti", speed: 0.5, loop: false).frame(width: max(0, geometry.size.width))
                     }
                     
-                    if isWithdrawalConfirmed {
+                    if is_withdrawal_confirmed {
                         VStack(alignment: .center) {
                             Spacer()
                             Text("Confirmed!").font(Font.custom("Nunito-Bold", size: 40))
@@ -102,7 +102,7 @@ struct UserHome: View {
                             }
                         }
                         
-                        if selectedTab == .house {
+                        if selected_tab == .house {
                             Text("New Opportunities")
                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.065))
                                 .padding(.bottom, -5)
@@ -111,9 +111,9 @@ struct UserHome: View {
                                 .frame(height: 1)
                                 .overlay(.black)
                             
-                            UserHomeContent(opportunity_data: $readDB.user_opportunity_data, franchise_data: $readDB.franchise_data, user_holdings_data: $readDB.user_holdings_data, readDB: readDB, email: $email, portfolio_data: $portfolio_data, transformed_payouts_data: $transformed_payouts_data, user_payouts_data: $user_payouts_data, payouts_value: $payouts_value, payouts_chart_values: $payouts_chart_values, admin_opportunity_data: $admin_opportunity_data, holdings_value: $holdings_value, chart_values: $chart_values)
+                            UserHomeContent(opportunity_data: $read_db.user_opportunity_data, franchise_data: $read_db.franchise_data, user_holdings_data: $read_db.user_holdings_data, readDB: read_db, email: $email, portfolio_data: $portfolio_data, transformed_payouts_data: $transformed_payouts_data, user_payouts_data: $user_payouts_data, payouts_value: $payouts_value, payouts_chart_values: $payouts_chart_values, admin_opportunity_data: $admin_opportunity_data, holdings_value: $holdings_value, chart_values: $chart_values)
                             
-                        } else if selectedTab == .chartPie {
+                        } else if selected_tab == .chartPie {
                             Text("Portfolio")
                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.065))
                                 .padding(.bottom, -5)
@@ -121,7 +121,7 @@ struct UserHome: View {
                                 .frame(height: 1)
                                 .overlay(.black)
                             
-                            UserPortfolio(portfolio_data: $portfolio_data, franchise_data: $readDB.franchise_data, user_payouts_data: $user_payouts_data, payouts_chart_values: $payouts_chart_values, payouts_value: $payouts_value, holdings_value: $holdings_value, chart_values: $chart_values, opportunity_data: $readDB.admin_opportunity_data)
+                            UserPortfolio(portfolio_data: $portfolio_data, franchise_data: $read_db.franchise_data, user_payouts_data: $user_payouts_data, payouts_chart_values: $payouts_chart_values, payouts_value: $payouts_value, holdings_value: $holdings_value, chart_values: $chart_values, opportunity_data: $read_db.admin_opportunity_data)
                         } else {
                             Text("Secondary Market")
                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.065))
@@ -130,12 +130,12 @@ struct UserHome: View {
                                 .frame(height: 1)
                                 .overlay(.black)
                             
-                            UserMarketplace(franchise_data: $readDB.franchise_data_dropdown, holding_data: $readDB.user_holdings_data_dropdown, listed_shares: $readDB.secondary_market_data, secondary_shares: $readDB.listed_shares, opportunity_data: $readDB.admin_opportunity_data, transformed_payouts_data: $transformed_payouts_data, franchises: $readDB.franchise_data)
+                            UserMarketplace(franchise_data: $read_db.franchise_data_dropdown, holding_data: $read_db.user_holdings_data_dropdown, listed_shares: $read_db.secondary_market_data, secondary_shares: $read_db.listed_shares, opportunity_data: $read_db.admin_opportunity_data, transformed_payouts_data: $transformed_payouts_data, franchises: $read_db.franchise_data)
                         }
                         
                         
                         Spacer()
-                        BottomNavBar(selectedTab: $selectedTab)
+                        BottomNavBar(selected_tab: $selected_tab)
                         
                     }
                     .frame(width: max(0, geometry.size.width-40), height: max(0, geometry.size.height - 20))
@@ -143,11 +143,11 @@ struct UserHome: View {
                     .onAppear {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                             withAnimation(.easeOut(duration: 0.5)) {
-                                isShownHomePage = false
-                                isInvestmentConfirmed = false
-                                isWithdrawalConfirmed = false
+                                is_shown_home_page = false
+                                is_investment_confirmed = false
+                                is_withdrawal_confirmed = false
                                 if !onboarding_completed {
-                                    isShownOnboarding.toggle()
+                                    is_shown_onboarding.toggle()
                                 }
                             }
                         }
@@ -157,62 +157,62 @@ struct UserHome: View {
                                 init_profile_image = response!
                             }
                         }
-                        readDB.user_holdings_data_dropdown = []
-                        readDB.listed_shares = [:]
-                        readDB.franchise_data_dropdown = []
-                        readDB.franchise_data = []
-                        readDB.user_opportunity_data = []
-                        readDB.admin_opportunity_data = []
-                        readDB.user_holdings_data = []
-                        readDB.full_user_holdings_data = []
-                        readDB.user_payout_data = []
-                        readDB.sold_shares = []
-                        readDB.trading_window_data = []
-                        readDB.payout_data = []
-                        readDB.secondary_market_transactions_ind = 0
-                        readDB.get_franchises()
-                        readDB.get_all_user_holdings()
-                        readDB.get_trading_windows()
-                        readDB.get_trading_window_transactions_email()
-                        readDB.get_payouts() { response in
+                        read_db.user_holdings_data_dropdown = []
+                        read_db.listed_shares = [:]
+                        read_db.franchise_data_dropdown = []
+                        read_db.franchise_data = []
+                        read_db.user_opportunity_data = []
+                        read_db.admin_opportunity_data = []
+                        read_db.user_holdings_data = []
+                        read_db.full_user_holdings_data = []
+                        read_db.user_payout_data = []
+                        read_db.sold_shares = []
+                        read_db.trading_window_data = []
+                        read_db.payout_data = []
+                        read_db.secondary_market_transactions_ind = 0
+                        read_db.get_franchises()
+                        read_db.get_all_user_holdings()
+                        read_db.get_trading_windows()
+                        read_db.get_trading_window_transactions_email()
+                        read_db.get_payouts() { response in
                             if response == "Fetched payouts" {
-                                self.transformed_payouts_data = transform_payouts(payouts_array: readDB.payout_data)
+                                self.transformed_payouts_data = transform_payouts(payouts_array: read_db.payout_data)
                             }
                         }
-                        readDB.get_user_payouts(email: email) { response in
+                        read_db.get_user_payouts(email: email) { response in
                             if response == "Fetched user payouts" {
-                                self.user_payouts_data = readDB.user_payout_data
+                                self.user_payouts_data = read_db.user_payout_data
                                 self.payouts_value = calculate_total_value(input: self.user_payouts_data, field: "amount_received")
                                 self.payouts_chart_values = calculate_payout_opportunities(input: self.user_payouts_data)
                             }
                         }
-                        readDB.get_user_holdings(email: email) { response in
+                        read_db.get_user_holdings(email: email) { response in
                             if response == "Fetched user holdings" {
-                                self.portfolio_data = readDB.user_holdings_data
+                                self.portfolio_data = read_db.user_holdings_data
                                 self.holdings_value = calculate_total_value(input: self.portfolio_data, field: "amount")
                                 self.chart_values = calculate_portion_holdings(input: portfolio_data, holdings_value: calculate_total_value(input: self.portfolio_data, field: "amount"))
                             }
                         }
-                        readDB.get_admin_opportunities() { response in
+                        read_db.get_admin_opportunities() { response in
                             if response == "Fetched all opportunities" {
-                                self.admin_opportunity_data = readDB.admin_opportunity_data
+                                self.admin_opportunity_data = read_db.admin_opportunity_data
                             }
                         }
-                        readDB.get_user_opportunities() { response in
+                        read_db.get_user_opportunities() { response in
                             if response == "Fetched all opportunities" {
-                                self.opportunity_data = readDB.user_opportunity_data
-                                self.admin_opportunity_data = readDB.admin_opportunity_data
+                                self.opportunity_data = read_db.user_opportunity_data
+                                self.admin_opportunity_data = read_db.admin_opportunity_data
                             }
                         }
                         
                     }
-                    .opacity(isInvestmentConfirmed ? 0 : 1)
-                    .opacity(isShownHomePage ? 0 : 1)
-                    .opacity(isWithdrawalConfirmed ? 0 : 1)
+                    .opacity(is_investment_confirmed ? 0 : 1)
+                    .opacity(is_shown_home_page ? 0 : 1)
+                    .opacity(is_withdrawal_confirmed ? 0 : 1)
                 }
-                .blur(radius: isUnlocked ? 0 : 10)
+                .blur(radius: is_unlocked ? 0 : 10)
                 .navigationDestination(isPresented: $account_shown) {
-                    UserAccount(payoutsValue: $payouts_value, secondaryTransactionsValue: $readDB.secondary_market_transactions_ind, profile_image: $profile_image, init_profile_image: $init_profile_image, user_holdings: $readDB.user_holdings_data, user_holdings_sold: $readDB.sold_shares)
+                    UserAccount(payouts_value: $payouts_value, secondary_transactions_value: $read_db.secondary_market_transactions_ind, profile_image: $profile_image, init_profile_image: $init_profile_image, user_holdings: $read_db.user_holdings_data, user_holdings_sold: $read_db.sold_shares)
                 }
             }
             
@@ -241,14 +241,14 @@ struct UserHomeContent: View {
     @Binding var admin_opportunity_data: [[String: String]]
     @Binding var holdings_value: Int
     @Binding var chart_values: [Float]
-    @State var isRefreshing = false
+    @State var is_refreshing = false
     @State private var counter = 2
     
     var body: some View {
         GeometryReader { geometry in
             ScrollView(.vertical, showsIndicators: false) {
                 
-                if (isRefreshing == true) {
+                if (is_refreshing == true) {
                     VStack(alignment: .center) {
                         Spacer()
                         LottieView(name: "loading_3.0", speed: 1, loop: false).frame(width: 75, height: 75)
@@ -440,7 +440,7 @@ struct UserHomeContent: View {
             }
             .refreshable() {
                 withAnimation(.easeOut(duration: 0.25)) {
-                    isRefreshing = true
+                    is_refreshing = true
                 }
                 readDB.user_holdings_data_dropdown = []
                 readDB.listed_shares = [:]
@@ -495,7 +495,7 @@ struct UserHomeContent: View {
                         self.counter -= 1
                     } else {
                         withAnimation(.easeOut(duration: 0.25)) {
-                            isRefreshing = false
+                            is_refreshing = false
                         }
                         timer.invalidate()
                     }

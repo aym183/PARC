@@ -9,19 +9,19 @@ import SwiftUI
 
 // This is the onboarding process a users goes through to gauge their financial stability and experience investing
 struct UserOnboarding: View {
-    @State var isShowingVerificationHint = false
-    @State var isShowingCardHint = false
-    @State private var selectedBackground: DropdownMenuOption? = nil
-    @State var selectedYes = false
-    @State var selectedNo = false
-    @State var showVerificationImagePicker = false
+    @State var is_showing_verification_hint = false
+    @State var is_showing_card_hint = false
+    @State private var selected_background: DropdownMenuOption? = nil
+    @State var selected_yes = false
+    @State var selected_no = false
+    @State var show_verification_image_picker = false
     @State var net_worth = ""
-    @State var isValidInput = true
+    @State var is_valid_input = true
     @State var verification_image: UIImage?
     @AppStorage("email") var email: String = ""
-    @Binding var isShownOnboarding: Bool
-    var isNetWorthValid: Bool {
-        net_worth.count>0 && Int(net_worth)!>0 && (selectedNo || selectedYes) && self.verification_image != nil
+    @Binding var is_shown_onboarding: Bool
+    var is_net_worth_valid: Bool {
+        net_worth.count>0 && Int(net_worth)!>0 && (selected_no || selected_yes) && self.verification_image != nil
     }
     
     var body: some View {
@@ -74,14 +74,14 @@ struct UserOnboarding: View {
                                         .onChange(of: self.net_worth, perform: { value in
                                             withAnimation(.easeOut(duration: 0.2)) {
                                                 if self.net_worth.count > 0 {
-                                                    if Int(self.net_worth)! == 0 { isValidInput = false }
-                                                } else { isValidInput = true }
+                                                    if Int(self.net_worth)! == 0 { is_valid_input = false }
+                                                } else { is_valid_input = true }
                                             }
                                         })
                                 }
                                 .padding(.top, -10).padding(.bottom, 5)
                                 
-                                if !isValidInput {
+                                if !is_valid_input {
                                     HStack {
                                         Spacer()
                                         Text("Amount should be greater than 0").foregroundColor(.red).font(Font.custom("Nunito-Medium", size: min(geometry.size.width, geometry.size.height) * 0.035)).fontWeight(.bold)
@@ -106,16 +106,16 @@ struct UserOnboarding: View {
                                             )
                                         
                                         Button(action: {
-                                            if self.selectedNo == true {
-                                                self.selectedNo.toggle()
+                                            if self.selected_no == true {
+                                                self.selected_no.toggle()
                                             }
-                                            self.selectedYes.toggle()
+                                            self.selected_yes.toggle()
                                         }) {
                                             Text("Yes")
                                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.05))
                                                 .frame(width: 135, height: 45)
-                                                .background(selectedYes ? Color("Secondary") : .white)
-                                                .foregroundColor(selectedYes ? .white : .black)
+                                                .background(selected_yes ? Color("Secondary") : .white)
+                                                .foregroundColor(selected_yes ? .white : .black)
                                         }
                                         .cornerRadius(5)
                                     }
@@ -132,16 +132,16 @@ struct UserOnboarding: View {
                                             )
                                         
                                         Button(action: { 
-                                            if self.selectedYes == true {
-                                                self.selectedYes.toggle()
+                                            if self.selected_yes == true {
+                                                self.selected_yes.toggle()
                                             }
-                                            self.selectedNo.toggle()
+                                            self.selected_no.toggle()
                                         }) {
                                             Text("No")
                                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.05))
                                                 .frame(width: 135, height: 45)
-                                                .background(selectedNo ? Color("Secondary") : .white)
-                                                .foregroundColor(selectedNo ? .white : .black)
+                                                .background(selected_no ? Color("Secondary") : .white)
+                                                .foregroundColor(selected_no ? .white : .black)
                                         }
                                         .cornerRadius(5)
                                     }
@@ -158,7 +158,7 @@ struct UserOnboarding: View {
                                         Text("✅").padding(.vertical)
                                     } else {
                                         Button(action: {
-                                            withAnimation(.easeOut(duration: 0.5)) { isShowingVerificationHint.toggle() }
+                                            withAnimation(.easeOut(duration: 0.5)) { is_showing_verification_hint.toggle() }
                                         }) {
                                             Image(systemName: "questionmark")
                                                 .background(Circle().fill(.gray).font(.system(size: 12)).frame(width: 25, height: 25).opacity(0.3))
@@ -168,7 +168,7 @@ struct UserOnboarding: View {
                                     
                                     Spacer()
                                 }
-                                if isShowingVerificationHint {
+                                if is_showing_verification_hint {
                                     CardView(hint: "Allowed documents - Passport, Residency Permit, or Proof of Address")
                                         .transition(.scale)
                                         .padding(.top, -25)
@@ -185,7 +185,7 @@ struct UserOnboarding: View {
                                         )
                                         .frame(width: max(0, geometry.size.width - 80), height: 45)
                                     
-                                    Button(action: { showVerificationImagePicker.toggle() }) {
+                                    Button(action: { show_verification_image_picker.toggle() }) {
                                         HStack {
                                             Text("Upload")
                                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.05))
@@ -212,7 +212,7 @@ struct UserOnboarding: View {
                                             UserDefaults.standard.set(true, forKey: "onboarding_completed")
                                             UserDefaults.standard.set(true, forKey: "verification_completed")
                                             UserDefaults.standard.set(Int(net_worth)!, forKey: "net_worth")
-                                            isShownOnboarding.toggle()
+                                            is_shown_onboarding.toggle()
                                         }) {
                                             Text("Submit")
                                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.05))
@@ -221,8 +221,8 @@ struct UserOnboarding: View {
                                         .background(Color("Secondary"))
                                         .foregroundColor(Color.white)
                                         .cornerRadius(5)
-                                        .disabled(isNetWorthValid ? false : true)
-                                        .opacity(isNetWorthValid ? 1 : 0.75)
+                                        .disabled(is_net_worth_valid ? false : true)
+                                        .opacity(is_net_worth_valid ? 1 : 0.75)
                                     }
                                     .frame(width: 135, height: 45)
                                     
@@ -236,7 +236,7 @@ struct UserOnboarding: View {
                                                     .stroke(Color.black, lineWidth: 1.25)
                                             )
                                         
-                                        Button(action: { isShownOnboarding.toggle() }) {
+                                        Button(action: { is_shown_onboarding.toggle() }) {
                                             Text("Skip")
                                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.05))
                                                 .frame(width: 135, height: 45)
@@ -253,7 +253,7 @@ struct UserOnboarding: View {
                         }
                         .frame(width: max(0, geometry.size.width - 70))
                     }
-                    .sheet(isPresented: $showVerificationImagePicker) {
+                    .sheet(isPresented: $show_verification_image_picker) {
                         ImagePicker(image: $verification_image)
                     }
                     .frame(width: max(0, geometry.size.width - 40), height: max(0, geometry.size.height-280))
@@ -283,5 +283,5 @@ struct CardView: View {
 }
 
 #Preview {
-    UserOnboarding(isShownOnboarding: .constant(true))
+    UserOnboarding(is_shown_onboarding: .constant(true))
 }

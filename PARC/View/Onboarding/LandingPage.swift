@@ -11,23 +11,23 @@ import Auth0
 
 // Decides which view is displayed whether it is a (i) New user, (ii) Logged in user, or (iii) Logged in admin
 struct LandingPage: View {
-    @State var loggedInUser = true
-    @State var loggedInAdmin = false
-    @State var isInvestmentConfirmed = false
-    @State var isWithdrawalConfirmed = false
-    @State var isSharesListed = false
-    @State var userProfile = Profile.empty
-    @State var isShownHomePage = false
+    @State var logged_in_user = true
+    @State var logged_in_admin = false
+    @State var is_investment_confirmed = false
+    @State var is_withdrawal_confirmed = false
+    @State var is_shares_listed = false
+    @State var user_profile = Profile.empty
+    @State var is_shown_home_page = false
     @AppStorage("logged_in") var logged_in: Bool = false
     @AppStorage("email") var email: String = ""
     var body: some View {
         NavigationStack {
-            if logged_in && !isShownHomePage && email == "ayman.ali1302@gmail.com" {
-                UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isWithdrawalConfirmed: $isWithdrawalConfirmed, isShownHomePage: $isShownHomePage)
-            } else if logged_in && !isShownHomePage && email != "ayman.ali1302@gmail.com" {
+            if logged_in && !is_shown_home_page && email == "ayman.ali1302@gmail.com" {
+                UserHome(is_investment_confirmed: $is_investment_confirmed, is_withdrawal_confirmed: $is_withdrawal_confirmed, is_shown_home_page: $is_shown_home_page)
+            } else if logged_in && !is_shown_home_page && email != "ayman.ali1302@gmail.com" {
                 AdminHome()
             } else {
-                LandingContent(isShownHomePage: $isShownHomePage)
+                LandingContent(is_shown_home_page: $is_shown_home_page)
             }
         }
     }
@@ -36,12 +36,12 @@ struct LandingPage: View {
 // Displays content to new users (i.e. the landing page)
 struct LandingContent: View {
     @State private var index = 0
-    @State var isInvestmentConfirmed = false
-    @State var isWithdrawalConfirmed = false
+    @State var is_investment_confirmed = false
+    @State var is_withdrawal_confirmed = false
     @State var isAuthenticated = false
-    @State var isSharesListed = false
-    @State var userProfile = Profile.empty
-    @Binding var isShownHomePage: Bool
+    @State var is_shares_listed = false
+    @State var user_profile = Profile.empty
+    @Binding var is_shown_home_page: Bool
     @State var email = ""
     var onboarding_assets = ["shop", "Onboarding_2", "Onboarding_3"]
     @AppStorage("logged_in") var logged_in: Bool = false
@@ -97,7 +97,7 @@ struct LandingContent: View {
             }
             .navigationDestination(isPresented: $logged_in) {
                 if email == "ayman.ali1302@gmail.com" {
-                    UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isWithdrawalConfirmed: $isWithdrawalConfirmed, isShownHomePage: $isShownHomePage).navigationBarHidden(true)
+                    UserHome(is_investment_confirmed: $is_investment_confirmed, is_withdrawal_confirmed: $is_withdrawal_confirmed, is_shown_home_page: $is_shown_home_page).navigationBarHidden(true)
                 } else {
                     AdminHome().navigationBarBackButtonHidden(true)
                 }
@@ -117,21 +117,21 @@ extension LandingContent {
                     print("Failed with: \(error)")
                     
                 case .success(let credentials):
-                    self.isShownHomePage = true
-                    self.userProfile = Profile.from(credentials.idToken)
-                    UserDefaults.standard.set(self.userProfile.given_name, forKey: "first_name")
-                    UserDefaults.standard.set(self.userProfile.family_name, forKey: "family_name")
-                    UserDefaults.standard.set(self.userProfile.name, forKey: "full_name")
-                    UserDefaults.standard.set(self.userProfile.email, forKey: "email")
-                    self.email = self.userProfile.email
+                    self.is_shown_home_page = true
+                    self.user_profile = Profile.from(credentials.idToken)
+                    UserDefaults.standard.set(self.user_profile.given_name, forKey: "first_name")
+                    UserDefaults.standard.set(self.user_profile.family_name, forKey: "family_name")
+                    UserDefaults.standard.set(self.user_profile.name, forKey: "full_name")
+                    UserDefaults.standard.set(self.user_profile.email, forKey: "email")
+                    self.email = self.user_profile.email
                     UserDefaults.standard.set(true, forKey: "logged_in")
                     UserDefaults.standard.set(0, forKey: "net_worth")
                     UserDefaults.standard.set(false, forKey: "onboarding_completed")
                     DispatchQueue.global(qos: .userInteractive).async {
-                        CreateDB().create_user(email: self.userProfile.email, first_name: self.userProfile.given_name, last_name: self.userProfile.family_name, full_name: self.userProfile.name, picture: self.userProfile.picture) { response in
+                        CreateDB().create_user(email: self.user_profile.email, first_name: self.user_profile.given_name, last_name: self.user_profile.family_name, full_name: self.user_profile.name, picture: self.user_profile.picture) { response in
                             
                             if response == "User Created" {
-                                CreateDB().create_onboarding_email(name: self.userProfile.given_name, email: self.userProfile.email)
+                                CreateDB().create_onboarding_email(name: self.user_profile.given_name, email: self.user_profile.email)
                             } else if response == "User already exists" {
                                 UserDefaults.standard.set(true, forKey: "onboarding_completed")
                             }

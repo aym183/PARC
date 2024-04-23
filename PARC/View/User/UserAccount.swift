@@ -10,19 +10,19 @@ import URLImage
 
 // Shows the users their account with details such as withdrawable balance and transactio history
 struct UserAccount: View {
-    @Binding var payoutsValue: Int
-    @Binding var secondaryTransactionsValue: Int
-    @AppStorage("full_name") var fullName: String = ""
+    @Binding var payouts_value: Int
+    @Binding var secondary_transactions_value: Int
+    @AppStorage("full_name") var full_name: String = ""
     @AppStorage("email") var email: String = ""
     @AppStorage("verification_completed") var verification_completed: Bool = false
-    @State var showProfileImagePicker = false
+    @State var show_profile_image_picker = false
     @State var logged_out = false
     @State var withdraw_request = false
     @State var withdraw_request_confirmed = false
     @State var showing_log_out = false
-    @State var isShownHomePage = false
-    @State var isInvestmentConfirmed = false
-    @State var isWithdrawalConfirmed = false
+    @State var is_shown_home_page = false
+    @State var is_investment_confirmed = false
+    @State var is_withdrawal_confirmed = false
     @State var transaction_history_shown = false
     @Binding var profile_image: UIImage?
     @Binding var init_profile_image: UIImage?
@@ -37,7 +37,7 @@ struct UserAccount: View {
                 VStack(alignment: .center) {
                     HStack {
                         VStack {
-                            Button(action: { showProfileImagePicker.toggle() }) {
+                            Button(action: { show_profile_image_picker.toggle() }) {
                                 if let image = profile_image {
                                     ZStack {
                                         Image(uiImage: profile_image!)
@@ -68,7 +68,7 @@ struct UserAccount: View {
                                         VStack {
                                             HStack {
                                                 Spacer()
-                                                Button(action: { showProfileImagePicker.toggle() }) {
+                                                Button(action: { show_profile_image_picker.toggle() }) {
                                                     Image(systemName: "pencil.circle.fill")
                                                         .resizable()
                                                         .foregroundColor(.gray)
@@ -114,7 +114,7 @@ struct UserAccount: View {
                         .padding(.leading, -10)
                         
                         VStack(alignment: .leading) {
-                            Text(fullName)
+                            Text(full_name)
                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.08))
                             
                             Text("Member since November 2023")
@@ -182,7 +182,7 @@ struct UserAccount: View {
                             Text("Balance")
                                 .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.052))
                             Spacer()
-                            Text("£\(formatted_number(input_number: payoutsValue+secondaryTransactionsValue))")
+                            Text("£\(formatted_number(input_number: payouts_value+secondary_transactions_value))")
                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.052))
                                 .foregroundColor(.black)
                                 .padding(.trailing, 13)
@@ -270,7 +270,7 @@ struct UserAccount: View {
                     title: Text("Are you sure you want to withdraw?"),
                     primaryButton: .default(Text("Yes")) {
                         DispatchQueue.global(qos: .userInteractive).async {
-                            CreateDB().create_withdrawal_confirmation(email: email, amount: formatted_number(input_number: payoutsValue+secondaryTransactionsValue))
+                            CreateDB().create_withdrawal_confirmation(email: email, amount: formatted_number(input_number: payouts_value+secondary_transactions_value))
                         }
                         withdraw_request_confirmed.toggle()
                     },
@@ -278,12 +278,12 @@ struct UserAccount: View {
                 )
             }
             .navigationDestination(isPresented: $logged_out) {
-                LandingContent(isShownHomePage: $isShownHomePage).navigationBarBackButtonHidden(true)
+                LandingContent(is_shown_home_page: $is_shown_home_page).navigationBarBackButtonHidden(true)
             }
             .navigationDestination(isPresented: $withdraw_request_confirmed) {
-                UserHome(isInvestmentConfirmed: $isInvestmentConfirmed, isWithdrawalConfirmed: $isWithdrawalConfirmed, isShownHomePage: $isShownHomePage).navigationBarBackButtonHidden(true)
+                UserHome(is_investment_confirmed: $is_investment_confirmed, is_withdrawal_confirmed: $is_withdrawal_confirmed, is_shown_home_page: $is_shown_home_page).navigationBarBackButtonHidden(true)
             }
-            .sheet(isPresented: $showProfileImagePicker) {
+            .sheet(isPresented: $show_profile_image_picker) {
                 ImagePicker(image: $profile_image)
             }
             .frame(width: max(0, geometry.size.width-40))

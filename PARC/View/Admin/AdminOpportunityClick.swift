@@ -14,7 +14,7 @@ struct AdminOpportunityClick: View {
     @Binding var opportunity_logo: UIImage?
     @Binding var opportunity_data: [String:String]
     @State var admin_home_shown = false
-    @State var showingDeleteAlert = false
+    @State var showing_delete_alert = false
     
     var body: some View {
         GeometryReader { geometry in
@@ -34,7 +34,7 @@ struct AdminOpportunityClick: View {
                         
                         if opportunity_data["status"]! == "Active" {
                             
-                            Button(action: { showingDeleteAlert.toggle() }) {
+                            Button(action: { showing_delete_alert.toggle() }) {
                                 HStack {
                                     Text("Close Opportunity")
                                         .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.038))
@@ -186,7 +186,7 @@ struct AdminOpportunityClick: View {
             .navigationDestination(isPresented: $admin_home_shown) {
                 AdminHome().navigationBarBackButtonHidden(true)
             }
-            .alert(isPresented: $showingDeleteAlert) {
+            .alert(isPresented: $showing_delete_alert) {
                 Alert(
                     title: Text("Are you sure you want to close this opportunity?"),
                     primaryButton: .default(Text("Yes")) {

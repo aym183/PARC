@@ -17,7 +17,7 @@ struct Profile {
     let name: String
     let email: String
     let picture: String
-    let updatedAt: String
+    let updated_at: String
     
 }
 
@@ -32,7 +32,7 @@ extension Profile {
             name: "",
             email: "",
             picture: "",
-            updatedAt: ""
+            updated_at: ""
         )
     }
     
@@ -45,7 +45,7 @@ extension Profile {
             let name = jwt.claim(name: "name").string,
             let email = jwt.claim(name: "email").string,
             let picture = jwt.claim(name: "picture").string,
-            let updatedAt = jwt.claim(name: "updated_at").string
+            let updated_at = jwt.claim(name: "updated_at").string
         else { return .empty }
         
         return Profile(
@@ -55,7 +55,7 @@ extension Profile {
             name: name,
             email: email,
             picture: picture,
-            updatedAt: updatedAt
+            updated_at: updated_at
         )
     }
 }
