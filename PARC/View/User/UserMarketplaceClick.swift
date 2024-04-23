@@ -201,18 +201,18 @@ struct UserMarketplaceClick: View {
                     primaryButton: .default(Text("Yes")) {
                         
                         DispatchQueue.global(qos: .userInteractive).async {
-                            CreateDB().createSecondaryMarketTransaction(opportunity_id: opportunity_id, trading_window_id: trading_window_id, price: amount, equity: equity, user_buying: email, user_selling: selling_email) { response in
+                            CreateDB().create_secondary_market_transaction(opportunity_id: opportunity_id, trading_window_id: trading_window_id, price: amount, equity: equity, user_buying: email, user_selling: selling_email) { response in
                                 if response == "Transactions Secondary Market Created" {
-                                    UpdateDB().updateTable(primary_key: "user_holdings_id", primary_key_value: user_holding_id, table: "user-holdings", updated_key: "status", updated_value: "Sold") { response in
+                                    UpdateDB().update_table(primary_key: "user_holdings_id", primary_key_value: user_holding_id, table: "user-holdings", updated_key: "status", updated_value: "Sold") { response in
                                         if response == "user-holdings status updated" {
                                             home_page_shown.toggle()
-                                            CreateDB().createUserInvestmentHolding(opportunity_name: opportunity_name, opportunity_id: opportunity_id, email: email, equity: equity, amount: amount)
+                                            CreateDB().create_user_investment_holding(opportunity_name: opportunity_name, opportunity_id: opportunity_id, email: email, equity: equity, amount: amount)
                                         }
                                     }
                                 }
                             }
-                            CreateDB().createInvestmentConfirmation(email: email, amount: amount, opportunity_name: opportunity_name, type: "buyer")
-                            CreateDB().createInvestmentConfirmation(email: selling_email, amount: amount, opportunity_name: opportunity_name, type: "seller")
+                            CreateDB().create_investment_confirmation(email: email, amount: amount, opportunity_name: opportunity_name, type: "buyer")
+                            CreateDB().create_investment_confirmation(email: selling_email, amount: amount, opportunity_name: opportunity_name, type: "seller")
                         }
                     },
                     secondaryButton: .destructive(Text("No")) {

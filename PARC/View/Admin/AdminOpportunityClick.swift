@@ -191,7 +191,7 @@ struct AdminOpportunityClick: View {
                     title: Text("Are you sure you want to close this opportunity?"),
                     primaryButton: .default(Text("Yes")) {
                         DispatchQueue.global(qos: .userInteractive).async {
-                            UpdateDB().updateTable(primary_key: "opportunity_id", primary_key_value: opportunity_data["opportunity_id"]!, table: "opportunities", updated_key: "status", updated_value: "Completed") { response in
+                            UpdateDB().update_table(primary_key: "opportunity_id", primary_key_value: opportunity_data["opportunity_id"]!, table: "opportunities", updated_key: "status", updated_value: "Completed") { response in
                                 if response == "opportunities status updated" {
                                     admin_home_shown.toggle()
                                 }

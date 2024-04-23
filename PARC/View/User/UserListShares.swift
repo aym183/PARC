@@ -102,10 +102,10 @@ struct UserListShares: View {
                             let components = selectedHolding!.option.components(separatedBy: "-")
                             if let userHoldingID = Int((components.first?.trimmingCharacters(in: .whitespaces))!) {
                                 DispatchQueue.global(qos: .userInteractive).async {
-                                    UpdateDB().updateTable(primary_key: "user_holdings_id", primary_key_value: String(describing: userHoldingID), table: "user-holdings", updated_key: "status", updated_value: "Listed") { response in
+                                    UpdateDB().update_table(primary_key: "user_holdings_id", primary_key_value: String(describing: userHoldingID), table: "user-holdings", updated_key: "status", updated_value: "Listed") { response in
                                         if response == "user-holdings status updated" {
                                             
-                                            UpdateDB().updateTable(primary_key: "user_holdings_id", primary_key_value: String(describing: userHoldingID), table: "user-holdings", updated_key: "amount", updated_value: asking_price) { response in
+                                            UpdateDB().update_table(primary_key: "user_holdings_id", primary_key_value: String(describing: userHoldingID), table: "user-holdings", updated_key: "amount", updated_value: asking_price) { response in
                                                 if response == "user-holdings amount updated" {
                                                     marketplace_shown.toggle()
                                                 }

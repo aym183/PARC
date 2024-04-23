@@ -128,7 +128,7 @@ extension LandingContent {
                     UserDefaults.standard.set(0, forKey: "net_worth")
                     UserDefaults.standard.set(false, forKey: "onboarding_completed")
                     DispatchQueue.global(qos: .userInteractive).async {
-                        CreateDB().createUser(email: self.userProfile.email, first_name: self.userProfile.given_name, last_name: self.userProfile.family_name, full_name: self.userProfile.name, picture: self.userProfile.picture) { response in
+                        CreateDB().create_user(email: self.userProfile.email, first_name: self.userProfile.given_name, last_name: self.userProfile.family_name, full_name: self.userProfile.name, picture: self.userProfile.picture) { response in
                             
                             if response == "User Created" {
                                 CreateDB().create_onboarding_email(name: self.userProfile.given_name, email: self.userProfile.email)

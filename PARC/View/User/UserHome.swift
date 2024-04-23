@@ -170,35 +170,35 @@ struct UserHome: View {
                         readDB.trading_window_data = []
                         readDB.payout_data = []
                         readDB.secondary_market_transactions_ind = 0
-                        readDB.getFranchises()
-                        readDB.getAllUserHoldings()
-                        readDB.getTradingWindows()
-                        readDB.getTradingWindowTransactionsEmail()
-                        readDB.getPayouts() { response in
+                        readDB.get_franchises()
+                        readDB.get_all_user_holdings()
+                        readDB.get_trading_windows()
+                        readDB.get_trading_window_transactions_email()
+                        readDB.get_payouts() { response in
                             if response == "Fetched payouts" {
                                 self.transformed_payouts_data = transformPayouts(payouts_array: readDB.payout_data)
                             }
                         }
-                        readDB.getUserPayouts(email: email) { response in
+                        readDB.get_user_payouts(email: email) { response in
                             if response == "Fetched user payouts" {
                                 self.user_payouts_data = readDB.user_payout_data
                                 self.payouts_value = calculateTotalValue(input: self.user_payouts_data, field: "amount_received")
                                 self.payouts_chart_values = calculatePayoutOpportunities(input: self.user_payouts_data)
                             }
                         }
-                        readDB.getUserHoldings(email: email) { response in
+                        readDB.get_user_holdings(email: email) { response in
                             if response == "Fetched user holdings" {
                                 self.portfolio_data = readDB.user_holdings_data
                                 self.holdings_value = calculateTotalValue(input: self.portfolio_data, field: "amount")
                                 self.chart_values = calculatePortionHoldings(input: portfolio_data, holdings_value: calculateTotalValue(input: self.portfolio_data, field: "amount"))
                             }
                         }
-                        readDB.getAdminOpportunities() { response in
+                        readDB.get_admin_opportunities() { response in
                             if response == "Fetched all opportunities" {
                                 self.admin_opportunity_data = readDB.admin_opportunity_data
                             }
                         }
-                        readDB.getUserOpportunities() { response in
+                        readDB.get_user_opportunities() { response in
                             if response == "Fetched all opportunities" {
                                 self.opportunity_data = readDB.user_opportunity_data
                                 self.admin_opportunity_data = readDB.admin_opportunity_data
@@ -455,35 +455,35 @@ struct UserHomeContent: View {
                 readDB.trading_window_data = []
                 readDB.payout_data = []
                 readDB.secondary_market_transactions_ind = 0
-                readDB.getFranchises()
-                readDB.getAllUserHoldings()
-                readDB.getTradingWindows()
-                readDB.getTradingWindowTransactionsEmail()
-                readDB.getPayouts() { response in
+                readDB.get_franchises()
+                readDB.get_all_user_holdings()
+                readDB.get_trading_windows()
+                readDB.get_trading_window_transactions_email()
+                readDB.get_payouts() { response in
                     if response == "Fetched payouts" {
                         self.transformed_payouts_data = transformPayouts(payouts_array: readDB.payout_data)
                     }
                 }
-                readDB.getUserPayouts(email: email) { response in
+                readDB.get_user_payouts(email: email) { response in
                     if response == "Fetched user payouts" {
                         self.user_payouts_data = readDB.user_payout_data
                         self.payouts_value = calculateTotalValue(input: self.user_payouts_data, field: "amount_received")
                         self.payouts_chart_values = calculatePayoutOpportunities(input: self.user_payouts_data)
                     }
                 }
-                readDB.getUserHoldings(email: email) { response in
+                readDB.get_user_holdings(email: email) { response in
                     if response == "Fetched user holdings" {
                         self.portfolio_data = readDB.user_holdings_data
                         self.holdings_value = calculateTotalValue(input: self.portfolio_data, field: "amount")
                         self.chart_values = calculatePortionHoldings(input: portfolio_data, holdings_value: calculateTotalValue(input: self.portfolio_data, field: "amount"))
                     }
                 }
-                readDB.getAdminOpportunities() { response in
+                readDB.get_admin_opportunities() { response in
                     if response == "Fetched all opportunities" {
                         self.admin_opportunity_data = readDB.admin_opportunity_data
                     }
                 }
-                readDB.getUserOpportunities() { response in
+                readDB.get_user_opportunities() { response in
                     if response == "Fetched all opportunities" {
                         self.opportunity_data = readDB.user_opportunity_data
                         self.admin_opportunity_data = readDB.admin_opportunity_data

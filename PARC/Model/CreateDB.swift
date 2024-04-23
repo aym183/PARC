@@ -22,7 +22,7 @@ class CreateDB: ObservableObject {
     ///   - last_name: User last name
     ///   - full_name: User full name
     ///   - picture: User profile picture
-    func createUser(email: String, first_name: String, last_name: String, full_name: String, picture: String, completion: @escaping (String?) -> Void) {
+    func create_user(email: String, first_name: String, last_name: String, full_name: String, picture: String, completion: @escaping (String?) -> Void) {
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/users")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
@@ -106,7 +106,7 @@ class CreateDB: ObservableObject {
     ///   - amount: User amount
     ///   - opportunity_name: User opportunity
     ///   - type: Type of investment (buyer confirmation, seller confirmation)
-    func createInvestmentConfirmation(email: String, amount: String, opportunity_name: String, type: String) {
+    func create_investment_confirmation(email: String, amount: String, opportunity_name: String, type: String) {
         if type == "buyer" {
             let apiUrl = URL(string: "https://brdh472ip2.execute-api.us-east-1.amazonaws.com/development/emails/investment-confirmed?email=\(email)&amount=\(amount)&opportunity_name=\(opportunity_name)")
             var request = URLRequest(url: apiUrl!)
@@ -271,7 +271,7 @@ class CreateDB: ObservableObject {
     ///   - date_scheduled: Date of payout
     ///   - amount_offered: Total amount offered to investors
     ///   - user_holdings: All the investors and the equity they own
-    func createPayout(franchise: String, revenue_generated: String, opportunity_id: Int, date_scheduled: String, amount_offered: String, user_holdings: [[String: String]], completion: @escaping (String?) -> Void) {
+    func create_payout(franchise: String, revenue_generated: String, opportunity_id: Int, date_scheduled: String, amount_offered: String, user_holdings: [[String: String]], completion: @escaping (String?) -> Void) {
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/payouts")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
@@ -294,7 +294,7 @@ class CreateDB: ObservableObject {
                                 URLSession.shared.dataTask(with: request) { data, response, error in
                                     if let data = data, let responseText = String(data: data, encoding: .utf8) {
                                         DispatchQueue.main.async {
-                                            CreateDB().createUserPayout(opportunity_id: opportunity_id, user_holdings: user_holdings, amount_offered: amount_offered)
+                                            CreateDB().create_user_payout(opportunity_id: opportunity_id, user_holdings: user_holdings, amount_offered: amount_offered)
                                             completion("Payout Created")
                                         }
                                     } else if let error = error {
@@ -319,7 +319,7 @@ class CreateDB: ObservableObject {
     ///   - opportunity_id: Opportunity for which payout is created
     ///   - user_holdings:  All the investors and the equity they own
     ///   - amount_offered:  Total amount offered to investors
-    func createUserPayout(opportunity_id: Int, user_holdings: [[String: String]], amount_offered: String) {
+    func create_user_payout(opportunity_id: Int, user_holdings: [[String: String]], amount_offered: String) {
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/payouts/user-payouts")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
@@ -392,7 +392,7 @@ class CreateDB: ObservableObject {
     ///   - opportunity_id: The opportunity for which a transaction was made
     ///   - email: Email of the investor
     ///   - amount: Amount invested (in £)
-    func createOpportunityTransaction(opportunity_id: String, email: String, amount: String) {
+    func create_opportunity_transaction(opportunity_id: String, email: String, amount: String) {
         
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/transactions")!
         var request = URLRequest(url: apiUrl)
@@ -441,7 +441,7 @@ class CreateDB: ObservableObject {
     ///   - email: Email of the investor
     ///   - equity: Equity owned by the user after successful investment
     ///   - amount: Amount invested in the opportunity
-    func createUserInvestmentHolding(opportunity_name: String, opportunity_id: String, email: String, equity: String, amount: String) {
+    func create_user_investment_holding(opportunity_name: String, opportunity_id: String, email: String, equity: String, amount: String) {
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/user-holdings")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
@@ -489,7 +489,7 @@ class CreateDB: ObservableObject {
     ///   - start_date: Start date of the trading window
     ///   - duration: Duration of the secondary market trading window (in days)
     ///   - status: Status of the trading window (initially "Active")
-    func createTradingWindow(start_date: String, duration: String, status: String, completion: @escaping (String?) -> Void) {
+    func create_trading_window(start_date: String, duration: String, status: String, completion: @escaping (String?) -> Void) {
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/trading-windows")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
@@ -540,7 +540,7 @@ class CreateDB: ObservableObject {
     ///   - equity: Equity in the opportunity now owned by the buyer
     ///   - user_buying: Email of buyer
     ///   - user_selling: Email of seller
-    func createSecondaryMarketTransaction(opportunity_id: String, trading_window_id: String, price: String, equity: String, user_buying: String, user_selling: String, completion: @escaping (String?) -> Void) {
+    func create_secondary_market_transaction(opportunity_id: String, trading_window_id: String, price: String, equity: String, user_buying: String, user_selling: String, completion: @escaping (String?) -> Void) {
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/transactions-secondary-market")!
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
@@ -587,7 +587,7 @@ class CreateDB: ObservableObject {
     /// - Parameters:
     ///   - email: Email of the investor
     ///   - amount: Amount withdrawn
-    func createWithdrawalConfirmation(email: String, amount: String) {
+    func create_withdrawal_confirmation(email: String, amount: String) {
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/users/withdrawals?email=\(email)&amount=\(amount)")
         var request = URLRequest(url: apiUrl!)
         request.httpMethod = "POST"
@@ -610,7 +610,7 @@ class CreateDB: ObservableObject {
     /// Creates a request that gets sent to Amazon Bedrock to fetch the chatbot's response
     /// - Parameters:
     ///   - message: Message created by the user
-    func createChatbotRequest(message: String, completion: @escaping (String?) -> Void) {
+    func create_chatbot_request(message: String, completion: @escaping (String?) -> Void) {
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/chatbot?user_input=\(message)")
         var request = URLRequest(url: apiUrl!)
         request.httpMethod = "POST"

@@ -87,7 +87,7 @@ struct UserAccount: View {
                                 Button(action: {
                                     UserDefaults.standard.removeObject(forKey: "profile_image")
                                     
-                                    UpdateDB().updateUserTable(primary_key: "email", primary_key_value: email, table: "users", updated_key: "picture", updated_value: CreateDB().upload_logo_image(image: profile_image!, folder: "profile_images")) { response in
+                                    UpdateDB().update_user_table(primary_key: "email", primary_key_value: email, table: "users", updated_key: "picture", updated_value: CreateDB().upload_logo_image(image: profile_image!, folder: "profile_images")) { response in
                                     }
                                     withAnimation(.easeOut(duration: 0.25)) {
                                         self.init_profile_image = profile_image
@@ -270,7 +270,7 @@ struct UserAccount: View {
                     title: Text("Are you sure you want to withdraw?"),
                     primaryButton: .default(Text("Yes")) {
                         DispatchQueue.global(qos: .userInteractive).async {
-                            CreateDB().createWithdrawalConfirmation(email: email, amount: formattedNumber(input_number: payoutsValue+secondaryTransactionsValue))
+                            CreateDB().create_withdrawal_confirmation(email: email, amount: formattedNumber(input_number: payoutsValue+secondaryTransactionsValue))
                         }
                         withdraw_request_confirmed.toggle()
                     },

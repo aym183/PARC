@@ -190,19 +190,19 @@ struct UserInvestPage: View {
                     primaryButton: .default(Text("Yes")) {
                         updated_amount_offered = Int(amount_offered)! + Int(investment_amount)!
                         DispatchQueue.global(qos: .userInteractive).async {
-                            UpdateDB().updateTable(primary_key: "opportunity_id", primary_key_value: opportunity_id, table: "opportunities", updated_key: "amount_raised", updated_value: String(describing: updated_amount_offered)) { response in
+                            UpdateDB().update_table(primary_key: "opportunity_id", primary_key_value: opportunity_id, table: "opportunities", updated_key: "amount_raised", updated_value: String(describing: updated_amount_offered)) { response in
                                 
                                 if response == "opportunities amount_raised updated" {
-                                    UpdateDB().updateTable(primary_key: "opportunity_id", primary_key_value: opportunity_id, table: "opportunities", updated_key: "investors", updated_value: investors) { second_response in
+                                    UpdateDB().update_table(primary_key: "opportunity_id", primary_key_value: opportunity_id, table: "opportunities", updated_key: "investors", updated_value: investors) { second_response in
                                         
                                         if second_response == "opportunities investors updated" {
                                             home_page_shown.toggle()
                                             
-                                            CreateDB().createUserInvestmentHolding(opportunity_name: opportunity_name, opportunity_id: opportunity_id, email: email, equity: String(format: "%.3f", (Double(investment_amount)!/equity_value)*100), amount: investment_amount)
+                                            CreateDB().create_user_investment_holding(opportunity_name: opportunity_name, opportunity_id: opportunity_id, email: email, equity: String(format: "%.3f", (Double(investment_amount)!/equity_value)*100), amount: investment_amount)
                                             
-                                            CreateDB().createOpportunityTransaction(opportunity_id: opportunity_id, email: email, amount: investment_amount)
+                                            CreateDB().create_opportunity_transaction(opportunity_id: opportunity_id, email: email, amount: investment_amount)
                                             
-                                            CreateDB().createInvestmentConfirmation(email: email, amount: investment_amount, opportunity_name: opportunity_name, type: "buyer")
+                                            CreateDB().create_investment_confirmation(email: email, amount: investment_amount, opportunity_name: opportunity_name, type: "buyer")
                                         }
                                     }
                                 }

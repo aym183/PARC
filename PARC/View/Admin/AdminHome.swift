@@ -494,17 +494,17 @@ struct AdminHome: View {
                     readDB.trading_window_data = []
                     readDB.trading_window_transactions_data = []
                     readDB.transformed_trading_window_transactions_data = [:]
-                    readDB.getFranchises()
-                    readDB.getAllUserHoldings()
-                    readDB.getAdminOpportunities() { response in
+                    readDB.get_franchises()
+                    readDB.get_all_user_holdings()
+                    readDB.get_admin_opportunities() { response in
                         if response == "Fetched all opportunities" {
-                            readDB.getPayouts() { response in
+                            readDB.get_payouts() { response in
                                 if response == "Fetched payouts data" {
                                     readDB.payout_data = sortArrayByDate(inputArray: readDB.payout_data, field_name: "date_created", date_type: "dd/MM/yyyy")
                                 }
                             }
-                            readDB.getTradingWindows()
-                            readDB.getTradingWindowTransactions()
+                            readDB.get_trading_windows()
+                            readDB.get_trading_window_transactions()
                         }
                     }
                     
@@ -539,17 +539,17 @@ struct AdminHome: View {
             readDB.sold_shares = []
             readDB.trading_window_transactions_data = []
             readDB.transformed_trading_window_transactions_data = [:]
-            readDB.getFranchises()
-            readDB.getAllUserHoldings()
-            readDB.getAdminOpportunities() { response in
+            readDB.get_franchises()
+            readDB.get_all_user_holdings()
+            readDB.get_admin_opportunities() { response in
                 if response == "Fetched all opportunities" {
-                    readDB.getPayouts() { response in
+                    readDB.get_payouts() { response in
                         if response == "Fetched payouts" {
                             readDB.payout_data = sortArrayByDate(inputArray: readDB.payout_data, field_name: "date_created", date_type: "dd/MM/yyyy")
                         }
                     }
-                    readDB.getTradingWindows()
-                    readDB.getTradingWindowTransactions()
+                    readDB.get_trading_windows()
+                    readDB.get_trading_window_transactions()
                 }
             }
         }

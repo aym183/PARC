@@ -36,7 +36,7 @@ class ReadDB: ObservableObject {
     
     
     /// Retrieves all the franchises from the database
-    func getFranchises() {
+    func get_franchises() {
         var temp_dict: [String: String] = [:]
         let keysArray = ["description", "avg_revenue_18_months", "name", "logo", "display_image", "industry", "no_of_franchises", "ebitda_estimate", "avg_franchise_mom_revenues", "avg_startup_capital"]
         let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/franchises")!
@@ -61,11 +61,11 @@ class ReadDB: ObservableObject {
                                     }
                                     self.franchise_data.append(temp_dict)
                                     if UserDefaults.standard.object(forKey: temp_dict["logo"]!) == nil {
-                                        self.getImage(path: temp_dict["logo"]!)
+                                        self.get_image(path: temp_dict["logo"]!)
                                     }
                                     
                                     if UserDefaults.standard.object(forKey: temp_dict["display_image"]!) == nil {
-                                        self.getImage(path: temp_dict["display_image"]!)
+                                        self.get_image(path: temp_dict["display_image"]!)
                                     }
                                     
                                     self.franchise_data_dropdown.append(DropdownMenuOption(option: temp_dict["name"]!))
@@ -83,7 +83,7 @@ class ReadDB: ObservableObject {
     
     
     /// Retrieves all the opportunities visible to users. This is only the active opprtunities available to invest.
-    func getUserOpportunities(completion: @escaping (String?) -> Void) {
+    func get_user_opportunities(completion: @escaping (String?) -> Void) {
         var keysArray = ["min_invest_amount", "location", "date_created", "equity_offered", "amount_raised", "close_date", "status", "franchise", "asking_price", "opportunity_id", "investors"]
         var temp_dict: [String: String] = [:]
         let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/opportunities")!
@@ -107,7 +107,7 @@ class ReadDB: ObservableObject {
                                                 if data == "opportunity_id" {
                                                     if let nValue = nameDictionary["N"] {
                                                         DispatchQueue.global(qos: .userInteractive).async {
-                                                            UpdateDB().updateTable(primary_key: "opportunity_id", primary_key_value: nValue, table: "opportunities", updated_key: "status", updated_value: "Completed") { response in
+                                                            UpdateDB().update_table(primary_key: "opportunity_id", primary_key_value: nValue, table: "opportunities", updated_key: "status", updated_value: "Completed") { response in
                                                                 if response == "opportunities status updated" {
                                                                     print("opportunities status updated")
                                                                 }
@@ -155,7 +155,7 @@ class ReadDB: ObservableObject {
     
     
     /// Retrieves all the opportunities visible from the database. This is different to the previuous function as admins should be able to see all opportunities
-    func getAdminOpportunities(completion: @escaping (String?) -> Void) {
+    func get_admin_opportunities(completion: @escaping (String?) -> Void) {
         var keysArray = ["min_invest_amount", "location", "date_created", "equity_offered", "amount_raised", "close_date", "status", "franchise", "asking_price", "opportunity_id", "investors"]
         var temp_dict: [String: String] = [:]
         let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/opportunities")!
@@ -206,7 +206,7 @@ class ReadDB: ObservableObject {
     
     
     /// Retrieves all high-level payouts information such as total amount given out to investors
-    func getPayouts(completion: @escaping (String?) -> Void) {
+    func get_payouts(completion: @escaping (String?) -> Void) {
         var keysArray = ["franchise", "revenue_generated", "date_scheduled", "status", "opportunity_id", "date_created", "payout_id", "amount_offered"]
         var temp_dict: [String: String] = [:]
         let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/payouts")!
@@ -260,7 +260,7 @@ class ReadDB: ObservableObject {
     /// Fetches all individual payouts sent to users from te database. This wil include granular information such as how much a user has earned in payouts during an opportunity's lifetime
     /// - Parameters:
     ///   - email: Email of the user for whom payouts need to be checked
-    func getUserPayouts(email: String, completion: @escaping (String?) -> Void) {
+    func get_user_payouts(email: String, completion: @escaping (String?) -> Void) {
         let keysArray = ["user_payout_id", "equity", "opportunity_id", "amount_received", "user_email", "payout_date"]
         var temp_dict: [String: String] = [:]
         let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/payouts/user-payouts")!
@@ -311,7 +311,7 @@ class ReadDB: ObservableObject {
     /// Fetches a user's investment holdings from the database
     /// - Parameters:
     ///   - email: Email of the user for whom holdings need to be retrieved
-    func getUserHoldings(email: String, completion: @escaping (String?) -> Void) {
+    func get_user_holdings(email: String, completion: @escaping (String?) -> Void) {
         var keysArray = ["opportunity_name", "user_holdings_id", "user_email", "status", "opportunity_id", "equity", "amount", "transaction_date"]
         var temp_dict: [String: String] = [:]
         var listed_temp_dict: [String: String] = [:]
@@ -392,7 +392,7 @@ class ReadDB: ObservableObject {
     
     
     /// Retrieves all user holdings for the admin to keep track of investments made for an opportunity
-    func getAllUserHoldings() {
+    func get_all_user_holdings() {
         var keysArray = ["opportunity_name", "user_holdings_id", "user_email", "status", "opportunity_id", "equity", "amount", "transaction_date"]
         var temp_dict: [String: String] = [:]
         let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/user-holdings")!
@@ -434,7 +434,7 @@ class ReadDB: ObservableObject {
     
     
     /// Retrieves all trading windows from the database for the admin to manage each
-    func getTradingWindows() {
+    func get_trading_windows() {
         var keysArray = ["trading-window-id", "start_date", "status", "duration", "trading_volume"]
         var temp_dict: [String: String] = [:]
         var current_status = ""
@@ -490,7 +490,7 @@ class ReadDB: ObservableObject {
                                 }
                                 self.trading_window_data = sortArrayByDate(inputArray: self.trading_window_data, field_name: "start_date", date_type: "dd/MM/yyyy")
                                 if trading_window_active && current_status == "Scheduled"  {
-                                    UpdateDB().updateTable(primary_key: "trading-window-id", primary_key_value: trading_window_id, table: "trading-windows", updated_key: "status", updated_value: "Ongoing") { response in
+                                    UpdateDB().update_table(primary_key: "trading-window-id", primary_key_value: trading_window_id, table: "trading-windows", updated_key: "status", updated_value: "Ongoing") { response in
                                         
                                         if response == "trading-windows status updated" {
                                             print("Trading window ongoing updated")
@@ -500,7 +500,7 @@ class ReadDB: ObservableObject {
                                 }
                                 
                                 else if trading_window_completed && current_status == "Ongoing" {
-                                    UpdateDB().updateTable(primary_key: "trading-window-id", primary_key_value: trading_window_id, table: "trading-windows", updated_key: "status", updated_value: "Completed") { response in
+                                    UpdateDB().update_table(primary_key: "trading-window-id", primary_key_value: trading_window_id, table: "trading-windows", updated_key: "status", updated_value: "Completed") { response in
                                         
                                         if response == "trading-windows status updated" {
                                             print("Trading window completed updated")
@@ -520,7 +520,7 @@ class ReadDB: ObservableObject {
     
     
     /// Retrieves all trading window transactions to show each trading window's performance to the admin
-    func getTradingWindowTransactions() {
+    func get_trading_window_transactions() {
         var temp_dict: [String: String] = [:]
         let keysArray = ["user_selling", "user_buying", "trading_window_id", "opportunity_id", "equity", "transaction_date", "transaction_id", "price"]
         let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/transactions-secondary-market")!
@@ -563,7 +563,7 @@ class ReadDB: ObservableObject {
     
     
     /// Retrieves all trading window transactions that involves the seller being the logged in user. This is to add the balance from sales to the user's withdrawable amount
-    func getTradingWindowTransactionsEmail() {
+    func get_trading_window_transactions_email() {
         let keysArray = ["user_selling", "user_buying", "trading_window_id", "opportunity_id", "equity", "transaction_date", "transaction_id", "price"]
         let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/transactions-secondary-market")!
         var request = URLRequest(url: apiUrl)
@@ -603,7 +603,7 @@ class ReadDB: ObservableObject {
     
     /// Retrieves an image from Firebase Storage
     /// - Parameter path: The path from which the image is retrieved
-    func getImage(path: String) {
+    func get_image(path: String) {
         let storage = Storage.storage()
         let storageRef = storage.reference()
         let imageRef = storageRef.child(path)
@@ -622,7 +622,7 @@ class ReadDB: ObservableObject {
     
     /// Retrieves an image from Firebase Storage
     /// - Parameter path: The path from which the image is retrieved
-    func getDisImage(path: String, completion: @escaping (UIImage?) -> Void) {
+    func get_dis_image(path: String, completion: @escaping (UIImage?) -> Void) {
         let storage = Storage.storage()
         let storageRef = storage.reference()
         let imageRef = storageRef.child(path)

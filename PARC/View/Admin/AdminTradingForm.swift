@@ -86,7 +86,7 @@ struct AdminTradingForm: View {
                         Spacer()
                         
                         Button(action: {
-                            CreateDB().createTradingWindow(start_date: String(describing: start_date), duration: duration, status: "Scheduled") { response in
+                            CreateDB().create_trading_window(start_date: String(describing: start_date), duration: duration, status: "Scheduled") { response in
                                 if response == "Trading Window Created" {
                                     admin_home_shown.toggle()
                                 }

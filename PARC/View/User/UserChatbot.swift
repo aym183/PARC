@@ -112,7 +112,7 @@ struct UserChatbot: View {
                                         test_input.append(["type": "Sender", "data": text_input])
                                         test_input.append(["type": "Loading"])
                                         input_sent.toggle()
-                                        CreateDB().createChatbotRequest(message: text_input) { response in
+                                        CreateDB().create_chatbot_request(message: text_input) { response in
                                             if response != nil {
                                                 test_input[test_input.count-1] = ["type": "Receiver", "data": response!]
                                                 input_sent.toggle()
