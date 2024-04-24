@@ -8,7 +8,7 @@
 import SwiftUI
 import SlidingTabView
 
-// Content seen by users when an investable opportunity is clicked on
+// Content seen by users when an investable opportunity is clicked on which contains the data
 struct UserOpportunityClick: View {
     @Binding var opportunity_data: [String: String]
     @Binding var franchise_data: [String: String]
@@ -50,6 +50,7 @@ struct UserOpportunityClick: View {
                             .aspectRatio(contentMode: .fit)
                             .frame(width: max(0, geometry.size.width))
                         
+                        // Variably adjusting the color of the tiles according to the number of days remaining
                         VStack {
                             HStack {
                                 Spacer()
@@ -124,7 +125,6 @@ struct UserOpportunityClick: View {
                                 .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.0255))
                                 .foregroundColor(Color("Custom_Gray"))
                             Spacer()
-                            
                         }
                         .padding(.top, 5)
                         
@@ -143,7 +143,6 @@ struct UserOpportunityClick: View {
                             Text("Target - £\(String(describing: formatted_number(input_number:Int(opportunity_data["asking_price"]!)!)))")
                                 .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.0255))
                                 .foregroundColor(Color("Custom_Gray"))
-                            
                         }
                         .padding(.top, -3)
                         
@@ -231,7 +230,6 @@ struct UserOpportunityClick: View {
                                         
                                         Text(titles_why_invest_description_2[index])
                                             .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.033))
-                                        //                                            .foregroundColor(.gray)
                                             .foregroundColor(Color("Secondary"))
                                             .multilineTextAlignment(.center)
                                         
@@ -290,7 +288,7 @@ struct UserOpportunityClick: View {
                             .frame(height: 1)
                             .padding(.top, -5)
                         
-                        
+                        // Displaying data to users about similar franchise performance
                         if text_selected == "Similar Franchises" {
                             ForEach(0..<2, id: \.self) { index in
                                 HStack(spacing: 10) {
@@ -365,6 +363,7 @@ struct UserOpportunityClick: View {
                                 .frame(height: 190)
                                 .padding(.bottom, 2.5).padding(.top, 5)
                             }
+                        // Displaying data to users about the selected franchise's performance
                         } else {
                             ForEach(0..<2, id: \.self) { index in
                                 HStack(spacing: 10) {
@@ -408,10 +407,8 @@ struct UserOpportunityClick: View {
                                                     .foregroundColor(Color("Secondary"))
                                                     .padding(.vertical, 1.5)
                                             }
-                                            
                                         }
                                         .padding(.horizontal, 10)
-                                        
                                     }
                                 }
                                 .frame(height: 120)
@@ -486,6 +483,7 @@ struct UserOpportunityClick: View {
                 HStack(spacing: 20) {
                     VStack {
                         Spacer()
+                        // Button action responsible to passing data to the page where a user finalises investment
                         Button(action: {
                             asking_price = Double(opportunity_data["asking_price"]!)!
                             equity_offered = Double(opportunity_data["equity_offered"]!)!

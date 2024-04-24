@@ -39,8 +39,9 @@ struct UserAccount: View {
                         VStack {
                             Button(action: { show_profile_image_picker.toggle() }) {
                                 if let image = profile_image {
+                                    // Fetching the profile image
                                     ZStack {
-                                        Image(uiImage: profile_image!)
+                                        Image(uiImage: image)
                                             .resizable()
                                             .frame(width: 100, height: 100)
                                             .cornerRadius(100)
@@ -60,6 +61,7 @@ struct UserAccount: View {
                                         
                                     }
                                 } else {
+                                    // Displaying a static icon if no profile image uploaded
                                     ZStack {
                                         Image(systemName: "person.crop.circle")
                                             .resizable()
@@ -83,6 +85,7 @@ struct UserAccount: View {
                                 }
                             }
                             
+                            // Logic for handling upload of new images
                             if init_profile_image != profile_image {
                                 Button(action: {
                                     UserDefaults.standard.removeObject(forKey: "profile_image")
@@ -149,6 +152,7 @@ struct UserAccount: View {
                             .opacity(0.75)
                             .frame(height: 1)
                         
+                        // Button to check a user's transaction history
                         HStack {
                             Text("Transaction History")
                                 .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.052))
@@ -194,6 +198,7 @@ struct UserAccount: View {
                             .opacity(0.75)
                             .frame(height: 1)
                         
+                        // Button to show the platform's Data Privacy laws
                         HStack {
                             Text("Data Privacy")
                                 .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.052))
@@ -220,7 +225,6 @@ struct UserAccount: View {
                     .foregroundColor(Color("Custom_Gray"))
                     
                     HStack {
-                        
                         Button(action: { showing_log_out.toggle() }) {
                             HStack {
                                 Text("Log out")
@@ -233,6 +237,7 @@ struct UserAccount: View {
                             .cornerRadius(5)
                         }
                         
+                        // Button to initiate withdrawal procedure
                         Button(action: { withdraw_request.toggle() }) {
                             HStack {
                                 Text("Withdraw")
@@ -255,6 +260,7 @@ struct UserAccount: View {
             .sheet(isPresented: $transaction_history_shown) {
                 UserTransactionHistory(user_holdings: $sorted_user_holdings)
             }
+            // Confirmation window for logout
             .alert(isPresented: $showing_log_out) {
                 Alert(
                     title: Text("Are you sure you want to log out?"),
@@ -265,6 +271,7 @@ struct UserAccount: View {
                     secondaryButton: .destructive(Text("No")) {}
                 )
             }
+            // Confirmation window for withdrawal
             .alert(isPresented: $withdraw_request) {
                 Alert(
                     title: Text("Are you sure you want to withdraw?"),

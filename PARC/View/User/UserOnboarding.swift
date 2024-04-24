@@ -46,17 +46,16 @@ struct UserOnboarding: View {
                                     Text("A few final details")
                                         .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.08))
                                         .padding(.bottom, 10)
-                                    
                                     Spacer()
                                 }
                                 
                                 HStack {
                                     Text("Estimated net worth")
                                         .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.05))
-                                    
                                     Spacer()
                                 }
                                 
+                                // Input for the user to enter their net worth
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 5)
                                         .fill(Color.white)
@@ -81,6 +80,7 @@ struct UserOnboarding: View {
                                 }
                                 .padding(.top, -10).padding(.bottom, 5)
                                 
+                                // Error checking to validate amount entered
                                 if !is_valid_input {
                                     HStack {
                                         Spacer()
@@ -91,7 +91,6 @@ struct UserOnboarding: View {
                                 HStack {
                                     Text("Have you ever invested before?")
                                         .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.05))
-                                    
                                     Spacer()
                                 }
                                 .padding(.bottom, 10)
@@ -149,7 +148,7 @@ struct UserOnboarding: View {
                                 }
                                 .padding(.top, -10).padding(.bottom, 5)
                                 
-                                
+                                // Identity verification through upload for the user
                                 HStack {
                                     Text("Identity Verification")
                                         .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.05))
@@ -199,7 +198,6 @@ struct UserOnboarding: View {
                                 Spacer()
                                 
                                 HStack {
-                                    
                                     ZStack {
                                         RoundedRectangle(cornerRadius: 5)
                                             .fill(Color.white)

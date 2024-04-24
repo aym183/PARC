@@ -45,6 +45,7 @@ struct UserPortfolio: View {
     @Binding var chart_values: [Float]
     @Binding var opportunity_data: [[String: String]]
     @State var appeared_before = 0
+    // Colors shown in the chart that match the application theme
     let random_colors: [Color] = [
         Color(red: 0.41568627450980394, green: 0.5529411764705883, blue: 0.45098039215686275),
         Color(red: 0.9568627450980393, green: 0.9921568627450981, blue: 0.8509803921568627),
@@ -87,6 +88,7 @@ struct UserPortfolio: View {
                                 }
                             }
                             
+                            // Variably showing a user's holdings and payouts for each investment
                             VStack(alignment: .center) {
                                 if text_selected == "Holdings" || text_selected == "" {
                                     Text("£\(formatted_number(input_number: holdings_value))")
@@ -150,12 +152,12 @@ struct UserPortfolio: View {
                         }
                         .padding(.top)
                         
+                        // Variably showing a user's holdings and payouts for each investment
                         if text_selected == "Holdings" || text_selected == "" {
                             Divider()
                                 .overlay(Color("Custom_Gray"))
                                 .padding([.top, .bottom], 10)
                                 .frame(height: 1)
-                            
                         } else {
                             if let opportunityID = portfolio_data[index]["opportunity_id"],
                                let equity = portfolio_data[index]["equity"],
@@ -180,6 +182,7 @@ struct UserPortfolio: View {
                             ForEach(0..<portfolio_data.count, id: \.self) { index in
                                 HStack {
                                     
+                                    // Variably showing a user's holdings and payouts for each investment
                                     if text_selected == "Holdings" || text_selected == "" {
                                         RoundedRectangle(cornerRadius: 5)
                                             .frame(width: 40, height: 40)
@@ -199,6 +202,7 @@ struct UserPortfolio: View {
                                     }
 
                                     VStack(alignment: .leading) {
+                                        // Variably showing a user's holdings and payouts for each investment
                                         if text_selected == "Holdings" || text_selected == "" {
                                             if let opportunityID = Int(portfolio_data[index]["opportunity_id"]!) {
                                                 if let opportunity = opportunity_data.first(where: { $0["opportunity_id"] == String(opportunityID) }) {
@@ -290,6 +294,7 @@ struct UserPortfolio: View {
                                     
                                     Spacer()
                                     
+                                    // Variably showing a user's holdings and payouts for each investment
                                     if text_selected == "Holdings" || text_selected == "" {
                                         Text("£\(formatted_number(input_number: Int(portfolio_data[index]["amount"]!)!))")
                                             .font(Font.custom("Nunito-ExtraBold", size: min(geometry.size.width, geometry.size.height) * 0.055))
@@ -307,6 +312,7 @@ struct UserPortfolio: View {
                                     }
                                 }
                                 
+                                // Variably showing a user's holdings and payouts for each investment
                                 if text_selected == "Holdings" || text_selected == "" {
                                     Divider()
                                         .overlay(Color("Custom_Gray"))
@@ -322,7 +328,6 @@ struct UserPortfolio: View {
                                             .overlay(Color("Custom_Gray"))
                                             .frame(height: 0.5)
                                             .padding(.bottom, 10)
-                                        
                                     }
                                 }
                             }

@@ -116,6 +116,7 @@ struct UserMarketplaceClick: View {
                             .frame(height: 1)
                             .padding(.top, -5)
                         
+                        // Data shown about each available share for the franchise
                         if shares_data.count != 0 && opportunity_data.count != 0 {
                             ForEach(0..<shares_data.count, id: \.self) { index in
                                 HStack(spacing: 20) {
@@ -176,7 +177,7 @@ struct UserMarketplaceClick: View {
                                     .opacity(0.5)
                                     .frame(height: 1)
                             }
-                            
+                        // Text shown to investors if no shares available for a franchise
                         } else {
                             Text("☹️")
                                 .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.3))
@@ -195,6 +196,8 @@ struct UserMarketplaceClick: View {
             .navigationDestination(isPresented: $home_page_shown) {
                 UserHome(is_investment_confirmed: $is_investment_confirmed, is_withdrawal_confirmed: $is_withdrawal_confirmed, is_shown_home_page: $is_shown_home_page).navigationBarBackButtonHidden(true)
             }
+            
+            // Confirmation window shown to a user when confirming purchase of secondary shares
             .alert(isPresented: $showing_payment_alert) {
                 Alert(
                     title: Text("Are you sure you want to buy this?"),

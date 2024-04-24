@@ -28,7 +28,7 @@ struct AdminAccount: View {
                             Button(action: { show_profile_image_picker.toggle() }) {
                                 if let image = profile_image {
                                     ZStack {
-                                        Image(uiImage: profile_image!)
+                                        Image(uiImage: image)
                                             .resizable()
                                             .frame(width: 100, height: 100)
                                             .cornerRadius(100)
@@ -70,7 +70,7 @@ struct AdminAccount: View {
                                     }
                                 }
                             }
-                            
+                            // Logic for handling upload of new images
                             if init_profile_image != profile_image {
                                 Button(action: {
                                     UserDefaults.standard.removeObject(forKey: "profile_image")
@@ -135,6 +135,7 @@ struct AdminAccount: View {
                     }
                 }
             }
+            // Confirmation window for logout
             .alert(isPresented: $showing_log_out) {
                 Alert(
                     title: Text("Are you sure you want to log out?"),

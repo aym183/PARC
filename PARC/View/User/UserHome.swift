@@ -42,6 +42,8 @@ struct UserHome: View {
                 ZStack {
                     Color(.white).ignoresSafeArea()
                     
+                    // Animations that are shown to the user in different conditions. Thsoe include:
+                    // (i) Appearing on the app, (ii) Investment confirmed, and (iii) Withdrawals
                     if is_shown_home_page {
                         VStack(alignment: .center) {
                             Spacer()
@@ -102,6 +104,7 @@ struct UserHome: View {
                             }
                         }
                         
+                        // Configuring the bottom navbar to show specific content on click of a bottom navbar element
                         if selected_tab == .house {
                             Text("New Opportunities")
                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.065))
@@ -117,6 +120,7 @@ struct UserHome: View {
                             Text("Portfolio")
                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.065))
                                 .padding(.bottom, -5)
+                            
                             Divider()
                                 .frame(height: 1)
                                 .overlay(.black)
@@ -126,6 +130,7 @@ struct UserHome: View {
                             Text("Secondary Market")
                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.065))
                                 .padding(.bottom, -5)
+                            
                             Divider()
                                 .frame(height: 1)
                                 .overlay(.black)
@@ -133,14 +138,13 @@ struct UserHome: View {
                             UserMarketplace(franchise_data: $read_db.franchise_data_dropdown, holding_data: $read_db.user_holdings_data_dropdown, listed_shares: $read_db.secondary_market_data, secondary_shares: $read_db.listed_shares, opportunity_data: $read_db.admin_opportunity_data, transformed_payouts_data: $transformed_payouts_data, franchises: $read_db.franchise_data)
                         }
                         
-                        
                         Spacer()
                         BottomNavBar(selected_tab: $selected_tab)
-                        
                     }
                     .frame(width: max(0, geometry.size.width-40), height: max(0, geometry.size.height - 20))
                     .foregroundColor(.black)
                     .onAppear {
+                        // Fetching all the information needed to operate all user views across the application
                         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                             withAnimation(.easeOut(duration: 0.5)) {
                                 is_shown_home_page = false
@@ -204,7 +208,6 @@ struct UserHome: View {
                                 self.admin_opportunity_data = read_db.admin_opportunity_data
                             }
                         }
-                        
                     }
                     .opacity(is_investment_confirmed ? 0 : 1)
                     .opacity(is_shown_home_page ? 0 : 1)
@@ -215,7 +218,6 @@ struct UserHome: View {
                     UserAccount(payouts_value: $payouts_value, secondary_transactions_value: $read_db.secondary_market_transactions_ind, profile_image: $profile_image, init_profile_image: $init_profile_image, user_holdings: $read_db.user_holdings_data, user_holdings_sold: $read_db.sold_shares)
                 }
             }
-            
         }
     }
 }
@@ -248,6 +250,7 @@ struct UserHomeContent: View {
         GeometryReader { geometry in
             ScrollView(.vertical, showsIndicators: false) {
                 
+                // Animation when user refreshes the home page
                 if (is_refreshing == true) {
                     VStack(alignment: .center) {
                         Spacer()
@@ -257,6 +260,7 @@ struct UserHomeContent: View {
                     }
                     .frame(width: max(0, geometry.size.width))
                 } else if (opportunity_data.count != 0 && franchise_data.count != 0) {
+                    // Displying the content for the home page (i.e. all the investment opportunities)
                     ForEach(0..<opportunity_data.count, id: \.self) { index in
                         Button(action: {
                             selected_franchise = franchise_data[franchise_data.firstIndex(where: { $0["name"] == opportunity_data[index]["franchise"]!})!]
@@ -270,7 +274,6 @@ struct UserHomeContent: View {
                                             .resizable()
                                             .frame(height: 225)
                                             .cornerRadius(5)
-                                            
                                             
                                             VStack {
                                                 HStack {
@@ -304,8 +307,6 @@ struct UserHomeContent: View {
                                                 }
                                                 Spacer()
                                             }
-
-                                        
 
                                 Rectangle()
                                     .opacity(0)
@@ -385,7 +386,7 @@ struct UserHomeContent: View {
                                                 .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.033))
                                                 .frame(height: 80)
                                                 .multilineTextAlignment(.leading)
-                                                .padding(.horizontal, 12).padding(.top, -18).padding(.bottom, -15)
+                                                .padding(.horizontal, 12).padding(.vertical, -15)
                                             
                                             HStack {
                                                 
@@ -439,6 +440,7 @@ struct UserHomeContent: View {
                 }
             }
             .refreshable() {
+                // Fetching all the information needed to operate all user views across the application after refresh is initiated
                 withAnimation(.easeOut(duration: 0.25)) {
                     is_refreshing = true
                 }
@@ -506,6 +508,7 @@ struct UserHomeContent: View {
     
 }
 
+// The content displayed to the user when no investment opportunities are listed
 struct UserHomeError: View {
     var body: some View {
         GeometryReader { geometry in

@@ -39,7 +39,6 @@ struct AdminTradingClick: View {
                                 .cornerRadius(5)
                                 .padding(.bottom)
                             }
-                            
                         }
                         
                         HStack {

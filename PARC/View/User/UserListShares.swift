@@ -43,6 +43,7 @@ struct UserListShares: View {
                         Text("Holding").font(Font.custom("Nunito-Bold", size: 18))
                             .padding(.top).padding(.bottom, -5)
                         
+                        // The dropdown that shows users all their owned shares
                         DropdownMenu(selected_option: self.$selected_holding, placeholder: "Select", options: holding_data)
                             .frame(width: max(0, geometry.size.width - 40), height: 50)
                             .padding(.top, 0.5)
@@ -75,6 +76,7 @@ struct UserListShares: View {
                                 })
                         }
                         
+                        // Error checking to validate amount entered
                         if !is_valid_input {
                             HStack {
                                 Spacer()

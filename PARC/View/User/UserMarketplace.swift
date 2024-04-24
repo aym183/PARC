@@ -34,6 +34,7 @@ struct UserMarketplace: View {
     var body: some View {
         GeometryReader { geometry in
             
+            // Showing user a message when the trading window is not open
             if trading_window_active == "false" {
                 ZStack {
                     Color(.white).ignoresSafeArea()
@@ -56,6 +57,8 @@ struct UserMarketplace: View {
                     .foregroundColor(.black)
                     .padding(.bottom)
                 }
+            
+            // Showing user a message when the trading window is open but has no listed shares
             } else if trading_window_active == "true" && listed_shares.count == 0 {
                 ZStack() {
                     Color(.white).ignoresSafeArea()
@@ -95,8 +98,6 @@ struct UserMarketplace: View {
                 .sheet(isPresented: $marketplace_bottom_sheet_shown) {
                     UserMarketplaceBottomSheet(marketplace_bottom_sheet_shown: $marketplace_bottom_sheet_shown, marketplace_list_shares_shown: $marketplace_list_shares_shown).presentationDetents([.height(150)])
                 }
-                
-                
             } else {
                 ZStack(alignment: .bottomTrailing) {
                     Color(.white).ignoresSafeArea()
@@ -119,6 +120,7 @@ struct UserMarketplace: View {
                                 .padding(.top, -5)
                             
                             if listed_shares.count != 0 && franchises.count != 0 {
+                                // Displayong all the listed shares data
                                 ForEach((0..<listed_shares.count), id: \.self) { index in
                                     Button(action: {
                                         title = String(describing: listed_shares[index].key)
@@ -141,8 +143,7 @@ struct UserMarketplace: View {
                                                         .resizable()
                                                         .aspectRatio(contentMode: .fill)
                                                         .frame(width: 40, height: 40)
-                                                }
-                                                
+                                                }    
                                             } else {
                                                 Image(systemName: "house")
                                                     .resizable()

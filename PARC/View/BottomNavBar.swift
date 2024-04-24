@@ -38,6 +38,7 @@ struct BottomNavBar: View {
                                 }
                             }
                         
+                        // All the options of the bottom navigation bar displayed
                         if tab.rawValue == "house" {
                             Text("Home")
                                 .font(Font.custom("Nunito-Bold", size: 10))

@@ -282,6 +282,7 @@ struct AdminFranchiseForm: View {
                         
                         Spacer()
                         
+                        // Action to confirm a franchise's creation
                         Button(action: {
                             DispatchQueue.global(qos: .userInteractive).async {
                                 self.franchise_data.append(DropdownMenuOption(option: self.name))

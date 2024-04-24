@@ -48,6 +48,7 @@ struct AdminPayoutForm: View {
                         Text("Opportunity").font(Font.custom("Nunito-Bold", size: 18))
                             .padding(.bottom, -5).padding(.leading,2.5)
                         
+                        // Dropdown for admins to select which opportunity the payout should occur for
                         DropdownMenu(selected_option: self.$selectedOpportunity, placeholder: "Select", options: opportunity_data)
                             .frame(width: max(0, geometry.size.width - 45))
                             .padding(.leading,2.5)

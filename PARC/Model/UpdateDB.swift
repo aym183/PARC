@@ -16,7 +16,7 @@ class UpdateDB: ObservableObject {
     ///   - primary_key: Primary key of table to be updated
     ///   - primary_key_value: Primary key value
     ///   - table: Name of DB table
-    ///   - updated_key: Updated column name
+    ///   - updated_key: Column name where the value needs to get updated
     ///   - updated_value: Updated value at column of given row
     func update_table(primary_key: String, primary_key_value: String, table: String, updated_key: String, updated_value: String, completion: @escaping (String?) -> Void) {
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/payouts?primary_key=\(primary_key)&primary_key_value=\(Int(primary_key_value)!)&table=\(table)&updated_key=\(updated_key)&updated_value=\(updated_value)")!
@@ -38,7 +38,7 @@ class UpdateDB: ObservableObject {
     }
     
     
-    /// Updates a table's records with an integer value in the database
+    /// Updates a table's records in the database. This differs from the previous function as it stores non Integer values
     /// - Parameters:
     ///   - primary_key: Primary key of table to be updated
     ///   - primary_key_value: Primary key value

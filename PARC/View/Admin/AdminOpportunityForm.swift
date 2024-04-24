@@ -53,11 +53,13 @@ struct AdminOpportunityForm: View {
                         Text("Franchise").font(Font.custom("Nunito-Bold", size: 18))
                             .padding(.bottom, -5).padding(.leading,2.5)
                         
+                        // Takes care of allowing admins to select franchises for which an investment opportunity must be created
                         HStack(spacing: 15) {
                             
                             DropdownMenu(selected_option: self.$selected_franchise, placeholder: "Select", options: franchise_data)
                                 .frame(width: max(0, geometry.size.width - 100))
                             
+                            // Option for admins to add new franchises
                             Button(action: { franchise_form_shown.toggle() }) {
                                 ZStack {
                                     Circle()
@@ -199,6 +201,7 @@ struct AdminOpportunityForm: View {
                         
                         Spacer()
                         
+                        // Form submission to create a new investment opportunity
                         Button(action: {
                             DispatchQueue.global(qos: .userInteractive).async {
                                 CreateDB().create_opportunity(franchise_name: selected_franchise!.option, location: location, asking_price: asking_price, equity_offered: equity_offered, min_invest_amount: min_investment_amount, close_date: String(describing: date)) { response in

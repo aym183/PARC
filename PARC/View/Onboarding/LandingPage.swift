@@ -106,6 +106,7 @@ struct LandingContent: View {
     }
 }
 
+// The extensions is responsible for initiating and cancelling user sign up/sign in actions
 extension LandingContent {
     private func login() {
         Auth0

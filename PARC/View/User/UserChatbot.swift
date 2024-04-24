@@ -33,6 +33,7 @@ struct UserChatbot: View {
                             ForEach(0..<test_input.count, id: \.self) { index in
                                 VStack {
                                     HStack {
+                                        // Conditions to separate between messages sent and received
                                         if test_input[index]["type"] == "Receiver" {
                                             Text(test_input[index]["data"]!)
                                                 .padding(12.5)
@@ -55,7 +56,6 @@ struct UserChatbot: View {
                                                 )
                                                 .padding(.leading, geometry.size.width/5)
                                         } else {
-                                            
                                             ZStack {
                                                 RoundedRectangle(cornerRadius: 20)
                                                     .fill(Color("Custom_Gray"))
@@ -66,7 +66,6 @@ struct UserChatbot: View {
                                                 
                                             }
                                             .frame(width: geometry.size.width*0.25)
-                                            
                                             Spacer()
                                         }
                                         
@@ -77,6 +76,7 @@ struct UserChatbot: View {
                                 }
                                 .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.035))
                                 .id(index)
+                                // auto scroll to the bottom on receiving a new message
                                 .onChange(of: test_input) { _ in
                                     withAnimation(.easeOut(duration: 0.2)) {
                                         proxy.scrollTo(test_input.count-1, anchor: .bottom)

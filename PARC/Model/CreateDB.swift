@@ -33,6 +33,7 @@ class CreateDB: ObservableObject {
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data {
                 do {
+                    // Initial check to see if the user record exists
                     if let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
                         if let itemsArray = jsonObject["Items"] as? [[String: Any]] {
                             for value in itemsArray.reversed() {
@@ -45,6 +46,7 @@ class CreateDB: ObservableObject {
                                     }
                                 }
                             }
+                            // If no email exists, add record
                             if !email_found {
                                 let userApiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/users?email=\(email)&first_name=\(first_name)&last_name=\(last_name)&full_name=\(full_name)&picture=\(picture)&date_joined=\(Date.now)&balance=0")!
                                 
@@ -158,7 +160,7 @@ class CreateDB: ObservableObject {
     ///   - ebitda_estimate: Franchise EBITDA (Earnings before interest, taxes, depreciation, and ammortisation) estimate
     func createFranchise(name: String, logo: String, description: String, no_of_franchises: String, avg_franchise_mom_revenues: String, avg_startup_capital: String, avg_revenue_18_months: String, ebitda_estimate: String, completion: @escaping (String?) -> Void) {
         
-        var bg_images = ["store_live_3", "store_live_4", "store_live_5", "store_live_6", "store_live_7", "store_live_8"]
+        var bg_images = ["store_live_3", "store_live_4", "store_live_5", "store_live_6", "store_live_7", "store_live_8"] // Stock images are randomised and shown to the user
         let display_image = bg_images.randomElement()
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/franchises?name=\(name)&logo=\(logo)&display_image=\(display_image!)&description=\(description)&no_of_franchises=\(no_of_franchises)&avg_franchise_mom_revenues=\(avg_franchise_mom_revenues)&avg_startup_capital=\(avg_startup_capital)&avg_revenue_18_months=\(avg_revenue_18_months)&ebitda_estimate=\(ebitda_estimate)")!
         var request = URLRequest(url: apiUrl)
@@ -254,6 +256,7 @@ class CreateDB: ObservableObject {
             }
         }
         
+        // If a profile image is stored, it will have only one UserDefaults value whereas for each listing, there can be multiple images
         if folder == "profile_images" {
             UserDefaults.standard.set(image.jpegData(compressionQuality: 0.8), forKey: "profile_image")
         } else {
@@ -263,7 +266,7 @@ class CreateDB: ObservableObject {
     }
     
     
-    /// Creats a payout record. This is just to keep track of the overall payout and not the actual sending out of the payouts to investors
+    /// Creats a payout record. This is just to keep track of the overall payout and not how much each investor received in payouts
     /// - Parameters:
     ///   - franchise: Franchise for which payout is created
     ///   - revenue_generated: Amount of revenue generated
@@ -609,7 +612,7 @@ class CreateDB: ObservableObject {
     
     /// Creates a request that gets sent to Amazon Bedrock to fetch the chatbot's response
     /// - Parameters:
-    ///   - message: Message created by the user
+    ///   - message: The message request created by the user
     func create_chatbot_request(message: String, completion: @escaping (String?) -> Void) {
         let apiUrl = URL(string: "https://q3dck5qp1e.execute-api.us-east-1.amazonaws.com/development/chatbot?user_input=\(message)")
         var request = URLRequest(url: apiUrl!)

@@ -10,7 +10,6 @@ import Foundation
 import JWTDecode
 
 struct Profile {
-    
     let id: String
     let given_name: String
     let family_name: String
@@ -18,12 +17,10 @@ struct Profile {
     let email: String
     let picture: String
     let updated_at: String
-    
 }
 
 
 extension Profile {
-    
     static var empty: Self {
         return Profile(
             id: "",

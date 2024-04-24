@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-// Transaction history of investments and sales available to users in their account page
+// Transaction history of investments and sales available to users via the account page
 struct UserTransactionHistory: View {
     @Binding var user_holdings: [[String: String]]
     
@@ -32,7 +32,6 @@ struct UserTransactionHistory: View {
                                 HStack {
                                     VStack(alignment: .leading) {
                                         HStack {
-                                            
                                             if user_holdings[index]["status"]! == "Owned" {
                                                 Text("Bought \(user_holdings[index]["opportunity_name"]!)")
                                                     .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.045))
@@ -40,7 +39,6 @@ struct UserTransactionHistory: View {
                                                 Text("Sold \(user_holdings[index]["opportunity_name"]!)")
                                                     .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.045))
                                             }
-                                            
                                         }
                                         Text("Date Bought - \(user_holdings[index]["transaction_date"]!)")
                                             .font(Font.custom("Nunito-SemiBold", size: min(geometry.size.width, geometry.size.height) * 0.027))

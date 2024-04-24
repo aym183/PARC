@@ -34,12 +34,11 @@ class ReadDB: ObservableObject {
     let dispatch_group = DispatchGroup()
     let api_key = AppConfig.apiKey
     
-    
-    /// Retrieves all the franchises from the database
+    /// Retrieves all the franchises data from the database. This is base information displayed on the home page to all investors
     func get_franchises() {
         var temp_dict: [String: String] = [:]
         let keysArray = ["description", "avg_revenue_18_months", "name", "logo", "display_image", "industry", "no_of_franchises", "ebitda_estimate", "avg_franchise_mom_revenues", "avg_startup_capital"]
-        let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/franchises")!
+        let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/franchises")! // Cloudfront CDN
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
         request.addValue(self.api_key, forHTTPHeaderField: "x-api-key")
@@ -60,6 +59,8 @@ class ReadDB: ObservableObject {
                                         }
                                     }
                                     self.franchise_data.append(temp_dict)
+                                    
+                                    // Fetching images from the cache
                                     if UserDefaults.standard.object(forKey: temp_dict["logo"]!) == nil {
                                         self.get_image(path: temp_dict["logo"]!)
                                     }
@@ -82,11 +83,11 @@ class ReadDB: ObservableObject {
     }
     
     
-    /// Retrieves all the opportunities visible to users. This is only the active opprtunities available to invest.
+    /// Retrieves all the opportunities visible to users. This is only the active opprtunities that are available to invest.
     func get_user_opportunities(completion: @escaping (String?) -> Void) {
         var keysArray = ["min_invest_amount", "location", "date_created", "equity_offered", "amount_raised", "close_date", "status", "franchise", "asking_price", "opportunity_id", "investors"]
         var temp_dict: [String: String] = [:]
-        let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/opportunities")!
+        let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/opportunities")! // Cloudfront CDN
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
         request.addValue(self.api_key, forHTTPHeaderField: "x-api-key")
@@ -158,7 +159,7 @@ class ReadDB: ObservableObject {
     func get_admin_opportunities(completion: @escaping (String?) -> Void) {
         var keysArray = ["min_invest_amount", "location", "date_created", "equity_offered", "amount_raised", "close_date", "status", "franchise", "asking_price", "opportunity_id", "investors"]
         var temp_dict: [String: String] = [:]
-        let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/opportunities")!
+        let apiUrl = URL(string: "https://d2nin7ltw63dl6.cloudfront.net/opportunities")! // Cloudfront CDN
         var request = URLRequest(url: apiUrl)
         request.httpMethod = "GET"
         request.addValue(self.api_key, forHTTPHeaderField: "x-api-key")
@@ -181,6 +182,8 @@ class ReadDB: ObservableObject {
                                             }
                                         }
                                     }
+                                    
+                                    // Calculating how much of the target amount has been raised
                                     let amountRaised = Int(temp_dict["amount_raised"] ?? "0") ?? 0
                                     let askingPrice = Int(temp_dict["asking_price"] ?? "1") ?? 1
                                     let ratio = Double(amountRaised) / Double(askingPrice)
@@ -245,7 +248,6 @@ class ReadDB: ObservableObject {
                                 }
                                 self.payout_data = sort_array_by_date(inputArray: self.payout_data, field_name: "date_created", date_type: "dd/MM/yyyy")
                                 completion("Fetched payouts")
-                                
                             }
                         }
                     }
@@ -257,7 +259,7 @@ class ReadDB: ObservableObject {
     }
     
     
-    /// Fetches all individual payouts sent to users from te database. This wil include granular information such as how much a user has earned in payouts during an opportunity's lifetime
+    /// Fetches all individual payouts sent to users from the database. This wil include granular information such as how much a user has earned in payouts during an opportunity's lifetime
     /// - Parameters:
     ///   - email: Email of the user for whom payouts need to be checked
     func get_user_payouts(email: String, completion: @escaping (String?) -> Void) {
@@ -482,10 +484,7 @@ class ReadDB: ObservableObject {
                                         current_status = temp_dict["status"]!
                                         trading_window_id = temp_dict["trading-window-id"]!
                                         UserDefaults.standard.set("false", forKey: "trading_window_active")
-                                    } 
-                                    //                                    else {
-                                    //                                        UserDefaults.standard.set("false", forKey: "trading_window_active")
-                                    //                                    }
+                                    }
                                     temp_dict = [:]
                                 }
                                 self.trading_window_data = sort_array_by_date(inputArray: self.trading_window_data, field_name: "start_date", date_type: "dd/MM/yyyy")

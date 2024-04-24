@@ -99,6 +99,7 @@ struct UserInvestPage: View {
                                 .opacity(0.5)
                                 .padding(.top, 2.5).padding(.bottom, -5)
                             
+                            // Restrictions for the user if verified but cannot invest due to lack of income
                             if investment_limit > 0 {
                                 Text("Investment Amount (£)").font(Font.custom("Nunito-Bold", size: 18))
                                     .padding(.top).padding(.bottom, -2.5)
@@ -184,6 +185,7 @@ struct UserInvestPage: View {
                 }
                 equity_value = (asking_price*100)/(equity_offered)
             }
+            // Before a user invests, a confirmation popup gets shown to confirm investment
             .alert(isPresented: $showing_payment_alert) {
                 Alert(
                     title: Text("Are you sure you want to buy this?"),
@@ -219,7 +221,7 @@ struct UserInvestPage: View {
     
     
     
-    /// Valides whether the inputted amount by the user is within the limits set
+    // Valides whether the inputted amount by the user is within the limits set
     private func validateInvestmentAmount() {
         if investment_amount != "" && (Int(investment_amount)! >= Int(min_investment)! && Int(investment_amount)! <= investment_limit) {
             is_investment_amount_valid = true
@@ -229,7 +231,7 @@ struct UserInvestPage: View {
     }
     
     
-    ///  Calculates how much the user is allowed to invest
+    //  Calculates how much the user is allowed to invest
     private func calculateInvestmentLimit() {
         investment_limit = 10*(net_worth_int/100)
     }

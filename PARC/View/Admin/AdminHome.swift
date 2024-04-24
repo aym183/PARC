@@ -61,7 +61,7 @@ struct AdminHome: View {
                             }
                         }
                         
-                        
+                        // Refreshing view when admin refreshes the page
                         if (self.is_refreshing == true) {
                             VStack(alignment: .center) {
                                 Spacer()
@@ -71,6 +71,8 @@ struct AdminHome: View {
                             }
                             .frame(width: max(0, geometry.size.width)-40)
                         } else {
+                            
+                            // Displaying all investment opportunity listings
                             Text("Opportunities")
                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.065))
                                 .padding(.bottom, -5)
@@ -92,7 +94,6 @@ struct AdminHome: View {
                                                             RoundedRectangle(cornerRadius: 5)
                                                                 .stroke(Color.gray, lineWidth: 1.25)
                                                         )
-                                                    
                                                     VStack {
                                                         Text("Add Opportunity")
                                                             .font(Font.custom("Nunito-ExtraBold", size: 15))
@@ -163,7 +164,6 @@ struct AdminHome: View {
                                                     Spacer()
                                                     
                                                     HStack {
-                                                        
                                                         ZStack {
                                                             Rectangle()
                                                                 .foregroundColor(.clear)
@@ -194,6 +194,7 @@ struct AdminHome: View {
                                                         .padding(.top,3)
                                                         .frame(width: 140)
                                                     
+                                                    // Variably adjusting the color of the opportunity status by the days remaining
                                                     HStack {
                                                         if read_db.admin_opportunity_data[index-1]["status"]! == "Closed"{
                                                             Text("Closed")
@@ -201,18 +202,15 @@ struct AdminHome: View {
                                                             Text("Completed")
                                                                 .foregroundColor(Color("Profit"))
                                                         } else if get_days_remaining(date_input: String(describing: read_db.admin_opportunity_data[index-1]["close_date"]!))! <= 5 {
-                                                            
                                                             Text("\(get_days_remaining(date_input: String(describing: read_db.admin_opportunity_data[index-1]["close_date"]!))!) days left")
                                                                 .foregroundColor(Color("Loss"))
                                                             
                                                         } else if get_days_remaining(date_input: String(describing: read_db.admin_opportunity_data[index-1]["close_date"]!))! > 5 && get_days_remaining(date_input: String(describing: read_db.admin_opportunity_data[index-1]["close_date"]!))! < 15 {
-                                                            
                                                             Text("\(get_days_remaining(date_input: String(describing: read_db.admin_opportunity_data[index-1]["close_date"]!))!) days left")
                                                                 .foregroundColor(Color("Amber"))
                                                         } else {
                                                             Text("\(get_days_remaining(date_input: String(describing: read_db.admin_opportunity_data[index-1]["close_date"]!))!) days left")
                                                         }
-                                                        
                                                         Spacer()
                                                     }
                                                     .font(Font.custom("Nunito-Bold", size: 12))
@@ -228,6 +226,7 @@ struct AdminHome: View {
                             }
                             .frame(height: 150)
                             
+                            // Displaying all payouts information
                             Text("Payouts")
                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.065))
                                 .padding(.bottom, -5)
@@ -238,7 +237,6 @@ struct AdminHome: View {
                             ScrollView(.horizontal, showsIndicators: false) {
                                 LazyHGrid(rows: rows, spacing: 20) {
                                     ForEach(0..<read_db.payout_data.count+1, id: \.self ) { index in
-                                        
                                         if index == 0 {
                                             Button(action: { admin_payout_form_shown.toggle() }) {
                                                 ZStack {
@@ -307,16 +305,12 @@ struct AdminHome: View {
                                                                     .foregroundColor(.white)
                                                             }
                                                         }
-                                                        
                                                         Spacer()
-                                                        
                                                         Text("+£\(String(describing: formatted_number(input_number: Int(read_db.payout_data[index-1]["amount_offered"]!)!)))")
                                                             .font(Font.custom("Nunito-Bold", size: 25))
-                                                        
+
                                                         Spacer()
-                                                        
                                                         HStack {
-                                                            
                                                             Text("Investors: \(String(describing: read_db.admin_opportunity_data[Int(read_db.payout_data[index-1]["opportunity_id"]!)!-1]["investors"]!))")
                                                             
                                                             Divider().frame(height: 15)
@@ -344,6 +338,7 @@ struct AdminHome: View {
                             }
                             .frame(height: 150)
                             
+                            // Displaying all secondary market windows
                             Text("Secondary Market")
                                 .font(Font.custom("Nunito-Bold", size: min(geometry.size.width, geometry.size.height) * 0.065))
                                 .padding(.bottom, -5)
@@ -354,10 +349,8 @@ struct AdminHome: View {
                             ScrollView(.horizontal, showsIndicators: false) {
                                 LazyHGrid(rows: rows, spacing: 20) {
                                     ForEach(0..<read_db.trading_window_data.count+1, id: \.self ) { index in
-                                        
                                         if index == 0 {
                                             Button(action: { admin_trading_form_shown.toggle() }) {
-                                                
                                                 ZStack {
                                                     RoundedRectangle(cornerRadius: 5)
                                                         .fill(Color.white)
@@ -365,7 +358,6 @@ struct AdminHome: View {
                                                             RoundedRectangle(cornerRadius: 5)
                                                                 .stroke(Color.gray, lineWidth: 1.25)
                                                         )
-                                                    
                                                     VStack {
                                                         Text("Trading Window")
                                                             .font(Font.custom("Nunito-ExtraBold", size: 15))
@@ -480,6 +472,7 @@ struct AdminHome: View {
                     .frame(width: max(0, geometry.size.width-40), height: max(0, geometry.size.height - 20))
                     .foregroundColor(.black)
                 }
+                // Code that gets executed when the admin refreshes the view
                 .refreshable() {
                     withAnimation(.easeOut(duration: 0.25)) {
                         is_refreshing = true
@@ -523,6 +516,7 @@ struct AdminHome: View {
             .blur(radius: is_unlocked ? 0 : 10)
         }
         .onAppear {
+            // Fetching all the information needed to operate all user views across the application
             load_profile_image() { response in
                 if response != nil {
                     profile_image = response!
