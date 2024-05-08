@@ -7,6 +7,11 @@ Parc is an iOS application that allows Gen-Z consumers to invest in leading fran
 
 Users can browse different franchises available for investment, evaluate the data points, and chat with an AI-enabled franchise investing expert before deciding to invest. The performance of all investments can be viewed on the portfolio page, and liquidity has been factored through the secondary market.
 
+## System Design
+<div>
+    <img src="https://github.com/aym183/PARC/assets/63648492/994dfb16-11e1-4596-930a-8aef6a3cee2d" width="650" alt="System Design">
+</div>
+
 ## User
 ### Landing Page
 <div>
@@ -14,7 +19,9 @@ Users can browse different franchises available for investment, evaluate the dat
 </div>
 
 ### Home
-
+<div>
+    <img src="https://github.com/aym183/PARC/assets/63648492/0f9dc542-2929-4e73-8c47-b5ca1266ccfa" width="200" alt="Home Page UI">
+</div>
 
 ### AI-Enabled Chatbot
 <div>
@@ -34,9 +41,4 @@ Users can browse different franchises available for investment, evaluate the dat
 ## Admin
 <div>
     <img src="https://github.com/aym183/PARC/assets/63648492/401e59e4-31d2-4b17-aa8b-2c1afa7ff4a5)" width="200" alt="Admin UI">
-</div>
-
-## System Design
-<div>
-    <img src="https://github.com/aym183/PARC/assets/63648492/994dfb16-11e1-4596-930a-8aef6a3cee2d" width="650" alt="System Design">
 </div>
