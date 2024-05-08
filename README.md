@@ -3,9 +3,9 @@
      Parc
 </h1>
 
-Parc is an iOS application that allows Gen-Z consumers to invest in leading franchises like McDonald's and Subway with £100. This lowers the barrier to entry to an asset typically reserved for HNIs and let the 8.6 million Gen-Z investors in the UK, a seat on the table.
+Parc is an iOS application that allows Gen-Z consumers to invest in leading franchises like McDonald's and Subway for £100. This lowers the barrier to entry to an asset typically reserved for HNIs and gives the 8.6 million Gen-Z investors in the UK a seat at the table.
 
-Users can browse different franchises available for investment, evaluate the data points, and chat with an AI-enabled franchise investing expert before deciding to invest. The performance of all investments can be viewed on the portfolio page, and liquidity has been factored through the secondary market.
+Users can browse different franchises available for investment, evaluate the data points, and chat with an AI-enabled franchise investing expert before deciding to invest. The performance of all investments can be viewed on the portfolio page, and liquidity is enabled through the secondary market.
 
 ## System Design
 <div>
